@@ -1,0 +1,12 @@
+<div class="row">
+  <aside class="span5">
+    <section>
+      <%= render 'member_form' %>
+      <%= link_to '削除', @member, value:@member.id, method: :delete, class: 'btn btn-large btn-block btn-warning', data: {confirm: "削除してもよろしいですか？"} %>
+    </section>
+  </aside>
+  <div class="span7">
+    <%= render'participated_events' %>
+  </div>
+</div>
+

@@ -1,0 +1,16 @@
+<h2><%= will_paginate %></h2>
+<table class="table table-hover table-bordered table-condensed">
+  <tr>
+    <th width=300px>イベント名</th>
+    <th>開催日</th>
+    <th>参加者数</th>
+  </tr>
+  <% @events.each do |event| %>
+    <tr>
+    <td width=300px><%= link_to event.name, event_path(event) %></td>
+    <td><%= event.date.strftime("%Y/%m/%d (%a.)") %></td>
+    <td><%= event.participants.count %></td>
+  </tr>
+<% end %>
+</table>
+

@@ -1,0 +1,24 @@
+<h2>イベント情報</h2>
+<table class="table table-bordered">
+  <tr>
+    <th>イベント名</th>
+    <td><%= link_to @event.name, @event.url, target: 'blank' %></td>
+  </tr>
+  <tr>
+    <th>開催日</th>
+    <td><%= @event.date.strftime("%Y/%m/%d (%a.)") %></td>
+  </tr>
+  <% if @presenters.present? %>
+      <% i = 1 %>
+    <% @presenters.each do |presenter| %>
+      <tr>
+        <th>プレゼンター #<%= i %></th>
+        <td>
+          <%= link_to Member.find(presenter.participant_id).name, member_path(presenter.participated_id) %>
+        </td>
+      <tr>
+      <% i = i +1 %>
+    <% end %>
+  <% end %>
+</table>
+<%= link_to '編集', edit_event_path(@event), class: "btn btn-block btn-large" %>

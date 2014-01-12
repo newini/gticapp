@@ -1,0 +1,5 @@
+<h2>参加者情報CSVデータ読込</h2>
+<%= form_tag import_participants_event_path, multipart: true do %>
+  <%= file_field_tag :file, class: "file-holder" %>
+  <%= submit_tag "CSV読込",class: "btn" %>
+<% end %>

@@ -1,0 +1,24 @@
+<h2>メンバー情報</h2>
+<table class="table table-bordered">
+  <tr>
+    <th>氏名</th>
+    <td><%= @member.name %></td>
+  </tr>
+  <tr>
+    <th>氏名(カナ)</th>
+    <td><%= @member.name_kana %></td>
+  </tr>
+  <tr>
+    <th>Facebook名</th>
+    <td><%= @member.facebook_name %></td>
+  </tr>
+  <tr>
+    <th>所属</th>
+    <td><%= @member.affiliation %></td>
+  </tr>
+  <tr>
+    <th>email</th>
+    <td><%= @member.email %></td>
+  </tr>
+</table>
+<%= link_to '編集', edit_member_path(@member), class: "btn btn-block btn-large" %>

@@ -1,0 +1,16 @@
+<h2>参加イベント</h2>
+<table class="table table-bordered table-hover">
+  <tr>
+    <th>イベント名</th>
+    <th>開催日</th>
+    <th>プレゼンター</th>
+  </tr>
+  <% @member.participated_events.each do |event| %>
+    <tr>
+      <td><%= link_to event.name, event_path(event) %></td>
+      <td><%= event.date.strftime("%Y/%m/%d") %></td>
+      <td><%= check_member_flg(event) %></td> 
+    </tr>
+  <% end %>
+</table>
+

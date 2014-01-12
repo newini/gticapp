@@ -1,0 +1,23 @@
+<h2>イベント情報</h2>
+<%= form_for @event, :html => { :class => 'form-horizontal center' } do |f| %>
+  <div class="control-group"> 
+    <%= f.label :name, 'イベント名', class: 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :name %>
+    </div>
+  </div>
+  <div class="control-group"> 
+    <%= f.label :date, '開催日', class: 'control-label' %>
+    <div class="controls">
+      <%= f.date_field :date %>
+    </div>
+  </div>
+  <div class="control-group"> 
+    <%= f.label :url, 'URL', class: 'control-label' %>
+    <div class="controls">
+      <%= f.url_field :url %>
+    </div>
+  </div>
+
+  <%= f.submit "送信", class: "btn btn-large btn-primary btn-block" %> 
+<% end %>

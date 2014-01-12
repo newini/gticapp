@@ -1,0 +1,16 @@
+<div class="row">
+  <div class="span7 center">
+    <h1>メンバー管理</h1>
+    <span><%= link_to "新規メンバー登録", new_member_path, class: "btn btn-large" %></span>
+  </div>
+  <section class="well well-small">
+    <h2>メンバー情報CSVデータ取り込み</h2>
+    <%= form_tag import_members_path, multipart: true do %>
+      <%= file_field_tag :file, class: "file-holder" %>
+      <%= submit_tag "CSV読込",class: "btn" %>
+    <% end %>
+  </section>
+  <div class="span12">
+    <%= render'members' %>
+  </div>
+</div> 

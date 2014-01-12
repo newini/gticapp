@@ -1,0 +1,35 @@
+<h2>メンバー情報</h2>
+<%= form_for @member, :html => { :class => 'form-horizontal center' } do |f| %>
+  <div class="control-group">
+    <%= f.label '氏名', class: 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :name, placeholder:'山田太郎' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label '氏名（カナ）', class: 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :name_kana, placeholder:'ヤマダタロウ' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label 'Facebook名', class: 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :facebook_name, placeholder:'山田太郎' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label '所属', class: 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :affiliation, placeholder:'海山商事' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label 'email', class: 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :email,placeholder:'email@example.com' %>
+    </div>
+  </div>
+  <%= f.submit "送信", class: "btn btn-large btn-primary btn-block" %> 
+<% end %>
+
