@@ -1,0 +1,17 @@
+<h2>イベント案内</h2>
+<div class="row">
+  <aside class="span5">
+    <section>
+      <%= render'layouts/side' %>
+    </section>
+    <section>
+      <%= render'invitations/invitation_form' %>
+    </section>
+    <section class="well well-small">
+      <%= render 'import_participants' %>
+    </section>
+  </aside>
+  <div class="span7">
+    <%= render 'participants' %>
+  </div>
+</div>

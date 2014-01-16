@@ -1,4 +1,3 @@
-<h2>イベント情報</h2>
 <table class="table table-bordered">
   <tr>
     <th>イベント名</th>
@@ -8,6 +7,24 @@
     <th>開催日</th>
     <td><%= @event.date.strftime("%Y/%m/%d (%a.)") %></td>
   </tr>
+  <tr>
+    <th>開始時刻</th>
+    <td><%= @event.start_time.strftime("%H:%M") if @event.start_time.present?%></td>
+  </tr>
+  <tr>
+    <th>会場</th>
+    <td><%= @event.place %></td>
+  </tr>
+  <tr>
+    <th>参加費</th>
+    <td><%= number_to_currency(@event.fee,format:"%u%n",unit:"￥",precision:0,separetor:",") if @event.fee.present? %></td>
+  </tr>
+  <tr>
+    <th>イベントURL</th>
+    <td><%= link_to truncate(@event.url,length:50), @event.url, target: :blank %></td>
+  </tr>
+
+
   <% if @presenters.present? %>
       <% i = 1 %>
     <% @presenters.each do |presenter| %>
@@ -20,5 +37,13 @@
       <% i = i +1 %>
     <% end %>
   <% end %>
+  <tr>
+    <th>参加者数</th>
+    <td><%= link_to @event.participants.count, participant_event_path %></td>
+  </tr>
+  <tr>
+    <th>招待者数</th>
+    <td><%= link_to @event.invited_members.count, invited_event_path %></td>
+  </tr>
+
 </table>
-<%= link_to '編集', edit_event_path(@event), class: "btn btn-block btn-large" %>

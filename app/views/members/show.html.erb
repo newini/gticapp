@@ -1,11 +1,17 @@
 <div class="row">
-  <aside class="span5">
+  <aside class="span4">
     <section>
-      <%= render 'member_info' %>
+      <%= render'members/side' %>
+    </section>
+    <section>
+      <%= render'members/side_info' %>
+    </section>
+    <section>
+      <%= link_to 'メンバー情報編集', edit_member_path(@member), class: "btn btn-block btn-large btn-primary" %>
     </section>
   </aside>
-  <div class="span7">
-    <%= render 'participated_events' %>
+  <div class="span8">
+    <%= render 'member_info' %>
   </div>
 </div>
 

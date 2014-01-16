@@ -44,6 +44,10 @@ class MembersController < ApplicationController
     redirect_to members_path, :flash => {:success => "インポートされました" }
   end
 
+  def participated
+    @member = Member.find(params[:id])
+  end
+
   private
     def member_params
       params.require(:member).permit(:name, :name_kana, :facebook_name, :affiliation, :email)

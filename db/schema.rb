@@ -11,7 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140111180115) do
+ActiveRecord::Schema.define(version: 20140112160131) do
+
+  create_table "connections", force: true do |t|
+    t.integer  "invited_event_id"
+    t.integer  "invited_member_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "connections", ["invited_event_id", "invited_member_id"], name: "index_connections_on_invited_event_id_and_invited_member_id", unique: true
+  add_index "connections", ["invited_event_id"], name: "index_connections_on_invited_event_id"
+  add_index "connections", ["invited_member_id"], name: "index_connections_on_invited_member_id"
 
   create_table "events", force: true do |t|
     t.string   "name"
@@ -20,12 +31,26 @@ ActiveRecord::Schema.define(version: 20140111180115) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "url"
+    t.datetime "start_time"
+    t.string   "place"
+    t.integer  "fee"
   end
 
   add_index "events", ["date"], name: "index_events_on_date"
   add_index "events", ["name"], name: "index_events_on_name"
   add_index "events", ["num_of_participants"], name: "index_events_on_num_of_participants"
   add_index "events", ["url"], name: "index_events_on_url"
+
+  create_table "invitations", force: true do |t|
+    t.integer  "event_id"
+    t.string   "title"
+    t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "greeting"
+  end
+
+  add_index "invitations", ["event_id"], name: "index_invitations_on_event_id"
 
   create_table "members", force: true do |t|
     t.string   "name"

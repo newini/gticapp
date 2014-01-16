@@ -65,9 +65,49 @@ class EventsController < ApplicationController
     redirect_to event_path, :flash => {:success => "更新しました"}
   end
 
+  def participant
+    @event = Event.find(params[:id])
+    @participants = @event.participants.paginate(page:params[:page]).order("name_kana")
+  end
+
+  def invited 
+    @event = Event.find(params[:id])
+    @invited_members = @event.invited_members.paginate(page:params[:page]).order("name_kana")
+  end
+
+  def invite
+    @event = Event.find(params[:id])
+    @members = Member.all.paginate(page:params[:page]).order("name_kana")
+  end
+
+  def change_connection
+    @event = Event.find(params[:id])
+    @members = Member.all.paginate(page:params[:page]).order("name_kana")
+    @member = Member.find(params[:invited_member_id])
+    @connection = Connection.where(invited_event_id: @event.id).find_by_invited_member_id(@member.id)
+    if @connection.present? == true
+      @connection.destroy
+    else
+      Connection.create(invited_event_id: @event.id, invited_member_id: @member.id)
+    end
+    
+    redirect_to :back, :flash => {:success => "更新しました"}
+  end
+
+  def change_all_connection
+    @event = Event.find(params[:id])
+    @all_members = Member.all
+    @all_members.each do |member|
+      if Connection.where(invited_event_id: @event.id).find_by_invited_member_id(member.id).blank?
+        Connection.create(invited_event_id: @event.id, invited_member_id: member.id) 
+      end
+    end
+    redirect_to :back, :flash => {:success => "更新しました"}
+  end
+
   private
     def event_params
-      params.require(:event).permit(:name, :date, :url)
+      params.require(:event).permit(:name, :date, :url, :place, :fee, :start_time)
     end
 
 end

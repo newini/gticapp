@@ -1,15 +1,16 @@
 <div class="row">
-  <aside class="span5">
+  <aside class="span4">
     <section>
-      <%= render 'event_form' %>
-      <%= link_to '削除', @event, value:@event.id, method: :delete, class: 'btn btn-large btn-block btn-warning', data: {confirm: "削除してもよろしいですか？"} %>
+      <%= render'layouts/side' %>
     </section>
-    <section class="well well-small">
-      <%= render 'import_participants' %>
+    <section>
+      <%= render'events/side' %>
     </section>
   </aside>
-  <div class="span7">
-    <%= render 'participants' %>
+  <div class="span8">
+    <%= render 'event_form' %>
+    <%= link_to '削除', @event, value:@event.id, method: :delete, class: 'btn btn-large btn-block btn-warning', data: {confirm: "削除してもよろしいですか？"} %>
+
   </div>
 </div>
 

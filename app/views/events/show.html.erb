@@ -1,13 +1,17 @@
 <div class="row">
-  <aside class="span5">
+  <aside class="span4">
     <section>
-      <%= render'event_info' %>
+      <%= render'layouts/side' %>
     </section>
-    <section class="well well-small">
-      <%= render 'import_participants' %>
+    <section>
+      <%= render'events/side' %>
+    </section>
+    <section>
+      <%= link_to 'イベント情報編集', edit_event_path(@event), class: "btn btn-block btn-large btn-primary" %>
     </section>
   </aside>
-  <div class="span7">
-    <%= render 'participants' %>
+  <div class="span8">
+    <h2>イベント情報</h2>
+    <%= render'event_info' %>
   </div>
 </div>
