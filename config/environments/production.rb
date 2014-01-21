@@ -77,4 +77,15 @@ Gticapp::Application.configure do
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
+
+
+  config.action_mailer.delivery_method =:smtp
+  config.action_mailer.smtp_settings = {
+    :port =>            '587',
+    :address =>         'smtp.mandrillapp.com',
+    :user_name =>       'app21294268@heroku.com',
+    :password =>        '89u07G6G9K0IrkgEHQxq3g',
+    :domain =>          'heroku.com',
+    :authentication =>  :plain
+  }
 end

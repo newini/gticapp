@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+  <p><%= @member.name %> 様</p>
+  <p><%= simple_format(@invitation.greeting) %></p>
+  <p>さて、<%= @event.name %>を<%= @event.date.strftime("%Y/%m/%d") %>に開催致します。</p>
+  <p>どうぞ奮ってご参加下さい。</p>
+  <p>----概要----</p>
+  <p>開催日：<%= @event.date.strftime("%Y/%m/%d") if @event.date.present? %></p>
+  <p>開始時刻：<%= @event.start_time.strftime("%H:%M") if @event.start_time.present? %> ( <%= (@event.start_time - 60*30).strftime("%H:%M") if @event.start_time.present? %> 受付開始 )</p>
+  <p>会場：<%= @event.place %></p>
+  <p>参加費：<%= number_to_currency(@event.fee, unit:"￥", format:"%u%n", separetor:",", precision:0) %></p>
+  <p>参加申し込み：<%= @event.url %></p>
+  <p>----詳細----</p>
+  <p><%= simple_format(@invitation.content) %></p>
+  <p>----参加登録----</p>
+  <p><%= @event.url %></p>
+
+
+  </body>
+</html>

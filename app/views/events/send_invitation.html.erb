@@ -1,0 +1,27 @@
+<div class="row">
+  <aside class="span4">
+    <section>
+      <%= render'layouts/side' %>
+    </section>
+    <section>
+      <%= render'events/side' %>
+    </section>
+  </aside>
+  <div class="span8">
+    <%= form_tag send_invitation_path, multipart: true do %>
+      <%= hidden_field_tag 'send_flg',1 %>
+      <% @invitations.each do |invitation| %>
+        <label class="radio">
+          <%= radio_button_tag 'invitation_id', invitation.id %>
+          <%= invitation.title %>
+        </label>
+      <% end %>
+      <%= submit_tag '送信', class: 'btn btn-large btn-primary btn-block' %>
+    <% end %>
+    <% if @value == 1 %>
+    <% @members.each do |member| %>
+      <%= member.name %>
+    <% end %>
+    <% end %>
+  </div>
+</div>

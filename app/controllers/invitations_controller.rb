@@ -1,4 +1,5 @@
 class InvitationsController < ApplicationController
+  before_action :signed_in_user
   def index
     @event = Event.find(params[:event_id])
     @invitations = @event.invitations.paginate(page:params[:page]).order("created_at DESC")
@@ -40,8 +41,12 @@ class InvitationsController < ApplicationController
 
   private
     def invitation_params
-      params.require(:invitation).permit(:title, :content)
+      params.require(:invitation).permit(:title, :content, :greeting)
     end
+    def signed_in_user
+      redirect_to signin_url, notice: "Please sign in." unless signed_in?
+    end
+
 
 
 end

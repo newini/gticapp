@@ -1,4 +1,5 @@
 class MembersController < ApplicationController
+  before_action :signed_in_user
   def index
     @members = Member.paginate(page: params[:page]).order("name_kana")
   end
@@ -16,6 +17,7 @@ class MembersController < ApplicationController
     if @member.update_attributes(member_params)
       redirect_to member_path , :flash => {:success => '変更しました'}
     else
+      flash.now[:error] = 'Invalid email/password combination'
       render 'edit'
     end
   end
@@ -52,4 +54,9 @@ class MembersController < ApplicationController
     def member_params
       params.require(:member).permit(:name, :name_kana, :facebook_name, :affiliation, :email)
     end
+    def signed_in_user
+      redirect_to signin_url, notice: "Please sign in." unless signed_in?
+    end
+
+
 end

@@ -8,11 +8,12 @@ gem 'therubyracer', platforms: :ruby
 gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
-gem 'bcrypt-ruby', '~> 3.0.0'
+gem 'bcrypt-ruby', '~> 3.1.2'
 gem 'bootstrap-sass', '~> 2.3.0'
 gem 'bootswatch-rails'
 gem 'will_paginate'
 gem 'will_paginate-bootstrap'
+gem 'mandrill-api'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140112160131) do
+ActiveRecord::Schema.define(version: 20140116221333) do
 
   create_table "connections", force: true do |t|
     t.integer  "invited_event_id"
@@ -79,5 +79,18 @@ ActiveRecord::Schema.define(version: 20140112160131) do
   add_index "relationships", ["participated_id", "participant_id"], name: "index_relationships_on_participated_id_and_participant_id", unique: true
   add_index "relationships", ["participated_id"], name: "index_relationships_on_participated_id"
   add_index "relationships", ["presenter_flg"], name: "index_relationships_on_presenter_flg"
+
+  create_table "users", force: true do |t|
+    t.string   "name"
+    t.string   "email"
+    t.string   "password"
+    t.string   "password_digest"
+    t.string   "remember_token"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["remember_token"], name: "index_users_on_remember_token"
 
 end

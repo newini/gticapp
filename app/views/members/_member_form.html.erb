@@ -4,6 +4,8 @@
     <%= f.label '氏名', class: 'control-label' %>
     <div class="controls">
       <%= f.text_field :name, placeholder:'山田太郎' %>
+      <%= @member.errors.messages[:name][0] if @member.errors.any?%>
+      
     </div>
   </div>
   <div class="control-group">

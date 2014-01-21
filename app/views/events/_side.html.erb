@@ -1,9 +1,10 @@
 <%= link_to 'イベント情報', event_path(@event), class: "btn btn-block btn-large" %>
 <%= link_to 'イベント案内', event_invitations_path(@event), class: "btn btn-large btn-block" %>
-<%= link_to "招待", invite_event_path(@event), class: "btn btn-large btn-block" %>
+<%= link_to "メンバー招待", invite_event_path(@event), class: "btn btn-large btn-block" %>
 <%= link_to  invited_event_path(@event), class: "btn btn-large btn-block" do %>
   招待済みメンバー <span class = "badge badge-info"><%= @event.invited_members.count %></span>
 <% end %>
+<%= link_to "案内文送付", send_invitation_path(@event), class: "btn btn-large btn-block" %>
 <%= link_to participant_event_path(@event), class: "btn btn-large btn-block" do %>
   参加メンバー <span class="badge badge-info"><%= @event.participants.count %></span> 
 <% end %>

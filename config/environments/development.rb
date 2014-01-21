@@ -11,7 +11,7 @@ Gticapp::Application.configure do
 
   # Show full error reports and disable caching.
   config.consider_all_requests_local       = true
-  config.action_controller.perform_caching = false
+  config.action_controller.perform_caching = true 
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
@@ -26,4 +26,15 @@ Gticapp::Application.configure do
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = true
+  config.action_mailer.delivery_method =:smtp
+  #config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+  config.action_mailer.smtp_settings = {
+    :port =>            '587',
+    :address =>         'smtp.mandrillapp.com',
+    :user_name =>       'app21294268@heroku.com',
+    :password =>        '89u07G6G9K0IrkgEHQxq3g',
+    :domain =>          'heroku.com',
+    :authentication =>  :plain
+  }
+
 end

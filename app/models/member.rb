@@ -1,4 +1,6 @@
 class Member < ActiveRecord::Base
+  validates :name, presence:true, length: { maximum: 50 }
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   has_many :relationships, foreign_key: "participant_id", dependent: :destroy
   has_many :participated_events, through: :relationships, source: :participated
   has_many :connections, foreign_key: "invited_member_id", dependent: :destroy

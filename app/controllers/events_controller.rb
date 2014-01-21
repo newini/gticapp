@@ -1,4 +1,5 @@
 class EventsController < ApplicationController
+  before_action :signed_in_user
   def index
     @events = Event.paginate(page: params[:page]).order("date DESC")
   end
@@ -105,9 +106,29 @@ class EventsController < ApplicationController
     redirect_to :back, :flash => {:success => "更新しました"}
   end
 
+  def send_invitation
+    @event = Event.find(params[:event_id])
+    @invitations = Invitation.where(event_id: params[:event_id])
+  end
+  def send_email
+    @event = Event.find(params[:event_id])
+    @send_flg = params[:send_flg].to_i
+    if @send_flg== 1
+      @members = @event.invited_members
+      @members.each do |member|
+        InvitationMailer.invitation(member,@event,params[:invitation_id]).deliver
+        flash[:success] = "メール送信完了！"
+      end
+    end
+    redirect_to send_invitation_path(@event)
+  end
+   
   private
     def event_params
       params.require(:event).permit(:name, :date, :url, :place, :fee, :start_time)
+    end
+    def signed_in_user
+      redirect_to signin_url, notice: "Please sign in." unless signed_in?
     end
 
 end
