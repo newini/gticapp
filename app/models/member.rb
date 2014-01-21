@@ -7,7 +7,7 @@ class Member < ActiveRecord::Base
   has_many :invited_events, through: :connections, source: :invited_event
   def self.import(file)
     CSV.foreach(file.path, headers: true) do |row|
-      member = find_by_facebook_name(row["facebook_name"])|| find(row["id"]) || new
+      member = find_by_name(row["name"])|| new
       parameters = ActionController::Parameters.new(row.to_hash)
       member.update(parameters.permit(:name, :name_kana, :facebook_name, :affiliation, :email))
       member.save!
