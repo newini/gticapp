@@ -4,7 +4,6 @@
     <tr>
       <th>氏名</th>
       <th>所属</th>
-      <th>email</th>
       <th>参加回数</th>
       <th></th>
     </tr>
@@ -13,9 +12,8 @@
     <tr>
       <td><%= member.name %></td>
       <td><%= member.affiliation %></td>
-      <td><%= member.email %></td>
-      <td><%= member.participated_events.count %></td>
-      <td><%= link_to '詳細', member_path(member), class:"btn btn-small btn-primary btn-block" %></td>
+      <td width= "55px"><%= member.participated_events.count %></td>
+      <td width= "30px"><%= link_to '詳細', member_path(member), class:"btn btn-small btn-primary btn-block" %></td>
     </tr>
   <% end %>
 </table>

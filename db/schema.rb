@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140116221333) do
+ActiveRecord::Schema.define(version: 20140123151949) do
 
   create_table "connections", force: true do |t|
     t.integer  "invited_event_id"
@@ -60,9 +60,11 @@ ActiveRecord::Schema.define(version: 20140116221333) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "facebook_name"
+    t.boolean  "black_list_flg", default: false
   end
 
   add_index "members", ["affiliation"], name: "index_members_on_affiliation"
+  add_index "members", ["black_list_flg"], name: "index_members_on_black_list_flg"
   add_index "members", ["email"], name: "index_members_on_email"
   add_index "members", ["facebook_name"], name: "index_members_on_facebook_name"
   add_index "members", ["name_kana"], name: "index_members_on_name_kana"

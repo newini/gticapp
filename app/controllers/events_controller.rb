@@ -78,7 +78,7 @@ class EventsController < ApplicationController
 
   def invite
     @event = Event.find(params[:id])
-    @members = Member.all.paginate(page:params[:page]).order("name_kana")
+    @members = Member.all.where("email not ?", nil).paginate(page:params[:page]).order("name_kana")
   end
 
   def change_connection

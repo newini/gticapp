@@ -1,9 +1,12 @@
 class Event < ActiveRecord::Base
- has_many :relationships, foreign_key: "participated_id", dependent: :destroy
- has_many :participants, through: :relationships, source: :participant
- has_many :connections, foreign_key: "invited_event_id", dependent: :destroy
- has_many :invited_members, through: :connections, source: :invited_member
- has_many :invitations, dependent: :destroy
+  validates :name, presence:true, length: { maximum: 50 }
+  validates :date, presence:true
+  has_many :relationships, foreign_key: "participated_id", dependent: :destroy
+  has_many :participants, through: :relationships, source: :participant
+  has_many :connections, foreign_key: "invited_event_id", dependent: :destroy
+  has_many :invited_members, through: :connections, source: :invited_member
+  has_many :invitations, dependent: :destroy
+
   def self.import(file)
     CSV.foreach(file.path, headers: true) do |row|
       Event.create! row.to_hash

@@ -52,7 +52,7 @@ class MembersController < ApplicationController
 
   private
     def member_params
-      params.require(:member).permit(:name, :name_kana, :facebook_name, :affiliation, :email)
+      params.require(:member).permit(:name, :name_kana, :facebook_name, :affiliation, :email, :black_list_flg)
     end
     def signed_in_user
       redirect_to signin_url, notice: "Please sign in." unless signed_in?
