@@ -1,5 +1,5 @@
-<div class="row">
-  <aside class="span4">
+<div class="row-fluid">
+  <aside class="span3">
     <section>
       <%= render'layouts/side' %>
     </section>
@@ -10,7 +10,8 @@
       <%= render 'import_participants' %>
     </section>
   </aside>
-  <div class="span8">
-    <%= render 'participants' %>
+  <div class="span9">
+    <h2>出席をキャンセルしたメンバー</h2>
+    <%= render 'members' %>
   </div>
 </div>

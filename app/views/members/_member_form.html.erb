@@ -1,17 +1,27 @@
 <h2>メンバー情報</h2>
 <%= form_for @member, :html => { :class => 'form-horizontal center' } do |f| %>
   <div class="control-group">
-    <%= f.label '氏名', class: 'control-label' %>
+    <%= f.label '氏', class: 'control-label' %>
     <div class="controls">
-      <%= f.text_field :name, placeholder:'山田太郎' %>
-      <%= @member.errors.messages[:name][0] if @member.errors.any?%>
-      
+      <%= f.text_field :last_name, placeholder: @member.errors.any? ? "#{@member.errors.messages[:last_name][0]}" : "山田" %>
     </div>
   </div>
   <div class="control-group">
-    <%= f.label '氏名（カナ）', class: 'control-label' %>
+    <%= f.label '名', class: 'control-label' %>
     <div class="controls">
-      <%= f.text_field :name_kana, placeholder:'ヤマダタロウ' %>
+      <%= f.text_field :first_name, placeholder: @member.errors.any? ? "#{@member.errors.messages[:first_name][0]}" : "太郎" %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label '氏（カナ）', class: 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :last_name_kana, placeholder:'ヤマダ' %>
+    </div>
+  </div>
+   <div class="control-group">
+    <%= f.label '名（カナ）', class: 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :first_name_kana, placeholder:'タロウ' %>
     </div>
   </div>
   <div class="control-group">
@@ -21,17 +31,36 @@
     </div>
   </div>
   <div class="control-group">
+    <%= f.label 'email', class: 'control-label' %>
+    <div class="controls">
+      <%= f.email_field :email,placeholder:'email@example.com' %>
+    </div>
+  </div>
+  <div class="control-group">
     <%= f.label '所属', class: 'control-label' %>
     <div class="controls">
       <%= f.text_field :affiliation, placeholder:'海山商事' %>
     </div>
   </div>
   <div class="control-group">
-    <%= f.label 'email', class: 'control-label' %>
+    <%= f.label '役職', class: 'control-label' %>
     <div class="controls">
-      <%= f.email_field :email,placeholder:'email@example.com' %>
+      <%= f.text_field :title, placeholder:'社長' %>
     </div>
   </div>
+  <div class="control-group">
+    <%= f.label '備考', class: 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :note, placeholder:'備考' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label '職業', class: 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :job, placeholder:'職業' %>
+    </div>
+  </div>
+ 
   <div class="control-group">
     <%= f.label :black_list_flg, 'ブラックリスト', class: 'control-label' %>
     <div class="controls">

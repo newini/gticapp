@@ -1,7 +1,8 @@
 class MembersController < ApplicationController
   before_action :signed_in_user
+  helper_method :sort_column, :sort_direction
   def index
-    @members = Member.paginate(page: params[:page]).order("name_kana")
+    @members = Member.order(sort_column + ' ' + sort_direction).paginate(page: params[:page])
   end
 
   def show
@@ -52,10 +53,16 @@ class MembersController < ApplicationController
 
   private
     def member_params
-      params.require(:member).permit(:name, :name_kana, :facebook_name, :affiliation, :email, :black_list_flg)
+      params.require(:member).permit(:first_name, :last_name,:first_name_kana, :last_name_kana, :facebook_name, :affiliation, :title, :note, :job, :email, :black_list_flg)
     end
     def signed_in_user
       redirect_to signin_url, notice: "Please sign in." unless signed_in?
+    end
+    def sort_column
+      Member.column_names.include?(params[:sort]) ? params[:sort] : 'last_name_kana'
+    end
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
     end
 
 

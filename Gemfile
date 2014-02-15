@@ -14,6 +14,7 @@ gem 'bootswatch-rails'
 gem 'will_paginate'
 gem 'will_paginate-bootstrap'
 gem 'mandrill-api'
+gem 'koala'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

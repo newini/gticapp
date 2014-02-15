@@ -1,12 +1,18 @@
-<p>
-  <strong>Name:</strong>
-  <%= @user.name %>
-</p>
+<div class="row-fluid">
+  <aside class="span4">
+    <h2>メンバー情報</h2>
+    <table class="table table-bordered">
+      <tr>
+        <th>Name</th>
+        <td><%= @user.name %></td>
+      </tr>
+      <tr>
+        <th>Email</th>
+        <td><%= @user.email %></td>
+      </tr>
+    </table>
 
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
-</p>
-
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+  </aside>
+  <div class="span8">
+  </div>
+</div>

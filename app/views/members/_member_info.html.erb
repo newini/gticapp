@@ -1,12 +1,20 @@
 <h2>メンバー情報</h2>
 <table class="table table-bordered">
   <tr>
-    <th>氏名</th>
-    <td><%= @member.name %></td>
+    <th>氏</th>
+    <td><%= @member.last_name %></td>
   </tr>
   <tr>
-    <th>氏名(カナ)</th>
-    <td><%= @member.name_kana %></td>
+    <th>名</th>
+    <td><%= @member.first_name %></td>
+  </tr>
+  <tr>
+    <th>氏(カナ)</th>
+    <td><%= @member.last_name_kana %></td>
+  </tr>
+  <tr>
+    <th>名(カナ)</th>
+    <td><%= @member.first_name_kana %></td>
   </tr>
   <tr>
     <th>Facebook名</th>
@@ -15,6 +23,10 @@
   <tr>
     <th>所属</th>
     <td><%= @member.affiliation %></td>
+  </tr>
+  <tr>
+    <th>役職</th>
+    <td><%= @member.title %></td>
   </tr>
   <tr>
     <th>email</th>

@@ -9,7 +9,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      InvitationMailer.welcome_email(@user).deliver
+      /InvitationMailer.welcome_email(@user).deliver/
       sign_in @user
       flash[:success] = "ようこそ GTIC App"
       redirect_to @user

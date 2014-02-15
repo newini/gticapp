@@ -5,11 +5,11 @@
   </tr>
   <tr>
     <th>開催日</th>
-    <td><%= @event.date.strftime("%Y/%m/%d (%a.)") %></td>
+    <td><%= show_date(@event.date) %></td>
   </tr>
   <tr>
     <th>開始時刻</th>
-    <td><%= @event.start_time.strftime("%H:%M") if @event.start_time.present?%></td>
+    <td><%= show_time(@event.start_time) %></td>
   </tr>
   <tr>
     <th>会場</th>
@@ -17,7 +17,7 @@
   </tr>
   <tr>
     <th>参加費</th>
-    <td><%= number_to_currency(@event.fee,format:"%u%n",unit:"￥",precision:0,separetor:",") if @event.fee.present? %></td>
+    <td><%= show_currency(@event.fee) %></td>
   </tr>
   <tr>
     <th>イベントURL</th>
@@ -31,19 +31,28 @@
       <tr>
         <th>プレゼンター #<%= i %></th>
         <td>
-          <%= link_to Member.find(presenter.participant_id).name, member_path(presenter.participated_id) %>
+          <%= link_to Member.find(presenter.member_id).last_name, member_path(presenter.member_id) %>
         </td>
       <tr>
       <% i = i +1 %>
     <% end %>
   <% end %>
+</table>
+<table class="table table-bordered table-hover">
   <tr>
+    <th>招待待ち</th>
+    <th>招待済み</th>
+    <th>参加予定</th>
     <th>参加者数</th>
-    <td><%= link_to @event.participants.count, participant_event_path %></td>
+    <th>キャンセル</th>
+    <th>No-show</th>
   </tr>
   <tr>
-    <th>招待者数</th>
+    <td><%= link_to @event.waiting_members.count, waiting_event_path %></td>
     <td><%= link_to @event.invited_members.count, invited_event_path %></td>
+    <td><%= link_to @event.registed_members.count, registed_event_path %></td>
+    <td><%= link_to @event.participants.count, participants_event_path %></td>
+    <td><%= link_to @event.canceled_members.count, canceled_event_path %></td>
+    <td><%= link_to @event.no_show.count, no_show_event_path %></td>
   </tr>
-
 </table>

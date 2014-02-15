@@ -4,29 +4,69 @@
     <tr>
       <th>氏名</th>
       <th>所属</th>
-      <th>招待</th>
+      <th>ステータス</th>
+      <th></th>
     </tr>
   </thead>
   <% @members.each do |member| %>
     <tr>
-      <td><%= link_to member.name, member_path(member) %></td>
+      <td><%= link_to "#{member.last_name} #{member.first_name}", member_path(member) %></td>
       <td><%= member.affiliation %></td>
+      <td><%= show_status(member) %></td> 
       <td>
-        <% if check_invite_flg(member) == "o" %>
-        <%= link_to check_invite_flg(member), 
-            change_connection_event_path(
-              :invited_member_id => member.id), 
-              :method => :post,
-              :class => "btn btn-small btn-primary btn-block"%>
-        <% else %>
-        <%= link_to check_invite_flg(member), 
-            change_connection_event_path(
-              :invited_member_id => member.id), 
-              :method => :post,
-              :class => "btn btn-small btn-block"%>
+        <% case member.relationships.find_by_event_id(@event).status %>
+        <% when 0 %>
+          <%= link_to "招待", change_status_event_path(:member_id => member.id, :direction => 2), :method => :post, :class => "btn btn-small btn-primary btn-block"%>
+        <% when 1 %>
+          <%= link_to "出席表明", change_status_event_path(:member_id => member.id, :direction => 2), :method => :post, :class => "btn btn-small btn-primary btn-block"%>
+        <% when 2 %>
+          <div class="btn-group">
+            <%= link_to "出席", change_status_event_path(:member_id => member.id, :direction => 3), :method => :post, :class => "btn btn-small btn-primary "%>
+            <button class="btn dropdown-toggle btn-primary btn-small" data-toggle="dropdown">
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li><%= link_to "キャンセル", change_status_event_path(:member_id => member.id, :direction => 4), :method => :post %></li>
+              <li><%= link_to "No-show", change_status_event_path(:member_id => member.id, :direction => 5), :method => :post%></li>
+            </ul>
+          </div>
+        <% when 3 %>
+          <div class="btn-group">
+            <%= link_to "キャンセル", change_status_event_path(:member_id => member.id, :direction => 4), :method => :post, :class => "btn btn-small btn-primary " %>
+            <button class="btn dropdown-toggle btn-primary btn-small" data-toggle="dropdown">
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li><%= link_to "No-show", change_status_event_path(:member_id => member.id, :direction => 5), :method => :post%></li>
+            </ul>
+          </div>
+        <% when 4 %>
+           <div class="btn-group">
+            <%= link_to "出席", change_status_event_path(:member_id => member.id, :direction => 3), :method => :post, :class => "btn btn-small btn-primary " %>
+            <button class="btn dropdown-toggle btn-primary btn-small" data-toggle="dropdown">
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li><%= link_to "No-show", change_status_event_path(:member_id => member.id, :direction => 5), :method => :post%></li>
+            </ul>
+          </div>
+        <% when 5 %>
+          <div class="btn-group">
+            <%= link_to swich_black_list_flg_event_path(:member_id => member.id), :method => :post, :class => "btn btn-small btn-primary " do %>
+              <%= member.black_list_flg == false ? "ブラックリスト入り" : "ブラックリスト解除" %> 
+            <% end %>
+            <button class="btn dropdown-toggle btn-primary btn-small" data-toggle="dropdown">
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li><%= link_to "出席", change_status_event_path(:member_id => member.id, :direction => 3), :method => :post%></li>
+              <li><%= link_to "キャンセル", change_status_event_path(:member_id => member.id, :direction => 4), :method => :post%></li>
+            </ul>
+          </div>
+ 
         <% end %>
       </td>
-
+ 
     </tr>
   <% end %>
 </table>

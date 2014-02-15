@@ -6,12 +6,10 @@
     <section>
       <%= render'events/side' %>
     </section>
-    <section>
-      <%= link_to 'イベント情報編集', edit_event_path(@event), class: "btn btn-block btn-large btn-primary" %>
-    </section>
   </aside>
   <div class="span9">
-    <h2>イベント情報</h2>
-    <%= render'event_info' %>
+    <h2>招待待ちメンバー一覧</h2>
+    <%= link_to '全メンバー招待', change_all_waiting_status_event_path, :method => :post %>
+    <%= render'members' %>
   </div>
 </div>

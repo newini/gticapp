@@ -6,13 +6,19 @@ Gticapp::Application.routes.draw do
   resources :events do
     collection { post :import }
     member { post :import_participants }
-    member { get :participant }
-    member { post :change_status }
+    member { post :import_registed_members }
+    member { post :swich_presenter_flg }
     resources :invitations
-    member { get :invited }
     member { get :invite }
-    member { post :change_connection }
-    member { post :change_all_connection }
+    member { get :waiting }
+    member { get :invited }
+    member { get :registed }
+    member { get :participants }
+    member { get :canceled }
+    member { get :no_show }
+    member { post :change_status }
+    member { post :swich_black_list_flg }
+    member { post :change_all_waiting_status }
   end
   resources :relationships, only: [:create, :destroy]
   resources :users

@@ -11,18 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140123151949) do
-
-  create_table "connections", force: true do |t|
-    t.integer  "invited_event_id"
-    t.integer  "invited_member_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "connections", ["invited_event_id", "invited_member_id"], name: "index_connections_on_invited_event_id_and_invited_member_id", unique: true
-  add_index "connections", ["invited_event_id"], name: "index_connections_on_invited_event_id"
-  add_index "connections", ["invited_member_id"], name: "index_connections_on_invited_member_id"
+ActiveRecord::Schema.define(version: 20140212074812) do
 
   create_table "events", force: true do |t|
     t.string   "name"
@@ -52,35 +41,53 @@ ActiveRecord::Schema.define(version: 20140123151949) do
 
   add_index "invitations", ["event_id"], name: "index_invitations_on_event_id"
 
-  create_table "members", force: true do |t|
-    t.string   "name"
-    t.string   "name_kana"
-    t.string   "email"
-    t.string   "affiliation"
+  create_table "member_relationships", force: true do |t|
+    t.integer  "introduced_id"
+    t.integer  "introducer_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  add_index "member_relationships", ["introduced_id", "introducer_id"], name: "index_member_relationships_on_introduced_id_and_introducer_id", unique: true
+  add_index "member_relationships", ["introduced_id"], name: "index_member_relationships_on_introduced_id"
+  add_index "member_relationships", ["introducer_id"], name: "index_member_relationships_on_introducer_id"
+
+  create_table "members", force: true do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "first_name_kana"
+    t.string   "last_name_kana"
+    t.string   "email"
+    t.string   "affiliation"
+    t.string   "title"
+    t.string   "note"
     t.string   "facebook_name"
-    t.boolean  "black_list_flg", default: false
+    t.string   "job"
+    t.boolean  "black_list_flg",  default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "members", ["affiliation"], name: "index_members_on_affiliation"
   add_index "members", ["black_list_flg"], name: "index_members_on_black_list_flg"
   add_index "members", ["email"], name: "index_members_on_email"
   add_index "members", ["facebook_name"], name: "index_members_on_facebook_name"
-  add_index "members", ["name_kana"], name: "index_members_on_name_kana"
+  add_index "members", ["last_name_kana"], name: "index_members_on_last_name_kana"
 
   create_table "relationships", force: true do |t|
-    t.integer  "participated_id"
-    t.integer  "participant_id"
+    t.integer  "member_id"
+    t.integer  "event_id"
+    t.boolean  "presenter_flg", default: false
+    t.integer  "status"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "presenter_flg",   default: false
   end
 
-  add_index "relationships", ["participant_id"], name: "index_relationships_on_participant_id"
-  add_index "relationships", ["participated_id", "participant_id"], name: "index_relationships_on_participated_id_and_participant_id", unique: true
-  add_index "relationships", ["participated_id"], name: "index_relationships_on_participated_id"
+  add_index "relationships", ["event_id"], name: "index_relationships_on_event_id"
+  add_index "relationships", ["member_id", "event_id"], name: "index_relationships_on_member_id_and_event_id", unique: true
+  add_index "relationships", ["member_id"], name: "index_relationships_on_member_id"
   add_index "relationships", ["presenter_flg"], name: "index_relationships_on_presenter_flg"
+  add_index "relationships", ["status"], name: "index_relationships_on_status"
 
   create_table "users", force: true do |t|
     t.string   "name"

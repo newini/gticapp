@@ -2,18 +2,26 @@
 <table class="table table-hover table-bordered">
   <thead>
     <tr>
-      <th>氏名</th>
-      <th>所属</th>
+      <th><%= sortable('last_name_kana',"氏名") %></th>
+      <th>読み</th>
+      <th><%= sortable('affiliation',"所属") %></th>
+      <th>役職</th>
+      <th>備考</th>
       <th>参加回数</th>
+      <th>紹介者</th>
       <th></th>
     </tr>
   </thead>
   <% @members.each do |member| %>
     <tr>
-      <td><%= member.name %></td>
+      <td><%= "#{member.last_name} #{member.first_name}" %></td>
+      <td><%= kana(member.last_name) %></td>
       <td><%= member.affiliation %></td>
-      <td width= "55px"><%= member.participated_events.count %></td>
-      <td width= "30px"><%= link_to '詳細', member_path(member), class:"btn btn-small btn-primary btn-block" %></td>
+      <td><%= member.title %></td>
+      <td><%= member.note %></td>
+      <td><%= member.events.count %></td>
+      <td><%= member.introducer.last.last_name if member.introducer.present?%></td>
+      <td><%= link_to '詳細', member_path(member), class:"btn btn-small btn-primary btn-block" %></td>
     </tr>
   <% end %>
 </table>

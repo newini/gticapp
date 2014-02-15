@@ -8,8 +8,8 @@ class CreateRelationships < ActiveRecord::Migration
       t.timestamps
     end
     add_index :relationships, :member_id
-    add_index :relationships, :event_id
-    add_index :relationships, [:member_id, :event_id], unique: true
+    add_index :relationships, :member_id
+    add_index :relationships, [:participated_id, :participant_id], unique: true
     add_index :relationships, :presenter_flg
     add_index :relationships, :status
 

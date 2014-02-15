@@ -1,17 +1,17 @@
-<h2>イベント案内</h2>
 <div class="row-fluid">
   <aside class="span3">
     <section>
       <%= render'layouts/side' %>
     </section>
     <section>
-      <%= render'invitations/invitation_form' %>
+      <%= render'events/side' %>
     </section>
     <section class="well well-small">
       <%= render 'import_participants' %>
     </section>
   </aside>
   <div class="span9">
-    <%= render 'participants' %>
+    <h2>No-show</h2>
+    <%= render 'members' %>
   </div>
 </div>

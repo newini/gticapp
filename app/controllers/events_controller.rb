@@ -1,21 +1,29 @@
 class EventsController < ApplicationController
   before_action :signed_in_user
+  before_action :selected_event, only: [:show, :edit, :update, :destroy, :swich_presenter_flg, :swich_black_list_flg,
+                                        :invited, :waiting, :registed, :participants, :canceled, :no_show, :change_status,
+                                        :change_all_waiting_status, :send_invitation, :send_email]
   def index
     @events = Event.paginate(page: params[:page]).order("date DESC")
   end
   def show
-    @event = Event.find(params[:id])
-    @participants = @event.participants.paginate(page:params[:page]).order("name_kana")
-    @presenters = Relationship.where(participated_id: @event.id).where(presenter_flg: true)
+    @participants = @event.participants.paginate(page:params[:page]).order("last_name_kana")
+    @presenters = @event.presenters
+    @invited_members = @event.invited_members
+    @registed_members = @event.registed_members
+    @new_members = Member.where.not(:id => @event.relationships.select(:member_id).map(&:member_id))
+    if @new_members.present?
+      @new_members.each do |new_member|
+        @event.relationships.create(member_id: new_member.id, event_id: @event.id, status: 0)
+      end
+    end
   end
 
   def edit
-    @event = Event.find(params[:id]) 
-    @participants = @event.participants.paginate(page:params[:page]).order("name_kana")
+    @participants = @event.participants.paginate(page:params[:page]).order("last_name_kana")
   end
 
   def update
-    @event = Event.find(params[:id])
     if @event.update_attributes(event_params)
       redirect_to event_path, :flash => {:success => '変更しました'}
     else
@@ -29,7 +37,7 @@ class EventsController < ApplicationController
 
   def create
     @event = Event.new(event_params)
-    if @event.save
+    if @event.save 
       redirect_to events_path
     else
       render 'new'
@@ -37,7 +45,6 @@ class EventsController < ApplicationController
   end
 
   def destroy
-    @event = Event.find(params[:id])
     @event.destroy
     redirect_to events_path
   end
@@ -46,72 +53,97 @@ class EventsController < ApplicationController
     Event.import(params[:file])
     redirect_to events_path, :flash => {:success => "インポートされました" }
   end
+  def import_registed_members
+    Event.import_registed_members(params[:file],params[:id]) 
+    redirect_to event_path, :flash => {:success => "インポートされました"}
+  end
+
 
   def import_participants
     Event.import_participants(params[:file],params[:id]) 
     redirect_to event_path, :flash => {:success => "インポートされました"}
   end
 
-  def change_status
-    @event = Event.find(params[:id])
-    @member = Member.find(params[:participant_id])
-    @relationship = Relationship.where(participated_id: @event.id).find_by_participant_id(@member.id)
-      if params[:status] == "true"
-        status = false 
-      else
-        status = true 
-      end
-      @relationship.presenter_flg = status
-      @relationship.save
+  def swich_presenter_flg
+    @relationship = @event.relationships.find_by_member_id(params[:participant_id])
+    status = params[:status] == "true" ? false : true
+    @relationship.update(presenter_flg: status)
+    @relationship.save
     redirect_to event_path, :flash => {:success => "更新しました"}
   end
 
-  def participant
-    @event = Event.find(params[:id])
-    @participants = @event.participants.paginate(page:params[:page]).order("name_kana")
+  def swich_black_list_flg
+    @member = Member.find(params[:member_id])
+    flg = @member.black_list_flg == true ? false : true
+    redirect_to no_show_event_path, :flash => {:success => "更新しました"} if @member.update(black_list_flg: flg)
   end
 
   def invited 
-    @event = Event.find(params[:id])
-    @invited_members = @event.invited_members.paginate(page:params[:page]).order("name_kana")
+    @members = @event.invited_members.paginate(page:params[:page]).order("last_name_kana")
   end
 
-  def invite
-    @event = Event.find(params[:id])
-    @members = Member.all.where("email IS NOT NULL").paginate(page:params[:page]).order("name_kana")
+  def waiting
+    @members = @event.waiting_members.where(black_list_flg: false).where("email IS NOT NULL").paginate(page:params[:page]).order("last_name_kana")
   end
 
-  def change_connection
-    @event = Event.find(params[:id])
-    @members = Member.all.paginate(page:params[:page]).order("name_kana")
-    @member = Member.find(params[:invited_member_id])
-    @connection = Connection.where(invited_event_id: @event.id).find_by_invited_member_id(@member.id)
-    if @connection.present? == true
-      @connection.destroy
-    else
-      Connection.create(invited_event_id: @event.id, invited_member_id: @member.id)
-    end
-    
-    redirect_to :back, :flash => {:success => "更新しました"}
+  def registed
+    @members = @event.registed_members.paginate(page:params[:page]).order("last_name_kana")
   end
 
-  def change_all_connection
-    @event = Event.find(params[:id])
-    @all_members = Member.all
-    @all_members.each do |member|
-      if Connection.where(invited_event_id: @event.id).find_by_invited_member_id(member.id).blank?
-        Connection.create(invited_event_id: @event.id, invited_member_id: member.id) 
+  def participants
+    @members = @event.participants.paginate(page:params[:page]).order("last_name_kana")
+  end
+
+  def canceled
+    @members = @event.canceled_members.paginate(page:params[:page]).order("last_name_kana")
+  end
+
+  def no_show
+    @members = @event.no_show.paginate(page:params[:page]).order("last_name_kana")
+  end
+
+  def change_status
+    @members = @event.members.paginate(page:params[:page]).order("last_name_kana")
+    @relationship = @event.relationships.find_by_member_id(params[:member_id])
+    @direction = params[:direction].to_i
+    if @relationship.nil?
+      @relationship = Relationship.new(member_id: params[:member_id], event_id: params[:id], status: 1)
+    elsif @relationship.status == 0
+      @relationship.update(status: 1)
+    elsif @relationship.status >= 1
+      case @direction
+      when 0
+        @relationship.update(status: 0)
+      when 2
+        @relationship.update(status: 2)
+      when 3
+        @relationship.update(status: 3)
+      when 4 
+        @relationship.update(status: 4)
+      when 5 
+        @relationship.update(status: 5)
       end
+    end
+    if @relationship.save
+      redirect_to :back, :flash => {:success => "更新しました"}
+    end
+  end
+  def change_all_waiting_status
+    @members = @event.waiting_members.where(black_list_flg: false).where("email IS NOT NULL").paginate(page:params[:page]).order("last_name_kana")
+    @members.each do |member|
+      relationship = @event.relationships.find_by_member_id(member.id)
+      if relationship.status == 0
+        relationship.update(status: 1)
+      end
+      relationship.save
     end
     redirect_to :back, :flash => {:success => "更新しました"}
   end
 
   def send_invitation
-    @event = Event.find(params[:event_id])
     @invitations = Invitation.where(event_id: params[:event_id])
   end
   def send_email
-    @event = Event.find(params[:event_id])
     @send_flg = params[:send_flg].to_i
     if @send_flg== 1
       @members = @event.invited_members
@@ -129,6 +161,9 @@ class EventsController < ApplicationController
     end
     def signed_in_user
       redirect_to signin_url, notice: "Please sign in." unless signed_in?
+    end
+    def selected_event
+      @event = Event.find(params[:id])
     end
 
 end
