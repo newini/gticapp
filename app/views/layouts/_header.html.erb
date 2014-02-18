@@ -15,13 +15,13 @@
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <%= User.find(current_user).name %> <b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li><%= link_to "プロフィール", current_user %></li> 
-                <li><%= link_to "設定", edit_user_path(current_user) %></li>
+                <li><%= link_to "設定", edit_user_path(@current_user) %></li>
                 <li class="divider"></li>
-                <li><%= link_to "サインアウト", signout_path, method: "delete" %> </li>
+                <li><%= link_to "サインアウト", '/signout', method: "delete" %> </li>
               </ul> 
             </li>
           <% else %>
-            <li><%= link_to "Sign in", signin_path %></li>
+            <li><%= link_to "Sign in", '/signin' %></li>
           <% end %>
         </ul> 
       </nav>

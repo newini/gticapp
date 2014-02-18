@@ -11,32 +11,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140212074812) do
+ActiveRecord::Schema.define(version: 20140218194419) do
+
+  create_table "categories", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "categories", ["name"], name: "index_categories_on_name"
 
   create_table "events", force: true do |t|
     t.string   "name"
-    t.integer  "num_of_participants"
-    t.datetime "date"
+    t.string   "fb_event_id"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.integer  "place_id"
+    t.integer  "fee"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "url"
-    t.datetime "start_time"
-    t.string   "place"
-    t.integer  "fee"
   end
 
-  add_index "events", ["date"], name: "index_events_on_date"
   add_index "events", ["name"], name: "index_events_on_name"
-  add_index "events", ["num_of_participants"], name: "index_events_on_num_of_participants"
-  add_index "events", ["url"], name: "index_events_on_url"
+  add_index "events", ["place_id"], name: "index_events_on_place_id"
+  add_index "events", ["start_time"], name: "index_events_on_start_time"
 
   create_table "invitations", force: true do |t|
     t.integer  "event_id"
     t.string   "title"
+    t.text     "greeting"
     t.text     "content"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "greeting"
   end
 
   add_index "invitations", ["event_id"], name: "index_invitations_on_event_id"
@@ -53,26 +59,44 @@ ActiveRecord::Schema.define(version: 20140212074812) do
   add_index "member_relationships", ["introducer_id"], name: "index_member_relationships_on_introducer_id"
 
   create_table "members", force: true do |t|
-    t.string   "first_name"
     t.string   "last_name"
-    t.string   "first_name_kana"
+    t.string   "first_name"
     t.string   "last_name_kana"
+    t.string   "first_name_kana"
     t.string   "email"
+    t.integer  "category_id"
     t.string   "affiliation"
     t.string   "title"
     t.string   "note"
-    t.string   "facebook_name"
-    t.string   "job"
-    t.boolean  "black_list_flg",  default: false
+    t.string   "fb_name"
+    t.integer  "fb_user_id"
+    t.boolean  "black_list_flg"
+    t.boolean  "gtic_flg"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "members", ["affiliation"], name: "index_members_on_affiliation"
   add_index "members", ["black_list_flg"], name: "index_members_on_black_list_flg"
+  add_index "members", ["category_id"], name: "index_members_on_category_id"
   add_index "members", ["email"], name: "index_members_on_email"
-  add_index "members", ["facebook_name"], name: "index_members_on_facebook_name"
+  add_index "members", ["fb_name"], name: "index_members_on_fb_name"
+  add_index "members", ["fb_user_id"], name: "index_members_on_fb_user_id"
+  add_index "members", ["gtic_flg"], name: "index_members_on_gtic_flg"
+  add_index "members", ["last_name"], name: "index_members_on_last_name"
   add_index "members", ["last_name_kana"], name: "index_members_on_last_name_kana"
+  add_index "members", ["title"], name: "index_members_on_title"
+
+  create_table "places", force: true do |t|
+    t.string   "name"
+    t.string   "address"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "places", ["name"], name: "index_places_on_name"
 
   create_table "relationships", force: true do |t|
     t.integer  "member_id"

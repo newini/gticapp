@@ -1,10 +1,12 @@
 class EventsController < ApplicationController
+  include EventsHelper
+  include MembersHelper
   before_action :signed_in_user
   before_action :selected_event, only: [:show, :edit, :update, :destroy, :swich_presenter_flg, :swich_black_list_flg,
                                         :invited, :waiting, :registed, :participants, :canceled, :no_show, :change_status,
-                                        :change_all_waiting_status, :send_invitation, :send_email]
+                                        :change_all_waiting_status, :send_invitation, :send_email, :update_facebook]
   def index
-    @events = Event.paginate(page: params[:page]).order("date DESC")
+    @events = Event.paginate(page: params[:page]).order("start_time DESC")
   end
   def show
     @participants = @event.participants.paginate(page:params[:page]).order("last_name_kana")
@@ -154,10 +156,34 @@ class EventsController < ApplicationController
     end
     redirect_to send_invitation_path(@event)
   end
+  def update_facebook
+    @rsvp_status = params[:rsvp_status]
+    @fb_members = facebook(@event.fb_event_id, @rsvp_status)
+    @fb_members.each do |fb_member|
+      fb_name = fb_member["name"]
+      fb_user_id = fb_member["id"]
+      if Member.find_by_fb_user_id(fb_user_id).present?
+        @member = Member.find_by_fb_user_id(fb_member["id"])
+        @member.update(fb_name: fb_name, fb_user_id: fb_user_id)
+      else
+        @member = Member.new(fb_name: fb_name, fb_user_id: fb_user_id)
+      end
+      @member.save!
+      if @member.relationships.find_by_event_id(@event.id).present?
+        @relationship = @member.relationships.find_by_event_id(@event.id)
+        @relationship.update(event_id: @event.id, status: convert_status(@rsvp_status))
+      else
+        @relationship = @member.relationships.new(event_id: @event.id, status: convert_status(@rsvp_status))
+      end
+      @relationship.save!
+    end
+    redirect_to :back
+  end
+
    
   private
     def event_params
-      params.require(:event).permit(:name, :date, :url, :place, :fee, :start_time)
+      params.require(:event).permit(:name, :start_time, :end_time, :fb_event_id, :place_id, :fee)
     end
     def signed_in_user
       redirect_to signin_url, notice: "Please sign in." unless signed_in?

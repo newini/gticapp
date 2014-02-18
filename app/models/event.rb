@@ -1,6 +1,5 @@
 class Event < ActiveRecord::Base
   validates :name, presence:true, length: { maximum: 50 }
-  validates :date, presence:true
   has_many :relationships, foreign_key: "event_id", dependent: :destroy
   has_many :members, through: :relationships, source: :member
   has_many :waiting_members, -> { where "status = 0"}, through: :relationships, source: :member 

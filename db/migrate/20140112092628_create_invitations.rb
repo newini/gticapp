@@ -3,6 +3,7 @@ class CreateInvitations < ActiveRecord::Migration
     create_table :invitations do |t|
       t.integer :event_id
       t.string :title
+      t.text :greeting
       t.text :content
 
       t.timestamps

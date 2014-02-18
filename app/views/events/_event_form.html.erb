@@ -6,21 +6,22 @@
     </div>
   </div>
   <div class="control-group"> 
-    <%= f.label :date, '開催日', class: 'control-label' %>
+    <%= f.label :start_time, '開始日時', class: 'control-label' %>
     <div class="controls">
-      <%= f.date_field :date %>
+      <%= f.datetime_select :start_time %>
     </div>
   </div>
   <div class="control-group"> 
-    <%= f.label :start_time, '開始時刻', class: 'control-label' %>
+    <%= f.label :end_time, '終了日時', class: 'control-label' %>
     <div class="controls">
-      <%= f.time_field :start_time %>
+      <%= f.datetime_select :end_time %>
     </div>
   </div>
   <div class="control-group"> 
-    <%= f.label :place, '会場', class: 'control-label' %>
+    <%= f.label :place_id, '会場', class: 'control-label' %>
     <div class="controls">
-      <%= f.text_field :place %>
+      <% @places = Place.all %>
+      <%= f.select :place_id, @places.map{|t| [t.name, t.id]} %>
     </div>
   </div>
   <div class="control-group"> 
@@ -30,9 +31,9 @@
     </div>
   </div>
   <div class="control-group"> 
-    <%= f.label :url, 'URL', class: 'control-label' %>
+    <%= f.label :fb_event_id, 'https://www.facebook.com/events/', class: 'control-label' %>
     <div class="controls">
-      <%= f.url_field :url %>
+      <%= f.text_field :fb_event_id %>
     </div>
   </div>
 

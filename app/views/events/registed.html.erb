@@ -11,7 +11,7 @@
     </section>
   </aside>
   <div class="span9">
-    <h2>参加予定メンバー一覧</h2>
+    <h2>参加予定者一覧<%= link_to "facebook情報更新", update_facebook_event_path(rsvp_status: "attending"), method: "post" %></h2>
     <%= render'members' %>
   </div>
 </div>

@@ -1,14 +1,15 @@
 class Member < ActiveRecord::Base
-  validates :last_name, presence:true, length: { maximum: 50 }
-  validates :first_name, presence:true, length: { maximum: 50 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   has_many :relationships, foreign_key: "member_id", dependent: :destroy
   has_many :events, through: :relationships, source: :event
+  has_many :registed_events, -> { where "status = 2"}, through: :relationships, source: :event 
+  has_many :participated_events, -> { where "status = 3"}, through: :relationships, source: :event 
 #紹介者同士のrelation
   has_many :member_relationships, foreign_key: "introduced_id", dependent: :destroy
   has_many :introducer, through: :member_relationships, source: :introducer
   has_many :reverse_member_relationships, foreign_key: "introducer_id", dependent: :destroy, class_name: "MemberRelationship"
   has_many :introduced_members, through: :reverse_member_relationships, source: :introduced
+
   def self.import(file)
     CSV.foreach(file.path, headers: true) do |row|
       member = Member.where(last_name: row["last_name"]).find_by_first_name(row["first_name"])|| Member.new

@@ -4,6 +4,7 @@
     <tr>
       <th><%= sortable('last_name_kana',"氏名") %></th>
       <th>読み</th>
+      <th>Facebook名</th>
       <th><%= sortable('affiliation',"所属") %></th>
       <th>役職</th>
       <th>備考</th>
@@ -15,11 +16,12 @@
   <% @members.each do |member| %>
     <tr>
       <td><%= "#{member.last_name} #{member.first_name}" %></td>
-      <td><%= kana(member.last_name) %></td>
+      <td><%= member.last_name_kana %></td>
+      <td><%= member.fb_name %></td>
       <td><%= member.affiliation %></td>
       <td><%= member.title %></td>
       <td><%= member.note %></td>
-      <td><%= member.events.count %></td>
+      <td><%= member.participated_events.count %></td>
       <td><%= member.introducer.last.last_name if member.introducer.present?%></td>
       <td><%= link_to '詳細', member_path(member), class:"btn btn-small btn-primary btn-block" %></td>
     </tr>

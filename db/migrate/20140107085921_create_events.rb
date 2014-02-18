@@ -2,13 +2,16 @@ class CreateEvents < ActiveRecord::Migration
   def change
     create_table :events do |t|
       t.string :name
-      t.integer :num_of_participants
-      t.datetime :date
+      t.string :fb_event_id
+      t.datetime :start_time
+      t.datetime :end_time
+      t.integer :place_id
+      t.integer :fee
 
       t.timestamps
     end
     add_index :events, :name
-    add_index :events, :num_of_participants
-    add_index :events, :date
+    add_index :events, :start_time
+    add_index :events, :place_id
   end
 end

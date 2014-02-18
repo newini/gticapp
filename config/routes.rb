@@ -8,6 +8,7 @@ Gticapp::Application.routes.draw do
     member { post :import_participants }
     member { post :import_registed_members }
     member { post :swich_presenter_flg }
+    member { post :update_facebook }
     resources :invitations
     member { get :invite }
     member { get :waiting }
@@ -24,8 +25,8 @@ Gticapp::Application.routes.draw do
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
   match '/signin', to: 'sessions#new', via: 'get'
-  match '/signout', to: 'sessions#destroy', via: 'delete'
   match '/signup', to: 'users#new', via: 'get'
+  match '/signout', to: 'sessions#destroy', via: 'delete'
   match '/home', to: 'static_pages#home', via: 'get'
   match '/events/:event_id/send_invitation', to: 'events#send_invitation', as: 'send_invitation',via: 'get'
   match '/events/:event_id/send_invitation', to: 'events#send_email', via: 'post'

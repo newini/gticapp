@@ -27,7 +27,7 @@
   <div class="control-group">
     <%= f.label 'Facebook名', class: 'control-label' %>
     <div class="controls">
-      <%= f.text_field :facebook_name, placeholder:'山田太郎' %>
+      <%= f.text_field :fb_name, placeholder:'山田太郎' %>
     </div>
   </div>
   <div class="control-group">
@@ -57,7 +57,8 @@
   <div class="control-group">
     <%= f.label '職業', class: 'control-label' %>
     <div class="controls">
-      <%= f.text_field :job, placeholder:'職業' %>
+      <% @categories = Category.all %>
+      <%= f.select :category_id, @categories.map{|t| [t.name, t.id]}%>
     </div>
   </div>
  

@@ -3,6 +3,7 @@
   <thead>
     <tr>
       <th>氏名</th>
+      <th>（Facebook名）</th>
       <th>所属</th>
       <th>ステータス</th>
       <th></th>
@@ -11,6 +12,7 @@
   <% @members.each do |member| %>
     <tr>
       <td><%= link_to "#{member.last_name} #{member.first_name}", member_path(member) %></td>
+      <td><%= member.fb_name %></td>
       <td><%= member.affiliation %></td>
       <td><%= show_status(member) %></td> 
       <td>
