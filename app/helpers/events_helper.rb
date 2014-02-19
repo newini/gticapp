@@ -42,7 +42,8 @@ module EventsHelper
 #    key = response.body.split("&").first.split("=").last
 
 #    key = current_user.token
-    key = 'CAAHkBAG9YhEBAMax5WL2M3U7rxpOpn6ukXx8ZAVcUWxFBXuOZB1ec2a3KdZALVyAoikmZC216bbMze8hae1cc9pcz7DHlH1zjZC7NQfBttEllgYER4rt2s4cJbX58zhIL1h2XheHyuWctfTJ1ucKnW6TJ0a7DzZB1N6s4afEZC8lmQZBi9szb4uOVZARGZA2kkBgUZD'
+#    key = 'CAAHkBAG9YhEBAMax5WL2M3U7rxpOpn6ukXx8ZAVcUWxFBXuOZB1ec2a3KdZALVyAoikmZC216bbMze8hae1cc9pcz7DHlH1zjZC7NQfBttEllgYER4rt2s4cJbX58zhIL1h2XheHyuWctfTJ1ucKnW6TJ0a7DzZB1N6s4afEZC8lmQZBi9szb4uOVZARGZA2kkBgUZD'
+    key = current_user.access_token
     graph = Koala::Facebook::API.new(key)
     return graph.get_connections(fb_event_id, status, locale: "jp_JP")
   end

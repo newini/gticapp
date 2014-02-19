@@ -1,3 +1,6 @@
 Rails.application.config.middleware.use OmniAuth::Builder do
-  provider :, ENV['TWITTER_KEY'], ENV['TWITTER_SECRET']
+  provider :facebook,
+    Settings.OmniAuth.facebook.app_id,
+    Settings.OmniAuth.facebook.app_secret,
+    display: 'popup'
 end

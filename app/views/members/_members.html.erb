@@ -8,7 +8,7 @@
       <th><%= sortable('affiliation',"所属") %></th>
       <th>役職</th>
       <th>備考</th>
-      <th>参加回数</th>
+      <th>参加表明回数</th>
       <th>紹介者</th>
       <th></th>
     </tr>
@@ -21,7 +21,7 @@
       <td><%= member.affiliation %></td>
       <td><%= member.title %></td>
       <td><%= member.note %></td>
-      <td><%= member.participated_events.count %></td>
+      <td><%= member.registed_events.count %></td>
       <td><%= member.introducer.last.last_name if member.introducer.present?%></td>
       <td><%= link_to '詳細', member_path(member), class:"btn btn-small btn-primary btn-block" %></td>
     </tr>

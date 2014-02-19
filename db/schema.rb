@@ -119,11 +119,18 @@ ActiveRecord::Schema.define(version: 20140218194419) do
     t.string   "password"
     t.string   "password_digest"
     t.string   "remember_token"
+    t.string   "provider"
+    t.string   "uid"
+    t.string   "image_url"
+    t.string   "access_token"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "users", ["access_token"], name: "index_users_on_access_token"
   add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["provider"], name: "index_users_on_provider"
   add_index "users", ["remember_token"], name: "index_users_on_remember_token"
+  add_index "users", ["uid"], name: "index_users_on_uid", unique: true
 
 end

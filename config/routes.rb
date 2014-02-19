@@ -30,6 +30,8 @@ Gticapp::Application.routes.draw do
   match '/home', to: 'static_pages#home', via: 'get'
   match '/events/:event_id/send_invitation', to: 'events#send_invitation', as: 'send_invitation',via: 'get'
   match '/events/:event_id/send_invitation', to: 'events#send_email', via: 'post'
+  #omniauth
+  match '/auth/:provider/callback', to: 'sessions#create', via: 'get'
 
   root 'static_pages#home'
 end

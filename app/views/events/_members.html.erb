@@ -12,7 +12,7 @@
   <% @members.each do |member| %>
     <tr>
       <td><%= link_to "#{member.last_name} #{member.first_name}", member_path(member) %></td>
-      <td><%= member.fb_name %></td>
+      <td><%= link_to member.fb_name, "https://facebook.com/#{member.fb_user_id}" %></td>
       <td><%= member.affiliation %></td>
       <td><%= show_status(member) %></td> 
       <td>
