@@ -6,11 +6,11 @@ class SessionsController < ApplicationController
     auth = request.env["omniauth.auth"]
     user = User.find_by_uid(auth["uid"])
     if user.provider.nil?
-      user = user.update(provider: auth["provider"],
-                         name:      auth["info"]["name"],
-                         email:     auth["info"]["email"],
-                         image_url: auth["info"]["image"],
-                         access_token: auth["credentials"]["token"])
+      user.update(provider: auth["provider"],
+                      name:      auth["info"]["name"],
+                      email:     auth["info"]["email"],
+                      image_url: auth["info"]["image"],
+                      access_token: auth["credentials"]["token"])
       user.save
     end
 
