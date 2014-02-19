@@ -11,7 +11,7 @@ class CreateMembers < ActiveRecord::Migration
       t.string :title
       t.string :note
       t.string :fb_name
-      t.integer :fb_user_id
+      t.string :fb_user_id
       t.boolean :black_list_flg
       t.boolean :gtic_flg
       t.timestamps
