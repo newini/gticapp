@@ -13,14 +13,16 @@ class Member < ActiveRecord::Base
   def self.import(file)
     CSV.foreach(file.path, headers: true) do |row|
       member = Member.where(fb_user_id: row["fb_user_id"]).find_by_fb_user_id(row["fb_user_id"])
-      parameters = ActionController::Parameters.new(row.to_hash)
-      member.update(parameters.permit(:last_name, :first_name, :last_name_kana, :first_name_kana, :fb_name, :affiliation, :email))
-      member.save
-      if member.introducer.where(last_name: row["introducer_last_name"]).find_by_first_name(row["introducer_first_name"]).blank?
-        introducer = Member.where(last_name: row["introducer_last_name"]).find_by_first_name(row["introducer_first_name"]) || Member.new
-        introducer.update(last_name: row["introducer_last_name"], first_name: row["introducer_first_name"])
-        introducer.save!
-        member.member_relationships.create(introducer_id: introducer.id)
+      if member.present?
+        parameters = ActionController::Parameters.new(row.to_hash)
+        member.update(parameters.permit(:last_name, :first_name, :last_name_kana, :first_name_kana, :fb_name, :affiliation, :email))
+        member.save
+        if member.introducer.where(last_name: row["introducer_last_name"]).find_by_first_name(row["introducer_first_name"]).blank?
+          introducer = Member.where(last_name: row["introducer_last_name"]).find_by_first_name(row["introducer_first_name"]) || Member.new
+          introducer.update(last_name: row["introducer_last_name"], first_name: row["introducer_first_name"])
+          introducer.save!
+          member.member_relationships.create(introducer_id: introducer.id)
+        end
       end
     end
   end
