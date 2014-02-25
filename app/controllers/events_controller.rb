@@ -81,15 +81,16 @@ class EventsController < ApplicationController
   end
 
   def invited 
-    @members = @event.invited_members.paginate(page:params[:page]).order("last_name_kana")
+    #@members = @event.invited_members.paginate(page:params[:page]).order("last_name_kana")
+    @members = @event.invited_members.order("last_name_kana")
   end
 
   def waiting
-    @members = @event.waiting_members.where(black_list_flg: false).where("email IS NOT NULL").paginate(page:params[:page]).order("last_name_kana")
+    @members = @event.waiting_members.where(black_list_flg: false).where("email IS NOT NULL").order("last_name_kana")
   end
 
   def registed
-    @members = @event.registed_members.paginate(page:params[:page]).order("last_name_kana")
+    @members = @event.registed_members.order("last_name_kana")
     respond_to do |format|
       format.html
       format.xls
@@ -97,19 +98,19 @@ class EventsController < ApplicationController
   end
 
   def participants
-    @members = @event.participants.paginate(page:params[:page]).order("last_name_kana")
+    @members = @event.participants.order("last_name_kana")
   end
 
   def canceled
-    @members = @event.canceled_members.paginate(page:params[:page]).order("last_name_kana")
+    @members = @event.canceled_members.order("last_name_kana")
   end
 
   def no_show
-    @members = @event.no_show.paginate(page:params[:page]).order("last_name_kana")
+    @members = @event.no_show.order("last_name_kana")
   end
 
   def change_status
-    @members = @event.members.paginate(page:params[:page]).order("last_name_kana")
+    @members = @event.members.order("last_name_kana")
     @relationship = @event.relationships.find_by_member_id(params[:member_id])
     @direction = params[:direction].to_i
     if @relationship.nil?
@@ -135,7 +136,7 @@ class EventsController < ApplicationController
     end
   end
   def change_all_waiting_status
-    @members = @event.waiting_members.where(black_list_flg: false).where("email IS NOT NULL").paginate(page:params[:page]).order("last_name_kana")
+    @members = @event.waiting_members.where(black_list_flg: false).where("email IS NOT NULL").order("last_name_kana")
     @members.each do |member|
       relationship = @event.relationships.find_by_member_id(member.id)
       if relationship.status == 0

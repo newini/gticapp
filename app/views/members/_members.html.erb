@@ -2,6 +2,7 @@
 <table class="table table-hover table-bordered">
   <thead>
     <tr>
+      <th></th>
       <th><%= sortable('last_name_kana',"氏名") %></th>
       <th>読み</th>
       <th>Facebook名</th>
@@ -15,6 +16,7 @@
   </thead>
   <% @members.each do |member| %>
     <tr>
+      <td><%= image_tag "https://graph.facebook.com/#{member.fb_user_id}/picture" %></td>
       <td><%= "#{member.last_name} #{member.first_name}" %></td>
       <td><%= member.last_name_kana %></td>
       <td><%= link_to member.fb_name, "http://facebook.com/#{member.fb_user_id}",target: "blank"%></td>
