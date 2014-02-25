@@ -90,6 +90,10 @@ class EventsController < ApplicationController
 
   def registed
     @members = @event.registed_members.paginate(page:params[:page]).order("last_name_kana")
+    respond_to do |format|
+      format.html
+      format.xls
+    end
   end
 
   def participants

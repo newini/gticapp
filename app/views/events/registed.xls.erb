@@ -1,0 +1,19 @@
+<table border="1">
+  <thead>
+    <tr>
+      <th>☑</th>
+      <th>氏名</th>
+      <th>（Facebook名）</th>
+      <th>所属</th>
+    </tr>
+  </thead>
+  <% @members.each do |member| %>
+    <tr>
+      <td></td>
+      <td><%= "#{member.last_name} #{member.first_name}" %></td>
+      <td><%= member.fb_name %></td>
+      <td><%= member.affiliation %></td>
+    </tr>
+  <% end %>
+</table>
+

@@ -3,6 +3,11 @@ class MembersController < ApplicationController
   helper_method :sort_column, :sort_direction
   def index
     @members = Member.order(sort_column + ' ' + sort_direction).paginate(page: params[:page])
+    @all_members = Member.all
+    respond_to do |format|
+      format.html
+      format.xls
+    end
   end
 
   def show

@@ -12,9 +12,9 @@ class Member < ActiveRecord::Base
 
   def self.import(file)
     CSV.foreach(file.path, headers: true) do |row|
-      member = Member.where(last_name: row["last_name"]).find_by_first_name(row["first_name"])|| Member.new
+      member = Member.where(fb_user_id: row["fb_user_id"]).find_by_fb_user_id(row["fb_user_id"])
       parameters = ActionController::Parameters.new(row.to_hash)
-      member.update(parameters.permit(:last_name, :first_name, :last_name_kana, :first_name_kana, :facebook_name, :affiliation, :email))
+      member.update(parameters.permit(:last_name, :first_name, :last_name_kana, :first_name_kana, :fb_name, :affiliation, :email))
       member.save
       if member.introducer.where(last_name: row["introducer_last_name"]).find_by_first_name(row["introducer_first_name"]).blank?
         introducer = Member.where(last_name: row["introducer_last_name"]).find_by_first_name(row["introducer_first_name"]) || Member.new
@@ -29,5 +29,13 @@ class Member < ActiveRecord::Base
   end
   def cancel!(participated_event)
     relationships.find_by(participated_id: participated_event.id).destroy
+  end
+  def self.to_csv
+    csv_data = CSV.generate do |csv|
+      csv << column_names
+      all.each do |row|
+        csv << row.attributes.values_at(*self.column_names)
+      end
+    end
   end
 end

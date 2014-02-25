@@ -25,7 +25,7 @@ places.each do |place|
 end
 puts "会場読込完了"
 
-CSV.foreach('db/fb_event_id.csv', headers: true) do |row|
+CSV.foreach('db/event.csv', headers: true) do |row|
   Event.create! row.to_hash
 end
 puts "イベント情報読込完了"

@@ -17,7 +17,7 @@
     <tr>
       <td><%= "#{member.last_name} #{member.first_name}" %></td>
       <td><%= member.last_name_kana %></td>
-      <td><%= member.fb_name %></td>
+      <td><%= link_to member.fb_name, "http://facebook.com/#{member.fb_user_id}",target: "blank"%></td>
       <td><%= member.affiliation %></td>
       <td><%= member.title %></td>
       <td><%= member.note %></td>

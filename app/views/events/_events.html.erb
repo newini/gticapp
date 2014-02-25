@@ -6,6 +6,7 @@
     <th>出席表明者数</th>
     <th>参加者数</th>
     <th></th>
+    <th></th>
   </tr>
   <% @events.each do |event| %>
     <tr>
@@ -14,6 +15,7 @@
     <td><%= event.registed_members.count %></td>
     <td><%= event.participants.count %></td>
     <td><%= link_to '詳細', event_path(event) ,class: "btn btn-small btn-primary btn-block"%></td>
+    <td><%= link_to 'fb更新', update_facebook_event_path(id: event, rsvp_status: "attending") ,class: "btn btn-small btn-primary btn-block", method: "post" %></td>
   </tr>
 <% end %>
 </table>

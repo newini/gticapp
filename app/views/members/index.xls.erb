@@ -1,0 +1,41 @@
+<table border="1px">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>fb_user_id</th>
+      <th>fb_name</th>
+      <th>last_name</th>
+      <th>first_name</th>
+      <th>last_name_kana</th>
+      <th>first_name_kana</th>
+      <th>email</th>
+      <th>category_id</th>
+      <th>affiliation</th>
+      <th>title</th>
+      <th>note</th>
+      <th>black_list_flg</th>
+      <th>gtic_flg</th>
+      <th>updated_at</th>
+    </tr>
+  </thead>
+  <% @all_members.each do |member| %>
+    <tr>
+      <td><%= member.id %></td>
+      <td><%= member.fb_user_id %></td>
+      <td><%= member.fb_name %></td>
+      <td><%= member.last_name %></td>
+      <td><%= member.first_name %></td>
+      <td><%= member.last_name_kana %></td>
+      <td><%= member.first_name_kana %></td>
+      <td><%= member.email %></td>
+      <td><%= member.category_id %></td>
+      <td><%= member.affiliation %></td>
+      <td><%= member.title %></td>
+      <td><%= member.note %></td>
+      <td><%= member.black_list_flg %></td>
+      <td><%= member.gtic_flg %></td>
+      <td><%= member.updated_at %></td>
+    </tr>
+  <% end %>
+</table>
+
