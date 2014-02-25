@@ -277,6 +277,7 @@ DEPENDENCIES
   jbuilder (~> 1.2)
   jquery-rails
   koala
+  libv8
   mandrill-api
   omniauth
   omniauth-facebook
