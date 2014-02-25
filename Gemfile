@@ -18,7 +18,7 @@ gem 'koala'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'rails_config'
-
+gem 'sqlite3'
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
@@ -26,10 +26,12 @@ end
 group :development, :test do
   gem 'rspec-rails'
   gem 'guard-rspec', '2.5.0'
-  gem 'sqlite3'
   gem 'spork-rails'
   gem 'guard-spork'
   gem 'childprocess'
+  gem "capistrano-bundler"
+  gem "capistrano-rails"
+  gem "capistrano-rbenv"
 end
 group :test do
   gem 'capybara'
@@ -37,6 +39,5 @@ group :test do
   gem 'factory_girl_rails'
 end
 group :production do
-  gem 'mysql2'
   gem 'rails_12factor'
 end
