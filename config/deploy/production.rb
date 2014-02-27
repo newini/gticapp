@@ -1,6 +1,6 @@
 set :stage, :production
 user = 'ec2-user@'
-server_ip = 'ec2-54-199-230-35.ap-northeast-1.compute.amazonaws.com'
+server_ip = '54.199.230.19'
 role :app, %W{#{user}#{server_ip}}
 role :web, %W{#{user}#{server_ip}}
 role :db, %W{#{user}#{server_ip}}
