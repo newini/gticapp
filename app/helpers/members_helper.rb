@@ -16,12 +16,16 @@ module MembersHelper
     req_url = "#{base_url}?sentence=#{sentence}&appid=#{key}"
     response = Net::HTTP.get_response(URI.parse(req_url))
     status = Hash.from_xml(response.body)
-    if status["ResultSet"]["Result"]["WordList"]["Word"].length <= 1 
-      return status["ResultSet"]["Result"]["WordList"]["Word"]["Furigana"]
-    else
-      return nil
+    words = status["ResultSet"]["Result"]["WordList"]["Word"]
+    value = String.new
+    words.each do |word|
+      if word["Furigana"].nil?
+        value << word["Surface"]
+      else
+        value << word["Furigana"]
+      end
     end
-
+    value
   end
 
 

@@ -12,17 +12,13 @@ class Member < ActiveRecord::Base
 
   def self.import(file)
     CSV.foreach(file.path, headers: true) do |row|
-      member = Member.where(fb_user_id: row["fb_user_id"]).find_by_fb_user_id(row["fb_user_id"])
-      if member.present?
+      if member = Member.find_by_fb_user_id(row["fb_user_id"])
         parameters = ActionController::Parameters.new(row.to_hash)
-        member.update(parameters.permit(:last_name, :first_name, :last_name_kana, :first_name_kana, :fb_name, :affiliation, :email))
-        member.save
-        if member.introducer.where(last_name: row["introducer_last_name"]).find_by_first_name(row["introducer_first_name"]).blank?
-          introducer = Member.where(last_name: row["introducer_last_name"]).find_by_first_name(row["introducer_first_name"]) || Member.new
-          introducer.update(last_name: row["introducer_last_name"], first_name: row["introducer_first_name"])
-          introducer.save!
-          member.member_relationships.create(introducer_id: introducer.id)
+        member.update(parameters.permit(:last_name, :first_name, :fb_name, :affiliation, :email))
+        if member.last_name.present?
+          member.update(last_name_kana: Member.kana(member.last_name))
         end
+        member.save
       end
     end
   end
@@ -40,4 +36,21 @@ class Member < ActiveRecord::Base
       end
     end
   end
+  def self.kana(kanji)
+    sentence = kanji
+    sentence = URI.encode(sentence)
+    key = 'dj0zaiZpPVR3TzJrbEJzRjRwTCZzPWNvbnN1bWVyc2VjcmV0Jng9OTg-'
+    base_url = 'http://jlp.yahooapis.jp/FuriganaService/V1/furigana'
+    req_url = "#{base_url}?sentence=#{sentence}&appid=#{key}"
+    response = Net::HTTP.get_response(URI.parse(req_url))
+    status = Hash.from_xml(response.body)
+    begin
+      words = status["ResultSet"]["Result"]["WordList"]["Word"]["Furigana"]
+    rescue
+      words = nil
+    end
+    words
+  end
+
+
 end
