@@ -45,11 +45,23 @@ class Member < ActiveRecord::Base
     response = Net::HTTP.get_response(URI.parse(req_url))
     status = Hash.from_xml(response.body)
     begin
-      words = status["ResultSet"]["Result"]["WordList"]["Word"]["Furigana"]
+      words = status["ResultSet"]["Result"]["WordList"]
+      value = String.new
+      if words.length == 1
+        value << words["Word"]["Furigana"]
+      else
+        words.each do |word|
+          if word["Furigana"].nil?
+            value << word["Word"]["Surface"]
+          else
+            value << word["Word"]["Furigana"]
+          end
+        end
+      end
     rescue
-      words = nil
+      value = nil
     end
-    words
+    value
   end
 
 
