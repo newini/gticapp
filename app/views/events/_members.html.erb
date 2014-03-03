@@ -1,6 +1,8 @@
 <table class="table table-hover table-bordered table-condensed">
   <thead>
     <tr>
+      <th></th>
+      <th></th>
       <th>氏名</th>
       <th>（Facebook名）</th>
       <th>所属</th>
@@ -10,6 +12,8 @@
   </thead>
   <% @members.each do |member| %>
     <tr>
+      <td><%= member.last_name_kana[0] if member.last_name_kana.present? %></td>
+      <td><%= image_tag "https://graph.facebook.com/#{member.fb_user_id}/picture" %></td>
       <td><%= link_to "#{member.last_name} #{member.first_name}", member_path(member) %></td>
       <td><%= link_to member.fb_name, "https://facebook.com/#{member.fb_user_id}" %></td>
       <td><%= member.affiliation %></td>
