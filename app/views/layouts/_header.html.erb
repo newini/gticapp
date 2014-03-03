@@ -9,8 +9,8 @@
         <ul class="nav pull-right">
           <li><%= link_to "Home", root_path %></li> 
           <% if signed_in? %>
-            <li><%= link_to "メンバー管理", members_path %></li> 
-            <li><%= link_to "イベント管理", events_path %></li>
+            <li><%= link_to "メンバー", members_path %></li> 
+            <li><%= link_to "イベント", events_path %></li>
             <li id="fat-menu" class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <%= User.find(current_user).name %> <b class="caret"></b></a>
               <ul class="dropdown-menu">

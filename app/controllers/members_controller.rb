@@ -3,6 +3,9 @@ class MembersController < ApplicationController
   helper_method :sort_column, :sort_direction
   def index
     @members = Member.order(sort_column + ' ' + sort_direction).paginate(page: params[:page])
+    if params[:count].present?
+      @members = Member.joins(:registed_events).group(:member_id).order("count(event_id) DESC").paginate(page: params[:page])
+    end
     @all_members = Member.all
     respond_to do |format|
       format.html
@@ -51,11 +54,6 @@ class MembersController < ApplicationController
     Member.import(params[:file])
     redirect_to members_path, :flash => {:success => "インポートされました" }
   end
-
-  def participated
-    @member = Member.find(params[:id])
-  end
-
   private
     def member_params
       params.require(:member).permit(:first_name, :last_name,:first_name_kana, :last_name_kana, :facebook_name, :affiliation, :title, :note, :job, :email, :black_list_flg)

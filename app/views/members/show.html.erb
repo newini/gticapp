@@ -1,17 +1,19 @@
-<div class="row">
-  <aside class="span4">
+<div class="row-fluid">
+  <aside class="span2">
     <section>
       <%= render'members/side' %>
     </section>
     <section>
       <%= render'members/side_info' %>
     </section>
-    <section>
-      <%= link_to 'メンバー情報編集', edit_member_path(@member), class: "btn btn-block btn-large btn-primary" %>
-    </section>
   </aside>
-  <div class="span8">
+  <div class="span5">
     <%= render 'member_info' %>
+    <%= link_to 'メンバー情報編集', edit_member_path(@member), class: "btn btn-block btn-large btn-primary" %>
   </div>
+  <div class="span5">
+    <%= render 'participated_events' %>
+  </div>
+</div>
 </div>
 

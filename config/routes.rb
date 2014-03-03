@@ -1,7 +1,6 @@
 Gticapp::Application.routes.draw do
   resources :members do
     collection { post :import }
-    member { get :participated }
   end
   resources :events do
     collection { post :import }

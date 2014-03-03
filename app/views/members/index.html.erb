@@ -1,17 +1,10 @@
 <div class="row-fluid">
-  <aside class="span3">
+  <aside class="span2">
     <section>
       <%= render'members/side' %>
     </section>
-    <section class="well well-small">
-      <h2>メンバー情報CSVデータ取り込み</h2>
-      <%= form_tag import_members_path, multipart: true do %>
-        <%= file_field_tag :file, class: "file-holder" %>
-      <%= submit_tag "CSV読込",class: "btn" %>
-    <% end %>
-    </section>
   </aside>
-  <div class="span9">
+  <div class="span10">
     <%= link_to 'ダウンロード', members_path(format: 'xls'), class: "btn btn-primary" %>
     <%= render'members' %>
   </div>
