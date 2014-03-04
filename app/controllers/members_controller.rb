@@ -1,4 +1,5 @@
 class MembersController < ApplicationController
+
   before_action :signed_in_user
   helper_method :sort_column, :sort_direction
   def index
@@ -59,9 +60,19 @@ class MembersController < ApplicationController
     @categories = Category.all
   end
 
+  def update_information
+    params[:member].each do |member|
+      @member = Member.find(member[:id])
+      last_name_kana = (member[:last_name].present? && @member.last_name_kana.nil?) ? Member.kana(member[:last_name]) : @member.last_name_kana
+      @member.update(first_name: member[:first_name], last_name: member[:last_name], last_name_kana: last_name_kana,  category_id: member[:category_id], affiliation: member[:affiliation], title: member[:title], note: member[:note], email: member[:email])
+      @member.save!
+    end
+    redirect_to :back
+  end
+
   private
     def member_params
-      params.require(:member).permit(:first_name, :last_name,:first_name_kana, :last_name_kana, :facebook_name, :affiliation, :title, :note, :job, :email, :black_list_flg)
+      params.require(:member).permit(:first_name, :last_name,:first_name_kana, :last_name_kana, :facebook_name, :affiliation, :title, :note, :category_id, :email, :black_list_flg)
     end
     def signed_in_user
       redirect_to signin_url, notice: "Please sign in." unless signed_in?
@@ -72,6 +83,7 @@ class MembersController < ApplicationController
     def sort_direction
       %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
     end
+
 
 
 end
