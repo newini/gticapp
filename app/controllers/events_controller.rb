@@ -196,7 +196,7 @@ class EventsController < ApplicationController
       redirect_to signin_url, notice: "Please sign in." unless signed_in?
     end
     def selected_event
-      @event = Event.find(params[:event_id])
+      @event = Event.find(params[:id])
     end
 
 end
