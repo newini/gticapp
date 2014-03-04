@@ -12,8 +12,6 @@
   </aside>
   <div class="span10">
     <h2>参加予定者一覧</h2>
-    <%= link_to "facebook情報更新", update_facebook_event_path(rsvp_status: "attending"), method: "post", class: "btn" %>
-    <%= link_to "ダウンロード", registed_event_path(format: 'xls'), method: "get", class: "btn" %>
     <%= render'members' %>
   </div>
 </div>

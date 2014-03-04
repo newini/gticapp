@@ -1,5 +1,12 @@
 <div id= "input_container" %>
   <%= form_tag :update_information_members, id: "input_container" do %>
+    <div class="btn-group">
+      <%= link_to "メンバー新規登録/CSV読込",new_member_path, class: "btn" %>
+      <%= link_to "facebook情報更新", update_facebook_event_path(rsvp_status: "attending"), method: "post", class:"btn" %>
+      <%= link_to "参加予定者一覧ダウンロード", registed_event_path(format: 'xls'), method: "get", class: "btn" %>
+      <%= submit_tag "メンバー情報更新", class: "btn"%>
+    </div>
+
     <%= content_tag :table, class: 'table table-condensed table-bordered table-striped' do %>
       <tr>
         <th></th>
@@ -33,6 +40,5 @@
         <% end %>
       <% end %>
     <% end %>
-    <%= submit_tag "更新", class: "btn btn-primary btn-block" %>
   <% end %>
 </div>

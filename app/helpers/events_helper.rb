@@ -99,7 +99,7 @@ module EventsHelper
       }
     when 5
       content_tag(:div, class: "btn-group"){ 
-        concat link_to(swich_black_list_flg_event_path(:member_id => member.id), :method => :post, :class => "btn btn-small btn-primary "){
+        concat link_to(switch_black_list_flg_event_path(:member_id => member.id), :method => :post, :class => "btn btn-small btn-primary "){
           member.black_list_flg == (false || nil) ? "ブラックリスト入り" : "ブラックリスト解除" 
         }
         concat content_tag(:button, class: "btn dropdown-toggle btn-primary btn-small", :"data-toggle" => "dropdown"){
