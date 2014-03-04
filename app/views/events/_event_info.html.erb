@@ -27,7 +27,7 @@
       <tr>
         <th>プレゼンター #<%= i %></th>
         <td>
-          <%= link_to Member.find(presenter.member_id).last_name, member_path(presenter.member_id) %>
+          <%= link_to Member.find(presenter.id).last_name, member_path(presenter.id) %>
         </td>
       <tr>
       <% i = i +1 %>

@@ -8,7 +8,7 @@ class Event < ActiveRecord::Base
   has_many :participants, -> { where "status = 3"}, through: :relationships, source: :member 
   has_many :canceled_members, -> {where "status = 4"}, through: :relationships, source: :member 
   has_many :no_show, -> {where "status = 5"}, through: :relationships, source: :member 
-  has_many :presenters, -> {where presenter_flg: true}, class_name: "Relationship", through: :relationships, source: :member
+  has_many :presenters, -> {where :relationships => {presenter_flg: true}}, through: :relationships, source: :member
   has_many :invitations, dependent: :destroy
 
   def self.import(file)

@@ -9,7 +9,7 @@ class EventsController < ApplicationController
     @events = Event.paginate(page: params[:page]).order("start_time DESC")
   end
   def show
-    @participants = @event.participants.paginate(page:params[:page]).order("last_name_kana")
+    @participants = @event.participants
     @presenters = @event.presenters
     @invited_members = @event.invited_members
     @registed_members = @event.registed_members
