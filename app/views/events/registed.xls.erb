@@ -2,7 +2,10 @@
   <thead>
     <tr>
       <th>☑</th>
+      <th></th>
       <th>氏名</th>
+      <th>Role</th>
+      <th>参加費</th>
       <th>（Facebook名）</th>
       <th>所属</th>
     </tr>
@@ -10,7 +13,10 @@
   <% @members.each do |member| %>
     <tr>
       <td></td>
+      <td><%= member.last_name_kana[0] if member.last_name_kana.present? %></td>
       <td><%= "#{member.last_name} #{member.first_name}" %></td>
+      <td><%= show_role(member, @event) %></td>
+      <td><%= show_currency(show_fee(member, @event)) %></td>
       <td><%= member.fb_name %></td>
       <td><%= member.affiliation %></td>
     </tr>
