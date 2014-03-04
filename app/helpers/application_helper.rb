@@ -12,7 +12,7 @@ module ApplicationHelper
     time.strftime("%H:%M") if time.class == (Time || DateTime)
   end
   def show_currency(number)
-    number_to_currency(number, format: "%u%n", unit: "￥", precision: 0, separator: ",") if number.class == (Integer || Float)
+    number_to_currency(number, format: "%u%n", unit: "￥", precision: 0, separator: ",") if number.present?
   end
 
 end

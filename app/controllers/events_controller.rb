@@ -2,7 +2,7 @@ class EventsController < ApplicationController
   include EventsHelper
   include MembersHelper
   before_action :signed_in_user
-  before_action :selected_event, only: [:show, :edit, :update, :destroy, :swich_presenter_flg, :swich_black_list_flg,
+  before_action :selected_event, only: [:show, :edit, :update, :destroy, :switch_presenter_flg,:switch_guest_flg, :switch_black_list_flg,
                                         :invited, :waiting, :registed, :participants, :canceled, :no_show, :change_status,
                                         :change_all_waiting_status, :send_invitation, :send_email, :update_facebook]
   def index
@@ -67,15 +67,31 @@ class EventsController < ApplicationController
     redirect_to event_path, :flash => {:success => "インポートされました"}
   end
 
-  def swich_presenter_flg
-    @relationship = @event.relationships.find_by_member_id(params[:participant_id])
-    status = params[:status] == "true" ? false : true
-    @relationship.update(presenter_flg: status)
-    @relationship.save
-    redirect_to event_path, :flash => {:success => "更新しました"}
+  def switch_presenter_flg
+    @relationship = @event.relationships.find_by_member_id(params[:member_id])
+    if params[:switch] == "on"
+      @relationship.update(presenter_flg: true, guest_flg: false)
+    elsif params[:switch] == "off"
+      @relationship.update(presenter_flg: false, guest_flg: false)
+    end
+    if @relationship.save!
+      redirect_to :back
+    end
   end
 
-  def swich_black_list_flg
+  def switch_guest_flg
+    @relationship = @event.relationships.find_by_member_id(params[:member_id])
+    if params[:switch] == "on"
+      @relationship.update(guest_flg: true, presenter_flg: false)
+    elsif params[:switch] == "off"
+      @relationship.update(guest_flg: false, presenter_flg: false)
+    end
+    if @relationship.save!
+      redirect_to :back
+    end
+  end
+
+  def switch_black_list_flg
     @member = Member.find(params[:member_id])
     flg = @member.black_list_flg == true ? false : true
     redirect_to no_show_event_path, :flash => {:success => "更新しました"} if @member.update(black_list_flg: flg)

@@ -8,7 +8,8 @@ Gticapp::Application.routes.draw do
     collection { post :import }
     member { post :import_participants }
     member { post :import_registed_members }
-    member { post :swich_presenter_flg }
+    member { post :switch_presenter_flg }
+    member { post :switch_guest_flg }
     member { post :update_facebook }
     resources :invitations
     member { get :invite }
@@ -19,7 +20,7 @@ Gticapp::Application.routes.draw do
     member { get :canceled }
     member { get :no_show }
     member { post :change_status }
-    member { post :swich_black_list_flg }
+    member { post :switch_black_list_flg }
     member { post :change_all_waiting_status }
   end
   resources :relationships, only: [:create, :destroy]

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140218194419) do
+ActiveRecord::Schema.define(version: 20140304152633) do
 
   create_table "categories", force: true do |t|
     t.string   "name"
@@ -105,9 +105,11 @@ ActiveRecord::Schema.define(version: 20140218194419) do
     t.integer  "status"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "guest_flg"
   end
 
   add_index "relationships", ["event_id"], name: "index_relationships_on_event_id"
+  add_index "relationships", ["guest_flg"], name: "index_relationships_on_guest_flg"
   add_index "relationships", ["member_id", "event_id"], name: "index_relationships_on_member_id_and_event_id", unique: true
   add_index "relationships", ["member_id"], name: "index_relationships_on_member_id"
   add_index "relationships", ["presenter_flg"], name: "index_relationships_on_presenter_flg"
