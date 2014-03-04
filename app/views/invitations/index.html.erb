@@ -1,17 +1,17 @@
 <div class="row-fluid">
-  <aside class="span3">
-    <section>
-      <%= render'layouts/side' %>
-    </section>
+  <aside class="span2">
     <section>
       <%= render'events/side' %>
+    </section>
+    <section>
+      <%= render'events/side_info' %>
     </section>
     <section>
       <%= link_to "新規イベント案内作成", new_event_invitation_path, class: 
         "btn btn-large btn-primary btn-block" %>
     </section>
   </aside>
-  <div class="span9">
+  <div class="span10">
     <h2>イベント案内</h2>
     <%= render 'invitations' %>
   </div>

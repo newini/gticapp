@@ -1,20 +1,10 @@
 <div class="row-fluid">
-  <aside class="span3">
+  <aside class="span2">
     <section>
-      <%= render'layouts/side' %>
-    </section>
-    <section>
-      <span><%= link_to "新規イベント登録", new_event_path, class: "btn btn-large btn-block" %></span>
-    </section>
-    <section class="well well-small">
-      <h2>イベント情報CSVデータ取り込み</h2>
-      <%= form_tag import_events_path, multipart: true do %>
-        <%= file_field_tag :file, class: "file-holder" %>
-        <%= submit_tag "CSV読込",class: "btn" %>
-      <% end %>
+      <%= render'side' %>
     </section>
   </aside>
-  <div class="span9">
+  <div class="span10">
     <h2>イベント一覧</h2>
     <%= render 'events' %>
   </div>

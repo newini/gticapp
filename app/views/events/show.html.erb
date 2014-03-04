@@ -1,16 +1,16 @@
 <div class="row-fluid">
-  <aside class="span3">
+  <aside class="span2">
     <section>
-      <%= render'layouts/side' %>
+      <%= render'side' %>
     </section>
     <section>
-      <%= render'events/side' %>
+      <%= render'side_info' %>
     </section>
     <section>
       <%= link_to 'イベント情報編集', edit_event_path(@event), class: "btn btn-block btn-large btn-primary" %>
     </section>
   </aside>
-  <div class="span9">
+  <div class="span10">
     <h2>イベント情報</h2>
     <%= render'event_info' %>
   </div>

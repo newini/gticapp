@@ -1,5 +1,5 @@
 class InvitationsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :signed_in_user
   def index
     @event = Event.find(params[:event_id])
     @invitations = @event.invitations.paginate(page:params[:page]).order("created_at DESC")

@@ -1,16 +1,16 @@
 <div class="row-fluid">
-  <aside class="span3">
+  <aside class="span2">
     <section>
-      <%= render'layouts/side' %>
+      <%= render'side' %>
     </section>
     <section>
-      <%= render'events/side' %>
+      <%= render'side_info' %>
     </section>
      <section class="well well-small">
       <%= render 'import_registed_members' %>
     </section>
   </aside>
-  <div class="span9">
+  <div class="span10">
     <h2>参加予定者一覧</h2>
     <%= link_to "facebook情報更新", update_facebook_event_path(rsvp_status: "attending"), method: "post", class: "btn" %>
     <%= link_to "ダウンロード", registed_event_path(format: 'xls'), method: "get", class: "btn" %>

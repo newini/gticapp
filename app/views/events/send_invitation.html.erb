@@ -1,13 +1,13 @@
-<div class="row">
-  <aside class="span4">
-    <section>
-      <%= render'layouts/side' %>
-    </section>
+<div class="row-fluid">
+  <aside class="span2">
     <section>
       <%= render'events/side' %>
     </section>
+    <section>
+      <%= render'events/side_info' %>
+    </section>
   </aside>
-  <div class="span8">
+  <div class="span5">
     <%= form_tag send_invitation_path, multipart: true do %>
       <%= hidden_field_tag 'send_flg',1 %>
       <% @invitations.each do |invitation| %>

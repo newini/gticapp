@@ -1,6 +1,7 @@
 Gticapp::Application.routes.draw do
   resources :members do
     collection { post :import }
+    collection { get :management }
   end
   resources :events do
     collection { post :import }

@@ -1,13 +1,13 @@
 <div class="row-fluid">
-  <aside class="span3">
+  <aside class="span2">
     <section>
-      <%= render'layouts/side' %>
+      <%= render'side' %>
     </section>
     <section>
-      <%= render'events/side' %>
+      <%= render'side_info' %>
     </section>
   </aside>
-  <div class="span9">
+  <div class="span10">
     <h2>招待待ちメンバー一覧</h2>
     <%= link_to '全メンバー招待', change_all_waiting_status_event_path, :method => :post %>
     <%= render'members' %>

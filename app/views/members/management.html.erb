@@ -1,0 +1,24 @@
+<div class="row-fluid">
+  <aside class="span2">
+    <section>
+      <%= render'members/side' %>
+    </section>
+  </aside>
+  <div class="span3">
+    <h2>属性</h2>
+    <table class="table table-bordered">
+      <tr>
+        <th>id</th>
+        <th>名前</th>
+        <th><%= link_to "新規作成", "#", class: "btn btn-primary btn-small" %></th>
+      </tr>
+      <% @categories.each do |category| %>
+        <tr>
+          <td><%= category.id %></td>
+          <td><%= category.name %></td>
+          <td><%= link_to "編集", "#", class: "btn btn-small" %><%= link_to "削除", "#", class: "btn btn-small" %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div> 

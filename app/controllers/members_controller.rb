@@ -54,6 +54,11 @@ class MembersController < ApplicationController
     Member.import(params[:file])
     redirect_to members_path, :flash => {:success => "インポートされました" }
   end
+
+  def management
+    @categories = Category.all
+  end
+
   private
     def member_params
       params.require(:member).permit(:first_name, :last_name,:first_name_kana, :last_name_kana, :facebook_name, :affiliation, :title, :note, :job, :email, :black_list_flg)

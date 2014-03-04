@@ -13,12 +13,6 @@ class EventsController < ApplicationController
     @presenters = @event.presenters
     @invited_members = @event.invited_members
     @registed_members = @event.registed_members
-    @new_members = Member.where.not(:id => @event.relationships.select(:member_id).map(&:member_id))
-    if @new_members.present?
-      @new_members.each do |new_member|
-        @event.relationships.create(member_id: new_member.id, event_id: @event.id, status: 0)
-      end
-    end
   end
 
   def edit
@@ -40,6 +34,13 @@ class EventsController < ApplicationController
   def create
     @event = Event.new(event_params)
     if @event.save 
+      @new_members = Member.where.not(:id => @event.relationships.select(:member_id).map(&:member_id))
+      if @new_members.present?
+        @new_members.each do |new_member|
+          @event.relationships.create(member_id: new_member.id, event_id: @event.id, status: 0)
+      end
+    end
+
       redirect_to events_path
     else
       render 'new'
@@ -174,13 +175,14 @@ class EventsController < ApplicationController
         @member = Member.new(fb_name: fb_name, fb_user_id: fb_user_id)
       end
       @member.save!
-      if @member.relationships.find_by_event_id(@event.id).present?
+      if @member.relationships.find_by_event_id(@event.id).blank?
+        @relationship = @member.relationships.new(event_id: @event.id, status: convert_status(@rsvp_status))
+        @relationship.save!
+      elsif @member.relationships.find_by_event_id(@event.id).status < 2
         @relationship = @member.relationships.find_by_event_id(@event.id)
         @relationship.update(event_id: @event.id, status: convert_status(@rsvp_status))
-      else
-        @relationship = @member.relationships.new(event_id: @event.id, status: convert_status(@rsvp_status))
+        @relationship.save!
       end
-      @relationship.save!
     end
     redirect_to :back
   end
@@ -194,7 +196,7 @@ class EventsController < ApplicationController
       redirect_to signin_url, notice: "Please sign in." unless signed_in?
     end
     def selected_event
-      @event = Event.find(params[:id])
+      @event = Event.find(params[:event_id])
     end
 
 end

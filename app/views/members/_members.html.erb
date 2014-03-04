@@ -6,6 +6,7 @@
       <th>氏名</th>
       <th><%= sortable('last_name_kana',"読み") %></th>
       <th>Facebook名</th>
+      <th>属性</th>
       <th><%= sortable('affiliation',"所属") %></th>
       <th>役職</th>
       <th>備考</th>
@@ -20,6 +21,7 @@
       <td><%= "#{member.last_name} #{member.first_name}" %></td>
       <td><%= member.last_name_kana[0] if member.last_name_kana%></td>
       <td><%= link_to member.fb_name, "http://facebook.com/#{member.fb_user_id}",target: "blank"%></td>
+      <td><%= member.gtic_flg ? "GTIC" : member.category_id  %></td>
       <td><%= member.affiliation %></td>
       <td><%= member.title %></td>
       <td><%= member.note %></td>
