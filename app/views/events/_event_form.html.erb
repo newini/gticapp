@@ -8,13 +8,13 @@
   <div class="control-group"> 
     <%= f.label :start_time, '開始日時', class: 'control-label' %>
     <div class="controls">
-      <%= f.datetime_select :start_time %>
+      <%= f.datetime_select :start_time, minute_step: 15, start_hour: 17%>
     </div>
   </div>
   <div class="control-group"> 
     <%= f.label :end_time, '終了日時', class: 'control-label' %>
     <div class="controls">
-      <%= f.datetime_select :end_time %>
+      <%= f.datetime_select( :end_time, discard_month: true, discard_year: true, minute_step: 15, start_hour: 17 ) %>
     </div>
   </div>
   <div class="control-group"> 
