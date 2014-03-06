@@ -11,7 +11,7 @@
   <% @events.each do |event| %>
     <tr>
     <td><%= event.name %></td>
-    <td><%= show_time(event.start_time) %></td>
+    <td><%= show_date(event.start_time) %></td>
     <td><%= event.registed_members.count %></td>
     <td><%= event.participants.count %></td>
     <td><%= link_to '詳細', event_path(event) ,class: "btn btn-small btn-primary btn-block"%></td>

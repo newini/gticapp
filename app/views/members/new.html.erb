@@ -13,5 +13,56 @@
         <%= file_field_tag :file, class: "file-holder" %>
       <%= submit_tag "CSV読込",class: "btn" %>
     <% end %>
+    <h2>csvのデータ形式</h2>
+    <table class="table table-bordered">
+      <tr>
+        <th>ヘッダー</th>
+        <th>説明</th>
+      <tr>
+        <td><strong>fb_user_id</strong></td>
+        <td><strong>＜キー＞</strong>FacebookID</li>
+      </tr>
+      <tr>
+        <td>last_name</td>
+        <td>氏</td>
+      </tr>
+      <tr>
+        <td>first_name</td>
+        <td>名</td>
+      </tr>
+      <tr>
+        <td>email</td>
+        <td>メールアドレス</td>
+      </tr>
+      <tr>
+        <td>affiliation</td>
+        <td>所属</td>
+      </tr>
+      <tr>
+        <td>title</td>
+        <td>役職</td>
+      </tr>
+      <tr>
+        <td>note</td>
+        <td>備考</td>
+      </tr>
+      <tr>
+        <td>category_id</td>
+        <td>
+          属性番号
+          <ul class="unstyled">
+            <li>1, "起業家"</li>
+            <li>2, "投資家"</li>
+            <li>3, "起業家予備軍"</li>
+            <li>4, "プロフェッショナル"</li>
+            <li>5, "金融マン"</li>
+            <li>6, "事業会社勤務"</li>
+            <li>7, "政府関係者"</li>
+            <li>8, "研究者／大学関係者"</li>
+            <li>9, "フリーランス"</li>
+            <li>10, "学生"</li>
+        </td>
+      </tr>
+    </table>
   </div>
 </div>

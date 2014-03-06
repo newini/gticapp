@@ -6,10 +6,10 @@ module ApplicationHelper
     link_to title, sort: column, direction: direction
   end
   def show_date(date)
-    date.strftime("%Y/%m/%d (%a.)") if date.class == (Date || DateTime)
+    date.strftime("%Y/%m/%d (%a.)") if date.present?
   end
   def show_time(time)
-    time.strftime("%H:%M") if time.class == (Time || DateTime)
+    time.strftime("%H:%M") if time.present? 
   end
   def show_currency(number)
     number_to_currency(number, format: "%u%n", unit: "￥", precision: 0, separator: ",") if number.present?
