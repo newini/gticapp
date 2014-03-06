@@ -3,6 +3,13 @@
     <section>
       <%= render'side' %>
     </section>
+    <div class="well well-small">
+      <ul class="unstyled">
+        <li><%= "開催回数：#{@total_events}名" %></li>
+        <li><%= "総参加者数：#{@total_participants}名" %></li>
+      </ul>
+    </div>
+
   </aside>
   <div class="span10">
     <h2>イベント一覧</h2>

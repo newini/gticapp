@@ -7,6 +7,9 @@ class EventsController < ApplicationController
                                         :change_all_waiting_status, :send_invitation, :send_email, :update_facebook]
   def index
     @events = Event.paginate(page: params[:page]).order("start_time DESC")
+    array = Member.where(:gtic_flg => nil).pluck(:id)
+    @total_events = Event.count
+    @total_participants = Relationship.where(member_id: array).where(status: 2..3).count
   end
   def show
     @participants = @event.participants
