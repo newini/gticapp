@@ -9,11 +9,11 @@
     <td><%= @member.first_name %></td>
   </tr>
   <tr>
-    <th>氏(カナ)</th>
+    <th>氏(かな)</th>
     <td><%= @member.last_name_kana %></td>
   </tr>
   <tr>
-    <th>名(カナ)</th>
+    <th>名(かな)</th>
     <td><%= @member.first_name_kana %></td>
   </tr>
   <tr>
@@ -23,6 +23,10 @@
   <tr>
     <th>Facebook ID</th>
     <td><%= @member.fb_user_id %></td>
+  </tr>
+  <tr>
+    <th>属性</th>
+    <td><%= Category.find(@member.category_id).name if @member.category_id.present? %></td>
   </tr>
   <tr>
     <th>所属</th>

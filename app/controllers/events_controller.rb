@@ -16,11 +16,8 @@ class EventsController < ApplicationController
     @presenters = @event.presenters
     @invited_members = @event.invited_members
     @registed_members = @event.registed_members
-    key = current_user.access_token
-    graph = Koala::Facebook::API.new(key)
-    fb_event_id = @event.fb_event_id
-    @graph = graph.get_objects(fb_event_id)
-    @fb_event_info = @graph[fb_event_id] if @graph.present?
+    @graph = facebook_objects(@event.fb_event_id)
+    @fb_event_info = @graph[@event.fb_event_id] if @graph.present?
   end
 
   def edit

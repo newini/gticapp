@@ -2,6 +2,7 @@ module EventsHelper
   def relationship(participant)
     Relationship.where(participated_id: @event.id).find_by_participant_id(participant.id)
   end
+
   def check_event_flg(participant)
     presenter_flg = Relationship.where(participated_id: @event.id).find_by_participant_id(participant.id).presenter_flg
     if presenter_flg == true
@@ -10,6 +11,7 @@ module EventsHelper
       "x"
     end
   end
+
   def show_status(member)
     relationship = @event.relationships.find_by_member_id(member.id)
     case relationship.status
@@ -35,6 +37,14 @@ module EventsHelper
     graph = Koala::Facebook::API.new(key)
     return graph.get_connections(fb_event_id, status, locale: "jp_JP")
   end
+
+  def facebook_objects(fb_event_id)
+    key = current_user.access_token
+    graph = Koala::Facebook::API.new(key)
+    graph.get_objects(fb_event_id)
+  end
+
+
   def convert_status(rsvp_status)
     case rsvp_status
     when "attending"
@@ -157,24 +167,4 @@ module EventsHelper
       return event.fee
     end
   end
-
-  def show_role(member, event)
-    @record = member.relationships.find_by_event_id(event.id)
-    @prenseter_flg = @record.presenter_flg
-    @guest_flg = @record.guest_flg
-    @gtic_flg = member.gtic_flg
-    @student_flg = member.category_id == 10 ? true : false
-    if @gtic_flg
-      return "GTIC"
-    elsif @presenter_flg
-      return "プレゼンター"
-    elsif @guest_flg
-      return "ゲスト"
-    elsif @student_flg
-      return "学生"
-    else
-      return "参加者"
-    end
-  end
-
 end

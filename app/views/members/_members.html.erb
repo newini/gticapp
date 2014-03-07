@@ -6,7 +6,7 @@
       <th width="28px"></th>
       <th width="60px">氏</th>
       <th width="60px">名</th>
-      <th>Facebook名</th>
+      <th>Fb</th>
       <th>属性</th>
       <th><%= sortable('affiliation',"所属") %></th>
       <th width="60px">役職</th>
@@ -14,16 +14,15 @@
       <th>email</th>
       <th><%= link_to "参加表明回数", count: true %></th>
       <th>紹介者</th>
-      <th></th>
     </tr>
     <% @members.each do |member| %>
       <%= content_tag :tr do %>
         <%= hidden_field_tag nil, member.id, name: "member[][id]" %>
         <td><%= member.last_name_kana[0] if member.last_name_kana.present? %></td>
-        <td><%= image_tag "https://graph.facebook.com/#{member.fb_user_id}/picture" %></td>
+        <td><%= link_to image_tag("https://graph.facebook.com/#{member.fb_user_id}/picture"), "https://facebook.com/#{member.fb_user_id}", target: :blank %></td>
         <td><%= text_field_tag nil, member.last_name, name: "member[][last_name]" %></td>
         <td><%= text_field_tag nil, member.first_name, name: "member[][first_name]" %></td>
-        <td><%= link_to member.fb_name, "http://facebook.com/#{member.fb_user_id}",target: "blank"%></td>
+        <td><%= link_to member.fb_name, member_path(member) %></td>
         <td><%= select_tag nil, options_from_collection_for_select(Category.all, :id, :name, member.category_id), name: "member[][category_id]", include_blank: true%></td>
         <td><%= text_field_tag nil, member.affiliation, name: "member[][affiliation]" %></td>
         <td><%= text_field_tag nil, member.title, name: "member[][title]" %></td>
@@ -31,7 +30,6 @@
         <td><%= email_field_tag nil, member.email, name: "member[][email]" %></td> 
         <td><%= member.registed_events.count %></td>
         <td><%= member.introducer.last.last_name if member.introducer.present?%></td>
-        <td><%= link_to '詳細', member_path(member), class:"btn btn-small btn-primary btn-block" %></td>
       <% end %>
     <% end %>
   <% end %>

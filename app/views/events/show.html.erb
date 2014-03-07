@@ -7,12 +7,12 @@
       <%= render'side_info' %>
     </section>
     <section>
-      <%= link_to 'イベント情報編集', edit_event_path(@event), class: "btn btn-block btn-large btn-primary" %>
     </section>
   </aside>
   <div class="span5">
     <h2>イベント情報</h2>
     <%= render'event_info' %>
+    <%= link_to 'イベント情報編集', edit_event_path(@event), class: "center btn btn-block btn-large btn-primary" %>
   </div>
   <div class="span5">
     <h2>Facebook情報</h2>
