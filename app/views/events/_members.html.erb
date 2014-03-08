@@ -35,7 +35,7 @@
           <td><%= text_field_tag nil, member.affiliation, name: "member[][affiliation]" %></td>
           <td><%= text_field_tag nil, member.title, name: "member[][title]" %></td>
           <td><%= text_field_tag nil, member.note, name: "member[][note]" %></td>
-          <td><%= select_tag nil, options_from_collection_for_select(Member.all, :id, :fb_name), name: "member[][introducer]", include_blank: true %></td>
+          <td><%#= select_tag nil, options_from_collection_for_select(Member.all, :id, :fb_name), name: "member[][introducer]", include_blank: true %></td>
           <td><%= select_roll(member, @event) %></td>
           <td><%= show_currency(show_fee(member, @event)) %></td>
           <td><%= select_status(member) %></td>
