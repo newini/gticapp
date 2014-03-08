@@ -1,23 +1,23 @@
 <div class="btn-group btn-group-vertical btn-block" >
-<%= link_to 'イベント情報', event_path(@event), class: "btn btn-block btn-large" %>
-<%= link_to waiting_event_path(@event), class: "btn btn-large btn-block" do %>
+<%= link_to 'イベント情報', event_path(@event), class: "btn btn-block " %>
+<%= link_to waiting_event_path(@event), class: "btn  btn-block" do %>
   招待待ち <span class = "badge badge-info"><%= @event.waiting_members.count %></span>
 <% end %>
-<%= link_to invited_event_path(@event), class: "btn btn-large btn-block" do %>
+<%= link_to invited_event_path(@event), class: "btn  btn-block" do %>
   招待済み <span class = "badge badge-info"><%= @event.invited_members.count %></span>
 <% end %>
-<%= link_to registed_event_path(@event), class: "btn btn-large btn-block" do %>
+<%= link_to registed_event_path(@event), class: "btn  btn-block" do %>
   参加予定 <span class = "badge badge-info"><%= @event.registed_members.count %></span>
 <% end %>
-<%= link_to participants_event_path(@event), class: "btn btn-large btn-block" do %>
+<%= link_to participants_event_path(@event), class: "btn  btn-block" do %>
   出席者 <span class="badge badge-info"><%= @event.participants.count %></span> 
 <% end %>
-<%= link_to canceled_event_path(@event), class: "btn btn-large btn-block" do %>
+<%= link_to canceled_event_path(@event), class: "btn  btn-block" do %>
   キャンセル <span class="badge badge-info"><%= @event.canceled_members.count %></span> 
 <% end %>
-<%= link_to no_show_event_path(@event), class: "btn btn-large btn-block" do %>
+<%= link_to no_show_event_path(@event), class: "btn  btn-block" do %>
   No-show <span class="badge badge-info"><%= @event.no_show.count %></span> 
 <% end %>
-<%= link_to 'イベント案内', event_invitations_path(@event), class: "btn btn-large btn-block" %>
-<%= link_to "案内文送付", send_invitation_path(@event), class: "btn btn-large btn-block" %>
+<%= link_to 'イベント案内', event_invitations_path(@event), class: "btn  btn-block" %>
+<%= link_to "案内文送付", send_invitation_path(@event), class: "btn  btn-block" %>
 </div>

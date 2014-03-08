@@ -11,6 +11,9 @@ module ApplicationHelper
   def show_time(time)
     time.strftime("%H:%M") if time.present? 
   end
+  def show_datetime(datetime)
+    datetime.strftime("%Y/%m/%d %H:%M") if datetime.present?
+  end
   def show_currency(number)
     number_to_currency(number, format: "%u%n", unit: "￥", precision: 0, separator: ",") if number.present?
   end
