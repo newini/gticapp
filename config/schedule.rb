@@ -19,7 +19,7 @@
 # Learn more: http://github.com/javan/whenever
 set :output, 'log/crontab.log'
 set :environment, :production
-every 1.minute do
-      runner "Event.test"
+every 30.minute do
+      runner "Event.check_facebook_update"
 end
 

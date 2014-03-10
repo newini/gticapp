@@ -8,7 +8,6 @@ class Event < ActiveRecord::Base
   has_many :no_show, -> {where "status = 5"}, through: :relationships, source: :member 
   has_many :presenters, -> {where :relationships => {presenter_flg: true}}, through: :relationships, source: :member
   has_many :invitations, dependent: :destroy
-
   def self.import(file)
     CSV.foreach(file.path, headers: true) do |row|
       Event.create! row.to_hash
@@ -50,8 +49,45 @@ class Event < ActiveRecord::Base
     end
   end
 
-  def self.test
-    Rails.logger.info "URRRRYYYY"
+  def self.check_facebook_update
+    base_url = 'https://graph.facebook.com/oauth/access_token'
+    app_id = Settings.OmniAuth.facebook.app_id
+    app_secret = Settings.OmniAuth.facebook.app_secret
+    user = User.find_by_name("Fuminori Sugawara")
+    user_access_token = user.access_token
+    req_url = "#{base_url}?grant_type=fb_exchange_token&client_id=#{app_id}&client_secret=#{app_secret}&fb_exchange_token=#{user_access_token}"
+    response = Net::HTTP.get_response(URI.parse(req_url))
+    key = response.body.split("&").first.split("=").last
+    user.update(access_token: key)
+    user.save!
+    status = "attending"
+    events = Event.where("start_time >= ?", DateTime.now)
+    graph = Koala::Facebook::API.new(key)
+    events.each do |event|
+      fb_event_id = event.fb_event_id
+      if fb_event_id.present?
+        fb_members = graph.get_connections(fb_event_id, status, locale: "jp_JP")
+        fb_members.each do |fb_member|
+          fb_name = fb_member["name"]
+          fb_user_id = fb_member["id"]
+          if Member.find_by_fb_user_id(fb_user_id).present?
+            @member = Member.find_by_fb_user_id(fb_member["id"])
+            @member.update(fb_name: fb_name, fb_user_id: fb_user_id)
+          else
+            @member = Member.new(fb_name: fb_name, fb_user_id: fb_user_id)
+          end
+          @member.save!
+          if @member.relationships.find_by_event_id(event.id).blank?
+            @relationship = @member.relationships.new(event_id: event.id, status: 2)
+            @relationship.save!
+          elsif @member.relationships.find_by_event_id(event.id).status < 2
+            @relationship = @member.relationships.find_by_event_id(event.id)
+            @relationship.update(event_id: event.id, status: 2)
+            @relationship.save!
+          end
+        end
+      end
+    end
   end
 
 end
