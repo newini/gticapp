@@ -2,8 +2,6 @@ class Event < ActiveRecord::Base
   validates :name, presence:true, length: { maximum: 50 }
   has_many :relationships, foreign_key: "event_id", dependent: :destroy
   has_many :members, through: :relationships, source: :member
-  has_many :waiting_members, -> { where "status = 0"}, through: :relationships, source: :member 
-  has_many :invited_members, -> { where "status = 1"}, through: :relationships, source: :member 
   has_many :registed_members, -> { where "status = 2"}, through: :relationships, source: :member 
   has_many :participants, -> { where "status = 3"}, through: :relationships, source: :member 
   has_many :canceled_members, -> {where "status = 4"}, through: :relationships, source: :member 

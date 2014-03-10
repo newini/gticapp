@@ -44,7 +44,7 @@ class InvitationsController < ApplicationController
       params.require(:invitation).permit(:title, :content, :greeting)
     end
     def signed_in_user
-      redirect_to signin_url, notice: "Please sign in." unless signed_in?
+      redirect_to root_path, notice: "Please sign in." unless signed_in?
     end
 
 

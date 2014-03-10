@@ -33,16 +33,14 @@
 
 <table class="table table-bordered table-hover">
   <tr>
-    <th>招待待ち</th>
-    <th>招待済み</th>
+    <th>待機</th>
     <th>参加予定</th>
     <th>参加者数</th>
     <th>キャンセル</th>
     <th>No-show</th>
   </tr>
   <tr>
-    <td><%= link_to @event.waiting_members.count, waiting_event_path %></td>
-    <td><%= link_to @event.invited_members.count, invited_event_path %></td>
+    <td><%= link_to waiting_members.count, waiting_event_path %></td>
     <td><%= link_to @event.registed_members.count, registed_event_path %></td>
     <td><%= link_to @event.participants.count, participants_event_path %></td>
     <td><%= link_to @event.canceled_members.count, canceled_event_path %></td>

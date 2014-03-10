@@ -75,7 +75,7 @@ class MembersController < ApplicationController
       params.require(:member).permit(:first_name, :last_name,:first_name_kana, :last_name_kana, :facebook_name, :affiliation, :title, :note, :category_id, :email, :black_list_flg)
     end
     def signed_in_user
-      redirect_to signin_url, notice: "Please sign in." unless signed_in?
+      redirect_to root_path, notice: "Please sign in." unless signed_in?
     end
     def sort_column
       Member.column_names.include?(params[:sort]) ? params[:sort] : 'last_name_kana'

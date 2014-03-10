@@ -15,10 +15,8 @@ module EventsHelper
   def show_status(member)
     relationship = @event.relationships.find_by_member_id(member.id)
     case relationship.status
-    when 0
-      "招待待ち"
     when 1
-      "招待済み"
+      "待機"
     when 2
       "参加予定"
     when 3
@@ -28,7 +26,7 @@ module EventsHelper
     when 5
       "No-show"
     else
-      "招待待ち"
+      "待機"
     end
   end
 
@@ -53,11 +51,11 @@ module EventsHelper
   end
 
   def select_status(member)
-    case member.relationships.find_by_event_id(@event).status
-    when 0
-      link_to "招待", change_status_event_path(:member_id => member.id, :direction => 2), :method => :post, :class => "btn btn-small btn-primary btn-block"
-    when 1
-      link_to("出席表明", change_status_event_path(:member_id => member.id, :direction => 2), :method => :post, :class => "btn btn-small btn-primary btn-block")
+    relation = member.relationships.find_by_event_id(@event)
+    status = relation.present? ? relation.status : nil
+    case status
+    when 1, 0, nil
+      link_to("参加", change_status_event_path(:member_id => member.id, :direction => 2), :method => :post, :class => "btn btn-small btn-primary btn-block")
     when 2
       content_tag(:div, class: "btn-group") {
         concat link_to( "出席", change_status_event_path(:member_id => member.id, :direction => 3), :method => :post, :class => "btn btn-small btn-primary ")
@@ -167,4 +165,10 @@ module EventsHelper
       return event.fee
     end
   end
+
+  def waiting_members
+    ids = Member.joins(:relationships).where(:relationships =>{event_id: @event.id}).where(:relationships => {status: 2..6}).uniq
+    Member.where.not(id: ids)
+  end
+
 end

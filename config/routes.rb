@@ -1,27 +1,34 @@
 Gticapp::Application.routes.draw do
   resources :members do
-    collection { post :import }
-    collection { get :management }
-    collection { post :update_information }
+    collection do
+      post :import
+      get :management
+      post :update_information
+      get :search_result
+    end
   end
   resources :events do
-    collection { post :import }
-    member { post :import_participants }
-    member { post :import_registed_members }
-    member { post :switch_presenter_flg }
-    member { post :switch_guest_flg }
-    member { post :update_facebook }
+    member do
+      get :invite
+      get :waiting
+      get :invited
+      get :registed
+      get :participants
+      get :canceled
+      get :no_show
+      get :new_member
+      post :change_status
+      post :switch_black_list_flg
+      post :change_all_waiting_status
+      post :create_member
+      post :import_participants
+      post :import_registed_members
+      post :switch_presenter_flg
+      post :switch_guest_flg
+      post :update_facebook
+    end
     resources :invitations
-    member { get :invite }
-    member { get :waiting }
-    member { get :invited }
-    member { get :registed }
-    member { get :participants }
-    member { get :canceled }
-    member { get :no_show }
-    member { post :change_status }
-    member { post :switch_black_list_flg }
-    member { post :change_all_waiting_status }
+    collection { post :import }
   end
   resources :relationships, only: [:create, :destroy]
   resources :users

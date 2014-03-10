@@ -4,17 +4,24 @@ class EventsController < ApplicationController
   before_action :signed_in_user
   before_action :selected_event, only: [:show, :edit, :update, :destroy, :switch_presenter_flg,:switch_guest_flg, :switch_black_list_flg,
                                         :invited, :waiting, :registed, :participants, :canceled, :no_show, :change_status,
-                                        :change_all_waiting_status, :send_invitation, :send_email, :update_facebook]
+                                        :change_all_waiting_status, :send_invitation, :send_email, :update_facebook, :new_member]
   def index
-    @events = Event.paginate(page: params[:page]).order("start_time DESC")
+    @start_date = Event.order("start_time ASC").first.start_time.beginning_of_year
+    @last_date = Event.order("start_time ASC").last.start_time.end_of_year
+    @year = params[:year].present? ? Date.parse(params[:year]) : @last_date 
+    @base = Event.where(:start_time => @year.beginning_of_year..@year.end_of_year).group(:start_time)
+    @events = @base.order("start_time DESC")
     array = Member.where(:gtic_flg => nil).pluck(:id)
     @total_events = Event.count
     @total_participants = Relationship.where(member_id: array).where(status: 2..3).count
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
   def show
     @participants = @event.participants
     @presenters = @event.presenters
-    @invited_members = @event.invited_members
     @registed_members = @event.registed_members
     @graph = facebook_objects(@event.fb_event_id)
     @fb_event_info = @graph[@event.fb_event_id] if @graph.present?
@@ -39,12 +46,12 @@ class EventsController < ApplicationController
   def create
     @event = Event.new(event_params)
     if @event.save 
-      @new_members = Member.where.not(:id => @event.relationships.select(:member_id).map(&:member_id))
-      if @new_members.present?
-        @new_members.each do |new_member|
-          @event.relationships.create(member_id: new_member.id, event_id: @event.id, status: 0)
-      end
-    end
+#      @new_members = Member.where.not(:id => @event.relationships.select(:member_id).map(&:member_id))
+#      if @new_members.present?
+#        @new_members.each do |new_member|
+#          @event.relationships.create(member_id: new_member.id, event_id: @event.id, status: 1)
+#      end
+#    end
 
       redirect_to events_path
     else
@@ -104,14 +111,17 @@ class EventsController < ApplicationController
 
   def invited 
     #@members = @event.invited_members.paginate(page:params[:page]).order("last_name_kana")
+    @title = "#{@event.name} 招待済みメンバー"
     @members = @event.invited_members.order("last_name_kana")
   end
 
   def waiting
-    @members = @event.waiting_members.where(black_list_flg: false).where("email IS NOT NULL").order("last_name_kana")
+    @title = "#{@event.name} 待機メンバー"
+    @members = waiting_members.order("last_name_kana").paginate(page: params[:page])
   end
 
   def registed
+    @title = "#{@event.name} 参加予定者"
     @members = @event.registed_members.order("last_name_kana")
     respond_to do |format|
       format.html
@@ -120,14 +130,17 @@ class EventsController < ApplicationController
   end
 
   def participants
+    @title = "#{@event.name} 出席者"
     @members = @event.participants.order("last_name_kana")
   end
 
   def canceled
+    @title = "#{@event.name} キャンセルしたメンバー"
     @members = @event.canceled_members.order("last_name_kana")
   end
 
   def no_show
+    @title = "#{@event.name} No-show"
     @members = @event.no_show.order("last_name_kana")
   end
 
@@ -136,7 +149,7 @@ class EventsController < ApplicationController
     @relationship = @event.relationships.find_by_member_id(params[:member_id])
     @direction = params[:direction].to_i
     if @relationship.nil?
-      @relationship = Relationship.new(member_id: params[:member_id], event_id: params[:id], status: 1)
+      @relationship = Relationship.new(member_id: params[:member_id], event_id: params[:id], status: 2)
     elsif @relationship.status == 0
       @relationship.update(status: 1)
     elsif @relationship.status >= 1
@@ -208,13 +221,29 @@ class EventsController < ApplicationController
     redirect_to :back
   end
 
+  def new_member 
+    @title = "#{@event.name} 新規メンバー登録"
+    @member = Member.new
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def create_member
+  end
+
+  def search_result
+  end
+
+
+
    
   private
     def event_params
       params.require(:event).permit(:name, :start_time, :end_time, :fb_event_id, :place_id, :fee)
     end
     def signed_in_user
-      redirect_to signin_url, notice: "Please sign in." unless signed_in?
+      redirect_to root_path, notice: "Please sign in." unless signed_in?
     end
     def selected_event
       @event = Event.find(params[:id])

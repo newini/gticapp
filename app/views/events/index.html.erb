@@ -12,7 +12,17 @@
 
   </aside>
   <div class="span10">
-    <h2>イベント一覧</h2>
-    <%= render 'events' %>
+    <h2><%= "イベント一覧" %></h2>
+    <div class="btn-group">
+      <%= link_to "新規登録/CSV読込", new_event_path, class: "btn" %>
+      <% date = @last_date%>
+      <% while date >= @start_date do %>
+        <%= link_to "#{date.strftime("%Y")}年", events_path(:year => date.strftime("%Y-%m-%d")), class: "btn", remote: true%>
+        <% date = date - 1.year %>
+      <% end %>
+    </div>
+    <div id="ajax_container">
+      <%= render 'events' %>
+    </div>
   </div>
 </div> 

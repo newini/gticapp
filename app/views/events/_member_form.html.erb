@@ -1,0 +1,74 @@
+<h2><%= @title %></h2>
+<div class="row-fluid">
+  <div class="span6">
+    <%= form_tag :create_member_event, :html => { :class => 'form-horizontal center' } do %>
+      <%= content_tag :table, class: "table" do %>
+        <tr>
+          <td>氏</td>
+          <td>
+            <%= text_field_tag :last_name, nil, placeholder: @member.errors.any? ? "#{@member.errors.messages[:last_name][0]}" : "山田" %>
+          </td>
+        </tr>
+        <tr>
+          <td>名</td>
+          <td>
+            <%= text_field_tag :first_name, nil, placeholder: @member.errors.any? ? "#{@member.errors.messages[:first_name][0]}" : "太郎" %>
+          </td>
+        </tr>
+        <tr>
+          <td>氏（かな）</td>
+          <td>
+          <%= text_field_tag :last_name_kana, nil, placeholder:'やまだ' %>
+          </td>
+        </tr>
+        <tr>
+          <td>名（かな）</td>
+          <td>
+            <%= text_field_tag :first_name_kana, nil, placeholder:'たろう' %>
+          </td>
+        </tr>
+        <tr>
+          <td>email</td>
+          <td>
+            <%= email_field_tag :email,nil, placeholder:'email@example.com' %>
+          </td>
+        </tr>
+        <tr>
+          <td>属性</td>
+          <td>
+            <%= select_tag nil, options_from_collection_for_select(Category.all, :id, :name), include_blank: true%>
+          </td>
+        </tr>
+        <tr>
+          <td>所属</td>
+          <td>
+            <%= text_field_tag :affiliation, nil, placeholder:'海山商事' %>
+          </td>
+        </tr>
+        <tr>
+          <td>役職</td>
+          <td>
+            <%= text_field_tag :title, nil, placeholder:'社長' %>
+          </td>
+        </tr>
+        <tr>
+          <td>備考</td>
+          <td>
+            <%= text_field_tag :note, nil, placeholder:'備考' %>
+          </td>
+        </tr>
+        <tr>
+          <td>ブラックリスト</td>
+          <td>
+            <%= check_box_tag :black_list_flg %>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <%= submit_tag "送信", class: "btn btn-large btn-primary btn-block" %> 
+          </td>
+        </tr>
+      <% end %>
+   <% end %>
+  </div>
+</div>
