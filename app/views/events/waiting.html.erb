@@ -8,7 +8,13 @@
     </section>
   </aside>
   <div class="span10">
-    <%= render'waiting_members' %>
+    <%= form_tag :search_event, method: 'get', remote: true, class: "well well-small form-inline" do %>
+      <%= text_field_tag :search, params[:search], class: "input-medium search-query" %>
+      <%= submit_tag 'Search', :name => nil, class: 'btn' %>
+    <% end %>
+    <div id="ajax_container">
+      <%= render'waiting_members' %>
+    </div>
   </div>
 </div>
 

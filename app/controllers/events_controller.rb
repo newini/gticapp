@@ -4,7 +4,7 @@ class EventsController < ApplicationController
   before_action :signed_in_user
   before_action :selected_event, only: [:show, :edit, :update, :destroy, :switch_presenter_flg,:switch_guest_flg, :switch_black_list_flg,
                                         :invited, :waiting, :registed, :participants, :canceled, :no_show, :change_status,
-                                        :change_all_waiting_status, :send_invitation, :send_email, :update_facebook, :new_member]
+                                        :change_all_waiting_status, :send_invitation, :send_email, :update_facebook, :new_member, :search]
   def index
     @start_date = Event.order("start_time ASC").first.start_time.beginning_of_year
     @last_date = Event.order("start_time ASC").last.start_time.end_of_year
@@ -118,6 +118,10 @@ class EventsController < ApplicationController
   def waiting
     @title = "#{@event.name} 待機メンバー"
     @members = waiting_members.order("last_name_kana").paginate(page: params[:page])
+    respond_to do |format|
+      format.html
+      format.json { render :json => @members.select(:id, :last_name, :fb_name) }
+    end
   end
 
   def registed
@@ -221,22 +225,14 @@ class EventsController < ApplicationController
     redirect_to :back
   end
 
-  def new_member 
-    @title = "#{@event.name} 新規メンバー登録"
-    @member = Member.new
-    respond_to do |format|
-      format.js
+  def search
+    if params[:search].present? 
+      @members = waiting_members.where("last_name like ?", "%#{params[:search]}%").order("last_name_kana").paginate(page: params[:page])
+      respond_to do |format|
+        format.js
+      end
     end
   end
-
-  def create_member
-  end
-
-  def search_result
-  end
-
-
-
    
   private
     def event_params

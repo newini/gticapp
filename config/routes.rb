@@ -4,7 +4,6 @@ Gticapp::Application.routes.draw do
       post :import
       get :management
       post :update_information
-      get :search_result
     end
   end
   resources :events do
@@ -17,6 +16,7 @@ Gticapp::Application.routes.draw do
       get :canceled
       get :no_show
       get :new_member
+      get :search
       post :change_status
       post :switch_black_list_flg
       post :change_all_waiting_status
@@ -28,7 +28,9 @@ Gticapp::Application.routes.draw do
       post :update_facebook
     end
     resources :invitations
-    collection { post :import }
+    collection { 
+      post :import
+    }
   end
   resources :relationships, only: [:create, :destroy]
   resources :users

@@ -2,7 +2,7 @@
 <div id= "input_container" %>
   <%= form_tag :update_information_members, id: "input_container" do %>
     <div class="btn-group">
-      <%= link_to "メンバー新規登録",new_member_event_path, class: "btn", remote: true %>
+      <%= link_to "メンバー新規登録",new_member_path, class: "btn" %>
       <%= link_to "facebook情報更新", update_facebook_event_path(rsvp_status: "attending"), method: "post", class:"btn" %>
       <%= link_to "参加予定者一覧ダウンロード", registed_event_path(format: 'xls'), method: "get", class: "btn" %>
       <%= submit_tag "メンバー情報更新", class: "btn"%>
@@ -14,7 +14,7 @@
         <th width="28px"></th>
         <th width="60px">氏</th>
         <th width="60px">名</th>
-        <th width="5em">Fb</th>
+        <th width="60px">Fb</th>
         <th width="90px">属性</th>
         <th>所属</th>
         <th width="60px">役職</th>

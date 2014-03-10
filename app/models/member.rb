@@ -64,5 +64,9 @@ class Member < ActiveRecord::Base
     value
   end
 
+  def member_tokens=(ids)
+    self.member_ids = ids.split(",")
+  end
+
 
 end
