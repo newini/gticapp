@@ -19,6 +19,7 @@ gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'rails_config'
 gem 'sqlite3'
+gem 'whenever', :require => false
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false

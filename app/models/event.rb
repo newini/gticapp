@@ -50,4 +50,8 @@ class Event < ActiveRecord::Base
     end
   end
 
+  def self.test
+    Rails.logger.info "URRRRYYYY"
+  end
+
 end
