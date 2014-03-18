@@ -2,9 +2,10 @@ class EventsController < ApplicationController
   include EventsHelper
   include MembersHelper
   before_action :signed_in_user
-  before_action :selected_event, only: [:show, :edit, :update, :destroy, :switch_presenter_flg,:switch_guest_flg, :switch_black_list_flg,
-                                        :invited, :waiting, :registed, :participants, :canceled, :no_show, :change_status,
-                                        :change_all_waiting_status, :send_invitation, :send_email, :update_facebook, :new_member, :search]
+  before_action :selected_event,
+    only: [:show, :edit, :update, :destroy, :switch_presenter_flg,:switch_guest_flg, :switch_black_list_flg,
+           :invited, :waiting, :registed, :participants, :canceled, :no_show, :change_status,
+           :change_all_waiting_status, :send_invitation, :send_email, :update_facebook, :new_member, :search]
   def index
     @start_date = Event.order("start_time ASC").first.start_time.beginning_of_year
     @last_date = Event.order("start_time ASC").last.start_time.end_of_year
