@@ -19,12 +19,12 @@
     <th>イベントURL</th>
     <td><%= link_to truncate("https://www.facebook.com/events/#{@event.fb_event_id}",length:50), "https://www.facebook.com/events/#{@event.fb_event_id}", target: :blank %></td>
   </tr>
-  <% if @presenters.present? %>
+  <% if @event.presenters.present? %>
     <% i = 1 %>
-    <% @presenters.each do |presenter| %>
+    <% @event.presenters.each do |presenter| %>
       <tr>
         <th>プレゼンター #<%= i %></th>
-        <td><%= link_to Member.find(presenter.id).last_name, member_path(presenter.id) %></td>
+        <td><%= link_to "#{presenter.last_name} #{presenter.first_name} ( #{presenter.affiliation} #{presenter.title} )", member_path(presenter.id) %></td>
       <tr>
       <% i += 1 %>
     <% end %>
