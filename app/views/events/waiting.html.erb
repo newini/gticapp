@@ -1,5 +1,5 @@
-<div class="row-fluid">
-  <aside class="span2">
+<div class="row">
+  <aside class="col-md-2">
     <section>
       <%= render'side' %>
     </section>
@@ -7,7 +7,7 @@
       <%= render'side_info' %>
     </section>
   </aside>
-  <div class="span10">
+  <div class="col-md-10">
     <%= form_tag :search_event, method: 'get', remote: true, class: "well well-small form-inline" do %>
       <%= text_field_tag :search, params[:search], class: "input-medium search-query" %>
       <%= submit_tag 'Search', :name => nil, class: 'btn' %>

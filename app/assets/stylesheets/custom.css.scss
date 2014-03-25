@@ -11,7 +11,8 @@ html {
   overflow-y: scroll;
 }
 body {
-  padding-top: 60px;
+  padding-top: 56px;
+  background: url(../fabric_of_squares_gray.png);
 }
 section { 
   overflow: auto;
@@ -33,13 +34,11 @@ h1 {
   font-size: 3em; 
   letter-spacing: -2px; 
   margin-bottom: 30px; 
-  text-align: center;
 }
 h2 {
   font-size: 1.2em; 
   letter-spacing: -1px; 
   margin-bottom: 30px; 
-  text-align: center; 
   font-weight: normal; 
   color: #999;
 }
@@ -49,27 +48,28 @@ p{
 }
 
 /* header */
-#logo {
-  float: left; 
-  margin-right: 10px; 
-  font-size: 2.2em;
-  color: #111; 
-  text-transform: uppercase; 
-  letter-spacing: -1px; 
-  padding-top: 4px; 
-  font-weight: bold; 
-  line-height: 1;
-}
-#logo:hover {
-  color: #333; 
-  text-decoration: none;
+.nav {
+  margin-top: 6px;
 }
 
+/* full-width-image */
+.full-width-image{
+  background: url(http://lorempixel.com/g/1920/500/technics) no-repeat center center;
+  background-size: cover;
+  text-align: center;
+  padding: 40px 0;
+}
+/* logo-wrapper */
+.logo-wrapper{
+  display: inline-block;
+  background-color: rgba(245, 245, 245, 0.6);
+  padding: 10px 10px;
+}
 /* sidebar */
 aside { 
   section {
     padding: 10px 0;
-    border-top: 1px solid $grayLighter; 
+    border-top: 1px solid $grayMediumLight; 
     &:first-child {
       border: 0;
       padding-top: 0; 
@@ -127,8 +127,8 @@ input {
   }
 }
 .field_with_errors { 
-  @extend .control-group; 
-  @extend .error;
+  @extend .form-group; 
+  @extend .has-error;
 }
 
 .td-nowrap{

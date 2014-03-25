@@ -1,0 +1,31 @@
+<div class="section">
+  <div class="container">
+    <h1>PRESENTER</h1>
+    <table class="table">
+      <tr>
+        <th>Event Name</th>
+        <th>Presenter</th>
+        <th>Affiliation</th>
+      </tr>
+      <% @presenters.each do |k,v| %>
+        <% unless v.length > 1 %>
+          <tr>
+            <td><%= k %></td>
+            <td><%= v %></td>
+            <td><%= v %></td>
+          </tr>
+        <% else %>
+          <% i=0 %>
+          <% v.each do |presenter| %>
+            <tr>
+              <%= content_tag :td, k, rowspan: v.length if i==0 %>
+              <td><%= presenter[0] %> 氏</td>
+              <td><%= presenter[1] %></td>
+            </tr>
+            <% i += 1 %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </table>
+  </div>
+</div>

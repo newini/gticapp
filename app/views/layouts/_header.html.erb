@@ -1,30 +1,37 @@
-<header class="navbar navbar-fixed-top navbar-fluid"> 
-  <div class="navbar-inner">
-    <div class="container-fluid">
-      <%= link_to root_path, id:"logo" do %>
-        <%= image_tag 'https://s3-ap-northeast-1.amazonaws.com/gtic/gtic_logo_c_30x30.png', id:"center-img" %>
-        GTICAPP
+<nav class="navbar navbar-fixed-top navbar-default" role="navigation"> 
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <%= link_to root_path, class: "navbar-brand logo-nav" do %>
+        <%#= image_tag 'https://s3-ap-northeast-1.amazonaws.com/gtic/gtic_logo_c_30x30.png' %>
+        <%= image_tag '../logo2.png' %>
       <% end %>
-      <nav>
-        <ul class="nav pull-right">
-          <li><%= link_to "Home", root_path %></li> 
-          <% if signed_in? %>
-            <li><%= link_to "メンバー", members_path %></li> 
-            <li><%= link_to "イベント", events_path %></li>
-            <li id="fat-menu" class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <%= User.find(current_user).name %> <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><%= link_to "プロフィール", current_user %></li> 
-                <li><%= link_to "設定", edit_user_path(@current_user) %></li>
-                <li class="divider"></li>
-                <li><%= link_to "サインアウト", '/signout', method: "delete" %> </li>
-              </ul> 
-            </li>
-          <% else %>
-            <li><%= link_to "Sign in", '/auth/facebook' %></li>
-          <% end %>
-        </ul> 
-      </nav>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav navbar-right">
+        <li><%= link_to "HOME", root_path %></li> 
+        <% if signed_in? %>
+          <li><%= link_to "MEMBER", members_path %></li> 
+          <li><%= link_to "EVENT", events_path %></li>
+          <li id="fat-menu" class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <%= User.find(current_user).name %> <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><%= link_to "PROFILE", current_user %></li> 
+              <li><%= link_to "SETTING", edit_user_path(@current_user) %></li>
+              <li class="divider"></li>
+              <li><%= link_to "SIGNOUT", '/signout', method: "delete" %> </li>
+            </ul> 
+          </li>
+        <% else %>
+          <li><%= link_to "ABOUT", :about %></li> 
+          <li><%= link_to "PRESENTER", :presenter %></li> 
+          <li><%= link_to "ORGANIZER", :organizer %></li> 
+        <% end %>
+      </ul> 
     </div>
   </div>
-</header>
+</nav>

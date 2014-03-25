@@ -1,5 +1,5 @@
-<div class="row-fluid">
-  <aside class="span2">
+<div class="row">
+  <aside class="col-md-2">
     <section>
       <%= render'side' %>
     </section>
@@ -7,7 +7,7 @@
       <%= render'side_info' %>
     </section>
   </aside>
-  <div class="span5">
+  <div class="col-md-5">
     <%= render 'event_form' %>
     <%= link_to '削除', @event, value:@event.id, method: :delete, class: 'btn btn-large btn-block btn-warning', data: {confirm: "削除してもよろしいですか？"} %>
 

@@ -39,6 +39,9 @@ Gticapp::Application.routes.draw do
   match '/signup', to: 'users#new', via: 'get'
   match '/signout', to: 'sessions#destroy', via: 'delete'
   match '/home', to: 'static_pages#home', via: 'get'
+  match '/about', to: 'static_pages#about', via: 'get'
+  match '/presenter', to: 'static_pages#presenter', via: 'get'
+  match '/organizer', to: 'static_pages#organizer', via: 'get'
   match '/events/:event_id/send_invitation', to: 'events#send_invitation', as: 'send_invitation',via: 'get'
   match '/events/:event_id/send_invitation', to: 'events#send_email', via: 'post'
   #omniauth
