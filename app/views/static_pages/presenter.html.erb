@@ -3,24 +3,29 @@
     <h1>PRESENTER</h1>
     <table class="table">
       <tr>
-        <th>Event Name</th>
+        <th>Event</th>
+        <th>Date</th>
         <th>Presenter</th>
-        <th>Affiliation</th>
+        <th>title</th>
       </tr>
-      <% @presenters.each do |k,v| %>
-        <% unless v.length > 1 %>
+      <% @events.each do |event| %>
+        <% if event[:detail].length == 0 %>
           <tr>
-            <td><%= k %></td>
-            <td><%= v %></td>
-            <td><%= v %></td>
+            <td><%= event[:event][:name] %></td>
+            <td><%= event[:event][:date] %></td>
+            <td></td>
+            <td></td>
           </tr>
-        <% else %>
+        <% elsif event[:detail].length >= 1 %>
           <% i=0 %>
-          <% v.each do |presenter| %>
+          <% event[:detail].each do |detail| %>
             <tr>
-              <%= content_tag :td, k, rowspan: v.length if i==0 %>
-              <td><%= presenter[0] %> 氏</td>
-              <td><%= presenter[1] %></td>
+              <% if i == 0 %>
+                <%= content_tag :td, event[:event][:name], rowspan: event[:detail].length %>
+                <%= content_tag :td, event[:event][:date], rowspan: event[:detail].length %>
+              <% end %>
+              <td><%= "#{detail[:affiliation]}" %><br><%= "#{detail[:title]} #{detail[:name]} 氏" %></td>
+              <td><%= "#{detail[:presentation_title]}" %></td>
             </tr>
             <% i += 1 %>
           <% end %>

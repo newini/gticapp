@@ -26,6 +26,7 @@ Gticapp::Application.routes.draw do
       post :switch_presenter_flg
       post :switch_guest_flg
       post :update_facebook
+      post :update_presentation
     end
     resources :invitations
     collection { 

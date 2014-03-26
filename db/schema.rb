@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140304152633) do
+ActiveRecord::Schema.define(version: 20140325225537) do
 
   create_table "categories", force: true do |t|
     t.string   "name"
@@ -97,6 +97,20 @@ ActiveRecord::Schema.define(version: 20140304152633) do
   end
 
   add_index "places", ["name"], name: "index_places_on_name"
+
+  create_table "presentations", force: true do |t|
+    t.integer  "member_id"
+    t.integer  "event_id"
+    t.string   "title"
+    t.string   "abstract"
+    t.string   "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "presentations", ["event_id"], name: "index_presentations_on_event_id"
+  add_index "presentations", ["member_id"], name: "index_presentations_on_member_id"
+  add_index "presentations", ["title"], name: "index_presentations_on_title"
 
   create_table "relationships", force: true do |t|
     t.integer  "member_id"

@@ -234,6 +234,16 @@ class EventsController < ApplicationController
       end
     end
   end
+
+  def update_presentation
+    params[:presentation].each do |presentation|
+      record = Presentation.where(member_id: presentation[:member_id]).find_by_event_id(presentation[:event_id]) || Presentation.new(member_id: presentation[:member_id], event_id: presentation[:event_id])
+      record.update(title: presentation[:title], abstract: presentation[:abstract])
+      record.save!
+    end
+    redirect_to :back
+  end
+
    
   private
     def event_params
