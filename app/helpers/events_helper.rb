@@ -77,7 +77,8 @@ module EventsHelper
         }
         concat content_tag( :ul, class: "dropdown-menu"){ 
           content_tag(:li){
-            link_to "No-show", change_status_event_path(:member_id => member.id, :direction => 5), :method => :post
+            concat link_to("No-show", change_status_event_path(:member_id => member.id, :direction => 5), :method => :post)
+            concat link_to("参加予定", change_status_event_path(:member_id => member.id, :direction => 2), :method => :post)
           }
         }
       }
@@ -89,7 +90,8 @@ module EventsHelper
         }
         concat content_tag(:ul, class: "dropdown-menu"){
           content_tag(:li){ 
-            link_to("No-show", change_status_event_path(:member_id => member.id, :direction => 5), :method => :post)
+            concat link_to("No-show", change_status_event_path(:member_id => member.id, :direction => 5), :method => :post)
+            concat link_to("参加予定", change_status_event_path(:member_id => member.id, :direction => 2), :method => :post)
           }
         }
       }
@@ -105,6 +107,7 @@ module EventsHelper
           content_tag(:li){
             concat link_to("出席", change_status_event_path(:member_id => member.id, :direction => 3), :method => :post)
             concat link_to("キャンセル", change_status_event_path(:member_id => member.id, :direction => 4), :method => :post)
+            concat link_to("参加予定", change_status_event_path(:member_id => member.id, :direction => 2), :method => :post)
           }
         }
       }

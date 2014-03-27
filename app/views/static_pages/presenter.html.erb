@@ -3,10 +3,10 @@
     <h1>PRESENTER</h1>
     <table class="table">
       <tr>
-        <th>Event</th>
-        <th>Date</th>
-        <th>Presenter</th>
-        <th>title</th>
+        <th class="col-md-1">Event</th>
+        <th class="col-md-1">Date</th>
+        <th class="col-md-2">Presenter</th>
+        <th class="col-md-4">title</th>
       </tr>
       <% @events.each do |event| %>
         <% if event[:detail].length == 0 %>

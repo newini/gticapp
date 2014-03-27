@@ -65,6 +65,12 @@ p{
   background-color: rgba(245, 245, 245, 0.6);
   padding: 10px 10px;
 }
+
+/* table */
+.table > thead > tr > th, .table > thead > tr > td, .table > tbody > tr > th, .table > tbody > tr > td, .table > tfoot > tr > th, .table > tfoot > tr > td{
+    vertical-align: middle;
+}
+
 /* sidebar */
 aside { 
   section {

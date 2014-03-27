@@ -10,19 +10,18 @@
 
     <%= content_tag :table, class: 'table table-condensed table-bordered table-striped' do %>
       <tr>
-        <th width="1em"></th>
-        <th width="28px"></th>
-        <th width="60px">氏</th>
-        <th width="60px">名</th>
-        <th width="60px">Fb</th>
-        <th width="90px">属性</th>
-        <th>所属</th>
-        <th width="60px">役職</th>
-        <th>備考</th>
-        <th>Role</th>
-        <th>参加費</th>
         <th></th>
-        <th>登録日</th>
+        <th class="col-xs-1"></th>
+        <th class="col-xs-1">氏</th>
+        <th class="col-xs-1">名</th>
+        <th class="col-xs-1">Fb</th>
+        <th class="col-xs-1">属性</th>
+        <th class="col-xs-1">所属</th>
+        <th class="col-xs-1">役職</th>
+        <th class="col-xs-1">備考</th>
+        <th class="col-xs-1">Role</th>
+        <th class="col-xs-1">参加費</th>
+        <th class="col-xs-1"></th>
       </tr>
       <% @members.each do |member| %>
         <%= content_tag :tr do %>
@@ -39,7 +38,6 @@
           <td><%= select_roll(member, @event) %></td>
           <td><%= show_currency(show_fee(member, @event)) %></td>
           <td><%= select_status(member) %></td>
-          <td><%= show_datetime(member.relationships.find_by_event_id(@event).created_at) %></td>
         <% end %>
       <% end %>
     <% end %>

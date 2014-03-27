@@ -2,9 +2,7 @@
   <tr>
     <th>イベント名</th>
     <th>開催日</th>
-    <th>内容</th>
-    <th>出席表明者数</th>
-    <th>参加者数</th>
+    <th>プレゼンター</th>
     <th></th>
     <th></th>
   </tr>
@@ -13,8 +11,6 @@
     <td><%= event.name %></td>
     <td><%= show_date(event.start_time) %></td>
     <td><%= event.presenters.map{|presenter| presenter.affiliation}.join(", ") %> </td>
-    <td><%= event.registed_members.count %></td>
-    <td><%= event.participants.count %></td>
     <td><%= link_to '詳細', event_path(event) ,class: "btn btn-small btn-primary btn-block"%></td>
     <td><%= link_to 'fb更新', update_facebook_event_path(id: event, rsvp_status: "attending") ,class: "btn btn-small btn-primary btn-block", method: "post" %></td>
   </tr>
