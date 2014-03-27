@@ -8,8 +8,16 @@ class MembersController < ApplicationController
       @members = Member.joins(:registed_events).group(:member_id).order("count(event_id) DESC").paginate(page: params[:page])
     end
     @all_members = Member.all
-    repeater_id = Relationship.joins(:event).where(:events => {:start_time => Date.parse("2014-1-1")..Date.today}).group(:member_id).count(:member_id).map{|k,v| k if v > 5}.compact
-    @repeater = Member.where(id: repeater_id)
+    repeater_id = Relationship.joins(:event).where(:events => {:start_time => Date.parse("2014-1-1")..Date.today}).where(status: 3).group(:member_id).count(:member_id)
+    ids = []
+    ids << repeater_id.map{|k,v| k if v >= 5}.compact
+    ids << repeater_id.map{|k,v| k if v == 4}.compact
+    ids << repeater_id.map{|k,v| k if v == 3}.compact
+    ids << repeater_id.map{|k,v| k if v == 2}.compact
+    @repeater = []
+    ids.each do |id|
+      @repeater << Member.where(id: id)
+    end
 
     respond_to do |format|
       format.html

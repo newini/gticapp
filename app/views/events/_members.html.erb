@@ -12,6 +12,7 @@
       <tr>
         <th></th>
         <th></th>
+        <th></th>
         <th class="col-md-1">氏</th>
         <th class="col-md-1">名</th>
         <th class="col-md-1">Fb</th>
@@ -24,9 +25,11 @@
         <th class="col-md-1">参加費</th>
         <th class="col-md-2"></th>
       </tr>
+      <% i = 1 %>
       <% @members.each do |member| %>
         <%= content_tag :tr do %>
           <%= hidden_field_tag nil, member.id, name: "member[][id]" %>
+          <td><%= i %></td>
           <td><%= member.last_name_kana[0] if member.last_name_kana.present? %></td>
           <td><%= link_to image_tag("https://graph.facebook.com/#{member.fb_user_id}/picture?type=square"), "https://facebook.com/#{member.fb_user_id}", target: :blank if member.fb_user_id.present?%></td>
           <td><%= text_field_tag nil, member.last_name, name: "member[][last_name]", class: "input-sm" %></td>
@@ -41,6 +44,7 @@
           <td><%= show_currency(show_fee(member, @event)) %></td>
           <td><%= select_status(member) %></td>
         <% end %>
+        <% i += 1 %>
       <% end %>
     <% end %>
   <% end %>
