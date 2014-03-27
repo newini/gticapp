@@ -13,6 +13,12 @@
           <% end %>
         <% end %>
         <li><%= "未分類：#{Member.where(:gtic_flg => nil).where(:category_id => nil).count}名" %></li>
+        <li>
+        <strong>5回以上参加者</strong>
+        <% @repeater.each do |repeater| %>
+          <li><%= "#{repeater.last_name} #{repeater.first_name}" %></li>
+        <% end %>
+        </li>
       </ul>
     </div>
   </aside>

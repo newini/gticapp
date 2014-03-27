@@ -24,13 +24,13 @@ module ApplicationHelper
     @guest_flg = @record.guest_flg
     @gtic_flg = member.gtic_flg
     @student_flg = member.category_id == 10 ? true : false
-    if @gtic_flg
+    if @gtic_flg == true
       return "GTIC"
-    elsif @presenter_flg
-      return "プレゼンター"
-    elsif @guest_flg
+    elsif @presenter_flg == true
+      return @presenter_flg
+    elsif @guest_flg == true
       return "ゲスト"
-    elsif @student_flg
+    elsif @student_flg == true
       return "学生"
     else
       return "参加者"

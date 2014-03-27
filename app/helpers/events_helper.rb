@@ -114,7 +114,7 @@ module EventsHelper
     end
   end
 
-  def select_roll(member,event)
+  def select_role(member,event)
     @record = member.relationships.find_by_event_id(event.id)
     @presenter_flg = @record.presenter_flg
     @guest_flg = @record.guest_flg
