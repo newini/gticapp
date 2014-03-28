@@ -86,7 +86,11 @@ class MembersController < ApplicationController
   def update_information
     params[:member].each do |member|
       @member = Member.find(member[:id])
-      last_name_kana = (member[:last_name].present? && @member.last_name_kana.nil?) ? Member.kana(member[:last_name]) : @member.last_name_kana
+      if member[:last_name_kana].present?
+        last_name_kana = member[:last_name_kana]
+      else
+        last_name_kana = (member[:last_name].present? && @member.last_name_kana.nil?) ? Member.kana(member[:last_name]) : @member.last_name_kana
+      end
       @member.update(first_name: member[:first_name], last_name: member[:last_name], last_name_kana: last_name_kana,  category_id: member[:category_id], affiliation: member[:affiliation], title: member[:title], note: member[:note], email: member[:email])
       @member.save!
     end

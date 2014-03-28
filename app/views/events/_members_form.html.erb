@@ -4,7 +4,7 @@
     <%= content_tag :table, class: 'table table-condensed table-bordered table-striped' do %>
       <tr>
         <th>#</th>
-        <th></th>
+        <th class="col-md-1">頭</th>
         <th class="col-md-1">氏</th>
         <th class="col-md-1">名</th>
         <th class="col-md-2">Fb</th>
@@ -18,14 +18,14 @@
         <%= content_tag :tr do %>
           <%= hidden_field_tag nil, member.id, name: "member[][id]" %>
           <td><%= i %></td>
-          <td><%= member.last_name_kana[0] if member.last_name_kana.present? %></td>
-          <td><%= text_field_tag nil, member.last_name, name: "member[][last_name]", class: "input-sm" %></td>
-          <td><%= text_field_tag nil, member.first_name, name: "member[][first_name]", class: "input-sm" %></td>
+          <td><%= text_field_tag nil, member.last_name_kana, name: "member[][last_name_kana]", class: "form-control input-sm" %></td>
+          <td><%= text_field_tag nil, member.last_name, name: "member[][last_name]", class: "form-control input-sm" %></td>
+          <td><%= text_field_tag nil, member.first_name, name: "member[][first_name]", class: "form-control input-sm" %></td>
           <td><%= link_to image_tag("https://graph.facebook.com/#{member.fb_user_id}/picture?type=square", class: "fb_user_icon") + member.fb_name, member_path(member) %></td>
-          <td><%= select_tag nil, options_from_collection_for_select(Category.all, :id, :name, member.category_id), name: "member[][category_id]", include_blank: true%></td>
-          <td><%= text_field_tag nil, member.affiliation, name: "member[][affiliation]", class: "input-sm" %></td>
-          <td><%= text_field_tag nil, member.title, name: "member[][title]", class: "input-sm" %></td>
-          <td><%= text_field_tag nil, member.note, name: "member[][note]", class: "input-sm" %></td>
+          <td><%= select_tag nil, options_from_collection_for_select(Category.all, :id, :name, member.category_id), name: "member[][category_id]", include_blank: true, class: "form-control"%></td>
+          <td><%= text_field_tag nil, member.affiliation, name: "member[][affiliation]", class: "form-control input-sm" %></td>
+          <td><%= text_field_tag nil, member.title, name: "member[][title]", class: "form-control input-sm" %></td>
+          <td><%= text_field_tag nil, member.note, name: "member[][note]", class: "form-control input-sm" %></td>
         <% end %>
         <% i += 1 %>
       <% end %>

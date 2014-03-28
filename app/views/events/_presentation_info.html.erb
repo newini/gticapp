@@ -11,11 +11,11 @@
         <% end %>
         <%= content_tag :tr do %>
           <th>題目</th>
-          <td><%= text_field_tag nil, presenter.presentations.find_by_event_id(@event).try(:title), name: "presentation[][title]" %></td>
+          <td><%= text_area_tag nil, presenter.presentations.find_by_event_id(@event).try(:title), name: "presentation[][title]", class: "form-control" %></td>
         <% end %>
         <%= content_tag :tr do %>
           <th>概要</th>
-          <td><%= text_field_tag nil, presenter.presentations.find_by_event_id(@event).try(:abstract), name: "presentation[][abstract]" %></td>
+          <td><%= text_area_tag nil, presenter.presentations.find_by_event_id(@event).try(:abstract), name: "presentation[][abstract]", class: "form-control" %></td>
         <% end %>
       <% end %>
     <% end %>

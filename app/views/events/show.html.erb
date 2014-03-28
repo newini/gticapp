@@ -13,7 +13,7 @@
     <%= link_to 'イベント情報編集', edit_event_path(@event), class: "center btn btn-block btn-large btn-primary" %>
     <hr>
     <h2>プレゼンテーション内容</h2>
-    <% if @presenter.present? %>
+    <% if @presenters.present? %>
       <%= render'presentation_info' %>
     <% else %>
       <strong>プレゼンターを登録して下さい</strong>
