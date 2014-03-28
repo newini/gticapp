@@ -17,6 +17,7 @@ Gticapp::Application.routes.draw do
       get :no_show
       get :new_member
       get :search
+      get :update_member
       post :change_status
       post :switch_black_list_flg
       post :change_all_waiting_status

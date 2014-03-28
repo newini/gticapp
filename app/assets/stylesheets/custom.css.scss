@@ -71,6 +71,11 @@ p{
     vertical-align: middle;
 }
 
+/* fb_user_icon */
+.fb_user_icon{
+  width: 30px;
+}
+
 /* sidebar */
 aside { 
   section {
@@ -105,24 +110,6 @@ aside {
   width: 100%;
   margin-top: 45px; 
   @include box_sizing;
-}
-
-/* forms */
-input, textarea, select, .uneditable-input { 
-  border: 1px solid #bbb;
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  @include box_sizing; 
-}
-input {
-  height: auto !important;
-}
-.form-small{
-  margin: 0 !important;
-}
-.input-small{
-  width: 40px;
 }
 
 #error_explanation {

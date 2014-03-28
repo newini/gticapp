@@ -3,7 +3,7 @@ class EventsController < ApplicationController
   include MembersHelper
   before_action :signed_in_user
   before_action :selected_event,
-    only: [:show, :edit, :update, :destroy, :switch_presenter_flg,:switch_guest_flg, :switch_black_list_flg,
+    only: [:show, :edit, :update, :destroy, :switch_presenter_flg,:switch_guest_flg, :switch_black_list_flg, :update_member,
            :invited, :waiting, :registed, :participants, :canceled, :no_show, :change_status,
            :change_all_waiting_status, :send_invitation, :send_email, :update_facebook, :new_member, :search]
   def index
@@ -29,6 +29,7 @@ class EventsController < ApplicationController
   end
 
   def edit
+    @title = "イベント情報編集"
     @participants = @event.participants.paginate(page:params[:page]).order("last_name_kana")
   end
 
@@ -117,10 +118,11 @@ class EventsController < ApplicationController
   end
 
   def waiting
-    @title = "#{@event.name} 待機メンバー"
-    @members = waiting_members.order("last_name_kana").paginate(page: params[:page])
+    @title = "#{@event.name} 参加予定者追加"
+    @members = waiting_members.order("last_name_kana")
     respond_to do |format|
       format.html
+      format.js
       format.json { render :json => @members.select(:id, :last_name, :fb_name) }
     end
   end
@@ -156,7 +158,7 @@ class EventsController < ApplicationController
     if @relationship.nil?
       @relationship = Relationship.new(member_id: params[:member_id], event_id: params[:id], status: 2)
     elsif @relationship.status == 0
-      @relationship.update(status: 1)
+      @relationship.update(status: 2)
     elsif @relationship.status >= 1
       case @direction
       when 0
@@ -227,11 +229,14 @@ class EventsController < ApplicationController
   end
 
   def search
+    @title = "#{@event.name} 参加予定者追加"
     if params[:search].present? 
-      @members = waiting_members.where("last_name like ?", "%#{params[:search]}%").order("last_name_kana").paginate(page: params[:page])
-      respond_to do |format|
-        format.js
-      end
+      @members = waiting_members.where("last_name like ?", "%#{params[:search]}%").order("last_name_kana")
+    else
+      @members = waiting_members.order("last_name_kana")
+    end
+    respond_to do |format|
+      format.js
     end
   end
 
@@ -242,6 +247,14 @@ class EventsController < ApplicationController
       record.save!
     end
     redirect_to :back
+  end
+
+  def update_member
+    @title = "#{@event.name} 参加予定者情報編集"
+    @members = @event.registed_members.order("last_name_kana")
+    respond_to do |format|
+      format.js
+    end
   end
 
    

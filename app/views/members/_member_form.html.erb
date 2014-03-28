@@ -1,73 +1,58 @@
-<h2>メンバー情報</h2>
-<%= form_for @member, :html => { :class => 'form-horizontal center' } do |f| %>
-  <div class="control-group">
-    <%= f.label '氏', class: 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :last_name, placeholder: @member.errors.any? ? "#{@member.errors.messages[:last_name][0]}" : "山田" %>
+<h2><%= @title %></h2>
+<%= form_for @member, html: {class: "form-horizontal"} do %>
+  <%= hidden_field_tag :event, @event.id, name: "event[id]" if @event.present? %>
+  <div class="form-group">
+    <%= label_tag :last_name, "氏 / last name", class: 'col-sm-2 control-label' %>
+    <div class="col-sm-4">
+      <%= text_field_tag nil, @member.last_name, name: "member[last_name]", placeholder: @member.errors.any? ? "#{@member.errors.messages[:last_name][0]}" : "山田 / Smith", class: "form-control" %>
     </div>
   </div>
-  <div class="control-group">
-    <%= f.label '名', class: 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :first_name, placeholder: @member.errors.any? ? "#{@member.errors.messages[:first_name][0]}" : "太郎" %>
+  <div class="form-group">
+    <%= label_tag :first_name, "名 / first name", class: 'col-sm-2 control-label' %>
+    <div class="col-sm-4">
+      <%= text_field_tag nil, @member.first_name, name: "member[first_name]", placeholder: @member.errors.any? ? "#{@member.errors.messages[:first_name][0]}" : "太郎 / John", class: "form-control" %>
     </div>
   </div>
-  <div class="control-group">
-    <%= f.label '氏（かな）', class: 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :last_name_kana, placeholder:'やまだ' %>
+  <div class="form-group">
+    <%= label_tag :last_name_kana, "氏（かな） / last name", class: 'col-sm-2 control-label' %>
+    <div class="col-sm-4">
+      <%= text_field_tag nil, @member.last_name_kana, name: "member[last_name_kana]", placeholder: @member.errors.any? ? "#{@member.errors.messages[:last_name_kana][0]}" : "やまだ / Smith", class: "form-control" %>
     </div>
   </div>
-   <div class="control-group">
-    <%= f.label '名（かな）', class: 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :first_name_kana, placeholder:'たろう' %>
+  <div class="form-group">
+    <%= label_tag :affiliation, "所属 / affiliation", class: 'col-sm-2 control-label' %>
+    <div class="col-sm-4">
+      <%= text_field_tag nil, @member.affiliation, name: "member[affiliation]", placeholder:  "海山商事", class: "form-control" %>
     </div>
   </div>
-  <div class="control-group">
-    <%= f.label 'Facebook名', class: 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :fb_name, placeholder:'山田太郎' %>
+  <div class="form-group">
+    <%= label_tag :title, "役職 / title", class: 'col-sm-2 control-label' %>
+    <div class="col-sm-4">
+      <%= text_field_tag nil, @member.title, name: "member[title]", placeholder:  "代表取締役社長", class: "form-control" %>
     </div>
   </div>
-  <div class="control-group">
-    <%= f.label 'email', class: 'control-label' %>
-    <div class="controls">
-      <%= f.email_field :email,placeholder:'email@example.com' %>
+  <div class="form-group">
+    <%= label_tag :note, "備考 / note", class: 'col-sm-2 control-label' %>
+    <div class="col-sm-4">
+      <%= text_field_tag nil, @member.note, name: "member[note]", placeholder:  "備考", class: "form-control" %>
     </div>
   </div>
-  <div class="control-group">
-    <%= f.label '属性', class: 'control-label' %>
-    <div class="controls">
-      <%= f.select :category_id, options_from_collection_for_select(Category.all, :id, :name, @member.category_id),  include_blank: true%>
+  <div class="form-group">
+    <%= label_tag :email, "メールアドレス / email", class: 'col-sm-2 control-label' %>
+    <div class="col-sm-4">
+      <%= email_field_tag nil, @member.email, name: "member[email]", placeholder:  "test@example.com", class: "form-control" %>
     </div>
   </div>
- 
-  <div class="control-group">
-    <%= f.label '所属', class: 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :affiliation, placeholder:'海山商事' %>
+  <div class="form-group">
+    <%= label_tag :category_id, "属性 / category", class: 'col-sm-2 control-label' %>
+    <div class="col-sm-4">
+      <%= select_tag nil, options_from_collection_for_select(Category.all, :id, :name, @member.category_id), name:"member[category_id]", class: "form-control", include_blank: true %>
     </div>
   </div>
-  <div class="control-group">
-    <%= f.label '役職', class: 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :title, placeholder:'社長' %>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-4">
+      <%= submit_tag "送信", class: "btn btn-primary" %> 
     </div>
   </div>
-  <div class="control-group">
-    <%= f.label '備考', class: 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :note, placeholder:'備考' %>
-    </div>
-  </div>
-
-  <div class="control-group">
-    <%= f.label :black_list_flg, 'ブラックリスト', class: 'control-label' %>
-    <div class="controls">
-      <%= f.check_box :black_list_flg %>
-    </div>
-  </div>
-  <%= f.submit "送信", class: "btn btn-large btn-primary btn-block" %> 
 <% end %>
 

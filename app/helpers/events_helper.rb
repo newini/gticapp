@@ -55,14 +55,14 @@ module EventsHelper
     status = relation.present? ? relation.status : nil
     case status
     when 1, 0, nil
-      link_to("参加", change_status_event_path(:member_id => member.id, :direction => 2), :method => :post, :class => "btn btn-small btn-primary btn-block")
+      link_to("追加", change_status_event_path(:member_id => member.id, :direction => 2), :method => :post, :class => "btn btn-xs btn-primary")
     when 2
       content_tag(:div, class: "btn-group") {
-        concat link_to( "出席", change_status_event_path(:member_id => member.id, :direction => 3), :method => :post, :class => "btn btn-small btn-primary ")
-        concat content_tag(:button, class: "btn dropdown-toggle btn-primary btn-small", data: {:toggle => "dropdown"}){ 
+        concat link_to( "出席", change_status_event_path(:member_id => member.id, :direction => 3), :method => :post, :class => "btn btn-xs btn-primary ")
+        concat content_tag(:button, class: "btn dropdown-toggle btn-primary btn-xs", data: {:toggle => "dropdown"}){ 
           content_tag( :span, "", class: "caret")
         } 
-        concat content_tag(:ul, class: "dropdown-menu"){ 
+        concat content_tag(:ul, class: "dropdown-menu", role: "menu"){ 
           content_tag(:li){
             concat link_to("キャンセル", change_status_event_path(:member_id => member.id, :direction => 4), :method => :post) 
             concat link_to("No-show", change_status_event_path(:member_id => member.id, :direction => 5), :method => :post)
@@ -71,11 +71,11 @@ module EventsHelper
       }
     when 3
       content_tag(:div, class: "btn-group"){ 
-        concat link_to "キャンセル", change_status_event_path(:member_id => member.id, :direction => 4), :method => :post, :class => "btn btn-small btn-primary "
-        concat content_tag(:button, class: "btn dropdown-toggle btn-primary btn-small", :"data-toggle" => "dropdown"){ 
+        concat link_to "キャンセル", change_status_event_path(:member_id => member.id, :direction => 4), :method => :post, :class => "btn btn-xs btn-primary "
+        concat content_tag(:button, class: "btn dropdown-toggle btn-primary btn-xs", :"data-toggle" => "dropdown"){ 
           content_tag :span, "",  class: "caret"
         }
-        concat content_tag( :ul, class: "dropdown-menu"){ 
+        concat content_tag( :ul, class: "dropdown-menu", role: "menu"){ 
           content_tag(:li){
             concat link_to("No-show", change_status_event_path(:member_id => member.id, :direction => 5), :method => :post)
             concat link_to("参加予定", change_status_event_path(:member_id => member.id, :direction => 2), :method => :post)
@@ -84,11 +84,11 @@ module EventsHelper
       }
     when 4
       content_tag(:div, class: "btn-group"){ 
-        concat link_to("出席", change_status_event_path(:member_id => member.id, :direction => 3), :method => :post, :class => "btn btn-small btn-primary ")
-        concat content_tag(:button, class: "btn dropdown-toggle btn-primary btn-small", :"data-toggle" => "dropdown"){
+        concat link_to("出席", change_status_event_path(:member_id => member.id, :direction => 3), :method => :post, :class => "btn btn-xs btn-primary ")
+        concat content_tag(:button, class: "btn dropdown-toggle btn-primary btn-xs", :"data-toggle" => "dropdown"){
           content_tag(:span,"", class: "caret")
         }
-        concat content_tag(:ul, class: "dropdown-menu"){
+        concat content_tag(:ul, class: "dropdown-menu", role: "menu"){
           content_tag(:li){ 
             concat link_to("No-show", change_status_event_path(:member_id => member.id, :direction => 5), :method => :post)
             concat link_to("参加予定", change_status_event_path(:member_id => member.id, :direction => 2), :method => :post)
@@ -97,13 +97,13 @@ module EventsHelper
       }
     when 5
       content_tag(:div, class: "btn-group"){ 
-        concat link_to(switch_black_list_flg_event_path(:member_id => member.id), :method => :post, :class => "btn btn-small btn-primary "){
+        concat link_to(switch_black_list_flg_event_path(:member_id => member.id), :method => :post, :class => "btn btn-xs btn-primary "){
           member.black_list_flg == (false || nil) ? "ブラックリスト入り" : "ブラックリスト解除" 
         }
-        concat content_tag(:button, class: "btn dropdown-toggle btn-primary btn-small", :"data-toggle" => "dropdown"){
+        concat content_tag(:button, class: "btn dropdown-toggle btn-primary btn-xs", :"data-toggle" => "dropdown"){
           content_tag(:span,"", class: "caret")
         }
-        concat content_tag(:ul, class: "dropdown-menu"){
+        concat content_tag(:ul, class: "dropdown-menu", role: "menu"){
           content_tag(:li){
             concat link_to("出席", change_status_event_path(:member_id => member.id, :direction => 3), :method => :post)
             concat link_to("キャンセル", change_status_event_path(:member_id => member.id, :direction => 4), :method => :post)

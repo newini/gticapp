@@ -1,5 +1,5 @@
-<div class="row-fluid">
-  <aside class="span2">
+<div class="row">
+  <aside class="col-md-2">
     <section>
       <%= render'members/side' %>
     </section>
@@ -7,11 +7,11 @@
       <%= render'members/side_info' %>
     </section>
   </aside>
-  <div class="span5">
+  <div class="col-md-5">
     <%= render 'member_info' %>
     <%= link_to 'メンバー情報編集', edit_member_path(@member), class: "btn btn-block btn-large btn-primary" %>
   </div>
-  <div class="span5">
+  <div class="col-md-5">
     <%= render 'participated_events' %>
   </div>
 </div>

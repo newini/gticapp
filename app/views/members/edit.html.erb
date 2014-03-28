@@ -1,5 +1,5 @@
-<div class="row-fluid">
-  <aside class="span2">
+<div class="row">
+  <aside class="col-md-2">
     <section>
       <%= render'members/side' %>
     </section>
@@ -7,9 +7,11 @@
       <%= render'members/side_info' %>
     </section>
   </aside>
-  <div class="span5">
+  <div class="col-md-10">
     <%= render 'member_form' %>
-    <%= link_to '削除', @member, value:@member.id, method: :delete, class: 'btn btn-large btn-block btn-warning', data: {confirm: "削除してもよろしいですか？"} %>
+    <div class="col-md-offset-2">
+      <%= link_to '削除', @member, value:@member.id, method: :delete, class: 'btn btn-large btn-warning', data: {confirm: "削除してもよろしいですか？"} %>
+    </div>
   </div>
 </div>
 

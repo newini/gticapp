@@ -1,18 +1,22 @@
-<div class="row-fluid">
-  <aside class="span2">
+<div class="row">
+  <aside class="col-md-2">
     <section>
       <%= render'members/side' %>
     </section>
   </aside>
-  <div class="span5">
+  <div class="col-md-10">
     <%= render 'member_form' %>
   </div>
-  <div class="span5">
+</div>
+<div class="row">
+  <div class="col-md-5 col-md-offset-2">
     <h2>メンバー情報CSVデータ取り込み</h2>
       <%= form_tag import_members_path, multipart: true do %>
         <%= file_field_tag :file, class: "file-holder" %>
       <%= submit_tag "CSV読込",class: "btn" %>
     <% end %>
+  </div>
+  <div class="col-md-5">
     <h2>csvのデータ形式</h2>
     <table class="table table-bordered">
       <tr>

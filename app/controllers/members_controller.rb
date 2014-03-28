@@ -30,6 +30,7 @@ class MembersController < ApplicationController
   end
 
   def edit
+    @title = "メンバー情報編集"
     @member = Member.find(params[:id]) 
   end
 
@@ -44,13 +45,24 @@ class MembersController < ApplicationController
   end
 
   def new
+    @title = "メンバー登録"
     @member = Member.new
+    @event = Event.find(params[:event_id]) if params[:event_id].present?
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def create
     @member = Member.new(member_params)
     if @member.save
-      redirect_to members_path 
+      if params[:event].present?
+        @member.relationships.create(event_id: params[:event][:id], status: 2) 
+        redirect_to :back 
+      else
+        redirect_to :members
+      end
     else
       render 'new'
     end

@@ -6,17 +6,21 @@
     <section>
       <%= render'side_info' %>
     </section>
-    <section>
-    </section>
   </aside>
   <div class="col-md-5">
     <h2>イベント情報</h2>
     <%= render'event_info' %>
     <%= link_to 'イベント情報編集', edit_event_path(@event), class: "center btn btn-block btn-large btn-primary" %>
+    <hr>
+    <h2>プレゼンテーション内容</h2>
+    <% if @presenter.present? %>
+      <%= render'presentation_info' %>
+    <% else %>
+      <strong>プレゼンターを登録して下さい</strong>
+    <% end %>
   </div>
   <div class="col-md-5">
-    <h2>プレゼンテーション内容</h2>
-    <%= render'presentation_info' %>
+    <h2>Facebook イベント情報</h2>
     <%= render'facebook_event_info' %>
   </div>
 </div>
