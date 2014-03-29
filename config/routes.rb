@@ -1,9 +1,16 @@
 Gticapp::Application.routes.draw do
+  get "categories/index"
+  get "categories/edit"
+  get "categories/update"
+  get "categories/new"
+  get "categories/create"
+  get "categories/destroy"
   resources :members do
     collection do
       post :import
       get :management
       post :update_information
+      get :search
     end
   end
   resources :events do
@@ -37,6 +44,8 @@ Gticapp::Application.routes.draw do
   resources :relationships, only: [:create, :destroy]
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
+  resources :places, only: [:index, :new, :create, :edit, :update, :destroy]
+  resources :categories, only: [:index, :new, :create, :edit, :update, :destroy]
   match '/signin', to: 'sessions#new', via: 'get'
   match '/signup', to: 'users#new', via: 'get'
   match '/signout', to: 'sessions#destroy', via: 'delete'

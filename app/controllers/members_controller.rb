@@ -97,6 +97,18 @@ class MembersController < ApplicationController
     redirect_to :back
   end
 
+  def search
+    if params[:search].present? 
+      @members = Member.all.where("last_name like ?", "%#{params[:search]}%").order("last_name_kana").paginate(page: params[:page])
+    else
+      @members = Member.order("last_name_kana").paginate(page: params[:page])
+    end
+    respond_to do |format|
+      format.js
+    end
+  end
+
+
   private
     def member_params
       params.require(:member).permit(:first_name, :last_name,:first_name_kana, :last_name_kana, :facebook_name, :affiliation, :title, :note, :category_id, :email, :black_list_flg)

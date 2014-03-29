@@ -13,7 +13,7 @@
         <td><%= event[:event][:date] %></td>
         <td></td>
         <td></td>
-        <td><%= Place.find(event[:event][:place]).name if event[:event][:place].present? %></td>
+        <td><%= Place.find(event[:event][:place]).name if event[:event][:place].present? and Place.where(id: event[:event][:place]).present? %></td>
       </tr>
     <% elsif event[:detail].length >= 1 %>
       <% i=0 %>
@@ -29,7 +29,7 @@
           <td><%= "#{detail[:presentation_title]}" %></td>
           <% if i == 0 %>
             <%= content_tag :td, rowspan: event[:detail].length do %>
-              <%= Place.find(event[:event][:place]).try(:name) if event[:event][:place].present? %></td>
+              <%= Place.find(event[:event][:place]).name if event[:event][:place].present? and Place.where(id: event[:event][:place]).present? %></td>
             <% end %>
           <% end %>
         </tr>

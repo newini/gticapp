@@ -120,7 +120,7 @@ class EventsController < ApplicationController
 
   def waiting
     @title = "#{@event.name} 参加予定者追加"
-    @members = waiting_members.order("last_name_kana")
+    @members = waiting_members.order("last_name_kana").limit(100)
     respond_to do |format|
       format.html
       format.js

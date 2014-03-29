@@ -1,0 +1,27 @@
+<div class="row">
+  <aside class="col-lg-2">
+    <%= render "events/side" %>
+  </aside>
+  <div class="col-lg-5">
+    <div id="ajax_container">
+      <h2><%= @title %></h2>
+      <table class="table table-bordered">
+        <tr>
+          <th>ID</th>
+          <th>会場名</th>
+          <th></th>
+          <th></th>
+        </tr>
+        <% @places.each do |place| %>
+          <tr>
+            <td><%= place.id %></td>
+            <td><%= place.name %></td>
+            <td><%= link_to "編集", edit_place_path(place), remote: true %> </td>
+            <td><%= link_to "削除", place_path(place), method: :delete %> </td>
+          </tr>
+        <% end %>
+      </table>
+      <%= link_to "会場登録", new_place_path, method: :get, class: "btn btn-primary btn-block", remote: true %>
+    </div>
+  </div>
+</div>

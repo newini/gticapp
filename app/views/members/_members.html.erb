@@ -1,4 +1,12 @@
 <div class="pagination pagination-centered"><%= will_paginate @members, renderer: BootstrapPagination::Rails %></div>
+<%= form_tag :search_members, method: 'get', remote: true, class: "form-inline", role: "form" do %>
+  <div class="form-group">
+    <span>メンバー検索</span>
+    <%= text_field_tag :search, params[:search], class: "form-control", placeholder: "山田（苗字を入力）" %>
+  </div>
+  <%= submit_tag 'Search', :name => nil, class: 'btn btn-primary' %>
+<% end %>
+
 <%= content_tag :table, class: 'table table-condensed table-bordered table-striped' do %>
   <tr>
     <th><%= sortable('last_name_kana',"頭") %></th>

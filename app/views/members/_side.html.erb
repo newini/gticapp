@@ -1,3 +1,5 @@
-<%= link_to "一覧", members_path, class: "btn btn-default btn-block" %>
-<%= link_to "新規登録/CSV読込", new_member_path, class: "btn btn-default btn-block" %>
-<%= link_to "管理", management_members_path, class: "btn btn-default btn-block" %>
+<div class="btn-group btn-group-vertical btn-block" >
+  <%= link_to "メンバー一覧", members_path, class: "btn btn-default btn-block" %>
+  <%= link_to "メンバー登録/CSV読込", new_member_path, class: "btn btn-default btn-block" %>
+  <%= link_to "属性管理", categories_path, class: "btn btn-default btn-block" %>
+</div>

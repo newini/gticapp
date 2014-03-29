@@ -1,0 +1,27 @@
+<div class="row">
+  <aside class="col-lg-2">
+    <%= render "members/side" %>
+  </aside>
+  <div class="col-lg-5">
+    <div id="ajax_container">
+      <h2><%= @title %></h2>
+      <table class="table table-bordered">
+        <tr>
+          <th>ID</th>
+          <th>属性名</th>
+          <th></th>
+          <th></th>
+        </tr>
+        <% @categories.each do |category| %>
+          <tr>
+            <td><%= category.id %></td>
+            <td><%= category.name %></td>
+            <td><%= link_to "編集", edit_category_path(category), remote: true %> </td>
+            <td><%= link_to "削除", category_path(category), method: :delete %> </td>
+          </tr>
+        <% end %>
+      </table>
+      <%= link_to "属性登録", new_category_path, method: :get, class: "btn btn-primary btn-block", remote: true %>
+    </div>
+  </div>
+</div>

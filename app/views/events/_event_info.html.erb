@@ -9,7 +9,7 @@
   </tr>
   <tr>
     <th>会場</th>
-    <td><%= Place.find(@event.place_id).name if @event.place_id.present?%></td>
+    <td><%= Place.find(@event.place_id).name if @event.place_id.present? and Place.where(id: @event.place_id).present?%></td>
   </tr>
   <tr>
     <th>参加費</th>
