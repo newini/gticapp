@@ -14,7 +14,6 @@
   <div class="col-lg-10">
     <h2><%= "イベント一覧" %></h2>
     <div class="btn-group">
-      <%= link_to "新規登録/CSV読込", new_event_path, class: "btn btn-default" %>
       <% date = @last_date%>
       <% while date >= @start_date do %>
         <%= link_to "#{date.strftime("%Y")}年", events_path(:year => date.strftime("%Y-%m-%d")), class: "btn btn-default", remote: true%>

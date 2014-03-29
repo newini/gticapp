@@ -1,19 +1,41 @@
 <table class="table table-hover table-bordered">
   <tr>
-    <th>イベント名</th>
-    <th>開催日</th>
-    <th>プレゼンター</th>
-    <th></th>
-    <th></th>
+    <th class="col-md-1">イベント名</th>
+    <th class="col-md-1">開催日</th>
+    <th class="col-md-2">プレゼンター</th>
+    <th class="col-md-4">タイトル</th>
+    <th class="col-md-1">会場</th>
   </tr>
   <% @events.each do |event| %>
-    <tr>
-    <td><%= event.name %></td>
-    <td><%= show_date(event.start_time) %></td>
-    <td><%= event.presenters.map{|presenter| presenter.affiliation}.join(", ") %> </td>
-    <td><%= link_to '詳細', event_path(event) ,class: "btn btn-small btn-primary btn-block"%></td>
-    <td><%= link_to 'fb更新', update_facebook_event_path(id: event, rsvp_status: "attending") ,class: "btn btn-small btn-primary btn-block", method: "post" %></td>
-  </tr>
-<% end %>
+    <% if event[:detail].length == 0 %>
+      <tr>
+        <td><%= link_to event[:event][:name], event_path(event[:event][:id]) %></td>
+        <td><%= event[:event][:date] %></td>
+        <td></td>
+        <td></td>
+        <td><%= Place.find(event[:event][:place]).name if event[:event][:place].present? %></td>
+      </tr>
+    <% elsif event[:detail].length >= 1 %>
+      <% i=0 %>
+      <% event[:detail].each do |detail| %>
+        <tr>
+          <% if i == 0 %>
+            <%= content_tag :td, rowspan: event[:detail].length do %>
+              <%= link_to event[:event][:name], event_path(event[:event][:id]) %>
+            <% end %>
+            <%= content_tag :td, event[:event][:date], rowspan: event[:detail].length %>
+          <% end %>
+          <td><%= "#{detail[:affiliation]}" %><br><%= "#{detail[:title]} #{detail[:name]} 氏" %></td>
+          <td><%= "#{detail[:presentation_title]}" %></td>
+          <% if i == 0 %>
+            <%= content_tag :td, rowspan: event[:detail].length do %>
+              <%= Place.find(event[:event][:place]).try(:name) if event[:event][:place].present? %></td>
+            <% end %>
+          <% end %>
+        </tr>
+        <% i += 1 %>
+      <% end %>
+    <% end %>
+  <% end %>
 </table>
 

@@ -10,6 +10,7 @@
   <div class="col-md-5">
     <%= render 'member_info' %>
     <%= link_to 'メンバー情報編集', edit_member_path(@member), class: "btn btn-block btn-large btn-primary" %>
+    <%= link_to 'メンバー削除', @member, value:@member.id, method: :delete, class: 'btn btn-large btn-warning btn-block', data: {confirm: "削除してもよろしいですか？"} %>
   </div>
   <div class="col-md-5">
     <%= render 'participated_events' %>
