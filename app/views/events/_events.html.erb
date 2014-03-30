@@ -25,8 +25,12 @@
             <% end %>
             <%= content_tag :td, event[:event][:date], rowspan: event[:detail].length %>
           <% end %>
-          <td><%= "#{detail[:affiliation]}" %><br><%= "#{detail[:title]} #{detail[:name]} 氏" %></td>
-          <td><%= "#{detail[:presentation_title]}" %></td>
+          <td>
+            <% detail[:presenter].each do |presenter| %>
+              <%= "#{presenter[:affiliation]}" %><br><%= "#{presenter[:title]} #{presenter[:name]} 氏" %><br>
+            <% end %>
+          </td>
+          <td><%= "#{detail[:title]}" %></td>
           <% if i == 0 %>
             <%= content_tag :td, rowspan: event[:detail].length do %>
               <%= Place.find(event[:event][:place]).name if event[:event][:place].present? and Place.where(id: event[:event][:place]).present? %></td>

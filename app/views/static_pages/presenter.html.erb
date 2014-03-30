@@ -24,8 +24,12 @@
                 <%= content_tag :td, event[:event][:name], rowspan: event[:detail].length %>
                 <%= content_tag :td, event[:event][:date], rowspan: event[:detail].length %>
               <% end %>
-              <td><%= "#{detail[:affiliation]}" %><br><%= "#{detail[:title]} #{detail[:name]} 氏" %></td>
-              <td><%= "#{detail[:presentation_title]}" %></td>
+              <td>
+                <% detail[:presenter].each do |presenter| %>
+                  <%= "#{presenter[:affiliation]}" %><br><%= "#{presenter[:title]} #{presenter[:name]} 氏" %><br>
+                <% end %>
+              </td>
+              <td><%= "#{detail[:title]}" %></td>
             </tr>
             <% i += 1 %>
           <% end %>

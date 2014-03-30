@@ -12,7 +12,30 @@ class EventsController < ApplicationController
     year = params[:year].present? ? Date.parse(params[:year]) : @last_date 
     base = Event.where(:start_time => year.beginning_of_year..year.end_of_year).group(:start_time)
     record = base.order("start_time DESC")
-    @events = record.map{|event| [event: {id: event.id, name: event.name, date: event.start_time.strftime("%Y-%m-%d"), place: event.place_id }, detail: event.presenters.map{|presenter| [name: [presenter.last_name, presenter.first_name].join(" "), affiliation: presenter.affiliation, title: presenter.title, presentation_title: presenter.presentations.find_by_event_id(event.id).try(:title)]}.flatten]}.flatten
+    @events = record.map{
+      |event| [
+        event: {
+          id: event.id, 
+          name: event.name, 
+          date: event.start_time.strftime("%Y-%m-%d"), 
+          place: event.place_id 
+        }, 
+        detail: event.presentations.map{
+          |presentation| [
+            title: presentation.try(:title),
+            abstract: presentation.try(:abstract),
+            note: presentation.try(:note),
+            presenter: presentation.presenters.map{
+              |presenter| [
+                name: [presenter.last_name, presenter.first_name].join(" "), 
+                affiliation: presenter.affiliation, 
+                title: presenter.title
+              ]
+            }.flatten
+          ]
+        }.flatten
+      ]
+    }.flatten
     array = Member.where(:gtic_flg => nil).pluck(:id)
     @total_events = Event.count
     @total_participants = Relationship.where(member_id: array).where(status: 2..3).count
@@ -23,7 +46,10 @@ class EventsController < ApplicationController
   end
   def show
     @participants = @event.participants
+    @presentations = @event.presentations
+    @presentation = Presentation.new
     @presenters = @event.presenters
+    @presenters_ary = @presenters.map{|presenter| [[presenter.last_name, presenter.first_name].join(" "), presenter.id]}
     @registed_members = @event.registed_members
     @graph = facebook_objects(@event.fb_event_id)
     @fb_event_info = @graph[@event.fb_event_id] if @graph.present?
@@ -256,6 +282,19 @@ class EventsController < ApplicationController
     respond_to do |format|
       format.js
     end
+  end
+
+  def convert
+    @presentations = Presentation.all
+    @presentations.each do |presentation|
+      event_id = presentation.event_id
+      member_id = presentation.member_id
+      presentation_id = presentation.id
+      presentationship = Presentationship.where(event_id: event_id).find_by_member_id(member_id) || Presentationship.new(event_id: event_id, member_id: member_id)
+      presentationship.update(presentation_id: presentation_id)
+      presentationship.save
+    end
+    redirect_to events_path
   end
 
    

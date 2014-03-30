@@ -8,7 +8,9 @@ class Event < ActiveRecord::Base
   has_many :no_show, -> {where "status = 5"}, through: :relationships, source: :member 
   has_many :presenters, -> {where :relationships => {presenter_flg: true}}, through: :relationships, source: :member
   has_many :invitations, dependent: :destroy
-  has_many :presentations, foreign_key: "event_id", dependent: :destroy
+  has_many :presentationships, foreign_key: "event_id", dependent: :destroy
+  has_many :presentations, through: :presentationships, source: :presentation, uniq: true
+#  has_many :presentations, foreign_key: "event_id", dependent: :destroy
   def self.import(file)
     CSV.foreach(file.path, headers: true) do |row|
       Event.create! row.to_hash

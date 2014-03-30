@@ -9,7 +9,9 @@ class Member < ActiveRecord::Base
   has_many :introducer, through: :member_relationships, source: :introducer
   has_many :reverse_member_relationships, foreign_key: "introducer_id", dependent: :destroy, class_name: "MemberRelationship"
   has_many :introduced_members, through: :reverse_member_relationships, source: :introduced
-  has_many :presentations, foreign_key: "member_id", dependent: :destroy
+  has_many :presentationships, foreign_key: "member_id", dependent: :destroy
+  has_many :presentations, through: :presentationships, source: :presentation
+#  has_many :presentations, foreign_key: "member_id", dependent: :destroy
 
   def self.import(file)
     CSV.foreach(file.path, headers: true) do |row|

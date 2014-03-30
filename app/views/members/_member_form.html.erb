@@ -22,6 +22,12 @@
         </div>
       </div>
       <div class="form-group">
+        <%= label_tag :last_name_kana, "名（かな） / first name", class: 'col-sm-6 control-label' %>
+        <div class="col-sm-6">
+          <%= text_field_tag nil, @member.first_name_kana, name: "member[first_name_kana]", placeholder: @member.errors.any? ? "#{@member.errors.messages[:first_name_kana][0]}" : "太郎 / John", class: "form-control" %>
+        </div>
+      </div>
+      <div class="form-group">
         <%= label_tag :affiliation, "所属 / affiliation", class: 'col-sm-6 control-label' %>
         <div class="col-sm-6">
           <%= text_field_tag nil, @member.affiliation, name: "member[affiliation]", placeholder:  "海山商事", class: "form-control" %>

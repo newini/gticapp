@@ -1,4 +1,4 @@
 class Presentation < ActiveRecord::Base
-  belongs_to :member
-  belongs_to :event
+  has_many :presentationships, foreign_key: "presentation_id", dependent: :destroy
+  has_many :presenters, through: :presentationships, source: :member
 end

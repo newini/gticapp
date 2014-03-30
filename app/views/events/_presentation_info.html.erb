@@ -1,24 +1,93 @@
-<div id= "input_container" %>
-  <%= form_tag :update_presentation_event, id: "input_container" do %>
-
-    <%= content_tag :table, class: 'table table-condensed table-bordered table-striped' do %>
-      <% @presenters.each do |presenter| %>
-        <%= hidden_field_tag nil, presenter.id, name: "presentation[][member_id]" %>
-        <%= hidden_field_tag nil, @event.id, name: "presentation[][event_id]" %>
-        <%= content_tag :tr do %>
-          <th>プレゼンター</th>
-          <td><%= "#{presenter.last_name} #{presenter.first_name} 氏" %></td>
+<% n = 1 %>
+<% @presentations.each do |presentation| %>
+  <%= content_tag :table, class: 'table table-condensed table-bordered table-striped' do %>
+    <tr>
+      <th>
+        <%="プレゼンテーション ##{n}" %>
+        <%= button_tag "編集", data: {target: "#myModal#{n}", toggle: "modal"}, class: "btn btn-default btn-xs" %>
+        <%= link_to "削除", presentation, value: presentation.id, method: :delete, class: "btn btn-default btn-xs", data: {confirm: "削除してもよろしいですか？"} %>
+      </th>
+    </tr>
+    <tr>
+      <th>プレゼンター</th>
+    </tr>
+    <tr>
+      <td>
+        <% presentation.presenters.each do |presenter| %>
+          <%= "#{presenter.try(:last_name)} #{presenter.try(:first_name)}" %>
         <% end %>
-        <%= content_tag :tr do %>
-          <th>題目</th>
-          <td><%= text_area_tag nil, presenter.presentations.find_by_event_id(@event).try(:title), name: "presentation[][title]", class: "form-control" %></td>
-        <% end %>
-        <%= content_tag :tr do %>
-          <th>概要</th>
-          <td><%= text_area_tag nil, presenter.presentations.find_by_event_id(@event).try(:abstract), name: "presentation[][abstract]", class: "form-control" %></td>
-        <% end %>
-      <% end %>
-    <% end %>
-    <%= submit_tag "更新", class: "btn btn-primary" %>
+      </td>
+    </tr>
+    <tr>
+      <th>題目</th>
+    </tr>
+    <tr>
+      <td><%= presentation.try(:title) %></td>
+    </tr>
+    <tr>
+      <th>概要</th>
+    </tr>
+    <tr>
+      <td><%= presentation.try(:abstract) %></td>
+    </tr>
   <% end %>
+  <% n += 1 %>
+<% end %>
+<%= button_tag "追加", data: {target: "#myModal", toggle: "modal"}, class: "btn btn-primary btn-block" %>
+
+<% i = 1 %>
+<% @presentations.each do |presentation|%>
+  <div class="modal fade" id="myModal<%= i %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="myModalLabel">編集</h4>
+        </div>
+        <%= form_for presentation, id: "input_container" do %>
+          <div class="modal-body">
+              <%= hidden_field_tag nil, @event.id, name: "presentation[event_id]" %>
+              <p>タイトル</p>
+              <%= text_area_tag nil, presentation.try(:title), name: "presentation[title]", class: "form-control" %>
+              <p>概要</p>
+              <%= text_area_tag nil, presentation.try(:abstract), name: "presentation[abstract]", class: "form-control" %>
+              <p>プレゼンター</p>
+              <%= select_tag nil, options_for_select(@presenters_ary, presentation.presenters.pluck(:id)), multiple: true, name: "presentation[member_id]", class: "form-control" %>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <%= submit_tag "Save", class: "btn btn-primary" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <% i += 1 %>
+<% end %>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">プレゼンテーション内容</h4>
+      </div>
+      <%= form_for @presentation, id: "input_container" do %>
+        <div class="modal-body">
+            <%= hidden_field_tag nil, @event.id, name: "presentation[event_id]" %>
+            <p>タイトル</p>
+            <%= text_area_tag nil, @presentation.try(:title), name: "presentation[title]", class: "form-control" %>
+            <p>概要</p>
+            <%= text_area_tag nil, @presentation.try(:abstract), name: "presentation[abstract]", class: "form-control" %>
+            <p>プレゼンター</p>
+            <%= select_tag nil, options_for_select(@presenters_ary, @presenters_ary.first[1]), multiple: true, name: "presentation[member_id][]", class: "form-control" %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <%= submit_tag "Save", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
 </div>
+

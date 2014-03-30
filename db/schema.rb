@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140325225537) do
+ActiveRecord::Schema.define(version: 20140330195127) do
 
   create_table "categories", force: true do |t|
     t.string   "name"
@@ -111,6 +111,19 @@ ActiveRecord::Schema.define(version: 20140325225537) do
   add_index "presentations", ["event_id"], name: "index_presentations_on_event_id"
   add_index "presentations", ["member_id"], name: "index_presentations_on_member_id"
   add_index "presentations", ["title"], name: "index_presentations_on_title"
+
+  create_table "presentationships", force: true do |t|
+    t.integer  "member_id"
+    t.integer  "event_id"
+    t.integer  "presentation_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "presentationships", ["event_id"], name: "index_presentationships_on_event_id"
+  add_index "presentationships", ["member_id", "event_id", "presentation_id"], name: "presentationship_index", unique: true
+  add_index "presentationships", ["member_id"], name: "index_presentationships_on_member_id"
+  add_index "presentationships", ["presentation_id"], name: "index_presentationships_on_presentation_id"
 
   create_table "relationships", force: true do |t|
     t.integer  "member_id"
