@@ -52,7 +52,7 @@
               <p>概要</p>
               <%= text_area_tag nil, presentation.try(:abstract), name: "presentation[abstract]", class: "form-control" %>
               <p>プレゼンター</p>
-              <%= select_tag nil, options_for_select(@presenters_ary, presentation.presenters.pluck(:id)), multiple: true, name: "presentation[member_id]", class: "form-control" %>
+              <%= select_tag nil, options_for_select(@presenters_ary, presentation.presenters.pluck(:id)), multiple: true, name: "presentation[member_id][]", class: "form-control" %>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

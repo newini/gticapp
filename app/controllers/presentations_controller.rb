@@ -17,14 +17,14 @@ class PresentationsController < ApplicationController
   def update
     @presentation = Presentation.find(params[:id])
     @event = Event.find(params[:presentation][:event_id])
-    presenters = Member.where(id: params[:presentation][:member_id])
+    presenters = params[:presentation][:member_id]
     if @presentation.update_attributes(presentation_params)
       presentationships = Presentationship.where(presentation_id: @presentation.id)
       presentationships.each do |presentationship|
         presentationship.destroy
       end
       presenters.each do |presenter|
-        Presentationship.create(presentation_id: @presentation.id, event_id: @event.id, member_id: presenter.id)
+        Presentationship.create(presentation_id: @presentation.id, event_id: @event.id, member_id: presenter)
       end
       redirect_to :back
     else
