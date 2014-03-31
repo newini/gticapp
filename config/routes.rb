@@ -18,7 +18,8 @@ Gticapp::Application.routes.draw do
       get :no_show
       get :new_member
       get :search
-      get :update_member
+      get :update_registed_member
+      get :update_participants
       post :change_status
       post :switch_black_list_flg
       post :change_all_waiting_status
@@ -53,7 +54,6 @@ Gticapp::Application.routes.draw do
   #omniauth
   match '/auth/:provider/callback', to: 'sessions#create', via: 'get'
 
-  match '/convert', to: 'events#convert', via: 'get'
 
   root 'static_pages#home'
 end

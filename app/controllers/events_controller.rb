@@ -3,7 +3,7 @@ class EventsController < ApplicationController
   include MembersHelper
   before_action :signed_in_user
   before_action :selected_event,
-    only: [:show, :edit, :update, :destroy, :switch_presenter_flg,:switch_guest_flg, :switch_black_list_flg, :update_member,
+    only: [:show, :edit, :update, :destroy, :switch_presenter_flg,:switch_guest_flg, :switch_black_list_flg, :update_registed_member, :update_participants,
            :invited, :waiting, :registed, :participants, :canceled, :no_show, :change_status,
            :change_all_waiting_status, :send_invitation, :send_email, :update_facebook, :new_member, :search]
   def index
@@ -166,6 +166,10 @@ class EventsController < ApplicationController
   def participants
     @title = "#{@event.name} 出席者"
     @members = @event.participants.order("last_name_kana")
+    respond_to do |format|
+      format.html
+      format.xls
+    end
   end
 
   def canceled
@@ -276,7 +280,7 @@ class EventsController < ApplicationController
     redirect_to :back
   end
 
-  def update_member
+  def update_registed_member
     @title = "#{@event.name} 参加予定者情報編集"
     @members = @event.registed_members.order("last_name_kana")
     respond_to do |format|
@@ -284,6 +288,14 @@ class EventsController < ApplicationController
     end
   end
 
+  def update_participants
+    @title = "#{@event.name} 出席者情報編集"
+    @members = @event.participants.order("last_name_kana")
+    respond_to do |format|
+      format.js
+    end
+  end
+=begin
   def convert
     @presentations = Presentation.all
     @presentations.each do |presentation|
@@ -296,6 +308,7 @@ class EventsController < ApplicationController
     end
     redirect_to events_path
   end
+=end
 
    
   private
