@@ -6,7 +6,7 @@
         <th class="col-md-1">Event</th>
         <th class="col-md-1">Date</th>
         <th class="col-md-2">Presenter</th>
-        <th class="col-md-4">title</th>
+        <th class="col-md-4">Title</th>
       </tr>
       <% @events.each do |event| %>
         <% if event[:detail].length == 0 %>
@@ -26,7 +26,7 @@
               <% end %>
               <td>
                 <% detail[:presenter].each do |presenter| %>
-                  <%= "#{presenter[:affiliation]}" %><br><%= "#{presenter[:title]} #{presenter[:name]} 氏" %><br>
+                  <strong><%= presenter[:affiliation] %></strong><br><%= "#{presenter[:title]} #{presenter[:name]} 氏" %><br>
                 <% end %>
               </td>
               <td><%= "#{detail[:title]}" %></td>
