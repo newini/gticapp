@@ -8,7 +8,11 @@
       </button>
       <%= link_to root_path, class: "navbar-brand logo-nav" do %>
         <%#= image_tag 'https://s3-ap-northeast-1.amazonaws.com/gtic/gtic_logo_c_30x30.png' %>
-        <%= image_tag '../logo2.png' %>
+        <% unless signed_in? %>
+          <%= image_tag '../logo2.png' %>
+        <% else %>
+          <%= image_tag 'https://s3-ap-northeast-1.amazonaws.com/gtic/gtic_logo_c_30x30.png' %>管理アプリ
+        <% end %>
       <% end %>
     </div>
     <div class="navbar-collapse collapse">
@@ -30,6 +34,7 @@
           <li><%= link_to "ABOUT", :about %></li> 
           <li><%= link_to "PRESENTER", :presenter %></li> 
           <li><%= link_to "ORGANIZER", :organizer %></li> 
+          <li><%= link_to "MEDIA", :media %></li> 
         <% end %>
       </ul> 
     </div>
