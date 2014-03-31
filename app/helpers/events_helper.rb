@@ -16,13 +16,13 @@ module EventsHelper
     relationship = @event.relationships.find_by_member_id(member.id)
     case relationship.status
     when 1
-      "待機"
+      "未定"
     when 2
       "参加予定"
     when 3
       "出席"
     when 4
-      "キャンセル"
+      "欠席"
     when 5
       "No-show"
     else
@@ -47,6 +47,10 @@ module EventsHelper
     case rsvp_status
     when "attending"
       2
+    when "declined"
+      4
+    when "maybe"
+      1
     end
   end
 

@@ -2,6 +2,7 @@ class Event < ActiveRecord::Base
   validates :name, presence:true, length: { maximum: 50 }
   has_many :relationships, foreign_key: "event_id", dependent: :destroy
   has_many :members, through: :relationships, source: :member
+  has_many :maybe_members, -> { where "status = 1"}, through: :relationships, source: :member 
   has_many :registed_members, -> { where "status = 2"}, through: :relationships, source: :member 
   has_many :participants, -> { where "status = 3"}, through: :relationships, source: :member 
   has_many :canceled_members, -> {where "status = 4"}, through: :relationships, source: :member 
@@ -63,30 +64,40 @@ class Event < ActiveRecord::Base
     key = response.body.split("&").first.split("=").last
     user.update(access_token: key)
     user.save!
-    status = "attending"
+    statuses = ["attending", "maybe", "declined"]
     events = Event.where("start_time >= ?", DateTime.now)
     graph = Koala::Facebook::API.new(key)
     events.each do |event|
       fb_event_id = event.fb_event_id
       if fb_event_id.present?
-        fb_members = graph.get_connections(fb_event_id, status, locale: "jp_JP")
-        fb_members.each do |fb_member|
-          fb_name = fb_member["name"]
-          fb_user_id = fb_member["id"]
-          if Member.find_by_fb_user_id(fb_user_id).present?
-            @member = Member.find_by_fb_user_id(fb_member["id"])
-            @member.update(fb_name: fb_name, fb_user_id: fb_user_id)
-          else
-            @member = Member.new(fb_name: fb_name, fb_user_id: fb_user_id)
-          end
-          @member.save!
-          if @member.relationships.find_by_event_id(event.id).blank?
-            @relationship = @member.relationships.new(event_id: event.id, status: 2)
-            @relationship.save!
-          elsif @member.relationships.find_by_event_id(event.id).status < 2
-            @relationship = @member.relationships.find_by_event_id(event.id)
-            @relationship.update(event_id: event.id, status: 2)
-            @relationship.save!
+        statuses.each do |status|
+          fb_members = graph.get_connections(fb_event_id, status, locale: "jp_JP")
+          fb_members.each do |fb_member|
+            fb_name = fb_member["name"]
+            fb_user_id = fb_member["id"]
+            if Member.find_by_fb_user_id(fb_user_id).present?
+              @member = Member.find_by_fb_user_id(fb_user_id)
+              @member.update(fb_name: fb_name, fb_user_id: fb_user_id)
+            else
+              @member = Member.new(fb_name: fb_name, fb_user_id: fb_user_id)
+            end
+            @member.save!
+            record = @member.relationships.find_by_event_id(event.id)
+            if record.blank?
+              record = @member.relationships.new(event_id: event.id, status: 2)
+            else
+              unless record.status == 3 or 5
+                case status
+                when "attending"
+                  record.update(event_id: event.id, status: 2)
+                when "maybe"
+                  record.update(event_id: event.id, status: 1)
+                when "declined"
+                  record.update(event_id: event.id, status: 4)
+                end
+              end
+            end
+            record.save!
           end
         end
       end

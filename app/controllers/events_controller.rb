@@ -3,8 +3,8 @@ class EventsController < ApplicationController
   include MembersHelper
   before_action :signed_in_user
   before_action :selected_event,
-    only: [:show, :edit, :update, :destroy, :switch_presenter_flg,:switch_guest_flg, :switch_black_list_flg, :update_registed_member, :update_participants,
-           :invited, :waiting, :registed, :participants, :canceled, :no_show, :change_status,
+    only: [:show, :edit, :update, :destroy, :switch_presenter_flg,:switch_guest_flg, :switch_black_list_flg, :update_maybe_member, :update_registed_member, :update_participants,
+           :invited, :waiting, :maybe, :registed, :participants, :canceled, :no_show, :change_status,
            :change_all_waiting_status, :send_invitation, :send_email, :update_facebook, :new_member, :search]
   def index
     @start_date = Event.order("start_time ASC").first.start_time.beginning_of_year
@@ -154,6 +154,15 @@ class EventsController < ApplicationController
     end
   end
 
+  def maybe
+    @title = "#{@event.name} 未定"
+    @members = @event.maybe_members.order("last_name_kana")
+    respond_to do |format|
+      format.html
+      format.xls
+    end
+  end
+
   def registed
     @title = "#{@event.name} 参加予定者"
     @members = @event.registed_members.order("last_name_kana")
@@ -235,25 +244,28 @@ class EventsController < ApplicationController
     redirect_to send_invitation_path(@event)
   end
   def update_facebook
-    @rsvp_status = params[:rsvp_status]
-    @fb_members = facebook(@event.fb_event_id, @rsvp_status)
-    @fb_members.each do |fb_member|
-      fb_name = fb_member["name"]
-      fb_user_id = fb_member["id"]
-      if Member.find_by_fb_user_id(fb_user_id).present?
-        @member = Member.find_by_fb_user_id(fb_member["id"])
-        @member.update(fb_name: fb_name, fb_user_id: fb_user_id)
-      else
-        @member = Member.new(fb_name: fb_name, fb_user_id: fb_user_id)
-      end
-      @member.save!
-      if @member.relationships.find_by_event_id(@event.id).blank?
-        @relationship = @member.relationships.new(event_id: @event.id, status: convert_status(@rsvp_status))
-        @relationship.save!
-      elsif @member.relationships.find_by_event_id(@event.id).status < 2
-        @relationship = @member.relationships.find_by_event_id(@event.id)
-        @relationship.update(event_id: @event.id, status: convert_status(@rsvp_status))
-        @relationship.save!
+    status_array = ["attending", "maybe", "declined"]
+    status_array.each do |rsvp_status|
+      fb_members = facebook(@event.fb_event_id, rsvp_status)
+      fb_members.each do |fb_member|
+        fb_name = fb_member["name"]
+        fb_user_id = fb_member["id"]
+        if Member.find_by_fb_user_id(fb_user_id).present?
+          member = Member.find_by_fb_user_id(fb_member["id"])
+          member.update(fb_name: fb_name, fb_user_id: fb_user_id)
+        else
+          member = Member.new(fb_name: fb_name, fb_user_id: fb_user_id)
+        end
+        member.save!
+        record = member.relationships.find_by_event_id(@event.id)
+        if record.blank?
+          record = member.relationships.new(event_id: @event.id, status: convert_status(rsvp_status))
+        else 
+          unless record.status == 3 or 5
+            record.update(event_id: @event.id, status: convert_status(rsvp_status))
+          end
+        end
+        record.save!
       end
     end
     redirect_to :back
@@ -279,6 +291,15 @@ class EventsController < ApplicationController
     end
     redirect_to :back
   end
+
+  def update_maybe_member
+    @title = "#{@event.name} 未定者情報編集"
+    @members = @event.maybe_members.order("last_name_kana")
+    respond_to do |format|
+      format.js
+    end
+  end
+
 
   def update_registed_member
     @title = "#{@event.name} 参加予定者情報編集"

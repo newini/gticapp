@@ -11,6 +11,7 @@ Gticapp::Application.routes.draw do
     member do
       get :invite
       get :waiting
+      get :maybe
       get :invited
       get :registed
       get :participants
@@ -18,6 +19,7 @@ Gticapp::Application.routes.draw do
       get :no_show
       get :new_member
       get :search
+      get :update_maybe_member
       get :update_registed_member
       get :update_participants
       post :change_status
