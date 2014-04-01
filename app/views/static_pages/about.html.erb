@@ -60,14 +60,43 @@
     <h1>RECEPTION</h1>
     <div class="row">
       <div class="col-lg-4 col-md-4">
-        <%= image_tag "../reception.png" %>
+        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+          <!-- Indicators -->
+          <ol class="carousel-indicators">
+            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+          </ol>
+
+          <!-- Wrapper for slides -->
+          <div class="carousel-inner">
+            <div class="item active">
+              <%= image_tag "../reception01.png" %>
+            </div>
+            <div class="item">
+              <%= image_tag "../reception02.png" %>
+            </div>
+            <div class="item">
+              <%= image_tag "../reception03.png" %>
+            </div>
+          </div>
+
+          <!-- Controls -->
+          <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+          </a>
+          <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+          </a>
+        </div>
         <div class="logo-wrapper">
         </div>
       </div>
  
       <div class="col-lg-8 col-md-8">
         <p>会議の後はビールと軽食を片手にプレゼンター、参加者が歓談します。</p>
-        <p>ハラルフードもおいています。</p>
+        <p>GTICでは、第１回イベントから一度もかかさず、ムスリムの人が来ても安心して、食事ができるように、Halal料理を懇親会に必ず、用意しています。 </p>
+        <p>そのような背景もあり、バングラデシュから政府高官や、経済界の代表団が来日した時も、GTICで講演をさせてくれ、と依頼がきました。</p>
       </div>
     </div> 
   </div>
