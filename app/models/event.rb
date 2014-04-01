@@ -34,22 +34,15 @@ class Event < ActiveRecord::Base
 
   def self.import_participants(file,event_id)
     CSV.foreach(file.path, headers: true) do |row|
-      member = Member.where(last_name: row["last_name"]).find_by_first_name(row["first_name"]) || Member.new
-      if member.last_name.blank?
+      member = Event.find(event_id).participants.where(last_name: row["last_name"]).find_by_first_name(row["first_name"]) || nil
+      if member.present?
         parameters = ActionController::Parameters.new(row.to_hash)
-        member.update(parameters.permit(:last_name, :first_name, :last_name_kana, :first_name_kana, :facebook_name, :affiliation, :title, :note, :email))
+        member.update(parameters.permit(:affiliation)) if member.affiliation.blank?
+        member.update(parameters.permit(:title)) if member.title.blank?
+        member.update(parameters.permit(:note)) if member.note.blank?
+        member.update(parameters.permit(:email)) if member.email.blank?
         member.save!
       end
-      relationship = Relationship.where(event_id: event_id).find_by_member_id(member.id) || Relationship.new
-      relationship.update(member_id: member.id, event_id: event_id, status: 3 )
-      relationship.save!
-      if member.introducer.where(last_name: row["introducer_last_name"]).find_by_first_name(row["introducer_first_name"]).blank?
-        introducer = Member.where(last_name: row["introducer_last_name"]).find_by_first_name(row["introducer_first_name"]) || Member.new
-        introducer.update(last_name: row["introducer_last_name"], first_name: row["introducer_first_name"])
-        introducer.save!
-        member.member_relationships.create(introducer_id: introducer.id)
-      end
- 
     end
   end
 

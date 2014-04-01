@@ -68,14 +68,14 @@ module EventsHelper
         } 
         concat content_tag(:ul, class: "dropdown-menu", role: "menu"){ 
           content_tag(:li){
-            concat link_to("キャンセル", change_status_event_path(:member_id => member.id, :direction => 4), :method => :post) 
+            concat link_to("欠席", change_status_event_path(:member_id => member.id, :direction => 4), :method => :post) 
             concat link_to("No-show", change_status_event_path(:member_id => member.id, :direction => 5), :method => :post)
           }
         }
       }
     when 3
       content_tag(:div, class: "btn-group"){ 
-        concat link_to "キャンセル", change_status_event_path(:member_id => member.id, :direction => 4), :method => :post, :class => "btn btn-xs btn-primary "
+        concat link_to "欠席", change_status_event_path(:member_id => member.id, :direction => 4), :method => :post, :class => "btn btn-xs btn-primary "
         concat content_tag(:button, class: "btn dropdown-toggle btn-primary btn-xs", :"data-toggle" => "dropdown"){ 
           content_tag :span, "",  class: "caret"
         }
@@ -110,7 +110,7 @@ module EventsHelper
         concat content_tag(:ul, class: "dropdown-menu", role: "menu"){
           content_tag(:li){
             concat link_to("出席", change_status_event_path(:member_id => member.id, :direction => 3), :method => :post)
-            concat link_to("キャンセル", change_status_event_path(:member_id => member.id, :direction => 4), :method => :post)
+            concat link_to("欠席", change_status_event_path(:member_id => member.id, :direction => 4), :method => :post)
             concat link_to("参加予定", change_status_event_path(:member_id => member.id, :direction => 2), :method => :post)
           }
         }
@@ -127,17 +127,17 @@ module EventsHelper
       content_tag :span, "GTIC"
     elsif @presenter_flg
       content_tag(:div, class: "dropdown") {
-        concat link_to("プレゼンター", "#", :class => "dropdown-toggle", data: {:toggle => "dropdown"})
+        concat link_to("プレゼンター", "#", :class => "dropdown-toggle btn btn-xs btn-default", data: {:toggle => "dropdown"})
         concat content_tag(:ul, class: "dropdown-menu", role: "menu", :"aria-labelledby" => "dLabel"){ 
           content_tag(:li){
-            concat link_to("ゲスト", switch_presenter_flg_event_path(:member_id => member.id, :switch => "on"), :method => :post) 
+            concat link_to("ゲスト", switch_guest_flg_event_path(:member_id => member.id, :switch => "on"), :method => :post) 
             concat link_to("参加者", switch_presenter_flg_event_path(:member_id => member.id, :switch => "off"), :method => :post) 
           }
         }
       }
     elsif @guest_flg
       content_tag(:div, class: "dropdown") {
-        concat link_to("ゲスト", "#", :class => "dropdown-toggle", data: {:toggle => "dropdown"})
+        concat link_to("ゲスト", "#", :class => "dropdown-toggle btn btn-xs btn-default", data: {:toggle => "dropdown"})
         concat content_tag(:ul, class: "dropdown-menu", role: "menu", :"aria-labelledby" => "dLabel"){ 
           content_tag(:li){
             concat link_to("プレゼンター", switch_presenter_flg_event_path(:member_id => member.id, :switch => "on"), :method => :post) 
@@ -147,7 +147,7 @@ module EventsHelper
       }
     else
       content_tag(:div, class: "dropdown") {
-        concat link_to("参加者", "#", :class => "dropdown-toggle", data: {:toggle => "dropdown"})
+        concat link_to("参加者", "#", :class => "dropdown-toggle btn btn-xs btn-default", data: {:toggle => "dropdown"})
         concat content_tag(:ul, class: "dropdown-menu", role: "menu", :"aria-labelledby" => "dLabel"){ 
           content_tag(:li){
             concat link_to("プレゼンター", switch_presenter_flg_event_path(:member_id => member.id, :switch => "on"), :method => :post) 

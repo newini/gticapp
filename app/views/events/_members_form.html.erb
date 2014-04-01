@@ -12,6 +12,7 @@
         <th class="col-md-2">所属</th>
         <th class="col-md-1">役職</th>
         <th class="col-md-2">備考</th>
+        <th class="col-md-1">email</th>
       </tr>
       <% i = 1 %>
       <% @members.each do |member| %>
@@ -26,6 +27,7 @@
           <td><%= text_field_tag nil, member.affiliation, name: "member[][affiliation]", class: "form-control input-sm" %></td>
           <td><%= text_field_tag nil, member.title, name: "member[][title]", class: "form-control input-sm" %></td>
           <td><%= text_field_tag nil, member.note, name: "member[][note]", class: "form-control input-sm" %></td>
+          <td><%= email_field_tag nil, member.email, name: "member[][email]", class: "form-control input-sm" %></td>
         <% end %>
         <% i += 1 %>
       <% end %>

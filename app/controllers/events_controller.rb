@@ -104,8 +104,12 @@ class EventsController < ApplicationController
 
 
   def import_participants
-    Event.import_participants(params[:file],params[:id]) 
-    redirect_to event_path, :flash => {:success => "インポートされました"}
+    if params[:file].present?
+      Event.import_participants(params[:file],params[:id])
+      redirect_to participants_event_path, :flash => {:success => "インポートされました"}
+    else
+      redirect_to participants_event_path
+    end
   end
 
   def switch_presenter_flg
