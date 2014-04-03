@@ -5,7 +5,7 @@ class Event < ActiveRecord::Base
   has_many :maybe_members, -> { where "status = 1"}, through: :relationships, source: :member 
   has_many :registed_members, -> { where "status = 2"}, through: :relationships, source: :member 
   has_many :participants, -> { where "status = 3"}, through: :relationships, source: :member 
-  has_many :canceled_members, -> {where "status = 4"}, through: :relationships, source: :member 
+  has_many :canceled_members, -> {where "status = 0 or status = 4"}, through: :relationships, source: :member 
   has_many :no_show, -> {where "status = 5"}, through: :relationships, source: :member 
   has_many :presenters, -> {where :relationships => {presenter_flg: true}}, through: :relationships, source: :member
   has_many :invitations, dependent: :destroy
@@ -77,7 +77,7 @@ class Event < ActiveRecord::Base
             @member.save!
             if record = @member.relationships.find_by_event_id(event.id)
               case record.status
-              when nil, 0, 1, 2, 4
+              when nil, 0, 1, 2
                 record.update(event_id: event.id, status: Event.convert_status(status))
                 record.save!
               end
@@ -92,17 +92,12 @@ class Event < ActiveRecord::Base
 
   def self.convert_status(rsvp_status)
     case rsvp_status
-    when "attending"
-      2
     when "declined"
-      4
+      0
     when "maybe"
       1
+    when "attending"
+      2
     end
   end
-
-
-
-
-
 end

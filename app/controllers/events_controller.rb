@@ -265,7 +265,7 @@ class EventsController < ApplicationController
         member.save!
         if record = member.relationships.find_by_event_id(@event.id)
           case record.status
-          when nil, 0, 1, 2, 4
+          when nil, 0, 1, 2
             record.update(event_id: @event.id, status: convert_status(rsvp_status))
             record.save!
           end

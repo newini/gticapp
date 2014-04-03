@@ -15,6 +15,8 @@ module EventsHelper
   def show_status(member)
     relationship = @event.relationships.find_by_member_id(member.id)
     case relationship.status
+    when 0
+      "欠席"
     when 1
       "未定"
     when 2
@@ -45,12 +47,12 @@ module EventsHelper
 
   def convert_status(rsvp_status)
     case rsvp_status
-    when "attending"
-      2
     when "declined"
-      4
+      0 
     when "maybe"
       1
+    when "attending"
+      2
     end
   end
 
