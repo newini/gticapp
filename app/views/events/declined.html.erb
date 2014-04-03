@@ -1,0 +1,27 @@
+<div class="row">
+  <aside class="col-md-2">
+    <section>
+      <%= render'side' %>
+    </section>
+    <section>
+      <%= render'side_info' %>
+    </section>
+  </aside>
+  <div class="col-md-10">
+    <div class="btn-group">
+      <%= link_to declined_event_path, class: "btn btn-default" do %>
+        <span class="glyphicon glyphicon-th-list"></span> 欠席者一覧
+      <% end %>
+      <%= link_to update_facebook_event_path, method: "post", class:"btn btn-default" do %>
+        <span class="glyphicon glyphicon-refresh"></span> facebook情報更新
+      <% end %>
+      <%= link_to compress_declined_event_path, method: "post", class:"btn btn-default" do %>
+        <span class="glyphicon glyphicon-compressed"></span> 欠席者情報圧縮
+      <% end %>
+
+    </div>
+    <div id="ajax_container">
+      <%= render 'members' %>
+    </div>
+  </div>
+</div>

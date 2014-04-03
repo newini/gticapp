@@ -43,7 +43,7 @@
     <td><%= link_to waiting_members.count, waiting_event_path %></td>
     <td><%= link_to @event.registed_members.count, registed_event_path %></td>
     <td><%= link_to @event.participants.count, participants_event_path %></td>
-    <td><%= link_to @event.canceled_members.count, canceled_event_path %></td>
+    <td><%= link_to @event.declined_members.count, declined_event_path %></td>
     <td><%= link_to @event.no_show.count, no_show_event_path %></td>
   </tr>
 </table>

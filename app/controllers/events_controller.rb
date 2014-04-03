@@ -4,8 +4,8 @@ class EventsController < ApplicationController
   before_action :signed_in_user
   before_action :selected_event,
     only: [:show, :edit, :update, :destroy, :switch_presenter_flg,:switch_guest_flg, :switch_black_list_flg, :update_maybe_member, :update_registed_member, :update_participants,
-           :invited, :waiting, :maybe, :registed, :participants, :canceled, :no_show, :change_status,
-           :change_all_waiting_status, :send_invitation, :send_email, :update_facebook, :new_member, :search]
+           :invited, :waiting, :maybe, :registed, :participants, :declined, :no_show, :change_status,
+           :change_all_waiting_status, :send_invitation, :send_email, :update_facebook, :new_member, :search, :compress_declined]
   def index
     @start_date = Event.order("start_time ASC").first.start_time.beginning_of_year
     @last_date = Event.order("start_time ASC").last.start_time.end_of_year
@@ -187,9 +187,9 @@ class EventsController < ApplicationController
     end
   end
 
-  def canceled
-    @title = "#{@event.name} キャンセルしたメンバー"
-    @members = @event.canceled_members.order("last_name_kana")
+  def declined
+    @title = "#{@event.name} 欠席者"
+    @members = @event.declined_members.order("last_name_kana")
   end
 
   def no_show
@@ -323,6 +323,15 @@ class EventsController < ApplicationController
       format.js
     end
   end
+
+  def compress_declined
+    @records = @event.relationships.where(status: 0)
+    @records.each do |record|
+      record.destroy
+    end
+    redirect_to :back
+  end
+
 =begin
   def convert
     @presentations = Presentation.all

@@ -15,7 +15,7 @@ Gticapp::Application.routes.draw do
       get :invited
       get :registed
       get :participants
-      get :canceled
+      get :declined
       get :no_show
       get :new_member
       get :search
@@ -32,6 +32,7 @@ Gticapp::Application.routes.draw do
       post :switch_guest_flg
       post :update_facebook
       post :update_presentation
+      post :compress_declined
     end
     resources :invitations
     collection { 

@@ -5,7 +5,7 @@ class Event < ActiveRecord::Base
   has_many :maybe_members, -> { where "status = 1"}, through: :relationships, source: :member 
   has_many :registed_members, -> { where "status = 2"}, through: :relationships, source: :member 
   has_many :participants, -> { where "status = 3"}, through: :relationships, source: :member 
-  has_many :canceled_members, -> {where "status = 0 or status = 4"}, through: :relationships, source: :member 
+  has_many :declined_members, -> {where "status = 0 or status = 4"}, through: :relationships, source: :member 
   has_many :no_show, -> {where "status = 5"}, through: :relationships, source: :member 
   has_many :presenters, -> {where :relationships => {presenter_flg: true}}, through: :relationships, source: :member
   has_many :invitations, dependent: :destroy

@@ -3,7 +3,7 @@
   <%= link_to "未定 (#{@event.maybe_members.count})", maybe_event_path(@event), class: "btn btn-default  btn-block" %>
   <%= link_to "参加予定 (#{@event.registed_members.count})", registed_event_path(@event), class: "btn btn-default  btn-block" %>
   <%= link_to "出席 (#{@event.participants.count})", participants_event_path(@event), class: "btn btn-default  btn-block" %>
-  <%= link_to "欠席 (#{@event.canceled_members.count})", canceled_event_path(@event), class: "btn btn-default  btn-block" %>
+  <%= link_to "欠席 (#{@event.declined_members.count})", declined_event_path(@event), class: "btn btn-default  btn-block" %>
   <%= link_to "No-show (#{@event.no_show.count})", no_show_event_path(@event), class: "btn btn-default  btn-block" %>
   <%= link_to 'イベント案内', event_invitations_path(@event), class: "btn btn-default  btn-block" %>
   <%= link_to "案内文送付", send_invitation_path(@event), class: "btn btn-default  btn-block" %>
