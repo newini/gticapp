@@ -75,26 +75,34 @@ class Event < ActiveRecord::Base
               @member = Member.new(fb_name: fb_name, fb_user_id: fb_user_id)
             end
             @member.save!
-            record = @member.relationships.find_by_event_id(event.id)
-            if record.blank?
-              record = @member.relationships.new(event_id: event.id, status: 2)
-            else
-              unless record.status == 3 or 5
-                case status
-                when "attending"
-                  record.update(event_id: event.id, status: 2)
-                when "maybe"
-                  record.update(event_id: event.id, status: 1)
-                when "declined"
-                  record.update(event_id: event.id, status: 4)
-                end
+            if record = @member.relationships.find_by_event_id(event.id)
+              case record.status
+              when nil, 0, 1, 2, 4
+                record.update(event_id: event.id, status: Event.convert_status(status))
+                record.save!
               end
+            else
+              member.relationships.create(event_id: event.id, status: Event.convert_status(status))
             end
-            record.save!
           end
         end
       end
     end
   end
+
+  def self.convert_status(rsvp_status)
+    case rsvp_status
+    when "attending"
+      2
+    when "declined"
+      4
+    when "maybe"
+      1
+    end
+  end
+
+
+
+
 
 end
