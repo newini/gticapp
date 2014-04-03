@@ -13,26 +13,28 @@
           <% end %>
         <% end %>
         <li><%= "未分類：#{Member.where(:gtic_flg => nil).where(:category_id => nil).count}名" %></li>
+        <hr>
+        <li><strong>2014年1月からの出席者</strong></li>
         <li>
-        <strong>5回以上参加</strong>
+        <strong>5回以上</strong>
         <% @repeater[0].each do |repeater| %>
           <li><%= "#{repeater.last_name} #{repeater.first_name}" %></li>
         <% end %>
         </li>
         <li>
-        <strong>4回参加</strong>
+        <strong>4回</strong>
         <% @repeater[1].each do |repeater| %>
           <li><%= "#{repeater.last_name} #{repeater.first_name}" %></li>
         <% end %>
         </li>
         <li>
-        <strong>3回参加</strong>
+        <strong>3回</strong>
         <% @repeater[2].each do |repeater| %>
           <li><%= "#{repeater.last_name} #{repeater.first_name}" %></li>
         <% end %>
         </li>
         <li>
-        <strong>2回参加</strong>
+        <strong>2回</strong>
         <% @repeater[3].each do |repeater| %>
           <li><%= "#{repeater.last_name} #{repeater.first_name}" %></li>
         <% end %>
