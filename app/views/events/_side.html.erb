@@ -1,10 +1,3 @@
-<div class="btn-group btn-group-vertical btn-block" >
+<div class="btn-group-vertical btn-block" >
   <%= link_to 'イベント一覧', events_path, class: "btn btn-default btn-block" %>
-  <%= link_to "新規登録/CSV読込", new_event_path, class: "btn btn-default btn-block" %>
-  <%= link_to "会場管理", places_path, class: "btn btn-default btn-block" %>
-  <%= link_to compress_declined_events_path, method: "post", class:"btn btn-default" do %>
-    <span class="glyphicon glyphicon-compressed"></span> 欠席者情報圧縮
-  <% end %>
-
-
 </div>

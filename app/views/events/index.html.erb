@@ -3,6 +3,14 @@
     <section>
       <%= render'side' %>
     </section>
+    <section>
+      <div class="btn-group-vertical btn-block" >
+        <%= link_to "新規登録/CSV読込", new_event_path, class: "btn btn-default btn-block" %>
+        <%= link_to "会場管理", places_path, class: "btn btn-default btn-block" %>
+        <%= link_to "イベントタイプ管理", event_categories_path, class: "btn btn-default btn-block" %>
+        <%= link_to "統計", statistics_events_path, class: "btn btn-default btn-block" %>
+      </div>
+    </section>
     <div class="well well-small">
       <ul class="list-unstyled">
         <li><%= "開催回数：#{@total_events}回" %></li>

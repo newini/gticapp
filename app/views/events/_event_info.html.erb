@@ -12,6 +12,9 @@
     <td><%= Place.find(@event.place_id).name if @event.place_id.present? and Place.where(id: @event.place_id).present?%></td>
   </tr>
   <tr>
+    <th>イベントタイプ</th>
+    <td><%= EventCategory.find(@event.event_category_id).name if @event.event_category_id.present? and EventCategory.where(id: @event.event_category_id).present? %></td>
+  <tr>
     <th>参加費</th>
     <td><%= show_currency(@event.fee) %></td>
   </tr>
@@ -33,14 +36,14 @@
 
 <table class="table table-bordered table-hover">
   <tr>
-    <th>待機</th>
+    <th>未定</th>
     <th>参加予定</th>
     <th>参加者数</th>
     <th>キャンセル</th>
     <th>No-show</th>
   </tr>
   <tr>
-    <td><%= link_to waiting_members.count, waiting_event_path %></td>
+    <td><%= link_to @event.maybe_members.count, maybe_event_path %></td>
     <td><%= link_to @event.registed_members.count, registed_event_path %></td>
     <td><%= link_to @event.participants.count, participants_event_path %></td>
     <td><%= link_to @event.declined_members.count, declined_event_path %></td>

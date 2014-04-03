@@ -2,6 +2,7 @@
   <tr>
     <th class="col-md-1">イベント名</th>
     <th class="col-md-1">開催日</th>
+    <th class="col-md-1">分類</th>
     <th class="col-md-2">プレゼンター</th>
     <th class="col-md-2">タイトル</th>
     <th class="col-md-2">概要</th>
@@ -13,6 +14,7 @@
       <tr>
         <td><%= link_to event[:event][:name], event_path(event[:event][:id]) %></td>
         <td><%= event[:event][:date] %></td>
+        <td><%= EventCategory.find(event[:event][:event_category_id]).name if event[:event][:event_category_id].present? and EventCategory.where(id: event[:event][:event_category_id]).present? %></td>
         <td></td>
         <td></td>
         <td></td>
@@ -28,6 +30,11 @@
               <%= link_to event[:event][:name], event_path(event[:event][:id]) %>
             <% end %>
             <%= content_tag :td, event[:event][:date], rowspan: event[:detail].length %>
+            <% if event[:event][:event_category_id].present? and EventCategory.where(id: event[:event][:event_category_id]).present? %>
+              <%= content_tag :td, EventCategory.find(event[:event][:event_category_id]).name, rowspan: event[:detail].length %>
+            <% else %>
+              <td></td>
+            <% end %>
           <% end %>
           <td>
             <% detail[:presenter].each do |presenter| %>

@@ -19,7 +19,8 @@ class EventsController < ApplicationController
           name: event.name, 
           date: event.start_time.strftime("%Y-%m-%d"), 
           place: event.place_id,
-          participants: event.participants.count
+          participants: event.participants.count,
+          event_category_id: event.event_category_id
         }, 
         detail: event.presentations.map{
           |presentation| [
@@ -324,13 +325,36 @@ class EventsController < ApplicationController
     end
   end
 
-  def compress_declined
-    @records = Relationship.where(status: nil)
-    @records.each do |record|
-      record.destroy
+  def statistics
+    @title = "統計"
+    if params[:id].present?
+      @event = Event.find(params[:id])
+      record = @event.participants.group(:category_id).count(:category_id)
+      category = record.map{|key,val| [key.present? ? Category.find(key).name : "その他", val]}
+      @graph = LazyHighCharts::HighChart.new("graph") do |f|
+        f.title(text: '出席者数の属性')
+        series = {name: '人数', data: category, type: "pie"}
+        f.series(series)
+        f.legend({align: "right"})
+      end
+    else
+      @events = Event.all
+      category = @events.map{|event| event.id}
+      participants = @events.map{|event| event.participants.count }
+      no_show = @events.map{|event| event.no_show.count }
+
+      @graph = LazyHighCharts::HighChart.new("graph") do |f|
+        f.title(text: '出席者数の推移')
+        f.xAxis(categories: category)
+        f.series(name: '出席', data: participants, type: "column")
+        f.series(name: 'No-show', data: no_show)
+        f.options[:yAxis][:title] = {:text=>"人数"}
+        f.options[:xAxis][:title] = {:text=>"回数"}
+        f.legend({align: "right"})
+      end
     end
-    redirect_to :back
   end
+
 
 =begin
   def convert
@@ -350,7 +374,7 @@ class EventsController < ApplicationController
    
   private
     def event_params
-      params.require(:event).permit(:name, :start_time, :end_time, :fb_event_id, :place_id, :fee)
+      params.require(:event).permit(:name, :start_time, :end_time, :fb_event_id, :place_id, :fee, :event_category_id)
     end
     def signed_in_user
       redirect_to root_path, notice: "Please sign in." unless signed_in?

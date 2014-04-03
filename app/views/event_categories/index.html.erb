@@ -1,0 +1,27 @@
+<div class="row">
+  <aside class="col-lg-2">
+    <%= render "events/side" %>
+  </aside>
+  <div class="col-lg-5">
+    <div id="ajax_container">
+      <h2><%= @title %></h2>
+      <table class="table table-bordered">
+        <tr>
+          <th>ID</th>
+          <th>分類名</th>
+          <th></th>
+          <th></th>
+        </tr>
+        <% @event_categories.each do |event_category| %>
+          <tr>
+            <td><%= event_category.id %></td>
+            <td><%= event_category.name %></td>
+            <td><%= link_to "編集", edit_event_category_path(event_category), remote: true %> </td>
+            <td><%= link_to "削除", event_category_path(event_category), method: :delete %> </td>
+          </tr>
+        <% end %>
+      </table>
+      <%= link_to "イベントタイプ登録", new_event_category_path, method: :get, class: "btn btn-primary btn-block", remote: true %>
+    </div>
+  </div>
+</div>
