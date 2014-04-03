@@ -88,4 +88,6 @@ Gticapp::Application.configure do
     :domain =>          'heroku.com',
     :authentication =>  :plain
   }
+
+  config.assets.logger = Logger.new $stdout
 end
