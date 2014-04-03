@@ -5,7 +5,7 @@ class MembersController < ApplicationController
   def index
     @members = Member.order(sort_column + ' ' + sort_direction).paginate(page: params[:page])
     if params[:count].present?
-      @members = Member.joins(:registed_events).group(:member_id).order("count(event_id) DESC").paginate(page: params[:page])
+      @members = Member.joins(:participated_events).group(:member_id).order("count(event_id) DESC").paginate(page: params[:page])
     end
     @all_members = Member.all
     repeater_id = Relationship.joins(:event).where(:events => {:start_time => Date.parse("2014-1-1")..Date.today}).where(status: 3).group(:member_id).count(:member_id)
