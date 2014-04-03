@@ -10,7 +10,7 @@ class Event < ActiveRecord::Base
   has_many :presenters, -> {where :relationships => {presenter_flg: true}}, through: :relationships, source: :member
   has_many :invitations, dependent: :destroy
   has_many :presentationships, foreign_key: "event_id", dependent: :destroy
-  has_many :presentations, through: :presentationships, source: :presentation, uniq: true
+  has_many :presentations, -> { uniq }, through: :presentationships, source: :presentation
 #  has_many :presentations, foreign_key: "event_id", dependent: :destroy
   def self.import(file)
     CSV.foreach(file.path, headers: true) do |row|
