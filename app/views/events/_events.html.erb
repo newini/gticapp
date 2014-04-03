@@ -1,10 +1,12 @@
-<table class="table table-hover table-bordered">
+<table class="table table-bordered">
   <tr>
     <th class="col-md-1">イベント名</th>
     <th class="col-md-1">開催日</th>
     <th class="col-md-2">プレゼンター</th>
-    <th class="col-md-4">タイトル</th>
+    <th class="col-md-2">タイトル</th>
+    <th class="col-md-2">概要</th>
     <th class="col-md-1">会場</th>
+    <th class="col-md-1">出席者数</th>
   </tr>
   <% @events.each do |event| %>
     <% if event[:detail].length == 0 %>
@@ -13,7 +15,9 @@
         <td><%= event[:event][:date] %></td>
         <td></td>
         <td></td>
+        <td></td>
         <td><%= Place.find(event[:event][:place]).name if event[:event][:place].present? and Place.where(id: event[:event][:place]).present? %></td>
+        <td><%= event[:event][:participants] %>名</td>
       </tr>
     <% elsif event[:detail].length >= 1 %>
       <% i=0 %>
@@ -30,10 +34,14 @@
               <%= "#{presenter[:affiliation]}" %><br><%= "#{presenter[:title]} #{presenter[:name]} 氏" %><br>
             <% end %>
           </td>
-          <td><%= "#{detail[:title]}" %></td>
+          <td><%= "#{truncate detail[:title], length: 40}" %></td>
+          <td><%= "#{truncate detail[:abstract], length: 40}" %></td>
           <% if i == 0 %>
             <%= content_tag :td, rowspan: event[:detail].length do %>
               <%= Place.find(event[:event][:place]).name if event[:event][:place].present? and Place.where(id: event[:event][:place]).present? %></td>
+            <% end %>
+            <%= content_tag :td, rowspan: event[:detail].length do %>
+              <%= event[:event][:participants] %>名</td>
             <% end %>
           <% end %>
         </tr>

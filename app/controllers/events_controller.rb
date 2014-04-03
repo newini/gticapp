@@ -18,7 +18,8 @@ class EventsController < ApplicationController
           id: event.id, 
           name: event.name, 
           date: event.start_time.strftime("%Y-%m-%d"), 
-          place: event.place_id 
+          place: event.place_id,
+          participants: event.participants.count
         }, 
         detail: event.presentations.map{
           |presentation| [
@@ -38,7 +39,8 @@ class EventsController < ApplicationController
     }.flatten
     array = Member.where(:gtic_flg => nil).pluck(:id)
     @total_events = Event.count
-    @total_participants = Relationship.where(member_id: array).where(status: 2..3).count
+    @total_participants = Relationship.where(member_id: array).where(status: 3).count
+    @participants = Relationship.where(member_id: array).where(status: 3).group(:member_id).pluck(:member_id).count
     respond_to do |format|
       format.html
       format.js
