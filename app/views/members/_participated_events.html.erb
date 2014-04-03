@@ -5,7 +5,7 @@
     <th>開催日</th>
     <th>Role</th>
   </tr>
-  <% @member.registed_events.each do |event| %>
+  <% @member.participated_events.each do |event| %>
     <tr>
       <td><%= link_to event.name, event_path(event) %></td>
       <td><%= event.start_time.strftime("%Y/%m/%d") %></td>
