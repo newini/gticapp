@@ -32,8 +32,10 @@ Gticapp::Application.routes.draw do
       post :switch_guest_flg
       post :update_facebook
       post :update_presentation
-      post :compress_declined
     end
+    collection {
+      post :compress_declined
+    }
     resources :invitations
     collection { 
       post :import

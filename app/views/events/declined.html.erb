@@ -15,10 +15,6 @@
       <%= link_to update_facebook_event_path, method: "post", class:"btn btn-default" do %>
         <span class="glyphicon glyphicon-refresh"></span> facebook情報更新
       <% end %>
-      <%= link_to compress_declined_event_path, method: "post", class:"btn btn-default" do %>
-        <span class="glyphicon glyphicon-compressed"></span> 欠席者情報圧縮
-      <% end %>
-
     </div>
     <div id="ajax_container">
       <%= render 'members' %>
