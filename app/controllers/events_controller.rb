@@ -325,12 +325,9 @@ class EventsController < ApplicationController
   end
 
   def compress_declined
-    @events = Event.all
-    @events.each do |event|
-      @records = event.relationships.where(status: 0)
-      @records.each do |record|
-        record.destroy
-      end
+    @records = Relationship.where(status: nil)
+    @records.each do |record|
+      record.destroy
     end
     redirect_to :back
   end
