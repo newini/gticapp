@@ -330,38 +330,14 @@ class EventsController < ApplicationController
     if params[:id].present?
       @event = Event.find(params[:id])
       record = @event.participants.group(:category_id).count
-      category = record.map{|key,val| [key.present? ? Category.find(key).name : "未登録", val]}
-      @category_graph = LazyHighCharts::HighChart.new("graph") do |f|
-        f.title(text: '出席者数の属性')
-        series = {name: '人数', data: category, type: "pie"}
-        f.series(series)
-        f.legend({align: "right"})
-      end
+      @category = record.map{|key,val| [key.present? ? Category.find(key).name : "未登録", val]}
       membership = @event.relationships.where("status = 2 or status = 3")
-      date = membership.group("date(created_at)").count.map{|key,val| key}
-      count = membership.group("date(created_at)").count.map{|key,val| val}
-      @date_graph = LazyHighCharts::HighChart.new("graph") do |f|
-        f.title(text: "イベントに登録した参加予定者／出席者数の推移")
-        series = {name: "人数", data: count, type: "column"}
-        f.series(series)
-        f.xAxis(categories: date)
-        f.legend({align: "light"})
-      end
+      @date_count = membership.group("date(created_at)").count.map{|key,val| [key,val]}
     else
       @events = Event.all
       category = @events.map{|event| event.id}
-      participants = @events.map{|event| event.participants.count }
-      no_show = @events.map{|event| event.no_show.count }
-
-      @graph = LazyHighCharts::HighChart.new("graph") do |f|
-        f.title(text: '出席者数の推移')
-        f.xAxis(categories: category)
-        f.series(name: '出席', data: participants, type: "column")
-        f.series(name: 'No-show', data: no_show)
-        f.options[:yAxis][:title] = {:text=>"人数"}
-        f.options[:xAxis][:title] = {:text=>"回数"}
-        f.legend({align: "right"})
-      end
+      @participants = @events.map{|event| [event.id, event.participants.count] }
+      @no_show = @events.map{|event| [event.id, event.no_show.count] }
     end
   end
 

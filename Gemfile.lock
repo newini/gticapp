@@ -60,6 +60,7 @@ GEM
     celluloid-io (0.15.0)
       celluloid (>= 0.15.0)
       nio4r (>= 0.5.0)
+    chartkick (1.2.4)
     childprocess (0.5.2)
       ffi (~> 1.0, >= 1.0.11)
     chronic (0.10.2)
@@ -97,7 +98,6 @@ GEM
       childprocess (>= 0.2.3)
       guard (>= 1.1)
       spork (>= 0.8.4)
-    hash-deep-merge (0.1.1)
     hashie (2.0.5)
     hike (1.2.3)
     i18n (0.6.9)
@@ -114,9 +114,6 @@ GEM
       addressable
       faraday
       multi_json
-    lazy_high_charts (1.5.2)
-      bundler (>= 1.0)
-      hash-deep-merge
     libv8 (3.16.14.3)
     listen (2.7.1)
       celluloid (>= 0.15.2)
@@ -285,6 +282,7 @@ DEPENDENCIES
   capistrano-rails
   capistrano-rbenv
   capybara
+  chartkick
   childprocess
   coffee-rails (~> 4.0.0)
   factory_girl_rails
@@ -293,7 +291,6 @@ DEPENDENCIES
   jbuilder (~> 1.2)
   jquery-rails
   koala
-  lazy_high_charts
   mandrill-api
   omniauth
   omniauth-facebook
