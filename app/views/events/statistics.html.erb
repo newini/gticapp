@@ -1,7 +1,3 @@
-<%= javascript_include_tag "highcharts/highcharts.js", "data-turbolinks-track" => true %>
-<%= javascript_include_tag "highcharts/highstock.js", "data-turbolinks-track" => true %>
-<%= javascript_include_tag "highcharts/highcharts-more.js", "data-turbolinks-track" => true %>
-
 <div class="row">
   <aside class="col-lg-2">
     <section>
@@ -16,7 +12,12 @@
   <div class="col-lg-10">
     <h2><%= @title %></h2>
     <div id="ajax_container">
-      <%= high_chart("number", @graph) %>
+      <% if params[:id].present? %>
+        <%= high_chart("number", @category_graph) %>
+        <%= high_chart("date", @date_graph) %>
+      <% else %>
+        <%= high_chart("number", @graph) %>
+      <% end %>
     </div>
   </div>
 </div> 
