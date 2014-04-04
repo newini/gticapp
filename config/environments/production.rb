@@ -89,5 +89,4 @@ Gticapp::Application.configure do
     :authentication =>  :plain
   }
 
-  config.assets.logger = Logger.new $stdout
 end
