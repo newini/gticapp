@@ -88,5 +88,6 @@ Gticapp::Application.configure do
     :domain =>          'heroku.com',
     :authentication =>  :plain
   }
+  config.assets.precompile += ['highcharts/highcharts.js', 'highcharts/highcharts-more','highcharts/highstock.js' ]
 
 end
