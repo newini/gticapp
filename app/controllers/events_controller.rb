@@ -338,6 +338,8 @@ class EventsController < ApplicationController
       category = @events.map{|event| event.id}
       @participants = @events.map{|event| [event.id, event.participants.count] }
       @no_show = @events.map{|event| [event.id, event.no_show.count] }
+      @maybe = @events.map{|event| [event.id, event.maybe_members.count] }
+      @declined = @events.map{|event| [event.id, event.declined_members.count] }
     end
   end
 
