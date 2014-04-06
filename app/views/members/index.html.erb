@@ -15,31 +15,14 @@
         <li><%= "未分類：#{Member.where(:gtic_flg => nil).where(:category_id => nil).count}名" %></li>
         <hr>
         <li><strong>2014年1月からの出席者</strong></li>
-        <li>
-        <strong>5回以上</strong>
-        <% @repeater[0].each do |repeater| %>
-          <li><%= "#{repeater.last_name} #{repeater.first_name}" %></li>
+        <% for i in 0..3 do %>
+          <li>
+            <strong> <%= 5-i %><%= i == 0 ? "回以上" : "回" %></strong>
+            <% @repeater[i].each do |repeater| %>
+              <li><%= link_to "#{repeater.last_name} #{repeater.first_name}", member_path(repeater) %></li>
+            <% end %>
+          </li>
         <% end %>
-        </li>
-        <li>
-        <strong>4回</strong>
-        <% @repeater[1].each do |repeater| %>
-          <li><%= "#{repeater.last_name} #{repeater.first_name}" %></li>
-        <% end %>
-        </li>
-        <li>
-        <strong>3回</strong>
-        <% @repeater[2].each do |repeater| %>
-          <li><%= "#{repeater.last_name} #{repeater.first_name}" %></li>
-        <% end %>
-        </li>
-        <li>
-        <strong>2回</strong>
-        <% @repeater[3].each do |repeater| %>
-          <li><%= "#{repeater.last_name} #{repeater.first_name}" %></li>
-        <% end %>
-        </li>
-
       </ul>
     </div>
   </div>

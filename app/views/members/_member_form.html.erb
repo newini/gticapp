@@ -42,7 +42,7 @@
       <div class="form-group">
         <%= label_tag :note, "備考 / note", class: 'col-sm-6 control-label' %>
         <div class="col-sm-6">
-          <%= text_field_tag nil, @member.note, name: "member[note]", placeholder:  "備考", class: "form-control" %>
+          <%= text_area_tag nil, @member.note, name: "member[note]", placeholder:  "備考", class: "form-control" %>
         </div>
       </div>
       <div class="form-group">

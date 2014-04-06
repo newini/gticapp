@@ -6,9 +6,10 @@
       <th class="col-md-1">氏名</th>
       <th class="col-md-2">Fb</th>
       <th class="col-md-1">属性</th>
-      <th class="col-md-3">所属</th>
+      <th class="col-md-2">所属</th>
       <th class="col-md-1">役職</th>
       <th class="col-md-1">備考</th>
+      <th class="col-md-1">回数(2014.1~)</th>
       <th class="col-md-1">Role</th>
       <th class="col-md-1">参加費</th>
       <th class="col-md-2"></th>
@@ -24,6 +25,7 @@
         <td><%= member.affiliation %></td>
         <td><%= member.title %></td>
         <td><%= member.note %></td>
+        <td><%= member.participated_events.where("start_time > ?", Date.parse("2014-01-01").beginning_of_month).count %></td>
         <td><%= select_role(member, @event) %></td>
         <td><%= show_currency(show_fee(member, @event)) %></td>
         <td><%= select_status(member) %></td>

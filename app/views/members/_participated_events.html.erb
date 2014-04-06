@@ -13,4 +13,8 @@
     </tr>
   <% end %>
 </table>
-
+<dl class="dl-horizontal">
+  <dt>総出席回数</dt>
+  <dd><%= @member.participated_events.count %>回</dd>
+  <dt>2014.01からの出席回数</dt>
+  <dd><%= @member.participated_events.where("start_time > ?", Date.parse("2014-01-01").beginning_of_month).count %>回</dd>
