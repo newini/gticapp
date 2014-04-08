@@ -20,11 +20,11 @@
         <td><%= i %></td>
         <td><%= member.last_name_kana[0] if member.last_name_kana.present? %></td>
         <td><%= link_to "#{member.last_name} #{member.first_name}", member_path(member) %></td>
-        <td><%= link_to image_tag("https://graph.facebook.com/#{member.fb_user_id}/picture?type=square", class: "fb_user_icon") + "    #{member.fb_name}", "https://facebook.com/#{member.fb_user_id}", target: :blank if member.fb_user_id.present?%></td>
+        <td><%= link_to image_tag("https://graph.facebook.com/#{member.fb_user_id}/picture?type=square", class: "fb_user_icon") + "    #{member.fb_name}", "https://facebook.com/#{member.fb_user_id}", target: :blank, class: "small" if member.fb_user_id.present?%></td>
         <td><%= Category.find(member.category_id).try(:name) if member.category_id.present? %></td>
-        <td><%= member.affiliation %></td>
+        <td><%= truncate(member.affiliation, length: 30) %></td>
         <td><%= member.title %></td>
-        <td><%= member.note %></td>
+        <td><%= truncate(member.note, length: 12) %></td>
         <td><%= member.participated_events.where("start_time > ?", Date.parse("2014-01-01").beginning_of_month).count %></td>
         <td><%= select_role(member, @event) %></td>
         <td><%= show_currency(show_fee(member, @event)) %></td>
