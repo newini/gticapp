@@ -17,6 +17,7 @@ module EventsHelper
     case relationship.status
     when 0
       "欠席"
+      #facebook参照
     when 1
       "未定"
     when 2
@@ -25,6 +26,7 @@ module EventsHelper
       "出席"
     when 4
       "欠席"
+      #手入力参照
     when 5
       "No-show"
     else
@@ -60,60 +62,60 @@ module EventsHelper
     relation = member.relationships.find_by_event_id(@event)
     status = relation.present? ? relation.status : nil
     case status
-    when 1, 0, nil
-      link_to("追加", change_status_event_path(:member_id => member.id, :direction => 2), :method => :post, :class => "btn btn-xs btn-primary")
+    when 1, nil
+      link_to("追加", change_status_event_path(:member_id => member.id, :direction => 2), :method => :post, :class => "btn btn-xs btn-primary", remote: true)
     when 2
       content_tag(:div, class: "btn-group") {
-        concat link_to( "出席", change_status_event_path(:member_id => member.id, :direction => 3), :method => :post, :class => "btn btn-xs btn-primary ")
+        concat link_to( "出席", change_status_event_path(:member_id => member.id, :direction => 3, referer: @referer), :method => :post, :class => "btn btn-xs btn-primary ", remote: true)
         concat content_tag(:button, class: "btn dropdown-toggle btn-primary btn-xs", data: {:toggle => "dropdown"}){ 
           content_tag( :span, "", class: "caret")
         } 
         concat content_tag(:ul, class: "dropdown-menu", role: "menu"){ 
           content_tag(:li){
-            concat link_to("欠席", change_status_event_path(:member_id => member.id, :direction => 4), :method => :post) 
-            concat link_to("No-show", change_status_event_path(:member_id => member.id, :direction => 5), :method => :post)
+            concat link_to("欠席", change_status_event_path(:member_id => member.id, :direction => 4, referer: @referer), :method => :post, remote: true) 
+            concat link_to("No-show", change_status_event_path(:member_id => member.id, :direction => 5, referer: @referer), :method => :post, remote: true)
           }
         }
       }
     when 3
       content_tag(:div, class: "btn-group"){ 
-        concat link_to "欠席", change_status_event_path(:member_id => member.id, :direction => 4), :method => :post, :class => "btn btn-xs btn-primary "
+        concat link_to "欠席", change_status_event_path(:member_id => member.id, :direction => 4, referer: @referer), :method => :post, :class => "btn btn-xs btn-primary ", remote: true
         concat content_tag(:button, class: "btn dropdown-toggle btn-primary btn-xs", :"data-toggle" => "dropdown"){ 
           content_tag :span, "",  class: "caret"
         }
         concat content_tag( :ul, class: "dropdown-menu", role: "menu"){ 
           content_tag(:li){
-            concat link_to("No-show", change_status_event_path(:member_id => member.id, :direction => 5), :method => :post)
-            concat link_to("参加予定", change_status_event_path(:member_id => member.id, :direction => 2), :method => :post)
+            concat link_to("No-show", change_status_event_path(:member_id => member.id, :direction => 5, referer: @referer), :method => :post, remote: true)
+            concat link_to("参加予定", change_status_event_path(:member_id => member.id, :direction => 2, referer: @referer), :method => :post, remote: true)
           }
         }
       }
-    when 4
+    when 0, 4
       content_tag(:div, class: "btn-group"){ 
-        concat link_to("出席", change_status_event_path(:member_id => member.id, :direction => 3), :method => :post, :class => "btn btn-xs btn-primary ")
+        concat link_to("出席", change_status_event_path(:member_id => member.id, :direction => 3, referer: @referer), :method => :post, :class => "btn btn-xs btn-primary ", remote: true)
         concat content_tag(:button, class: "btn dropdown-toggle btn-primary btn-xs", :"data-toggle" => "dropdown"){
           content_tag(:span,"", class: "caret")
         }
         concat content_tag(:ul, class: "dropdown-menu", role: "menu"){
           content_tag(:li){ 
-            concat link_to("No-show", change_status_event_path(:member_id => member.id, :direction => 5), :method => :post)
-            concat link_to("参加予定", change_status_event_path(:member_id => member.id, :direction => 2), :method => :post)
+            concat link_to("No-show", change_status_event_path(:member_id => member.id, :direction => 5, referer: @referer), :method => :post, remote: true)
+            concat link_to("参加予定", change_status_event_path(:member_id => member.id, :direction => 2, referer: @referer), :method => :post, remote: true)
           }
         }
       }
     when 5
       content_tag(:div, class: "btn-group"){ 
-        concat link_to(switch_black_list_flg_event_path(:member_id => member.id), :method => :post, :class => "btn btn-xs btn-primary "){
-          member.black_list_flg == (false || nil) ? "ブラックリスト入り" : "ブラックリスト解除" 
+        concat link_to(switch_black_list_flg_event_path(member_id: member.id, referer: @referer), method: :post, class: "btn btn-xs btn-primary ", remote: true){
+          member.black_list_flg ? "B-L解除" : "B-L" 
         }
         concat content_tag(:button, class: "btn dropdown-toggle btn-primary btn-xs", :"data-toggle" => "dropdown"){
           content_tag(:span,"", class: "caret")
         }
         concat content_tag(:ul, class: "dropdown-menu", role: "menu"){
           content_tag(:li){
-            concat link_to("出席", change_status_event_path(:member_id => member.id, :direction => 3), :method => :post)
-            concat link_to("欠席", change_status_event_path(:member_id => member.id, :direction => 4), :method => :post)
-            concat link_to("参加予定", change_status_event_path(:member_id => member.id, :direction => 2), :method => :post)
+            concat link_to("出席", change_status_event_path(:member_id => member.id, :direction => 3, referer: @referer), :method => :post, remote: true)
+            concat link_to("欠席", change_status_event_path(:member_id => member.id, :direction => 4, referer: @referer), :method => :post, remote: true)
+            concat link_to("参加予定", change_status_event_path(:member_id => member.id, :direction => 2, referer: @referer), :method => :post, remote: true)
           }
         }
       }
@@ -121,39 +123,29 @@ module EventsHelper
   end
 
   def select_role(member,event)
-    @record = member.relationships.find_by_event_id(event.id)
-    @presenter_flg = @record.presenter_flg
-    @guest_flg = @record.guest_flg
-    @gtic_flg = member.gtic_flg
-    if @gtic_flg
+    record = member.relationships.find_by_event_id(event.id)
+    presenter_flg = record.presenter_flg
+    guest_flg = record.guest_flg
+    gtic_flg = member.gtic_flg
+    if gtic_flg
       content_tag :span, "GTIC"
-    elsif @presenter_flg
-      content_tag(:div, class: "dropdown") {
-        concat link_to("プレゼンター", "#", :class => "dropdown-toggle btn btn-xs btn-default", data: {:toggle => "dropdown"})
-        concat content_tag(:ul, class: "dropdown-menu", role: "menu", :"aria-labelledby" => "dLabel"){ 
-          content_tag(:li){
-            concat link_to("ゲスト", switch_guest_flg_event_path(:member_id => member.id, :switch => "on"), :method => :post) 
-            concat link_to("参加者", switch_presenter_flg_event_path(:member_id => member.id, :switch => "off"), :method => :post) 
-          }
-        }
-      }
-    elsif @guest_flg
-      content_tag(:div, class: "dropdown") {
-        concat link_to("ゲスト", "#", :class => "dropdown-toggle btn btn-xs btn-default", data: {:toggle => "dropdown"})
-        concat content_tag(:ul, class: "dropdown-menu", role: "menu", :"aria-labelledby" => "dLabel"){ 
-          content_tag(:li){
-            concat link_to("プレゼンター", switch_presenter_flg_event_path(:member_id => member.id, :switch => "on"), :method => :post) 
-            concat link_to("参加者", switch_guest_flg_event_path(:member_id => member.id, :switch => "off"), :method => :post) 
-          }
-        }
-      }
     else
-      content_tag(:div, class: "dropdown") {
-        concat link_to("参加者", "#", :class => "dropdown-toggle btn btn-xs btn-default", data: {:toggle => "dropdown"})
+      if presenter_flg
+        title = ["プレゼンター","参加者","ゲスト"]
+        role = [nil, "participant", "guest"]
+      elsif guest_flg
+        title = ["ゲスト","プレゼンター","参加者"]
+        role = [nil, "presenter", "participant"]
+      else
+        title = ["参加者","ゲスト","プレゼンター"]
+        role = [nil, "guest", "presenter"]
+      end
+      content_tag(:div, class: "btn-group") {
+        concat content_tag(:button,"#{title[0]} #{content_tag(:span, '', class: 'caret')}".html_safe, :class => "dropdown-toggle btn btn-xs btn-default", data: {:toggle => "dropdown"})
         concat content_tag(:ul, class: "dropdown-menu", role: "menu", :"aria-labelledby" => "dLabel"){ 
           content_tag(:li){
-            concat link_to("プレゼンター", switch_presenter_flg_event_path(:member_id => member.id, :switch => "on"), :method => :post) 
-            concat link_to("ゲスト", switch_guest_flg_event_path(:member_id => member.id, :switch => "on"), :method => :post) 
+            concat link_to(title[1], change_role_event_path(:member_id => member.id, :role => role[1], referer: @referer), :method => :post, remote: true) 
+            concat link_to(title[2], change_role_event_path(:member_id => member.id, :role => role[2], referer: @referer), :method => :post, remote: true) 
           }
         }
       }
@@ -161,14 +153,14 @@ module EventsHelper
   end
     
   def show_fee(member,event)
-    @record = member.relationships.find_by_event_id(event.id)
-    @prenseter_flg = @record.presenter_flg
-    @guest_flg = @record.guest_flg
-    @gtic_flg = member.gtic_flg
-    @student_flg = member.category_id == 10 ? true : false
-    if ((@presenter_flg || @guest_flg) || @gtic_flg)
+    record = member.relationships.find_by_event_id(event.id)
+    presenter_flg = record.presenter_flg
+    guest_flg = record.guest_flg
+    gtic_flg = member.gtic_flg
+    student_flg = member.category_id == 10 ? true : false
+    if ((presenter_flg || guest_flg) || gtic_flg)
       return 0
-    elsif @student_flg
+    elsif student_flg
       return event.fee - 1000 if event.fee.present?
     else
       return event.fee

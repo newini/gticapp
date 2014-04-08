@@ -3,7 +3,7 @@ class Event < ActiveRecord::Base
   has_many :relationships, foreign_key: "event_id", dependent: :destroy
   has_many :members, through: :relationships, source: :member
   has_many :maybe_members, -> { where "status = 1"}, through: :relationships, source: :member 
-  has_many :registed_members, -> { where "status = 2"}, through: :relationships, source: :member 
+  has_many :registed_members, -> { where "status = 2"}, through: :relationships, source: :member
   has_many :participants, -> { where "status = 3"}, through: :relationships, source: :member 
   has_many :declined_members, -> {where "status = 0 or status = 4"}, through: :relationships, source: :member 
   has_many :no_show, -> {where "status = 5"}, through: :relationships, source: :member 
@@ -12,6 +12,7 @@ class Event < ActiveRecord::Base
   has_many :presentationships, foreign_key: "event_id", dependent: :destroy
   has_many :presentations, -> { uniq }, through: :presentationships, source: :presentation
 #  has_many :presentations, foreign_key: "event_id", dependent: :destroy
+
   def self.import(file)
     CSV.foreach(file.path, headers: true) do |row|
       Event.create! row.to_hash

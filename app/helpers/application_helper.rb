@@ -19,21 +19,23 @@ module ApplicationHelper
   end
 
   def show_role(member, event)
-    @record = member.relationships.find_by_event_id(event.id)
-    @prenseter_flg = @record.presenter_flg
-    @guest_flg = @record.guest_flg
-    @gtic_flg = member.gtic_flg
-    @student_flg = member.category_id == 10 ? true : false
-    if @gtic_flg == true
+    record = member.relationships.find_by_event_id(event.id)
+    presenter_flg = record.presenter_flg
+    guest_flg = record.guest_flg
+    gtic_flg = member.gtic_flg
+    student_flg = member.category_id == 10 ? true : false
+    if gtic_flg
       return "GTIC"
-    elsif @presenter_flg == true
-      return @presenter_flg
-    elsif @guest_flg == true
-      return "ゲスト"
-    elsif @student_flg == true
-      return "学生"
     else
-      return "参加者"
+      if presenter_flg 
+        return "プレゼンター" 
+      elsif guest_flg
+        return "ゲスト"
+      elsif student_flg
+        return "学生"
+      else
+        return "参加者"
+      end
     end
   end
 

@@ -2,10 +2,16 @@ class EventsController < ApplicationController
   include EventsHelper
   include MembersHelper
   before_action :signed_in_user
-  before_action :selected_event,
-    only: [:show, :edit, :update, :destroy, :switch_presenter_flg,:switch_guest_flg, :switch_black_list_flg, :update_maybe_member, :update_registed_member, :update_participants,
-           :invited, :waiting, :maybe, :registed, :participants, :declined, :no_show, :change_status,
-           :change_all_waiting_status, :send_invitation, :send_email, :update_facebook, :new_member, :search]
+  before_action :find_selected_event,only: [
+    :show, :edit, :update, :destroy,
+    :change_role, :switch_black_list_flg,
+    :update_maybe_member, :update_registed_member, :update_participants,
+    :invited, :registed, :participants, :waiting, :maybe, :declined, :no_show, 
+    :change_status,:change_all_waiting_status, 
+    :send_email, 
+    :update_facebook, :new_member, :search
+  ]
+
   def index
     @start_date = Event.order("start_time ASC").first.start_time.beginning_of_year
     @last_date = Event.order("start_time ASC").last.start_time.end_of_year
@@ -115,45 +121,16 @@ class EventsController < ApplicationController
     end
   end
 
-  def switch_presenter_flg
-    @relationship = @event.relationships.find_by_member_id(params[:member_id])
-    if params[:switch] == "on"
-      @relationship.update(presenter_flg: true, guest_flg: false)
-    elsif params[:switch] == "off"
-      @relationship.update(presenter_flg: false, guest_flg: false)
-    end
-    if @relationship.save!
-      redirect_to :back
-    end
-  end
-
-  def switch_guest_flg
-    @relationship = @event.relationships.find_by_member_id(params[:member_id])
-    if params[:switch] == "on"
-      @relationship.update(guest_flg: true, presenter_flg: false)
-    elsif params[:switch] == "off"
-      @relationship.update(guest_flg: false, presenter_flg: false)
-    end
-    if @relationship.save!
-      redirect_to :back
-    end
-  end
-
-  def switch_black_list_flg
-    @member = Member.find(params[:member_id])
-    flg = @member.black_list_flg == true ? false : true
-    redirect_to no_show_event_path, :flash => {:success => "更新しました"} if @member.update(black_list_flg: flg)
-  end
-
   def invited 
-    #@members = @event.invited_members.paginate(page:params[:page]).order("last_name_kana")
     @title = "#{@event.name} 招待済みメンバー"
     @members = @event.invited_members.order("last_name_kana")
+    @referer = action_name
   end
 
   def waiting
     @title = "#{@event.name} 参加予定者追加"
-    @members = waiting_members.order("last_name_kana").limit(100)
+    @members = waiting_members.order("gtic_flg desc").order("relationships.presenter_flg desc").order("relationships.guest_flg desc").order("last_name_kana asc").limit(100)
+    @referer = "waiting" 
     respond_to do |format|
       format.html
       format.js
@@ -163,67 +140,113 @@ class EventsController < ApplicationController
 
   def maybe
     @title = "#{@event.name} 未定"
-    @members = @event.maybe_members.order("last_name_kana")
+    @members = @event.maybe_members.sort_by_role
+    @referer = "maybe" 
     respond_to do |format|
       format.html
-      format.xls
+      format.xls {send_data render_to_string(partial: "member_download"),  filename: "#{@title.strip}.xls"}
+      format.js
     end
   end
 
   def registed
     @title = "#{@event.name} 参加予定者"
-    @members = @event.registed_members.order("last_name_kana")
+    @members = @event.registed_members.sort_by_role
+    @referer = "registed" 
     respond_to do |format|
       format.html
-      format.xls
+      format.xls {send_data render_to_string(partial: "member_download"),  filename: "#{@title.strip}.xls"}
+      format.js
     end
   end
 
   def participants
     @title = "#{@event.name} 出席者"
-    @members = @event.participants.order("last_name_kana")
+    @members = @event.participants.sort_by_role
+    @referer = "participants" 
     respond_to do |format|
       format.html
-      format.xls
+      format.xls {send_data render_to_string(partial: "member_download"),  filename: "#{@title.strip}.xls"}
+      format.js
     end
   end
 
   def declined
     @title = "#{@event.name} 欠席者"
-    @members = @event.declined_members.order("last_name_kana")
+    @members = @event.declined_members.sort_by_role
+    @referer = "declined" 
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def no_show
     @title = "#{@event.name} No-show"
-    @members = @event.no_show.order("last_name_kana")
+    @members = @event.no_show.sort_by_role
+    @referer = "no_show" 
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def change_status
-    @members = @event.members.order("last_name_kana")
-    @relationship = @event.relationships.find_by_member_id(params[:member_id])
-    @direction = params[:direction].to_i
-    if @relationship.nil?
-      @relationship = Relationship.new(member_id: params[:member_id], event_id: params[:id], status: 2)
-    elsif @relationship.status == 0
-      @relationship.update(status: 2)
-    elsif @relationship.status >= 1
-      case @direction
+    relationship = @event.relationships.find_by_member_id(params[:member_id])
+    direction = params[:direction].to_i
+    if relationship.blank?
+      relationship = Relationship.new(member_id: params[:member_id], event_id: params[:id], status: 2)
+    else
+      case direction
       when 0
-        @relationship.update(status: 0)
+        relationship.update(status: 0)
       when 2
-        @relationship.update(status: 2)
+        relationship.update(status: 2)
       when 3
-        @relationship.update(status: 3)
+        relationship.update(status: 3)
       when 4 
-        @relationship.update(status: 4)
+        relationship.update(status: 4)
       when 5 
-        @relationship.update(status: 5)
+        relationship.update(status: 5)
       end
     end
-    if @relationship.save
-      redirect_to :back, :flash => {:success => "更新しました"}
+    if relationship.save
+      select_action(params[:referer])
+    else
+      redirect_to :back
     end
   end
+
+  def change_role
+    relationship = @event.relationships.find_by_member_id(params[:member_id])
+    case params[:role]
+    when "presenter"
+      relationship.update(presenter_flg: true, guest_flg: nil)
+    when "guest"
+      relationship.update(presenter_flg: false, guest_flg: true)
+    when "participant"
+      relationship.update(presenter_flg: false, guest_flg: nil)
+    end
+    if relationship.save
+      select_action(params[:referer])
+    else
+      redirect_to :back
+    end
+  end
+
+  def switch_black_list_flg
+    member = Member.find(params[:member_id])
+    flg = member.black_list_flg == true ? false : true
+    member.update(black_list_flg: flg)
+    if member.save
+      select_action(params[:referer])
+    else
+      redirect_to :back
+    end
+  end
+
+
+
   def change_all_waiting_status
     @members = @event.waiting_members.where(black_list_flg: false).where("email IS NOT NULL").order("last_name_kana")
     @members.each do |member|
@@ -237,6 +260,7 @@ class EventsController < ApplicationController
   end
 
   def send_invitation
+    @event = Event.find(params[:event_id])
     @invitations = Invitation.where(event_id: params[:event_id])
   end
   def send_email
@@ -282,7 +306,7 @@ class EventsController < ApplicationController
   def search
     @title = "#{@event.name} 参加予定者追加"
     if params[:search].present? 
-      @members = waiting_members.where("last_name like ?", "%#{params[:search]}%").order("last_name_kana")
+      @members = waiting_members.find_name(params[:search]).order("last_name_kana")
     else
       @members = waiting_members.order("last_name_kana")
     end
@@ -367,8 +391,26 @@ class EventsController < ApplicationController
     def signed_in_user
       redirect_to root_path, notice: "Please sign in." unless signed_in?
     end
-    def selected_event
+    def find_selected_event
       @event = Event.find(params[:id])
     end
+
+    def select_action(referer)
+      case referer
+      when "maybe"
+        maybe
+      when "registed"
+        registed
+      when "participants"
+        participants
+      when "declined"
+        declined
+      when "no_show"
+        no_show
+      end
+    end
+
+
+ 
 
 end

@@ -12,6 +12,10 @@ class Member < ActiveRecord::Base
   has_many :presentationships, foreign_key: "member_id", dependent: :destroy
   has_many :presentations, through: :presentationships, source: :presentation
 #  has_many :presentations, foreign_key: "member_id", dependent: :destroy
+#scope
+  scope :find_name, ->(name) { where("fb_name like ? OR last_name like ? OR last_name_kana like ? OR first_name like ? OR first_name_kana like ?", "%#{name}%", "%#{name}%", "%#{name}%", "%#{name}%", "%#{name}%" ) }
+  scope :sort_by_role, -> { order("gtic_flg desc").order("relationships.presenter_flg desc").order("relationships.guest_flg desc").order("last_name_kana asc")}
+
 
   def self.import(file)
     CSV.foreach(file.path, headers: true) do |row|

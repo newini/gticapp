@@ -99,7 +99,7 @@ class MembersController < ApplicationController
 
   def search
     if params[:search].present? 
-      @members = Member.all.where("last_name like ?", "%#{params[:search]}%").order("last_name_kana").paginate(page: params[:page])
+      @members = Member.find_name(params[:search]).order("last_name_kana ASC").paginate(page: params[:page])
     else
       @members = Member.order("last_name_kana").paginate(page: params[:page])
     end

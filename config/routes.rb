@@ -29,8 +29,7 @@ Gticapp::Application.routes.draw do
       post :create_member
       post :import_participants
       post :import_registed_members
-      post :switch_presenter_flg
-      post :switch_guest_flg
+      post :change_role
       post :update_facebook
       post :update_presentation
     end
