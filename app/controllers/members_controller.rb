@@ -8,7 +8,7 @@ class MembersController < ApplicationController
       @members = Member.joins(:participated_events).group(:member_id).order("count(event_id) DESC").paginate(page: params[:page])
     end
     @all_members = Member.all
-    repeater_id = Relationship.joins(:event).where(:events => {:start_time => Date.parse("2014-1-1")..Date.today}).where(status: 3).group(:member_id).count(:member_id)
+    repeater_id = @all_members.map{|member| [member.id, member.participated_events.where("start_time > ?", Date.parse("2014-01-01").beginning_of_month).count]}
     ids = []
     ids << repeater_id.map{|k,v| k if v >= 5}.compact
     ids << repeater_id.map{|k,v| k if v == 4}.compact
