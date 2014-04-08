@@ -129,7 +129,10 @@ class EventsController < ApplicationController
 
   def waiting
     @title = "#{@event.name} 参加予定者追加"
-    @members = waiting_members.order("gtic_flg desc").order("relationships.presenter_flg desc").order("relationships.guest_flg desc").order("last_name_kana asc").limit(100)
+#    ids = Member.joins(:relationships).where(:relationships =>{event_id: @event.id}).where(:relationships => {status: 2..6}).uniq
+#    @members = Member.where.not(id: ids).order("last_name_kana").limit(100)
+    recorded = Member.recorded_member(@event)
+    @members = Member.waiting_member(recorded)
     @referer = "waiting" 
     respond_to do |format|
       format.html
@@ -305,10 +308,11 @@ class EventsController < ApplicationController
 
   def search
     @title = "#{@event.name} 参加予定者追加"
+    recorded = Member.recorded_member(@event)
     if params[:search].present? 
-      @members = waiting_members.find_name(params[:search]).order("last_name_kana")
+      @members = Member.waiting_member(recorded).find_name(params[:search]).order("last_name_kana")
     else
-      @members = waiting_members.order("last_name_kana")
+      @members = Member.waiting_member(recorded).order("last_name_kana")
     end
     respond_to do |format|
       format.js

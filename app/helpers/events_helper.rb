@@ -167,9 +167,4 @@ module EventsHelper
     end
   end
 
-  def waiting_members
-    ids = Member.joins(:relationships).where(:relationships =>{event_id: @event.id}).where(:relationships => {status: 2..6}).uniq
-    Member.where.not(id: ids)
-  end
-
 end
