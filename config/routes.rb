@@ -23,6 +23,8 @@ Gticapp::Application.routes.draw do
       get :update_registed_member
       get :update_participants
       get :statistics
+      get :edit_presentation
+      get :new_presentation
       post :change_status
       post :switch_black_list_flg
       post :change_all_waiting_status

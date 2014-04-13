@@ -27,7 +27,7 @@
   <div class="form-group"> 
     <%= f.label :event_category_id, 'イベントタイプ', class: 'col-sm-6 control-label' %>
     <div class="col-sm-6">
-      <%= select_tag nil, options_from_collection_for_select(EventCategory.all, :id, :name, @event.event_category_id), name:"event[event_category_id]", class: "form-control", include_blank: true %>
+      <%= select_tag nil, options_from_collection_for_select(EventCategory.all, :id, :name, @event.event_category_id), name:"event[event_category_id]", class: "form-control" %>
     </div>
   </div>
   <div class="form-group"> 

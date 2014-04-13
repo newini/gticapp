@@ -33,7 +33,7 @@
             <% if event[:event][:event_category_id].present? and EventCategory.where(id: event[:event][:event_category_id]).present? %>
               <%= content_tag :td, EventCategory.find(event[:event][:event_category_id]).name, rowspan: event[:detail].length %>
             <% else %>
-              <td></td>
+              <td rowspan="<%=event[:detail].length%>"></td>
             <% end %>
           <% end %>
           <td>

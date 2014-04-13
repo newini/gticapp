@@ -319,6 +319,26 @@ class EventsController < ApplicationController
     end
   end
 
+  def new_presentation
+    @event = Event.find(params[:id])
+    @presentation = Presentation.new
+    @presenters = @event.presenters
+    @presenters_ary = @presenters.map{|presenter| [[presenter.last_name, presenter.first_name].join(" "), presenter.id]}
+    respond_to :js
+
+  end
+  
+  def edit_presentation
+    @number = params[:number]
+    @presentation = Presentation.find(params[:presentation_id])
+    @event = Event.find(params[:id])
+    @presenters = @event.presenters
+    @presenters_ary = @presenters.map{|presenter| [[presenter.last_name, presenter.first_name].join(" "), presenter.id]}
+    respond_to do |format|
+      format.js 
+    end
+  end
+
   def update_presentation
     params[:presentation].each do |presentation|
       record = Presentation.where(member_id: presentation[:member_id]).find_by_event_id(presentation[:event_id]) || Presentation.new(member_id: presentation[:member_id], event_id: presentation[:event_id])

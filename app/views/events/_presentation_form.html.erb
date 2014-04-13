@@ -1,0 +1,11 @@
+<%= form_for @presentation, id: "input_container" do %>
+  <%= hidden_field_tag nil, @event.id, name: "presentation[event_id]" %>
+  <p>プレゼンター</p>
+  <%= select_tag nil, options_for_select(@presenters_ary, @presenters_ary.first[1]), multiple: true, name: "presentation[member_id][]", class: "form-control" %>
+  <p>タイトル</p>
+  <%= text_area_tag nil, @presentation.try(:title), name: "presentation[title]", class: "form-control" %>
+  <p>概要</p>
+  <%= text_area_tag nil, @presentation.try(:abstract), name: "presentation[abstract]", class: "form-control" %>
+  <%= submit_tag "Save", class: "btn btn-primary" %>
+<% end %>
+
