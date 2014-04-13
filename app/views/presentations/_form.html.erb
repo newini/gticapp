@@ -1,5 +1,6 @@
-<%= form_for @presentation, id: "input_container" do %>
+<%= form_for @presentation, id: "input_container", remote: true do %>
   <%= hidden_field_tag nil, @event.id, name: "presentation[event_id]" %>
+  <%= hidden_field_tag nil, @number, name: "presentation[number]" %>
   <p>プレゼンター</p>
   <%= select_tag nil, options_for_select(@presenters_ary, @presenters_ary.first[1]), multiple: true, name: "presentation[member_id][]", class: "form-control" %>
   <p>タイトル</p>

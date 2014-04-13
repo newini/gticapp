@@ -23,8 +23,6 @@ Gticapp::Application.routes.draw do
       get :update_registed_member
       get :update_participants
       get :statistics
-      get :edit_presentation
-      get :new_presentation
       post :change_status
       post :switch_black_list_flg
       post :change_all_waiting_status
@@ -33,7 +31,6 @@ Gticapp::Application.routes.draw do
       post :import_registed_members
       post :change_role
       post :update_facebook
-      post :update_presentation
     end
     resources :invitations
     collection { 
@@ -46,7 +43,7 @@ Gticapp::Application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
   resources :places, only: [:index, :new, :create, :edit, :update, :destroy]
   resources :categories, only: [:index, :new, :create, :edit, :update, :destroy]
-  resources :presentations, only: [:create, :update, :destroy]
+  resources :presentations, only: [:index, :new, :create, :edit, :update, :destroy]
   resources :event_categories, only: [:index, :new, :create, :edit, :update, :destroy]
   match '/signin', to: 'sessions#new', via: 'get'
   match '/signup', to: 'users#new', via: 'get'
