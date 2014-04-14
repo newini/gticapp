@@ -111,7 +111,7 @@ class MembersController < ApplicationController
 
   private
     def member_params
-      params.require(:member).permit(:first_name, :last_name,:first_name_kana, :last_name_kana, :facebook_name, :affiliation, :title, :note, :category_id, :email, :black_list_flg)
+      params.require(:member).permit(:first_name, :last_name,:first_name_kana, :last_name_kana, :facebook_name, :affiliation, :title, :note, :category_id, :email, :black_list_flg, :birthday)
     end
     def signed_in_user
       redirect_to root_path, notice: "Please sign in." unless signed_in?

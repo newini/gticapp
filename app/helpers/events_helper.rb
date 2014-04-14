@@ -157,13 +157,69 @@ module EventsHelper
     presenter_flg = record.presenter_flg
     guest_flg = record.guest_flg
     gtic_flg = member.gtic_flg
-    student_flg = member.category_id == 10 ? true : false
-    if ((presenter_flg || guest_flg) || gtic_flg)
-      return 0
-    elsif student_flg
-      return event.fee - 1000 if event.fee.present?
+    if member.birthday
+      if member.birthday.strftime("%m") == event.start_time.strftime("%m")
+        birthday_flg = true
+      else
+        birthday_flg = false
+      end
     else
-      return event.fee
+      birthday_flg = false
+    end
+    fee = event.fee || 0
+    student_flg = member.category_id == 10 ? true : false
+    if student_flg
+      fee -= 1000 
+    end
+    if birthday_flg
+      fee -= 1000
+    end
+    if ((presenter_flg || guest_flg) || gtic_flg)
+      fee = 0
+    end
+    fee
+  end
+
+  def select_birthday(member, event)
+    if member.birthday
+      if member.birthday.strftime("%m") == event.start_time.strftime("%m")
+        link_to update_birthday_event_path(member_id: member.id, referer: @referer), method: "post", remote: true, class:"btn btn-primary btn-xs" do
+          content_tag(:span, "", class:"glyphicon glyphicon-check") 
+        end
+      else
+        content_tag :button, disabled: "disabled", class: "btn btn-default btn-xs" do
+          content_tag(:span, "", class:"glyphicon glyphicon-unchecked")
+        end
+      end
+    else
+      link_to update_birthday_event_path(member_id: member.id, referer: @referer, birthday: true), method: "post", remote: true, class:"btn btn-default btn-xs" do
+        content_tag(:span, "", class:"glyphicon glyphicon-unchecked")
+      end
+    end
+  end
+
+  def show_birthday(member, event)
+    if member.birthday
+      if member.birthday.strftime("%m") == event.start_time.strftime("%m")
+        return "B" 
+      else
+        return ""
+      end
+    else
+      return ""
+    end
+  end
+
+  def show_note(member, event)
+    relationship = member.relationships.find_by_event_id(event.id)
+    if relationship.note
+      link_to edit_relationship_path(relationship.id), class: "btn btn-primary btn-xs", remote: true do
+        content_tag :span, "", class: "glyphicon glyphicon-check note", data: {content: relationship.note }
+      end
+    else
+      link_to edit_relationship_path(relationship.id), class: "btn btn-default btn-xs", remote: true do
+        content_tag :span, "", class: "glyphicon glyphicon-unchecked"
+      end
     end
   end
 

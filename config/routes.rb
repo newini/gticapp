@@ -31,6 +31,7 @@ Gticapp::Application.routes.draw do
       post :import_registed_members
       post :change_role
       post :update_facebook
+      post :update_birthday
     end
     resources :invitations
     collection { 
@@ -38,7 +39,7 @@ Gticapp::Application.routes.draw do
       get :statistics
     }
   end
-  resources :relationships, only: [:create, :destroy]
+  resources :relationships, only: [:create, :edit, :update, :destroy]
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
   resources :places, only: [:index, :new, :create, :edit, :update, :destroy]

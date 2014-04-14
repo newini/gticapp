@@ -6,6 +6,7 @@ class EventsController < ApplicationController
     :show, :edit, :update, :destroy,
     :change_role, :switch_black_list_flg,
     :update_maybe_member, :update_registed_member, :update_participants,
+    :update_birthday,
     :invited, :registed, :participants, :waiting, :maybe, :declined, :no_show, 
     :change_status,:change_all_waiting_status, 
     :send_email, 
@@ -343,6 +344,22 @@ class EventsController < ApplicationController
       format.js
     end
   end
+
+  def update_birthday
+    member = Member.find(params[:member_id])
+    if params[:birthday]
+      member.update(birthday: @event.start_time.beginning_of_month)
+    else
+      member.update(birthday: nil)
+    end
+    if member.save
+      select_action(params[:referer])
+    else
+      redirect_to :back
+    end
+  end
+
+
 
   def statistics
     @title = "統計"

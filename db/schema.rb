@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140403181158) do
+ActiveRecord::Schema.define(version: 20140414034608) do
 
   create_table "categories", force: true do |t|
     t.string   "name"
@@ -82,9 +82,11 @@ ActiveRecord::Schema.define(version: 20140403181158) do
     t.boolean  "gtic_flg"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "birthday"
   end
 
   add_index "members", ["affiliation"], name: "index_members_on_affiliation"
+  add_index "members", ["birthday"], name: "index_members_on_birthday"
   add_index "members", ["black_list_flg"], name: "index_members_on_black_list_flg"
   add_index "members", ["category_id"], name: "index_members_on_category_id"
   add_index "members", ["email"], name: "index_members_on_email"
@@ -141,12 +143,14 @@ ActiveRecord::Schema.define(version: 20140403181158) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "guest_flg"
+    t.string   "note"
   end
 
   add_index "relationships", ["event_id"], name: "index_relationships_on_event_id"
   add_index "relationships", ["guest_flg"], name: "index_relationships_on_guest_flg"
   add_index "relationships", ["member_id", "event_id"], name: "index_relationships_on_member_id_and_event_id", unique: true
   add_index "relationships", ["member_id"], name: "index_relationships_on_member_id"
+  add_index "relationships", ["note"], name: "index_relationships_on_note"
   add_index "relationships", ["presenter_flg"], name: "index_relationships_on_presenter_flg"
   add_index "relationships", ["status"], name: "index_relationships_on_status"
 
