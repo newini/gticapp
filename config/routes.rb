@@ -23,6 +23,7 @@ Gticapp::Application.routes.draw do
       get :update_registed_member
       get :update_participants
       get :statistics
+      get :account
       post :change_status
       post :switch_black_list_flg
       post :change_all_waiting_status
@@ -37,6 +38,7 @@ Gticapp::Application.routes.draw do
     collection { 
       post :import
       get :statistics
+      get :fb
     }
   end
   resources :relationships, only: [:create, :edit, :update, :destroy]
@@ -46,6 +48,7 @@ Gticapp::Application.routes.draw do
   resources :categories, only: [:index, :new, :create, :edit, :update, :destroy]
   resources :presentations, only: [:index, :new, :create, :edit, :update, :destroy]
   resources :event_categories, only: [:index, :new, :create, :edit, :update, :destroy]
+  resources :accounts
   match '/signin', to: 'sessions#new', via: 'get'
   match '/signup', to: 'users#new', via: 'get'
   match '/signout', to: 'sessions#destroy', via: 'delete'
@@ -58,6 +61,7 @@ Gticapp::Application.routes.draw do
   match '/events/:event_id/send_invitation', to: 'events#send_email', via: 'post'
   #omniauth
   match '/auth/:provider/callback', to: 'sessions#create', via: 'get'
+
 
 
   root 'static_pages#home'

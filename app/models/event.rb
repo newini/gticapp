@@ -8,9 +8,12 @@ class Event < ActiveRecord::Base
   has_many :declined_members, -> {where "status = 0 or status = 4"}, through: :relationships, source: :member 
   has_many :no_show, -> {where "status = 5"}, through: :relationships, source: :member 
   has_many :presenters, -> {where :relationships => {presenter_flg: true}}, through: :relationships, source: :member
+  has_many :guests, -> {where :relationships => {guest_flg: true}}, through: :relationships, source: :member
+
   has_many :invitations, dependent: :destroy
   has_many :presentationships, foreign_key: "event_id", dependent: :destroy
   has_many :presentations, -> { uniq }, through: :presentationships, source: :presentation
+  has_many :accounts, foreign_key: "event_id"
 #  has_many :presentations, foreign_key: "event_id", dependent: :destroy
 
   def self.import(file)

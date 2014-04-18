@@ -10,7 +10,7 @@ class EventsController < ApplicationController
     :invited, :registed, :participants, :waiting, :maybe, :declined, :no_show, 
     :change_status,:change_all_waiting_status, 
     :send_email, 
-    :update_facebook, :new_member, :search
+    :update_facebook, :new_member, :search, :account
   ]
 
   def index
@@ -379,6 +379,36 @@ class EventsController < ApplicationController
     end
   end
 
+  def account
+    @title = "会計"
+    range = @event.start_time.beginning_of_month..@event.start_time.end_of_month
+    fee = @event.fee || 0
+    participants = @event.participants
+    participant = participants.pluck(:id)
+    presenter = @event.relationships.where(status: 3).where(presenter_flg: true).pluck(:member_id)
+    guest = @event.relationships.where(status: 3).where(guest_flg: true).pluck(:member_id)
+    gtic = participants.where(gtic_flg: true).pluck(:id)
+    free = (presenter + guest + gtic).uniq
+    student = participants.where(category_id: 10).pluck(:id) - free
+    birthday = participants.where(birthday: range).pluck(:id) - free
+
+    if @event.accounts.blank?
+      Account.create( title: "参加費", event_id: @event.id, amount: participant.count * fee, positive: true)
+      Account.create( title: "GTIC割引", event_id: @event.id, amount: gtic.count * fee, positive: false)
+      Account.create( title: "プレゼンター割引", event_id: @event.id, amount: presenter.count * fee, positive: false)
+      Account.create( title: "ゲスト割引", event_id: @event.id, amount: guest.count * fee, positive: false)
+      Account.create( title: "学生割引", event_id: @event.id, amount: student.count * 1000, positive: false)
+      Account.create( title: "誕生日割引", event_id: @event.id, amount: birthday.count * 1000, positive: false)
+    else
+      @accounts = @event.accounts
+    end
+  end
+
+
+  def fb
+    @app_id = Settings.OmniAuth.facebook.app_id
+    @user =  User.find_by_uid(100001781966894)
+  end 
 
 =begin
   def convert

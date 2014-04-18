@@ -11,7 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140414034608) do
+ActiveRecord::Schema.define(version: 20140414072713) do
+
+  create_table "accounts", force: true do |t|
+    t.string   "title"
+    t.float    "amount"
+    t.integer  "event_id"
+    t.boolean  "positive"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "accounts", ["amount"], name: "index_accounts_on_amount"
+  add_index "accounts", ["event_id"], name: "index_accounts_on_event_id"
+  add_index "accounts", ["positive"], name: "index_accounts_on_positive"
+  add_index "accounts", ["title"], name: "index_accounts_on_title"
 
   create_table "categories", force: true do |t|
     t.string   "name"

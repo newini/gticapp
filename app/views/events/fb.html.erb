@@ -1,0 +1,78 @@
+<div id="fb-root"></div>
+<div id="result"></div>
+<script src="http://connect.facebook.net/en_US/all.js"></script>
+<script>
+FB.init({
+appId      : <%= @app_id %>,
+  status     : true,
+  xfbml      : true
+});
+window.onload = function deleteInvited(){
+  FB.api(
+    "226471170876676/invited",
+    {access_token: "<%= @user.access_token %>"},
+    "DELETE",
+    {
+      "object":{
+        "user": "100001104438485"
+      }
+    },
+    function(response){
+      if (response && !response.error) {
+        var contents = '';
+        for (var i = 0; i < response.data.length; i++) {
+           for (var elem in response.data[i]) {
+             contents += elem + ' : ' + response.data[i][elem] + '<br>';
+           }
+           contents += '<hr>';
+         }
+        document.getElementById('result').innerHTML = contents;
+      }
+    }
+  );
+}
+function getEvent(){
+  FB.api(
+    "/226471170876676",
+    {access_token: "<%= current_user.access_token %>"},
+    function(response){
+      if (response && !response.error) {
+        document.getElementById('result').innerHTML = JSON.stringify(response);
+      }
+    }
+  );
+}
+function getInvited(){
+  FB.api(
+    "226471170876676/invited",
+    {access_token: "<%= current_user.access_token %>"},
+    function(response){
+      if (response && !response.error) {
+        var contents = '';
+        for (var i = 0; i < response.data.length; i++) {
+           for (var elem in response.data[i]) {
+             contents += elem + ' : ' + response.data[i][elem] + '<br>';
+           }
+           contents += '<hr>';
+         }
+        document.getElementById('result').innerHTML = contents;
+      }
+    }
+  );
+}
+function getWall(){
+  FB.api("/me/feed",
+      {access_token: "<%= current_user.access_token %>"},
+    function(response){
+      var contents = '';
+      for (var i = 0; i < response.data.length; i++) {
+         for (var elem in response.data[i]) {
+           contents += elem + ' : ' + response.data[i][elem] + '<br>';
+         }
+         contents += '<hr>';
+       }
+      document.getElementById('result').innerHTML = contents;
+    }
+  );
+}
+</script>
