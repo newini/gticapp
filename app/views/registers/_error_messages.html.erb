@@ -1,0 +1,10 @@
+<% if @register.errors.present? %>
+  <div class="alert alert-warning">
+    フォームの入力内容に <%= @register.errors.count %>個のエラーがあります。
+    <ul>
+      <% @register.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

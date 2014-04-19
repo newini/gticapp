@@ -1,0 +1,5 @@
+<% if @num == 0 %>
+  $("#ajax-container-0").html("<%= escape_javascript(render"form") %>");
+<% else %>
+  $("#ajax-container-1").html("<%= escape_javascript(render"form") %>");
+<% end %>

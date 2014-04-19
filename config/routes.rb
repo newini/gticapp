@@ -48,6 +48,7 @@ Gticapp::Application.routes.draw do
   resources :presentations, only: [:index, :new, :create, :edit, :update, :destroy]
   resources :event_categories, only: [:index, :new, :create, :edit, :update, :destroy]
   resources :accounts
+  resources :registers
   match '/signin', to: 'sessions#new', via: 'get'
   match '/signup', to: 'users#new', via: 'get'
   match '/signout', to: 'sessions#destroy', via: 'delete'

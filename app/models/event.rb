@@ -13,7 +13,8 @@ class Event < ActiveRecord::Base
   has_many :invitations, dependent: :destroy
   has_many :presentationships, foreign_key: "event_id", dependent: :destroy
   has_many :presentations, -> { uniq }, through: :presentationships, source: :presentation
-  has_many :accounts, foreign_key: "event_id"
+  has_many :registers, foreign_key: "event_id", dependent: :destroy
+  has_many :accounts, through: :registers, source: :account
 #  has_many :presentations, foreign_key: "event_id", dependent: :destroy
 
   def self.import(file)

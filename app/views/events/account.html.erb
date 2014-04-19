@@ -9,40 +9,7 @@
       </section>
     <% end %>
   </aside>
-  <div class="col-lg-10">
-    <h2><%= @title %></h2>
-    <div id="ajax_container">
-      <div class="col-lg-5">
-        <h2>収入</h2>
-        <table class="table">
-          <tr>
-            <th class="col-md-1">科目</th>
-            <th class="col-md-1">金額</th>
-          </tr>
-          <% @accounts.where(positive: true).each do |account| %>
-            <tr>
-              <td><%= account.title %></td>
-              <td><%= account.amount %></td>
-            </tr>
-          <% end %>
-        </table>
-      </div>
-      <div class="col-lg-5">
-        <h2>支出</h2>
-        <table class="table">
-          <tr>
-            <th class="col-md-1">科目</th>
-            <th class="col-md-1">金額</th>
-          </tr>
-          <% @accounts.where(positive: false).each do |account| %>
-            <tr>
-              <td><%= account.title %></td>
-              <td><%= account.amount %></td>
-            </tr>
-          <% end %>
-        </table>
-      </div>
-
-    </div>
+  <div id="ajax-container">
+    <%= render "account" %>
   </div>
 </div> 

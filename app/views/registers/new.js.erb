@@ -1,0 +1,5 @@
+<% if @bool == true %>
+  $("#pos-form").html("<%= escape_javascript(render"form") %>");
+<% else %>
+  $("#neg-form").html("<%= escape_javascript(render"form") %>");
+<% end %>

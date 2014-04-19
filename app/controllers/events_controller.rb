@@ -394,16 +394,16 @@ class EventsController < ApplicationController
     student = participants.where(category_id: 10).pluck(:id) - free
     birthday = participants.where(birthday: range).pluck(:id) - free
 
-    if @event.accounts.blank?
-      Account.create( title: "参加費", event_id: @event.id, amount: participant.count * fee, positive: true)
-      Account.create( title: "GTIC割引", event_id: @event.id, amount: gtic.count * fee, positive: false)
-      Account.create( title: "プレゼンター割引", event_id: @event.id, amount: presenter.count * fee, positive: false)
-      Account.create( title: "ゲスト割引", event_id: @event.id, amount: guest.count * fee, positive: false)
-      Account.create( title: "学生割引", event_id: @event.id, amount: student.count * 1000, positive: false)
-      Account.create( title: "誕生日割引", event_id: @event.id, amount: birthday.count * 1000, positive: false)
-    else
-      @accounts = @event.accounts
+    if @event.registers.blank?
+      Register.create( event_id: @event.id, account_id: 1, amount: participant.count * fee )
+      Register.create( event_id: @event.id, account_id: 2, amount: gtic.count * fee )
+      Register.create( event_id: @event.id, account_id: 3, amount: presenter.count * fee )
+      Register.create( event_id: @event.id, account_id: 4, amount: guest.count * fee )
+      Register.create( event_id: @event.id, account_id: 5, amount: student.count * 1000 )
+      Register.create( event_id: @event.id, account_id: 6, amount: birthday.count * 1000 )
     end
+    @registers_pos = @event.registers.joins(:account).where("accounts.positive =?", true)
+    @registers_neg = @event.registers.joins(:account).where("accounts.positive =?", false)
   end
 
 
