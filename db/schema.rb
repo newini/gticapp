@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140414072713) do
+ActiveRecord::Schema.define(version: 20140419041518) do
 
   create_table "accounts", force: true do |t|
     t.string   "title"
@@ -167,6 +167,18 @@ ActiveRecord::Schema.define(version: 20140414072713) do
   add_index "relationships", ["note"], name: "index_relationships_on_note"
   add_index "relationships", ["presenter_flg"], name: "index_relationships_on_presenter_flg"
   add_index "relationships", ["status"], name: "index_relationships_on_status"
+
+  create_table "schedule_logs", force: true do |t|
+    t.integer  "event_id"
+    t.integer  "member_id"
+    t.integer  "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "schedule_logs", ["event_id"], name: "index_schedule_logs_on_event_id"
+  add_index "schedule_logs", ["member_id"], name: "index_schedule_logs_on_member_id"
+  add_index "schedule_logs", ["status"], name: "index_schedule_logs_on_status"
 
   create_table "users", force: true do |t|
     t.string   "name"

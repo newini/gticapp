@@ -293,10 +293,12 @@ class EventsController < ApplicationController
         end
         member.save!
         if record = member.relationships.find_by_event_id(@event.id)
-          case record.status
-          when nil, 0, 1, 2
-            record.update(event_id: @event.id, status: convert_status(rsvp_status))
-            record.save!
+          unless record.status == convert_status(rsvp_status)
+            case record.status
+            when nil, 0, 1, 2
+                record.update(event_id: @event.id, status: convert_status(rsvp_status))
+                record.save!
+            end
           end
         else
           member.relationships.create(event_id: @event.id, status: convert_status(rsvp_status))
@@ -406,8 +408,19 @@ class EventsController < ApplicationController
 
 
   def fb
+    status = "invited"
+      #GIFワークショップのイベントID
+    @event_id = "226471170876676"
+      #招待された人を格納["id",...]
+    invited = facebook(@event_id, status).map{|v| v["id"].to_i}
+      #GTICメンバーを格納["uid",...]
+    organizer = User.all.map{|v| v.uid.to_i}
+      #大野さんを追加
+    organizer.push(100001988359323)
+      #削除する人を格納["id",...]
+    @deleting = invited - organizer
     @app_id = Settings.OmniAuth.facebook.app_id
-    @user =  User.find_by_uid(100001781966894)
+    access_token = "CAAKLIo4ZCd3gBAJpRrnGhyUeWV3KWehqezNdLXGP7eZBPy9uJ4LLmKnT0Pbu2sdLz78OYG1UyhKLLHZB1Wq9oqjLuIkqSxI2fgQbcvYhrBmJ3E7qmBTSPl8y7QnVTnRDYgJZCOJnqtPEmxOVaqfRXa4kyKhGJJ04h9i1EbkyhggEGcEROyHq"
   end 
 
 =begin

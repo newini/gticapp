@@ -80,13 +80,17 @@ class Event < ActiveRecord::Base
             end
             @member.save!
             if record = @member.relationships.find_by_event_id(event.id)
-              case record.status
-              when nil, 0, 1, 2
-                record.update(event_id: event.id, status: Event.convert_status(status))
-                record.save!
+              unless record.status == Event.convert_status(status)
+                case record.status
+                when nil, 0, 1, 2
+                    record.update(event_id: event.id, status: Event.convert_status(status))
+                    record.save!
+                    ScheduleLog.create(event_id: event.id, status: Event.convert_status(status), member_id: @member.id)
+                end
               end
             else
-              member.relationships.create(event_id: event.id, status: Event.convert_status(status))
+              @member.relationships.create(event_id: event.id, status: Event.convert_status(status))
+              ScheduleLog.create(event_id: event.id, status: Event.convert_status(status), member_id: @member.id)
             end
           end
         end

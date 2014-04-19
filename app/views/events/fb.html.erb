@@ -1,5 +1,15 @@
-<div id="fb-root"></div>
-<div id="result"></div>
+<div class="col-md-2">
+</div>
+<div class="col-md-5">
+  <h2>出席者</h2>
+  <div id="attending"></div>
+</div>
+<div class="col-md-5">
+  <button class="btn btn-default ", onclick="deleteTest()">オーガナイザー以外の招待をキャンセル</button>
+  <div id="result"></div>
+</div>
+
+  <div id="fb-root"></div>
 <script src="http://connect.facebook.net/en_US/all.js"></script>
 <script>
 FB.init({
@@ -7,55 +17,68 @@ appId      : <%= @app_id %>,
   status     : true,
   xfbml      : true
 });
-window.onload = function deleteInvited(){
-  FB.api(
-    "226471170876676/invited",
-    {access_token: "<%= @user.access_token %>"},
-    "DELETE",
-    {
-      "object":{
-        "user": "100001104438485"
+
+function deleteTest(){
+  var deleting = <%= @deleting %>;
+  for (var elem in deleting){
+    var element = document.createElement('p'); 
+    var str = document.createTextNode(deleting[elem]);
+    FB.api(
+        "/<%= @event_id %>/invited",
+      "DELETE",
+      {"access_token": "<%= current_user.access_token %>",
+        "user": deleting[elem]
+      },
+      function(response){
+        str += JSON.stringify(response);
+        element.appendChild(str);
+        document.getElementById('result').appendChild(element);		
       }
-    },
-    function(response){
-      if (response && !response.error) {
-        var contents = '';
-        for (var i = 0; i < response.data.length; i++) {
-           for (var elem in response.data[i]) {
-             contents += elem + ' : ' + response.data[i][elem] + '<br>';
-           }
-           contents += '<hr>';
-         }
-        document.getElementById('result').innerHTML = contents;
+    );
+
+
+  }
+}
+
+function deleteInvited(){
+  var deleting = <%= @deleting %>;
+  for (var elem in deleting){
+    FB.api(
+        "/<%= @event_id %>/invited",
+      "DELETE",
+      {"access_token": "<%= current_user.access_token %>",
+        "user": elem
+      },
+      function(response){
+        document.getElementById('result').innerHTML = JSON.stringify(response);
       }
-    }
-  );
+    );
+  }
 }
 function getEvent(){
   FB.api(
-    "/226471170876676",
+      "/<%= @event_id %>",
     {access_token: "<%= current_user.access_token %>"},
     function(response){
-      if (response && !response.error) {
         document.getElementById('result').innerHTML = JSON.stringify(response);
-      }
     }
   );
 }
-function getInvited(){
+ function getInvited(){
   FB.api(
-    "226471170876676/invited",
+      "/<%= @event_id %>/invited",
     {access_token: "<%= current_user.access_token %>"},
     function(response){
       if (response && !response.error) {
-        var contents = '';
+      var contents = '<ul>';
         for (var i = 0; i < response.data.length; i++) {
            for (var elem in response.data[i]) {
-             contents += elem + ' : ' + response.data[i][elem] + '<br>';
+           contents += "<li>" + elem + ' : ' + response.data[i][elem] + '</li>';
            }
            contents += '<hr>';
          }
-        document.getElementById('result').innerHTML = contents;
+         contents += "</ul>"
+        document.getElementById('attending').innerHTML = contents;
       }
     }
   );

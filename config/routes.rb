@@ -38,7 +38,6 @@ Gticapp::Application.routes.draw do
     collection { 
       post :import
       get :statistics
-      get :fb
     }
   end
   resources :relationships, only: [:create, :edit, :update, :destroy]
