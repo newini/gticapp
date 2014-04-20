@@ -1,25 +1,6 @@
 <div class="row">
   <aside class="col-lg-2">
-    <section>
-      <%= render'side' %>
-    </section>
-    <section>
-      <div class="btn-group-vertical btn-block" >
-        <%= link_to "新規登録/CSV読込", new_event_path, class: "btn btn-default btn-block" %>
-        <%= link_to "会場管理", places_path, class: "btn btn-default btn-block" %>
-        <%= link_to "イベントタイプ管理", event_categories_path, class: "btn btn-default btn-block" %>
-        <%= link_to "統計", statistics_events_path, class: "btn btn-default btn-block" %>
-        <%= link_to "会計科目管理", accounts_path, class: "btn btn-default btn-block" %>
-      </div>
-    </section>
-    <div class="well well-small">
-      <ul class="list-unstyled">
-        <li><%= "開催回数：#{@total_events}回" %></li>
-        <li><%= "出席者延べ人数：#{@total_participants}名" %></li>
-        <li><%= "出席者数：#{@participants}名" %></li>
-      </ul>
-    </div>
-
+    <%= render'side' %>
   </aside>
   <div class="col-lg-10">
     <h2><%= "イベント一覧" %></h2>

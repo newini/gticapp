@@ -1,3 +1,40 @@
-<div class="btn-group-vertical btn-block" >
-  <%= link_to 'イベント一覧', events_path, class: "btn btn-default btn-block" %>
+<div id="side-nav">
+  <section>
+  <div class="btn-group-vertical btn-block" >
+    <%= link_to 'イベント一覧', events_path, class: "btn btn-default btn-block" %>
+  </div>
+  </section>
+  <% if params[:id].blank? %>
+    <section>
+      <div class="btn-group-vertical btn-block" >
+        <%= link_to "新規登録/CSV読込", new_event_path, class: "btn btn-default btn-block" %>
+        <%= link_to "統計", statistics_events_path, class: "btn btn-default btn-block" %>
+        <%= link_to "会場管理", places_path, class: "btn btn-default btn-block" %>
+        <%= link_to "イベントタイプ管理", event_categories_path, class: "btn btn-default btn-block" %>
+        <%= link_to "会計科目管理", accounts_path, class: "btn btn-default btn-block" %>
+      </div>
+    </section>
+  <% else %>
+    <section>
+        <div class="btn-group-vertical btn-block" >
+          <%= link_to 'イベント情報', event_path(@event), class: "btn btn-default btn-block " %>
+          <%= link_to "未定 (#{@event.maybe_members.count})", maybe_event_path(@event), class: "btn btn-default  btn-block" %>
+          <%= link_to "参加予定 (#{@event.registed_members.count})", registed_event_path(@event), class: "btn btn-default  btn-block" %>
+          <%= link_to "出席 (#{@event.participants.count})", participants_event_path(@event), class: "btn btn-default  btn-block" %>
+          <%= link_to "欠席 (#{@event.declined_members.count})", declined_event_path(@event), class: "btn btn-default  btn-block" %>
+          <%= link_to "No-show (#{@event.no_show.count})", no_show_event_path(@event), class: "btn btn-default  btn-block" %>
+          <%= link_to "統計", statistics_event_path(@event), class: "btn btn-default  btn-block" %>
+          <%= link_to "会計", account_event_path(@event), class: "btn btn-default  btn-block" %>
+        </div>
+    </section>
+  <% end %>
+  <% if request.path_info == "/events" %>
+    <div class="well well-small">
+      <ul class="list-unstyled">
+        <li><%= "開催回数：#{@total_events}回" %></li>
+        <li><%= "出席者延べ人数：#{@total_participants}名" %></li>
+        <li><%= "出席者数：#{@participants}名" %></li>
+      </ul>
+    </div>
+  <% end %>
 </div>

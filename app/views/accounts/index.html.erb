@@ -6,22 +6,18 @@
     <div class="col-lg-5">
       <div id="ajax-container-<%= i %>">
         <h2><%= @subtitle[i] %></h2>
-        <table class="table table-bordered">
+        <table class="table">
           <tr>
-            <th>ID</th>
-            <th>属性名</th>
-            <th></th>
-            <th></th>
+            <th class="col-lg-2">科目名</th>
+            <th class="col-lg-1"></th>
+            <th class="col-lg-1"></th>
           </tr>
-          <% n = 1 %>
           <% @accounts[i].each do |account| %>
             <tr>
-              <td><%= n %></td>
               <td><%= account.title %></td>
               <td><%= link_to "編集", edit_account_path(account, num: i), remote: true %> </td>
               <td><%= link_to "削除", account_path(account), method: :delete %> </td>
             </tr>
-            <% n += 1 %>
           <% end %>
         </table>
         <%= link_to "科目登録", new_account_path(num: i), method: :get, class: "btn btn-primary btn-block", remote: true %>

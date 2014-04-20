@@ -24,7 +24,7 @@ class AccountsController < ApplicationController
   end
 
   def new
-    @title = "会場登録"
+    @title = "会計科目登録"
     @num = params[:num].to_i
     if @num == 0 
       @account = Account.new(positive: true)
