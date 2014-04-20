@@ -11,6 +11,15 @@
   <meta name="robots" content="noindex,follow" >
   <meta name="robots" content="noindex,nofollow,noarchive" >
   <meta name="googlebot" content="noindex,nofollow,noarchive">
+  <script>
+    $(document).on('ajax:before ajaxStart page:fetch', function(){
+      var top = $(window).height()/2 + $(window).scrollTop();
+      $('body').spin({top: top});
+    });
+    $(document).on('ajax:complete ajaxComplete page:change', function(){
+      $('body').spin(false);
+    });
+  </script>
 </head>
 <body>
   <%= render 'layouts/header' %>
