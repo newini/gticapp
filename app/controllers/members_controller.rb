@@ -115,7 +115,7 @@ class MembersController < ApplicationController
     @members.each do |member|
       if member.last_name_kana.present?
         if member.last_name_kana.ascii_only?
-          last_name_alphabet = last_name_kana
+          last_name_alphabet = member.last_name_kana
         else
           last_name_alphabet = roman(member.last_name_kana)
         end
