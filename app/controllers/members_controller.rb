@@ -108,6 +108,7 @@ class MembersController < ApplicationController
   end
 
   def kana_to_roman
+    Rails.logger.level = Logger::DEBUG 
     @members = Member.where.not(last_name_kana: nil)
     total = @members.count
     i = 0
@@ -136,6 +137,7 @@ class MembersController < ApplicationController
   end
 
   def roman(kana)
+    Rails.logger.level = Logger::DEBUG 
     sentence = URI.encode(kana)
     key = 'dj0zaiZpPVR3TzJrbEJzRjRwTCZzPWNvbnN1bWVyc2VjcmV0Jng9OTg-'
     base_url = 'http://jlp.yahooapis.jp/FuriganaService/V1/furigana'
