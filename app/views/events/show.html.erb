@@ -16,6 +16,9 @@
   </div>
   <div class="col-md-5">
     <h2>Facebook イベント情報</h2>
-    <%= render'facebook_event_info' %>
+    <% if @fb_event_info %>
+      <%= render'facebook_event_info' %>
+    <% end %>
   </div>
 </div>
+

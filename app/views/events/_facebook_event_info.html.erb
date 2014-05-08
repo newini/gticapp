@@ -1,10 +1,8 @@
-<% if @fb_event_info.present? %>
-  <strong>タイトル</strong>
-  <div class="well well-small">
-    <%= @fb_event_info["name"] %><br>
-  </div>
-  <strong>概要</strong>
-  <div class="well well-small">
-    <%= simple_format(@fb_event_info["description"]) %>
-  </div>
-<% end %>
+<strong>タイトル</strong>
+<div class="well well-small">
+  <%= @fb_event_info["name"] %>
+</div>
+<strong>概要</strong>
+<div class="well well-small">
+  <%= simple_format(@fb_event_info["description"]) %>
+</div>

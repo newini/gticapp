@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140419061239) do
+ActiveRecord::Schema.define(version: 20140424022331) do
 
   create_table "accounts", force: true do |t|
     t.string   "title"
@@ -97,6 +97,8 @@ ActiveRecord::Schema.define(version: 20140419061239) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "birthday"
+    t.string   "last_name_alphabet"
+    t.string   "first_name_alphabet"
   end
 
   add_index "members", ["affiliation"], name: "index_members_on_affiliation"
@@ -106,8 +108,10 @@ ActiveRecord::Schema.define(version: 20140419061239) do
   add_index "members", ["email"], name: "index_members_on_email"
   add_index "members", ["fb_name"], name: "index_members_on_fb_name"
   add_index "members", ["fb_user_id"], name: "index_members_on_fb_user_id"
+  add_index "members", ["first_name_alphabet"], name: "index_members_on_first_name_alphabet"
   add_index "members", ["gtic_flg"], name: "index_members_on_gtic_flg"
   add_index "members", ["last_name"], name: "index_members_on_last_name"
+  add_index "members", ["last_name_alphabet"], name: "index_members_on_last_name_alphabet"
   add_index "members", ["last_name_kana"], name: "index_members_on_last_name_kana"
   add_index "members", ["title"], name: "index_members_on_title"
 

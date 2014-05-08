@@ -20,9 +20,22 @@
       $('body').spin(false);
     });
   </script>
+
+  <script src="http://connect.facebook.net/en_US/all.js"></script>
+  <script>
+    FB.init({
+      appId      : <%= Settings.OmniAuth.facebook.app_id %>,
+      status     : true,
+      xfbml      : true
+    });
+  </script>
+
+
+
 </head>
 <body>
   <%= render 'layouts/header' %>
+  <div id="fb-root"></div>
   <div class="container-fluid">
     <% flash.each do |key,value| %>
       <%= content_tag(:div, value, class: "alert alert-#{key}") %>

@@ -1,7 +1,7 @@
 class StaticPagesController < ApplicationController
   def home
     if signed_in?
-      redirect_to members_path
+      redirect_to events_path
     end
   end
 
