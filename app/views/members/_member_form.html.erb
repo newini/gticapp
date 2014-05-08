@@ -22,7 +22,7 @@
         </div>
       </div>
       <div class="form-group">
-        <%= label_tag :last_name_kana, "名（かな） / first name", class: 'col-sm-6 control-label' %>
+        <%= label_tag :first_name_kana, "名（かな） / first name", class: 'col-sm-6 control-label' %>
         <div class="col-sm-6">
           <%= text_field_tag nil, @member.first_name_kana, name: "member[first_name_kana]", placeholder: @member.errors.any? ? "#{@member.errors.messages[:first_name_kana][0]}" : "太郎 / John", class: "form-control" %>
         </div>
@@ -30,13 +30,13 @@
       <div class="form-group">
         <%= label_tag :last_name_alphabet, "氏（ローマ字） / last name", class: 'col-sm-6 control-label' %>
         <div class="col-sm-6">
-          <%= text_field_tag nil, @member.last_name_alphabet, name: "member[last_name_kana]", placeholder: @member.errors.any? ? "#{@member.errors.messages[:last_name_kana][0]}" : "Smith", class: "form-control" %>
+          <%= text_field_tag nil, @member.last_name_alphabet, name: "member[last_name_alphabet]", placeholder: @member.errors.any? ? "#{@member.errors.messages[:last_name_alphabet][0]}" : "Smith", class: "form-control" %>
         </div>
       </div>
       <div class="form-group">
-        <%= label_tag :last_name_alphabet, "名（ローマ字） / first name", class: 'col-sm-6 control-label' %>
+        <%= label_tag :first_name_alphabet, "名（ローマ字） / first name", class: 'col-sm-6 control-label' %>
         <div class="col-sm-6">
-          <%= text_field_tag nil, @member.first_name_alphabet, name: "member[first_name_kana]", placeholder: @member.errors.any? ? "#{@member.errors.messages[:first_name_kana][0]}" : "John", class: "form-control" %>
+          <%= text_field_tag nil, @member.first_name_alphabet, name: "member[first_name_alphabet]", placeholder: @member.errors.any? ? "#{@member.errors.messages[:first_name_alphabet][0]}" : "John", class: "form-control" %>
         </div>
       </div>
 
