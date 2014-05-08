@@ -1,5 +1,9 @@
 class UsersController < ApplicationController
-  before_action :signed_in_user, only:[:edit, :update]
+  before_action :signed_in_user, only:[:show, :edit, :update]
+  before_action :admin_user, only:[:index, :new, :create]
+  def index
+    @users = User.all
+  end
   def show
 #    @user = User.find(params[:id])
     @user = current_user
@@ -32,7 +36,7 @@ class UsersController < ApplicationController
   end
   private
     def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation)
+      params.require(:user).permit(:name, :email, :password, :password_confirmation, :uid, :language)
     end
     def signed_in_user
       redirect_to root_path, notice: "Please sign in." unless signed_in?

@@ -14,7 +14,8 @@ class Member < ActiveRecord::Base
 #  has_many :presentations, foreign_key: "member_id", dependent: :destroy
 #scope
   scope :find_name, ->(name) { where("fb_name like ? OR last_name like ? OR last_name_kana like ? OR first_name like ? OR first_name_kana like ?", "%#{name}%", "%#{name}%", "%#{name}%", "%#{name}%", "%#{name}%" ) }
-  scope :sort_by_role, -> { order("gtic_flg desc").order("relationships.presenter_flg desc").order("relationships.guest_flg desc").order("last_name_alphabet asc")}
+  scope :sort_by_role_kana, -> { order("gtic_flg desc").order("relationships.presenter_flg desc").order("relationships.guest_flg desc").order("last_name_kana asc")}
+  scope :sort_by_role_alphabet, -> { order("gtic_flg desc").order("relationships.presenter_flg desc").order("relationships.guest_flg desc").order("last_name_alphabet asc")}
   scope :recorded_member, ->(event) { joins(:relationships).where(relationships: {event_id: event.id}).where(relationships: {status: 2..6}).uniq }
   scope :waiting_member, ->(member) { where.not(id: member).order("last_name_kana") }
 

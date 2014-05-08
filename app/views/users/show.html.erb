@@ -1,6 +1,8 @@
-<div class="row-fluid">
-  <aside class="span4">
-    <h2>メンバー情報</h2>
+<div class="row">
+  <aside class="col-lg-2">
+  </aside>
+  <div class="col-lg-10">
+    <h2>User情報</h2>
     <table class="table table-bordered">
       <tr>
         <th>Name</th>
@@ -10,9 +12,10 @@
         <th>Email</th>
         <td><%= @user.email %></td>
       </tr>
+      <tr>
+        <th>Language</th>
+        <td><%= show_language(@user.language) %></td>
+      </tr>
     </table>
-
-  </aside>
-  <div class="span8">
   </div>
 </div>

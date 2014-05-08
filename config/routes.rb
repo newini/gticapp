@@ -5,6 +5,7 @@ Gticapp::Application.routes.draw do
       get :management
       post :update_information
       get :search
+      post :kana_to_roman
     end
   end
   resources :events do

@@ -1,5 +1,4 @@
 class MembersController < ApplicationController
-
   before_action :signed_in_user
   helper_method :sort_column, :sort_direction
   def index
@@ -107,6 +106,72 @@ class MembersController < ApplicationController
       format.js
     end
   end
+
+  def kana_to_roman
+    @members = Member.where.not(last_name_kana: nil)
+    total = @members.count
+    i = 0
+    @members.each do |member|
+      if member.last_name_kana.present?
+        if member.last_name_kana.ascii_only?
+          last_name_alphabet = last_name_kana
+        else
+          last_name_alphabet = roman(member.last_name_kana)
+        end
+      end
+      if member.first_name_kana.present?
+        if member.first_name_kana.ascii_only?
+          first_name_alphabet = member.first_name_kana
+        else
+          first_name_alphabet = roman(member.first_name_kana)
+        end
+      end
+      member.update(last_name_alphabet: last_name_alphabet,
+                   first_name_alphabet: first_name_alphabet)
+      if member.save
+        i += 1
+      end
+    end
+    redirect_to members_path, :flash => {:success => "#{i} / #{total}件更新しました" }
+  end
+
+  def roman(kana)
+    sentence = URI.encode(kana)
+    key = 'dj0zaiZpPVR3TzJrbEJzRjRwTCZzPWNvbnN1bWVyc2VjcmV0Jng9OTg-'
+    base_url = 'http://jlp.yahooapis.jp/FuriganaService/V1/furigana'
+    req_url = "#{base_url}?sentence=#{sentence}&appid=#{key}"
+    response = Net::HTTP.get_response(URI.parse(req_url))
+    status = Hash.from_xml(response.body)
+    words = status["ResultSet"]["Result"]["WordList"]["Word"]
+    value = String.new
+    logger.debug(words)
+    if words.instance_of?(Array)
+      words.each do |word|
+        if word["Roman"].nil?
+          value << word["Surface"]
+        else
+          value << word["Roman"]
+        end
+      end
+    else
+      if words["Roman"].nil?
+        value << words["Surface"]
+      else
+        value << words["Roman"]
+      end
+    end
+    value
+
+  end
+
+  def members(members)
+    if current_user.language == 0
+      @members = members.sort_by_role_kana
+    else
+      @members = members.sort_by_role_alphabet
+    end
+  end
+
 
 
   private

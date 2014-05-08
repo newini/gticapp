@@ -1,0 +1,27 @@
+<div class="row">
+  <aside class="col-lg-2">
+  </aside>
+  <div class="col-lg-10">
+    <h2>User情報</h2>
+    <table class="table table-bordered">
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Facebook ID</th>
+        <th>Admin</th>
+        <th>Language</th>
+        <th></th>
+      </tr>
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= user.id %></td>
+          <td><%= user.name %></td>
+          <td><%= user.uid %></td>
+          <td><%= user.admin %></td>
+          <td><%= show_language(user.language) %></td>
+          <td><%= link_to "編集", edit_user_path(user) %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>

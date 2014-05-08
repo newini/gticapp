@@ -124,7 +124,7 @@ class EventsController < ApplicationController
 
   def invited 
     @title = "#{@event.name} 招待済みメンバー"
-    @members = @event.invited_members.order("last_name_kana")
+    members(@event.invited_members)
     @referer = action_name
   end
 
@@ -144,7 +144,7 @@ class EventsController < ApplicationController
 
   def maybe
     @title = "#{@event.name} 未定"
-    @members = @event.maybe_members.sort_by_role
+    members(@event.maybe_members)
     @referer = "maybe" 
     respond_to do |format|
       format.html
@@ -155,7 +155,7 @@ class EventsController < ApplicationController
 
   def registed
     @title = "#{@event.name} 参加予定者"
-    @members = @event.registed_members.sort_by_role
+    members(@event.registed_members)
     @referer = "registed" 
     respond_to do |format|
       format.html
@@ -166,7 +166,7 @@ class EventsController < ApplicationController
 
   def participants
     @title = "#{@event.name} 出席者"
-    @members = @event.participants.sort_by_role
+    members(@event.participants)
     @referer = "participants" 
     respond_to do |format|
       format.html
@@ -177,7 +177,7 @@ class EventsController < ApplicationController
 
   def declined
     @title = "#{@event.name} 欠席者"
-    @members = @event.declined_members.sort_by_role
+    members(@event.declined_members)
     @referer = "declined" 
     respond_to do |format|
       format.html
@@ -187,7 +187,7 @@ class EventsController < ApplicationController
 
   def no_show
     @title = "#{@event.name} No-show"
-    @members = @event.no_show.sort_by_role
+    members(@event.no_show)
     @referer = "no_show" 
     respond_to do |format|
       format.html
@@ -437,6 +437,14 @@ class EventsController < ApplicationController
     redirect_to events_path
   end
 =end
+  def members(members)
+    if current_user.language == 0
+      @members = members.sort_by_role_kana
+    else
+      @members = members.sort_by_role_alphabet
+    end
+  end
+
 
    
   private
