@@ -24,9 +24,16 @@ class MembersController < ApplicationController
     #GTICメンバーを排除した参加者idの配列
     participant = all_participant - gtic
     #参加者のidごとにカウントした配列
-    repeater_id = participant.map{|id| [id, participant.count(id)]}
-
-#    repeater_id = Member.all.map{|member| [member.id, member.participated_events.where("start_time > ?", Date.parse("2014-01-01").beginning_of_month).count]}
+    repeater = participant.map{|id| [id, participant.count(id)]}
+    #出席回数でソートした配列(ソートの順番は大->小)
+    sorted_repeater =repeater.sort{|a,b| b[1] <=> a[1]}.uniq
+    #出席回数をキーにした配列
+    transposed_repeater = sorted_repeater.map{|a| [a[1], a[0]]}
+    #出席回数でグループ化した配列
+    counted_grouped_repeater = transposed_repeater.group_by{|a| a[0]}.map{|k,v| [k,v.map{|a| a[1]}]}
+    #配列をハッシュに{回数 => [id, id, ...], 回数 => [id, id, ...], ...}
+    @repeater = Hash[counted_grouped_repeater]
+=begin
     ids << repeater_id.map{|k,v| k if v >= 5}.compact
     ids << repeater_id.map{|k,v| k if v == 4}.compact
     ids << repeater_id.map{|k,v| k if v == 3}.compact
@@ -34,6 +41,7 @@ class MembersController < ApplicationController
     ids.each do |id|
       @repeater << Member.where(id: id)
     end
+=end
   end
 
   def category

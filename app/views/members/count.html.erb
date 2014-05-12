@@ -10,20 +10,35 @@
       <%= link_to 'かな->ローマ字', :kana_to_roman_members, class: "btn btn-primary", method: "POST" %>
     <% end %>
     <div id="ajax_container">
-      <div class="well well-small">
-        <ul class="list-unstyled">
-          <hr>
-          <li><strong>2014年1月からの出席者</strong></li>
-          <% for i in 0..3 do %>
-            <li>
-              <strong> <%= 5-i %><%= i == 0 ? "回以上" : "回" %></strong>
-              <% @repeater[i].each do |repeater| %>
-                <li><%= link_to "#{repeater.last_name} #{repeater.first_name}", member_path(repeater) %></li>
-              <% end %>
-            </li>
+      <h2>2014年1月からの出席者</h2>
+      <table class="table table-bordered">
+        <tr>
+          <th class="col-md-1">出席回数</th>
+          <th class="col-md-1">人数</th>
+          <th>氏名</th>
+        </tr>
+        <% @repeater.each do |repeater| %>
+          <% if repeater[0] >= 2 %>
+            <tr>
+              <td><%= repeater[0] %></td>
+              <td><%= repeater[1].count %></td>
+              <td>
+                <% i=1 %>
+                <% for id in repeater[1] do %>
+                  <% member = Member.find(id) %>
+                  <% if member.last_name.present? %>
+                    <%= link_to "#{member.last_name} #{member.first_name}", member_path(id) %>
+                  <% else %>
+                    <%= link_to "#{member.fb_name}", member_path(id) %>
+                  <% end %>
+                  <%= "|" unless i == repeater[1].length %>
+                  <% i += 1 %>
+                <% end %>
+              </td>
+            </tr>
           <% end %>
-        </ul>
-      </div>
+        <% end %>
+      </table>
     </div>
   </div>
 </div> 
