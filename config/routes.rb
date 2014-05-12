@@ -6,6 +6,8 @@ Gticapp::Application.routes.draw do
       post :update_information
       get :search
       post :kana_to_roman
+      get :count
+      get :category
     end
   end
   resources :events do

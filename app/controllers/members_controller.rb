@@ -6,22 +6,37 @@ class MembersController < ApplicationController
     if params[:count].present?
       @members = Member.joins(:participated_events).group(:member_id).order("count(event_id) DESC").paginate(page: params[:page])
     end
-    @all_members = Member.all
-    repeater_id = @all_members.map{|member| [member.id, member.participated_events.where("start_time > ?", Date.parse("2014-01-01").beginning_of_month).count]}
-    ids = []
-    ids << repeater_id.map{|k,v| k if v >= 5}.compact
-    ids << repeater_id.map{|k,v| k if v == 4}.compact
-    ids << repeater_id.map{|k,v| k if v == 3}.compact
-    ids << repeater_id.map{|k,v| k if v == 2}.compact
-    @repeater = []
-    ids.each do |id|
-      @repeater << Member.where(id: id)
-    end
-
     respond_to do |format|
       format.html
       format.xls
     end
+  end
+
+  def count
+    @repeater = []
+    ids = []
+    #2014年1月1日以降のイベント
+    events = Event.where("start_time > ?", Date.parse("2014-01-01"))
+    #参加者の全id（重複あり)の配列
+    all_participant = events.map{|event| event.participants.map{|member| member.id}}.flatten
+    #GTICメンバーのidの配列
+    gtic = Member.where(gtic_flg: true).map{|member| member.id}
+    #GTICメンバーを排除した参加者idの配列
+    participant = all_participant - gtic
+    #参加者のidごとにカウントした配列
+    repeater_id = participant.map{|id| [id, participant.count(id)]}
+
+#    repeater_id = Member.all.map{|member| [member.id, member.participated_events.where("start_time > ?", Date.parse("2014-01-01").beginning_of_month).count]}
+    ids << repeater_id.map{|k,v| k if v >= 5}.compact
+    ids << repeater_id.map{|k,v| k if v == 4}.compact
+    ids << repeater_id.map{|k,v| k if v == 3}.compact
+    ids << repeater_id.map{|k,v| k if v == 2}.compact
+    ids.each do |id|
+      @repeater << Member.where(id: id)
+    end
+  end
+
+  def category
   end
 
   def show
@@ -173,8 +188,6 @@ class MembersController < ApplicationController
       @members = members.sort_by_role_alphabet
     end
   end
-
-
 
   private
     def member_params

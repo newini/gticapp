@@ -1,0 +1,29 @@
+<div class="row">
+  <div class="col-md-2">
+    <section>
+      <%= render'members/side' %>
+    </section>
+  </div>
+  <div class="col-md-10">
+    <%= link_to 'ダウンロード', members_path(format: 'xls'), class: "btn btn-primary" %>
+    <% if admin? %>
+      <%= link_to 'かな->ローマ字', :kana_to_roman_members, class: "btn btn-primary", method: "POST" %>
+    <% end %>
+    <div id="ajax_container">
+      <div class="well well-small">
+        <ul class="list-unstyled">
+          <hr>
+          <li><strong>2014年1月からの出席者</strong></li>
+          <% for i in 0..3 do %>
+            <li>
+              <strong> <%= 5-i %><%= i == 0 ? "回以上" : "回" %></strong>
+              <% @repeater[i].each do |repeater| %>
+                <li><%= link_to "#{repeater.last_name} #{repeater.first_name}", member_path(repeater) %></li>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div> 
