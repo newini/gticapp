@@ -6,9 +6,9 @@
 
   </div>
   <div class="col-md-10">
-    <%= link_to 'ダウンロード', members_path(format: 'xls'), class: "btn btn-primary" %>
+    <%= link_to 'ダウンロード', members_path(format: 'xls'), class: "btn btn-default btn-sm" %>
     <% if admin? %>
-      <%= link_to 'かな->ローマ字', :kana_to_roman_members, class: "btn btn-primary", method: "POST" %>
+      <%= link_to 'かな->ローマ字', :kana_to_roman_members, class: "btn btn-info btn-sm", method: "POST" %>
     <% end %>
     <div id="ajax_container">
       <%= render'members' %>

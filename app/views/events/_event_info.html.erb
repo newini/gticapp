@@ -19,6 +19,10 @@
     <td><%= show_currency(@event.fee) %></td>
   </tr>
   <tr>
+    <th>備考</th>
+    <td><%= @event.note %></td>
+  </tr>
+  <tr>
     <th>イベントURL</th>
     <td><%= link_to truncate("https://www.facebook.com/events/#{@event.fb_event_id}",length:50), "https://www.facebook.com/events/#{@event.fb_event_id}", target: :blank %></td>
   </tr>

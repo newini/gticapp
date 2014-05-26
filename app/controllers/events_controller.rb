@@ -449,7 +449,7 @@ class EventsController < ApplicationController
    
   private
     def event_params
-      params.require(:event).permit(:name, :start_time, :end_time, :fb_event_id, :place_id, :fee, :event_category_id)
+      params.require(:event).permit(:name, :start_time, :end_time, :fb_event_id, :place_id, :fee, :event_category_id, :note)
     end
     def signed_in_user
       redirect_to root_path, notice: "Please sign in." unless signed_in?

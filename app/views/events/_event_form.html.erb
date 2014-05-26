@@ -42,6 +42,13 @@
       <%= f.text_field :fb_event_id, class: "form-control" %>
     </div>
   </div>
+  <div class="form-group"> 
+    <%= f.label :note, '備考', class: 'col-sm-6 control-label' %>
+    <div class="col-sm-6">
+      <%= f.text_area :note, class: "form-control" %>
+    </div>
+  </div>
+
 
   <%= f.submit "送信", class: "btn btn-large btn-primary btn-block" %> 
 <% end %>

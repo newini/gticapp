@@ -24,7 +24,9 @@
           <li id="fat-menu" class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <%= User.find(current_user).name %> <b class="caret"></b></a>
             <ul class="dropdown-menu">
-              <li><%= link_to "USERS", :users if admin? %></li> 
+              <% if admin? %>
+                <li><%= link_to "USERS*", :users %></li>
+              <% end %>
               <li><%= link_to "PROFILE", current_user %></li> 
               <li><%= link_to "SETTING", edit_user_path(@current_user) %></li>
               <li class="divider"></li>

@@ -1,12 +1,12 @@
 <div class="row">
-  <aside class="col-md-2">
+  <aside class="col-sm-2">
     <%= render'side' %>
   </aside>
-  <div class="col-md-5">
+  <div class="col-sm-5">
     <h2>イベント登録</h2>
     <%= render'event_form' %>
   </div>
-  <div class="col-md-5">
+  <div class="col-sm-5">
     <h2>イベント情報CSVデータ取り込み</h2>
     <%= form_tag import_events_path, multipart: true do %>
       <%= file_field_tag :file, class: "file-holder" %>

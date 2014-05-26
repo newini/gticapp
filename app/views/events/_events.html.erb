@@ -12,7 +12,7 @@
   <% @events.each do |event| %>
     <% if event[:detail].length == 0 %>
       <tr>
-        <td><%= link_to event[:event][:name], event_path(event[:event][:id]) %></td>
+        <td><%= link_to event[:event][:name], registed_event_path(event[:event][:id]) %></td>
         <td><%= event[:event][:date] %></td>
         <td><%= EventCategory.find(event[:event][:event_category_id]).name if event[:event][:event_category_id].present? and EventCategory.where(id: event[:event][:event_category_id]).present? %></td>
         <td></td>
@@ -27,7 +27,7 @@
         <tr>
           <% if i == 0 %>
             <%= content_tag :td, rowspan: event[:detail].length do %>
-              <%= link_to event[:event][:name], event_path(event[:event][:id]) %>
+              <%= link_to event[:event][:name], registed_event_path(event[:event][:id]) %>
             <% end %>
             <%= content_tag :td, event[:event][:date], rowspan: event[:detail].length %>
             <% if event[:event][:event_category_id].present? and EventCategory.where(id: event[:event][:event_category_id]).present? %>
