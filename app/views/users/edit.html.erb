@@ -21,7 +21,7 @@
       <div class="form-group">
         <%= f.label :admin, "Admin", class: 'col-sm-4 control-label' %>
         <div class="col-sm-6">
-          <%= f.text_field :admin, placeholder: "Name", class: "form-control" %>
+          <%= f.text_field :admin, placeholder: "t / f", class: "form-control" %>
           <%= @user.errors.messages[:admin][0] if @user.errors.any?%>
         </div>
       </div>

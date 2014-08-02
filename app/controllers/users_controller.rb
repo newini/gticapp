@@ -36,7 +36,7 @@ class UsersController < ApplicationController
   end
   private
     def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation, :uid, :language)
+      params.require(:user).permit(:name, :email, :password, :password_confirmation, :uid, :language, :admin)
     end
     def signed_in_user
       redirect_to root_path, notice: "Please sign in." unless signed_in?
