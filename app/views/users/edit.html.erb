@@ -18,6 +18,13 @@
           <%= @user.errors.messages[:email][0] if @user.errors.any?%>
         </div>
       </div>
+      <div class="form-group">
+        <%= f.label :admin, "Admin", class: 'col-sm-4 control-label' %>
+        <div class="col-sm-6">
+          <%= f.text_field :admin, placeholder: "Name", class: "form-control" %>
+          <%= @user.errors.messages[:admin][0] if @user.errors.any?%>
+        </div>
+      </div>
       <% if admin? %>
         <div class="form-group">
           <%= f.label :language, "*Language", class: 'col-sm-4 control-label' %>
