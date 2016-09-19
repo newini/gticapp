@@ -1,3 +1,7 @@
+body{
+font-family:'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', メイリオ, Meiryo, 'ＭＳ Ｐゴシック', sans-serif;
+}
+
 @import "bootstrap";
 /* mixins, variables, etc. */ 
 $grayMediumLight: #eaeaea;
@@ -12,7 +16,7 @@ html {
 }
 body {
   padding-top: 56px;
-  background: url(https://s3-ap-northeast-1.amazonaws.com/gtic/images/fabric_of_squares_gray.png);
+  background: image-url("fabric_of_squares_gray.png");
 }
 section { 
   overflow: auto;
@@ -55,7 +59,7 @@ p{
 /* full-width-image */
 .full-width-image{
   /*background: url(http://lorempixel.com/g/1920/500/technics) no-repeat center center; */
-  background: url(https://s3-ap-northeast-1.amazonaws.com/gtic/images/bg_image_01.png) no-repeat center center; 
+  background: image-url("bg_image_01.png") no-repeat center center; 
   background-size: cover;
   text-align: center;
   padding: 40px 0;
@@ -131,3 +135,8 @@ aside {
 .td-nowrap{
   white-space: nowrap; 
 }
+
+body{
+font-family:'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', メイリオ, Meiryo, 'ＭＳ Ｐゴシック', sans-serif;
+}
+

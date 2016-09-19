@@ -1,13 +1,14 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 4.0.0'
-gem 'sass-rails', '~> 4.0.0'
-gem 'uglifier', '>= 1.3.0'
-gem 'coffee-rails', '~> 4.0.0'
-gem 'therubyracer', platforms: :ruby
+gem 'rails', '4.2.6'
+gem 'sqlite3'
+gem 'sass-rails', '~> 4.0'
+gem 'uglifier', '~> 1.3.0'
+gem 'coffee-rails', '~> 4.1.0'
 gem 'jquery-rails'
 gem 'turbolinks'
-gem 'jbuilder', '~> 1.2'
+gem 'jbuilder', '~> 2.0'
+gem 'therubyracer', platforms: :ruby
 gem 'bcrypt-ruby', '~> 3.1.2'
 gem 'bootstrap-sass'
 gem 'bootswatch-rails'
@@ -17,18 +18,20 @@ gem 'mandrill-api'
 gem 'koala'
 gem 'omniauth'
 gem 'omniauth-facebook'
-gem 'rails_config'
-gem 'sqlite3'
+#gem 'rails_config'
 gem 'whenever', :require => false
 gem 'chartkick'
 gem 'spinjs-rails'
+gem 'config', github: 'railsconfig/config'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
 end
+
 group :development, :test do
   gem 'rspec-rails'
-  gem 'guard-rspec', '2.5.0'
+  gem 'guard-rspec'
   gem 'spork-rails'
   gem 'guard-spork'
   gem 'childprocess'
@@ -36,11 +39,13 @@ group :development, :test do
   gem "capistrano-rails"
   gem "capistrano-rbenv"
 end
+
 group :test do
   gem 'capybara'
   gem 'selenium-webdriver'
   gem 'factory_girl_rails'
 end
+
 group :production do
-  gem 'rails_12factor'
+#  gem 'rails_12factor'
 end

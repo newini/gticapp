@@ -9,6 +9,95 @@ class StaticPagesController < ApplicationController
   end
 
   def presenter
+    @start_date = Event.order("start_time ASC").first.start_time.beginning_of_year
+    @last_date = Event.order("start_time ASC").last.start_time.end_of_year
+    year = params[:year].present? ? Date.parse(params[:year]) : @last_date 
+    base = Event.where(:start_time => year.beginning_of_year..year.end_of_year).group(:start_time)
+    record = base.order("start_time DESC")
+    @events = record.map{
+      |event| [
+        event: {
+          id: event.id, 
+          name: event.name, 
+          date: event.start_time.strftime("%Y-%m-%d"), 
+          place: event.place_id, 
+          event_category_id: event.event_category_id
+        }, 
+        detail: event.presentations.map{
+          |presentation| [
+            title: presentation.try(:title),
+            abstract: presentation.try(:abstract),
+            note: presentation.try(:note),
+            presenter: presentation.presenters.map{
+              |presenter| [
+                name: [presenter.last_name, presenter.first_name].join(" "), 
+                affiliation: presenter.affiliation, 
+                title: presenter.title
+              ]
+            }.flatten
+          ]
+        }.flatten
+      ]
+    }.flatten
+    respond_to do |format|
+      format.html
+      format.js
+    end
+  end
+
+#
+  def chishikipresenter
+    @start_date = Event.order("start_time ASC").first.start_time.beginning_of_year
+    @last_date = Event.order("start_time ASC").last.start_time.end_of_year
+    record = Event.all.order("start_time DESC")
+    @events = record.map{
+      |event| [
+        event: {
+          id: event.id, 
+          name: event.name, 
+          date: event.start_time.strftime("%Y-%m-%d"), 
+          place: event.place_id, 
+          event_category_id: event.event_category_id
+        }, 
+        detail: event.presentations.map{
+          |presentation| [
+            title: presentation.try(:title),
+            abstract: presentation.try(:abstract),
+            note: presentation.try(:note),
+            presenter: presentation.presenters.map{
+              |presenter| [
+                name: [presenter.last_name, presenter.first_name].join(" "), 
+                affiliation: presenter.affiliation, 
+                title: presenter.title
+              ]
+            }.flatten
+          ]
+        }.flatten
+      ]
+    }.flatten
+  end
+#
+
+  def organizer
+  end
+
+  def schedule
+  end
+
+  def media_introduce
+  end
+
+  def contact
+  end
+
+  def thanks
+  end
+  
+  def test
+    @start_date = Event.order("start_time ASC").first.start_time.beginning_of_year
+    @last_date = Event.order("start_time ASC").last.start_time.end_of_year
+    year = params[:year].present? ? Date.parse(params[:year]) : @last_date 
+    base = Event.where(:start_time => year.beginning_of_year..year.end_of_year).group(:start_time)
     record = Event.all.order("start_time DESC")
     @events = record.map{
       |event| [
@@ -34,9 +123,10 @@ class StaticPagesController < ApplicationController
         }.flatten
       ]
     }.flatten
-
   end
+  
 
-  def organizer
-  end
+
+
+
 end

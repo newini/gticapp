@@ -7,11 +7,10 @@
         <span class="icon-bar"></span>
       </button>
       <%= link_to root_path, class: "navbar-brand logo-nav" do %>
-        <%#= image_tag 'https://s3-ap-northeast-1.amazonaws.com/gtic/gtic_logo_c_30x30.png' %>
         <% unless signed_in? %>
-          <%= image_tag 'https://s3-ap-northeast-1.amazonaws.com/gtic/images/logo2.png' %>
+          <%= image_tag 'logo2.png' %>
         <% else %>
-          <%= image_tag 'https://s3-ap-northeast-1.amazonaws.com/gtic/images/gtic_logo_c_30x30.png' %>管理アプリ
+          <%= image_tag 'gtic_logo_c_30x30.png' %>管理アプリ
         <% end %>
       <% end %>
     </div>
@@ -20,7 +19,8 @@
         <li><%= link_to "HOME", root_path %></li> 
         <% if signed_in? %>
           <li><%= link_to "MEMBER", members_path %></li> 
-          <li><%= link_to "EVENT", events_path %></li>
+          <li><%= link_to "GTIC", events_path %></li> 
+          <li><%= link_to "知識の泉", chisikis_path %></li>
           <li id="fat-menu" class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <%= User.find(current_user).name %> <b class="caret"></b></a>
             <ul class="dropdown-menu">
@@ -36,8 +36,10 @@
         <% else %>
           <li><%= link_to "ABOUT", :about %></li> 
           <li><%= link_to "PRESENTER", :presenter %></li> 
+          <li><%= link_to "SCHEDULE", :schedule %></li> 
           <li><%= link_to "ORGANIZER", :organizer %></li> 
-          <li><%= link_to "MEDIA", :media %></li> 
+          <li><%= link_to "MEDIA article", :media %></li>
+          <li><%= link_to "メディアに取材してもらいたい方へ", :media_introduce %></li>
         <% end %>
       </ul> 
     </div>

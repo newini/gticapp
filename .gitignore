@@ -22,3 +22,6 @@ config/environments/*.local.yml
 *~
 *.swp
 *.swo
+
+# ingnore vendor
+/vendor

@@ -6,9 +6,29 @@
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
   <%= render 'layouts/shim' %>
+
+<STYLE TYPE="text/css"><!--
+DIV.tuzukiwaku{border:1px solid #badefe;padding:3px;margin:3px;display:none;}
+--></STYLE>
+
+<SCRIPT language="JavaScript"><!--
+function hiraku(geID){
+document.getElementById(geID).style.display = "block";
+}
+function tatamu(geID){
+document.getElementById(geID).style.display = "none";
+}
+//--></SCRIPT>
+<NOSCRIPT>
+<STYLE TYPE="text/css"><!--
+DIV.tuzukiwaku{display:block;color:#ffffff;}
+--></STYLE>
+</NOSCRIPT>
 </head>
+
 <body>
   <%= render 'layouts/header' %>
+<br><br><br>
   <div class="container">
     <% flash.each do |key,value| %>
       <%= content_tag(:div, value, class: "alert alert-#{key}") %>
@@ -19,5 +39,17 @@
     <%= render 'layouts/footer' %>
     <%= debug(params) if Rails.env.development? %>
   </div>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-60265381-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
 </body>
 </html>
+
+<%= stylesheet_link_tag "static_pages", :media => "all" %>

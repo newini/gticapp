@@ -10,6 +10,7 @@
     <th class="col-md-1">出席者数</th>
   </tr>
   <% @events.each do |event| %>
+    <% if event[:event][:event_category_id] != 3 %>
     <% if event[:detail].length == 0 %>
       <tr>
         <td><%= link_to event[:event][:name], registed_event_path(event[:event][:id]) %></td>
@@ -54,6 +55,7 @@
         </tr>
         <% i += 1 %>
       <% end %>
+    <% end %>
     <% end %>
   <% end %>
 </table>

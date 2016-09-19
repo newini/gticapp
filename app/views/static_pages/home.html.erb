@@ -1,25 +1,59 @@
 <div class="full-width-image">
   <div class="logo-wrapper">
-    <%= image_tag 'https://s3-ap-northeast-1.amazonaws.com/gtic/images/logo200x200.png' %>
+    <%= image_tag 'logo200x200.png' %>
     <h1>「よりオープンに、よりグローバルに、よりイノベイティブに、<br>
       ベンチャー、起業、スタートアップ、イノベーションを考えよう！」</h1>
   </div>
 </div>
-<div class="section">
-  <div class="container">
+<br><br>
+<div class="container">
     <div class="row">
-      <div class="col-lg-4 col-md-4">
-        <h3><span class="glyphicon glyphicon-globe"></span> 本会議</h3>
-        <p>毎月都内でベンチャー企業によるプレゼンテーションを開催しています。</p>
+      <div class="col-lg-9 col-md-9">
+        <fieldset>
+          <legend></legend>
+        </fieldset>
       </div>
-      <div class="col-lg-4 col-md-4">
-        <h3><span class="glyphicon glyphicon-edit"></span> 分科会</h3>
-        <p>不定期でビジネスマンに役立つ勉強会を開催しています。</p>
-      </div>
-      <div class="col-lg-4 col-md-4">
-        <h3><span class="glyphicon glyphicon-link"></span> 懇親会</h3>
-        <p>会議の後はビールと軽食を片手にプレゼンター、参加者が歓談します。</p>
+      <div class="col-lg-3 col-md-3">
+          <br>
+          <div aligh = "center">
+          <button type="button"onclick="window.open('http://gtic.jp/presenter')" style="background-color:#e1e1e1;width:350px;height:70px;"
+            onmouseover="this.style.background='#616161'"
+            onmouseout="this.style.background='#e1e1e1'"><strong><font size = "4">過去の登壇者（本会・分科会）</font></strong></button>
+          </div>
       </div>
     </div>
-  </div>
 </div>
+<table width="100%" border="0px">  
+    <tr>
+        <td width="70%">
+        <center>
+        <h1><span class="glyphicon glyphicon-globe"></span> CONFERENCE (本会)</h1>
+        <p><h3>毎月都内でベンチャー企業によるプレゼンテーションを開催しています。</h3></p>
+        <br>
+        <h1><span class="glyphicon glyphicon-edit"></span> WORKSHOP (分科会)</h1>
+        <p><h3>不定期でビジネスマンに役立つ勉強会を開催しています。</h3></p>
+        <br>
+        <h1><span class="glyphicon glyphicon-link"></span> 懇親会</h1>
+        <p><h3>会議の後はビールと食事を片手にプレゼンター、参加者が歓談します。</h3></p>
+        </center>
+        </td>
+        <br>
+        <td align="left"><div id="fb-root"></div>
+          <script>(function(d, s, id) {
+             var js, fjs = d.getElementsByTagName(s)[0];
+               if (d.getElementById(id)) return;
+               js = d.createElement(s); js.id = id;
+               js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.3";
+             fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+          </script>
+          <div class="fb-page" data-href="https://www.facebook.com/GTICafe" data-hide-cover="false" data-show-facepile="true" data-show-posts="true" data-width="380">
+            <div class="fb-xfbml-parse-ignore">
+              <blockquote cite="https://www.facebook.com/GTICafe">
+                <a href="https://www.facebook.com/GTICafe">Global Techno Innovation Cafe (GTIC)</a>
+              </blockquote>
+            </div>
+          </div>
+        </td>  
+    </tr>  
+</table>
