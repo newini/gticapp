@@ -49,7 +49,9 @@ class StaticPagesController < ApplicationController
   def chishikipresenter
     @start_date = Event.order("start_time ASC").first.start_time.beginning_of_year
     @last_date = Event.order("start_time ASC").last.start_time.end_of_year
-    record = Event.all.order("start_time DESC")
+    year = params[:year].present? ? Date.parse(params[:year]) : @last_date 
+    base = Event.where(:start_time => year.beginning_of_year..year.end_of_year).group(:start_time)
+    record = base.order("start_time DESC")
     @events = record.map{
       |event| [
         event: {
@@ -75,6 +77,10 @@ class StaticPagesController < ApplicationController
         }.flatten
       ]
     }.flatten
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 #
 

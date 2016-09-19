@@ -1,19 +1,19 @@
 <div class="section">
- 
-  <div class="navbar-collapse collapse navbar-default">
-    <ul class="nav navbar-nav">
-      <li><%= link_to "GTIC PRESENTER", :presenter%></li>
-      <li><%= link_to "知識の泉 PRESENTER", :chishikipresenter%></li>
-    </ul>
-  </div>
-
   <div class="container">
+
+    <div class="navbar-collapse collapse navbar-default">
+      <ul class="nav navbar-nav">
+        <li><%= link_to "GTIC PRESENTER", :presenter %></li>
+        <li><%= link_to "知識の泉 PRESENTER", :chishikipresenter %></li>
+      </ul>
+    </div>
+
     <h1>GTIC PRESENTER</h1>
 
     <div class="btn-group">
       <% date = @last_date%>
       <% while date >= @start_date do %>
-        <%= link_to "#{date.strftime("%Y")}年", events_path(:year => date.strftime("%Y-%m-%d")), class: "btn btn-default", remote: true %>
+        <%= link_to "#{date.strftime("%Y")}年", presenter_path(:year => date.strftime("%Y-%m-%d")), class: "btn btn-default", remote: true %>
         <% date = date - 1.year %>
       <% end %>
     </div>

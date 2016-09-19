@@ -1,68 +1,26 @@
 <div class="section">
-
-  <div class="navbar-collapse collapse navbar-default">
-    <ul class="nav navbar-nav">
-      <li><%= link_to "GTIC PRESENTER", :presenter%></li>
-      <li><%= link_to "知識の泉 PRESENTER", :chishikipresenter%></li>
-    </ul>
-  </div>
-
   <div class="container">
+  
+    <div class="navbar-collapse collapse navbar-default">
+      <ul class="nav navbar-nav">
+        <li><%= link_to "GTIC PRESENTER", :presenter%></li>
+        <li><%= link_to "知識の泉 PRESENTER", :chishikipresenter%></li>
+      </ul>
+    </div>
+  
     <h1>知識の泉PRESENTER</h1>
 
-<!--
     <div class="btn-group">
       <% date = @last_date%>
       <% while date >= @start_date do %>
-        <%= link_to "#{date.strftime("%Y")}年", events_path(:year => date.strftime("%Y-%m-%d")), class: "btn btn-default", remote: true%>
+        <%= link_to "#{date.strftime("%Y")}年", chishikipresenter_path(:year => date.strftime("%Y-%m-%d")), class: "btn btn-default", remote: true%>
         <% date = date - 1.year %>
       <% end %>
     </div>
--->
 
-    <table class="table">
-      <tr>
-        <th class="col-md-1">Event</th>
-        <th class="col-md-1">Date</th>
-        <th class="col-md-2">Presenter</th>
-        <th class="col-md-4">Title</th>
-      </tr>
-      <% @events.each do |event| %>
-        <% if event[:event][:event_category_id] == 3 %>
-        <% if event[:detail].length == 0 %>
-          <tr>
-            <td><%= event[:event][:name] %></td>
-            <td><%= event[:event][:date] %></td>
-            <td></td>
-            <td></td>
-          </tr>
-        <% elsif event[:detail].length >= 1 %>
-          <% i=0 %>
-          <% event[:detail].each do |detail| %>
-            <tr>
-              <% if i == 0 %>
-                <%= content_tag :td, event[:event][:name], rowspan: event[:detail].length %>
-                <%= content_tag :td, event[:event][:date], rowspan: event[:detail].length %>
-              <% end %>
-              <td>
-                <% detail[:presenter].each do |presenter| %>
-                  <strong><%= presenter[:affiliation] %></strong><br><%= "#{presenter[:title]} #{presenter[:name]} 氏" %><br>
-                <% end %>
-              </td>
-              <td>
-                <strong>
-                <%= "#{detail[:title]}" %>
-                </strong>
-                <br>
-                <%= "#{detail[:abstract]}" %>
-              </td>            
-            </tr>
-            <% i += 1 %>
-          <% end %>
-        <% end %>
-        <% end %>
-      <% end %>
-    </table>
+    <div id="ajax_container">
+      <%= render 'chishikievents' %>
+    </div>
 
   </div>
 </div>
