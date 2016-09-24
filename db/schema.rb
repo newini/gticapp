@@ -11,10 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160722131004) do
+ActiveRecord::Schema.define(version: 20160924113857) do
 
-  create_table "accounts", force: true do |t|
-    t.string   "title"
+  create_table "accounts", force: :cascade do |t|
+    t.string   "title",      limit: 255
     t.float    "amount"
     t.integer  "event_id"
     t.boolean  "positive"
@@ -27,23 +27,23 @@ ActiveRecord::Schema.define(version: 20160722131004) do
   add_index "accounts", ["positive"], name: "index_accounts_on_positive"
   add_index "accounts", ["title"], name: "index_accounts_on_title"
 
-  create_table "categories", force: true do |t|
-    t.string   "name"
+  create_table "categories", force: :cascade do |t|
+    t.string   "name",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "categories", ["name"], name: "index_categories_on_name"
 
-  create_table "event_categories", force: true do |t|
-    t.string   "name"
+  create_table "event_categories", force: :cascade do |t|
+    t.string   "name",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "events", force: true do |t|
-    t.string   "name"
-    t.string   "fb_event_id"
+  create_table "events", force: :cascade do |t|
+    t.string   "name",              limit: 255
+    t.string   "fb_event_id",       limit: 255
     t.datetime "start_time"
     t.datetime "end_time"
     t.integer  "place_id"
@@ -51,7 +51,7 @@ ActiveRecord::Schema.define(version: 20160722131004) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "event_category_id"
-    t.string   "note"
+    t.string   "note",              limit: 255
   end
 
   add_index "events", ["event_category_id"], name: "index_events_on_event_category_id"
@@ -59,9 +59,9 @@ ActiveRecord::Schema.define(version: 20160722131004) do
   add_index "events", ["place_id"], name: "index_events_on_place_id"
   add_index "events", ["start_time"], name: "index_events_on_start_time"
 
-  create_table "invitations", force: true do |t|
+  create_table "invitations", force: :cascade do |t|
     t.integer  "event_id"
-    t.string   "title"
+    t.string   "title",      limit: 255
     t.text     "greeting"
     t.text     "content"
     t.datetime "created_at"
@@ -70,7 +70,7 @@ ActiveRecord::Schema.define(version: 20160722131004) do
 
   add_index "invitations", ["event_id"], name: "index_invitations_on_event_id"
 
-  create_table "member_relationships", force: true do |t|
+  create_table "member_relationships", force: :cascade do |t|
     t.integer  "introduced_id"
     t.integer  "introducer_id"
     t.datetime "created_at"
@@ -81,25 +81,25 @@ ActiveRecord::Schema.define(version: 20160722131004) do
   add_index "member_relationships", ["introduced_id"], name: "index_member_relationships_on_introduced_id"
   add_index "member_relationships", ["introducer_id"], name: "index_member_relationships_on_introducer_id"
 
-  create_table "members", force: true do |t|
-    t.string   "last_name"
-    t.string   "first_name"
-    t.string   "last_name_kana"
-    t.string   "first_name_kana"
-    t.string   "email"
+  create_table "members", force: :cascade do |t|
+    t.string   "last_name",           limit: 255
+    t.string   "first_name",          limit: 255
+    t.string   "last_name_kana",      limit: 255
+    t.string   "first_name_kana",     limit: 255
+    t.string   "email",               limit: 255
     t.integer  "category_id"
-    t.string   "affiliation"
-    t.string   "title"
-    t.string   "note"
-    t.string   "fb_name"
-    t.string   "fb_user_id"
+    t.string   "affiliation",         limit: 255
+    t.string   "title",               limit: 255
+    t.string   "note",                limit: 255
+    t.string   "fb_name",             limit: 255
+    t.string   "fb_user_id",          limit: 255
     t.boolean  "black_list_flg"
     t.boolean  "gtic_flg"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "birthday"
-    t.string   "last_name_alphabet"
-    t.string   "first_name_alphabet"
+    t.string   "last_name_alphabet",  limit: 255
+    t.string   "first_name_alphabet", limit: 255
   end
 
   add_index "members", ["affiliation"], name: "index_members_on_affiliation"
@@ -116,9 +116,9 @@ ActiveRecord::Schema.define(version: 20160722131004) do
   add_index "members", ["last_name_kana"], name: "index_members_on_last_name_kana"
   add_index "members", ["title"], name: "index_members_on_title"
 
-  create_table "places", force: true do |t|
-    t.string   "name"
-    t.string   "address"
+  create_table "places", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.string   "address",    limit: 255
     t.float    "latitude"
     t.float    "longitude"
     t.datetime "created_at"
@@ -127,12 +127,12 @@ ActiveRecord::Schema.define(version: 20160722131004) do
 
   add_index "places", ["name"], name: "index_places_on_name"
 
-  create_table "presentations", force: true do |t|
+  create_table "presentations", force: :cascade do |t|
     t.integer  "member_id"
     t.integer  "event_id"
-    t.string   "title"
-    t.string   "abstract"
-    t.string   "note"
+    t.string   "title",      limit: 255
+    t.string   "abstract",   limit: 255
+    t.string   "note",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -141,7 +141,7 @@ ActiveRecord::Schema.define(version: 20160722131004) do
   add_index "presentations", ["member_id"], name: "index_presentations_on_member_id"
   add_index "presentations", ["title"], name: "index_presentations_on_title"
 
-  create_table "presentationships", force: true do |t|
+  create_table "presentationships", force: :cascade do |t|
     t.integer  "member_id"
     t.integer  "event_id"
     t.integer  "presentation_id"
@@ -154,7 +154,7 @@ ActiveRecord::Schema.define(version: 20160722131004) do
   add_index "presentationships", ["member_id"], name: "index_presentationships_on_member_id"
   add_index "presentationships", ["presentation_id"], name: "index_presentationships_on_presentation_id"
 
-  create_table "registers", force: true do |t|
+  create_table "registers", force: :cascade do |t|
     t.integer  "event_id"
     t.integer  "account_id"
     t.float    "amount"
@@ -166,26 +166,30 @@ ActiveRecord::Schema.define(version: 20160722131004) do
   add_index "registers", ["amount"], name: "index_registers_on_amount"
   add_index "registers", ["event_id"], name: "index_registers_on_event_id"
 
-  create_table "relationships", force: true do |t|
+  create_table "relationships", force: :cascade do |t|
     t.integer  "member_id"
     t.integer  "event_id"
-    t.boolean  "presenter_flg", default: false
+    t.boolean  "presenter_flg",             default: false
     t.integer  "status"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "guest_flg"
-    t.string   "note"
+    t.string   "note",          limit: 255
+    t.boolean  "panelist_flg"
+    t.boolean  "moderator_flg"
   end
 
   add_index "relationships", ["event_id"], name: "index_relationships_on_event_id"
   add_index "relationships", ["guest_flg"], name: "index_relationships_on_guest_flg"
   add_index "relationships", ["member_id", "event_id"], name: "index_relationships_on_member_id_and_event_id", unique: true
   add_index "relationships", ["member_id"], name: "index_relationships_on_member_id"
+  add_index "relationships", ["moderator_flg"], name: "index_relationships_on_moderator_flg"
   add_index "relationships", ["note"], name: "index_relationships_on_note"
+  add_index "relationships", ["panelist_flg"], name: "index_relationships_on_panelist_flg"
   add_index "relationships", ["presenter_flg"], name: "index_relationships_on_presenter_flg"
   add_index "relationships", ["status"], name: "index_relationships_on_status"
 
-  create_table "schedule_logs", force: true do |t|
+  create_table "schedule_logs", force: :cascade do |t|
     t.integer  "event_id"
     t.integer  "member_id"
     t.integer  "status"
@@ -197,16 +201,16 @@ ActiveRecord::Schema.define(version: 20160722131004) do
   add_index "schedule_logs", ["member_id"], name: "index_schedule_logs_on_member_id"
   add_index "schedule_logs", ["status"], name: "index_schedule_logs_on_status"
 
-  create_table "users", force: true do |t|
-    t.string   "name"
-    t.string   "email"
-    t.string   "password"
-    t.string   "password_digest"
-    t.string   "remember_token"
-    t.string   "provider"
-    t.string   "uid"
-    t.string   "image_url"
-    t.string   "access_token"
+  create_table "users", force: :cascade do |t|
+    t.string   "name",            limit: 255
+    t.string   "email",           limit: 255
+    t.string   "password",        limit: 255
+    t.string   "password_digest", limit: 255
+    t.string   "remember_token",  limit: 255
+    t.string   "provider",        limit: 255
+    t.string   "uid",             limit: 255
+    t.string   "image_url",       limit: 255
+    t.string   "access_token",    limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "admin"
