@@ -103,7 +103,6 @@ Gticapp::Application.routes.draw do
   match '/schedule', to: 'static_pages#schedule', via: 'get'
   match '/contact', to: 'static_pages#contact', via: 'get'
   match '/test', to: 'static_pages#test', via: 'get'
-  match '/thanks', to: 'static_pages#thanks', via: 'get'
   match '/events/:event_id/send_invitation', to: 'events#send_invitation', as: 'send_invitation',via: 'get'
   match '/events/:event_id/send_invitation', to: 'events#send_email', via: 'post'
   #omniauth

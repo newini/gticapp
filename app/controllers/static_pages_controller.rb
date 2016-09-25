@@ -95,9 +95,6 @@ class StaticPagesController < ApplicationController
 
   def contact
   end
-
-  def thanks
-  end
   
   def test
     @start_date = Event.order("start_time ASC").first.start_time.beginning_of_year
