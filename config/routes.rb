@@ -1,4 +1,7 @@
 Gticapp::Application.routes.draw do
+
+  get 'manuals/index'
+
   resources :members do
     collection do
       post :import
@@ -105,6 +108,8 @@ Gticapp::Application.routes.draw do
   match '/test', to: 'static_pages#test', via: 'get'
   match '/events/:event_id/send_invitation', to: 'events#send_invitation', as: 'send_invitation',via: 'get'
   match '/events/:event_id/send_invitation', to: 'events#send_email', via: 'post'
+
+
   #omniauth
   match '/auth/:provider/callback', to: 'sessions#create', via: 'get'
   
