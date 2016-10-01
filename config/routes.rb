@@ -1,6 +1,5 @@
 Gticapp::Application.routes.draw do
 
-  get 'manuals/index'
 
   resources :members do
     collection do
@@ -116,5 +115,7 @@ Gticapp::Application.routes.draw do
   root 'static_pages#home'
 
 
+  get 'manuals/index'
+  get 'manuals/presentation'
 
 end
