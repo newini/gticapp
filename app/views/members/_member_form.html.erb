@@ -1,43 +1,36 @@
 <div class="row">
   <div class="col-md-5">
     <h2><%= @title %></h2>
-    <p>氏、名には、日本語の場合は漢字を氏、名の順に、英名の場合はアルファベットをfist, last順に書き込んでください。</p>
+    <p>注意）「（漢字） or First name (alphabet)」、「名（漢字） or Last name (alphabet)」欄において、<br>
+      漢字の名前の場合は「氏」、「名」順に、<br>
+      英名の場合はalphabetを「first」, 「last」順に、<br>
+      書き込んでください。</p>
     <%= form_for @member, html: {class: "form-horizontal"} do %>
       <%= hidden_field_tag :event, @event.id, name: "event[id]" if @event.present? %>
       <div class="form-group">
-        <%= label_tag :last_name, "氏 or First alphabet name", class: 'col-sm-6 control-label' %> 
+        <%= label_tag :last_name, "氏（漢字） or First name (alphabet)", class: 'col-sm-6 control-label' %> 
         <div class="col-sm-6">
-          <%= text_field_tag nil, @member.last_name, name: "member[last_name]", placeholder: @member.errors.any? ? "#{@member.errors.messages[:last_name][0]}" : "山田", class: "form-control" %>
+          <%= text_field_tag nil, @member.last_name, name: "member[last_name]", placeholder: @member.errors.any? ? "#{@member.errors.messages[:last_name][0]}" : "山田/John", class: "form-control" %>
         </div>
       </div>
       <div class="form-group">
-        <%= label_tag :first_name, "名 or Last alphabet name", class: 'col-sm-6 control-label' %>
+        <%= label_tag :first_name, "名（漢字） or Last name (alphabet)", class: 'col-sm-6 control-label' %>
         <div class="col-sm-6">
-          <%= text_field_tag nil, @member.first_name, name: "member[first_name]", placeholder: @member.errors.any? ? "#{@member.errors.messages[:first_name][0]}" : "太郎", class: "form-control" %>
+          <%= text_field_tag nil, @member.first_name, name: "member[first_name]", placeholder: @member.errors.any? ? "#{@member.errors.messages[:first_name][0]}" : "太郎/SMITH", class: "form-control" %>
+        </div>
+      </div>
+      
+      <p>↓今まで「かな」を入力していましたが、今後はalphabetを入力してください。もし、かなになっている場合はalphabetに直してください。英名の場合もalphabetを書いてください</p>
+      <div class="form-group">
+        <%= label_tag :last_name_kana, "氏(alphabet)", class: 'col-sm-6 control-label' %> 
+        <div class="col-sm-6">
+          <%= text_field_tag nil, @member.last_name_kana, name: "member[last_name_kana]", placeholder: @member.errors.any? ? "#{@member.errors.messages[:last_name_kana][0]}" : "Yamada", class: "form-control" %>
         </div>
       </div>
       <div class="form-group">
-        <%= label_tag :last_name_kana, "氏（かな）", class: 'col-sm-6 control-label' %> 
+        <%= label_tag :first_name_kana, "名(alphabet)", class: 'col-sm-6 control-label' %> 
         <div class="col-sm-6">
-          <%= text_field_tag nil, @member.last_name_kana, name: "member[last_name_kana]", placeholder: @member.errors.any? ? "#{@member.errors.messages[:last_name_kana][0]}" : "やまだ", class: "form-control" %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= label_tag :first_name_kana, "名（かな）", class: 'col-sm-6 control-label' %> 
-        <div class="col-sm-6">
-          <%= text_field_tag nil, @member.first_name_kana, name: "member[first_name_kana]", placeholder: @member.errors.any? ? "#{@member.errors.messages[:first_name_kana][0]}" : "太郎", class: "form-control" %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= label_tag :first_name_alphabet, "First name", class: 'col-sm-6 control-label' %>
-        <div class="col-sm-6">
-          <%= text_field_tag nil, @member.first_name_alphabet, name: "member[first_name_alphabet]", placeholder: @member.errors.any? ? "#{@member.errors.messages[:first_name_alphabet][0]}" : "John", class: "form-control" %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= label_tag :last_name_alphabet, "Last name", class: 'col-sm-6 control-label' %>
-        <div class="col-sm-6">
-          <%= text_field_tag nil, @member.last_name_alphabet, name: "member[last_name_alphabet]", placeholder: @member.errors.any? ? "#{@member.errors.messages[:last_name_alphabet][0]}" : "Smith", class: "form-control" %>
+          <%= text_field_tag nil, @member.first_name_kana, name: "member[first_name_kana]", placeholder: @member.errors.any? ? "#{@member.errors.messages[:first_name_kana][0]}" : "Taro", class: "form-control" %>
         </div>
       </div>
 
@@ -76,12 +69,6 @@
         <%= label_tag :category_id, "属性 / category", class: 'col-sm-6 control-label' %>
         <div class="col-sm-6">
           <%= select_tag nil, options_from_collection_for_select(Category.all, :id, :name, @member.category_id), name:"member[category_id]", class: "form-control", include_blank: true %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= label_tag :birthday, "誕生日 / birthday", class: 'col-sm-6 control-label' %>
-        <div class="col-sm-6">
-          <%= date_field_tag nil, @member.birthday, name:"member[birthday]", class: "form-control", include_blank: true %>
         </div>
       </div>
 
