@@ -1,4 +1,4 @@
-<h2><%= @title %></h2>
+<h2>参加予定者<%= @title %></h2>
   <%= content_tag :table, class: 'table table-condensed table-bordered table-striped' do %>
     <tr>
       <th>#</th>
@@ -20,11 +20,7 @@
     <% @members.each do |member| %>
       <%= content_tag :tr do %>
         <td><%= i %></td>
-        <% if current_user.language == 0 %>
           <td><%= member.last_name_kana[0] if member.last_name_kana.present? %></td>
-        <% else %>
-          <td><%= member.last_name_alphabet[0] if member.last_name_alphabet.present? %></td>
-        <% end %>
         <td><%= link_to "#{member.last_name} #{member.first_name}", member_path(member) %></td>
         <td><%= link_to member.fb_name, "https://facebook.com/#{member.fb_user_id}", target: :blank if member.fb_user_id.present?%></td>
         <td><%= Category.find(member.category_id).try(:name) if member.category_id.present? %></td>

@@ -9,7 +9,6 @@
         <th>Name</th>
         <th>Facebook ID</th>
         <th>Admin</th>
-        <th>Language</th>
         <th></th>
       </tr>
       <% @users.each do |user| %>
@@ -18,7 +17,6 @@
           <td><%= user.name %></td>
           <td><%= user.uid %></td>
           <td><%= user.admin %></td>
-          <td><%= show_language(user.language) %></td>
           <td><%= link_to "編集", edit_user_path(user) %></td>
         </tr>
       <% end %>
