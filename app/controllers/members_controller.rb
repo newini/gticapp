@@ -108,12 +108,12 @@ class MembersController < ApplicationController
   def update_information
     params[:member].each do |member|
       @member = Member.find(member[:id])
-      if member[:last_name_kana].present?
-        last_name_kana = member[:last_name_kana]
+      if member[:last_name_alphabet].present?
+        last_name_alphabet = member[:last_name_alphabet]
       else
-        last_name_kana = (member[:last_name].present? && @member.last_name_kana.nil?) ? Member.kana(member[:last_name]) : @member.last_name_kana
+        last_name_alphabet = (member[:last_name].present? && @member.last_name_alphabet.nil?) ? Member.alphabet(member[:last_name]) : @member.last_name_alphabet
       end
-      @member.update(first_name: member[:first_name], last_name: member[:last_name], last_name_kana: last_name_kana,  category_id: member[:category_id], affiliation: member[:affiliation], title: member[:title], note: member[:note], email: member[:email])
+      @member.update(first_name: member[:first_name], last_name: member[:last_name], last_name_alphabet: last_name_alphabet,  category_id: member[:category_id], affiliation: member[:affiliation], title: member[:title], note: member[:note], email: member[:email])
       @member.save!
     end
     redirect_to :back
@@ -121,33 +121,33 @@ class MembersController < ApplicationController
 
   def search
     if params[:search].present? 
-      @members = Member.find_name(params[:search]).order("last_name_kana ASC").paginate(page: params[:page])
+      @members = Member.find_name(params[:search]).order("last_name_alphabet ASC").paginate(page: params[:page])
     else
-      @members = Member.order("last_name_kana").paginate(page: params[:page])
+      @members = Member.order("last_name_alphabet").paginate(page: params[:page])
     end
     respond_to do |format|
       format.js
     end
   end
 
-  def kana_to_roman
+  def alphabet_to_roman
     Rails.logger.level = Logger::DEBUG 
-    @members = Member.where.not(last_name_kana: nil)
+    @members = Member.where.not(last_name_alphabet: nil)
     total = @members.count
     i = 0
     @members.each do |member|
-      if member.last_name_kana.present?
-        if member.last_name_kana.ascii_only?
-          last_name_alphabet = member.last_name_kana
+      if member.last_name_alphabet.present?
+        if member.last_name_alphabet.ascii_only?
+          last_name_alphabet = member.last_name_alphabet
         else
-          last_name_alphabet = roman(member.last_name_kana)
+          last_name_alphabet = roman(member.last_name_alphabet)
         end
       end
-      if member.first_name_kana.present?
-        if member.first_name_kana.ascii_only?
-          first_name_alphabet = member.first_name_kana
+      if member.first_name_alphabet.present?
+        if member.first_name_alphabet.ascii_only?
+          first_name_alphabet = member.first_name_alphabet
         else
-          first_name_alphabet = roman(member.first_name_kana)
+          first_name_alphabet = roman(member.first_name_alphabet)
         end
       end
       member.update(last_name_alphabet: last_name_alphabet,
@@ -159,9 +159,9 @@ class MembersController < ApplicationController
     redirect_to members_path, :flash => {:success => "#{i} / #{total}件更新しました" }
   end
 
-  def roman(kana)
+  def roman(alphabet)
     Rails.logger.level = Logger::DEBUG 
-    sentence = URI.encode(kana)
+    sentence = URI.encode(alphabet)
     key = 'dj0zaiZpPVR3TzJrbEJzRjRwTCZzPWNvbnN1bWVyc2VjcmV0Jng9OTg-'
     base_url = 'http://jlp.yahooapis.jp/FuriganaService/V1/furigana'
     req_url = "#{base_url}?sentence=#{sentence}&appid=#{key}"
@@ -191,7 +191,7 @@ class MembersController < ApplicationController
 
   def members(members)
     if current_user.language == 0
-      @members = members.sort_by_role_kana
+      @members = members.sort_by_role_alphabet
     else
       @members = members.sort_by_role_alphabet
     end
@@ -200,7 +200,7 @@ class MembersController < ApplicationController
   private
     def member_params
       params.require(:member).permit(
-        :first_name, :last_name,:first_name_kana, :last_name_kana, :last_name_alphabet, :first_name_alphabet,
+        :first_name, :last_name,:first_name_alphabet, :last_name_alphabet, :last_name_alphabet, :first_name_alphabet,
         :facebook_name, :affiliation, :title, :note, :category_id, :email, :black_list_flg, :birthday, :fb_user_id
       )
     end
@@ -208,7 +208,7 @@ class MembersController < ApplicationController
       redirect_to root_path, notice: "Please sign in." unless signed_in?
     end
     def sort_column
-      Member.column_names.include?(params[:sort]) ? params[:sort] : 'last_name_kana'
+      Member.column_names.include?(params[:sort]) ? params[:sort] : 'last_name_alphabet'
     end
     def sort_direction
       %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'

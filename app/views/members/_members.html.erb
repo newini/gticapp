@@ -22,7 +22,7 @@
   </tr>
   <% @members.each do |member| %>
     <%= content_tag :tr do %>
-      <td><%= member.last_name_kana[0] if member.last_name_kana.present? %></td>
+      <td><%= member.last_name_alphabet[0] if member.last_name_alphabet.present? %></td>
       <td><%= link_to "#{member.last_name} #{member.first_name}", member_path(member) %></td>
       <td><%= link_to member.fb_name, "https://facebook.com/#{member.fb_user_id}", target: :blank if member.fb_user_id.present?%></td>
       <td><%= Category.find(member.category_id).try(:name) if member.category_id.present? %></td>

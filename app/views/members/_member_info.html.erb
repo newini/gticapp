@@ -1,28 +1,20 @@
 <h2>メンバー情報</h2>
 <table class="table table-bordered">
   <tr>
-    <th>氏 or First alphabet name</th>
+    <th>氏（漢字） or First alphabet name</th>
     <td><%= @member.last_name %></td>
   </tr>
   <tr>
-    <th>名 or Last alphabet name</th>
+    <th>名（漢字） or Last alphabet name</th>
     <td><%= @member.first_name %></td>
   </tr>
   <tr>
-    <th>氏(かな)</th>
-    <td><%= @member.last_name_kana %></td>
-  </tr>
-  <tr>
-    <th>名(かな)</th>
-    <td><%= @member.first_name_kana %></td>
-  </tr>
-  <tr>
-    <th>First name</th>
-    <td><%= @member.first_name_alphabet %></td>
-  </tr>
-  <tr>
-    <th>Last name</th>
+    <th>氏(alphabet)</th>
     <td><%= @member.last_name_alphabet %></td>
+  </tr>
+  <tr>
+    <th>名(alphabet)</th>
+    <td><%= @member.first_name_alphabet %></td>
   </tr>
   <tr>
     <th>Facebook名</th>
