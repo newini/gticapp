@@ -190,17 +190,13 @@ class MembersController < ApplicationController
   end
 
   def members(members)
-    if current_user.language == 0
       @members = members.sort_by_role_alphabet
-    else
-      @members = members.sort_by_role_alphabet
-    end
   end
 
   private
     def member_params
       params.require(:member).permit(
-        :first_name, :last_name,:first_name_alphabet, :last_name_alphabet, :last_name_alphabet, :first_name_alphabet,
+        :first_name, :last_name,:first_name_alphabet, :last_name_alphabet,
         :facebook_name, :affiliation, :title, :note, :category_id, :email, :black_list_flg, :birthday, :fb_user_id
       )
     end
