@@ -20,16 +20,19 @@ module ApplicationHelper
 
   def show_role(member, event)
     record = member.relationships.find_by_event_id(event.id)
-    presenter_flg = record.presenter_flg
-    guest_flg = record.guest_flg
+    presentation_role = record.presentation_role
     gtic_flg = member.gtic_flg
     student_flg = member.category_id == 10 ? true : false
     if gtic_flg
       return "GTIC"
     else
-      if presenter_flg 
+      if presentation_role == 1 
         return "プレゼンター" 
-      elsif guest_flg
+      elsif presentation_role == 2 
+        return "Panelist" 
+      elsif presentation_role == 3 
+        return "Moderator" 
+      elsif presentation_role == 4 
         return "ゲスト"
       elsif student_flg
         return "学生"

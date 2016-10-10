@@ -38,7 +38,7 @@ class EventsController < ApplicationController
               |presenter| [
                 name: [presenter.last_name, presenter.first_name].join(" "), 
                 affiliation: presenter.affiliation, 
-                title: presenter.title
+                title: presenter.title,
               ]
             }.flatten
           ]
@@ -54,7 +54,9 @@ class EventsController < ApplicationController
       format.js
     end
   end
+
   def show
+    relationship = @event.relationships.find_by_member_id(params[:member_id])
     @participants = @event.participants
     @presentations = @event.presentations.order("created_at desc")
     @presentation = Presentation.new
@@ -67,7 +69,7 @@ class EventsController < ApplicationController
 
   def edit
     @title = "イベント情報編集"
-    @participants = @event.participants.paginate(page:params[:page]).order("last_name_kana")
+    @participants = @event.participants.paginate(page:params[:page]).order("last_name_alphabet")
   end
 
   def update
@@ -131,7 +133,7 @@ class EventsController < ApplicationController
   def waiting
     @title = "#{@event.name} 参加予定者追加"
 #    ids = Member.joins(:relationships).where(:relationships =>{event_id: @event.id}).where(:relationships => {status: 2..6}).uniq
-#    @members = Member.where.not(id: ids).order("last_name_kana").limit(100)
+#    @members = Member.where.not(id: ids).order("last_name_alphabet").limit(100)
     recorded = Member.recorded_member(@event)
     @members = Member.waiting_member(recorded)
     @referer = "waiting" 
@@ -224,12 +226,18 @@ class EventsController < ApplicationController
   def change_role
     relationship = @event.relationships.find_by_member_id(params[:member_id])
     case params[:role]
+    when "gtic"
+      relationship.update(presentation_role: -1)
     when "presenter"
-      relationship.update(presenter_flg: true, guest_flg: nil)
+      relationship.update(presentation_role: 1)
+    when "panelist"
+      relationship.update(presentation_role: 2)
+    when "moderator"
+      relationship.update(presentation_role: 3)
     when "guest"
-      relationship.update(presenter_flg: false, guest_flg: true)
+      relationship.update(presentation_role: 4)
     when "participant"
-      relationship.update(presenter_flg: false, guest_flg: nil)
+      relationship.update(presentation_role: 0)
     end
     if relationship.save
       select_action(params[:referer])
@@ -252,7 +260,7 @@ class EventsController < ApplicationController
 
 
   def change_all_waiting_status
-    @members = @event.waiting_members.where(black_list_flg: false).where("email IS NOT NULL").order("last_name_kana")
+    @members = @event.waiting_members.where(black_list_flg: false).where("email IS NOT NULL").order("last_name_alphabet")
     @members.each do |member|
       relationship = @event.relationships.find_by_member_id(member.id)
       if relationship.status == 0
@@ -313,9 +321,9 @@ class EventsController < ApplicationController
     @title = "#{@event.name} 参加予定者追加"
     recorded = Member.recorded_member(@event)
     if params[:search].present? 
-      @members = Member.waiting_member(recorded).find_name(params[:search]).order("last_name_kana")
+      @members = Member.waiting_member(recorded).find_name(params[:search]).order("last_name_alphabet")
     else
-      @members = Member.waiting_member(recorded).order("last_name_kana")
+      @members = Member.waiting_member(recorded).order("last_name_alphabet")
     end
     respond_to do |format|
       format.js
@@ -324,7 +332,7 @@ class EventsController < ApplicationController
 
   def update_maybe_member
     @title = "#{@event.name} 未定者情報編集"
-    @members = @event.maybe_members.order("last_name_kana")
+    @members = @event.maybe_members.order("last_name_alphabet")
     respond_to do |format|
       format.js
     end
@@ -333,7 +341,7 @@ class EventsController < ApplicationController
 
   def update_registed_member
     @title = "#{@event.name} 参加予定者情報編集"
-    @members = @event.registed_members.order("last_name_kana")
+    @members = @event.registed_members.order("last_name_alphabet")
     respond_to do |format|
       format.js
     end
@@ -341,7 +349,7 @@ class EventsController < ApplicationController
 
   def update_participants
     @title = "#{@event.name} 出席者情報編集"
-    @members = @event.participants.order("last_name_kana")
+    @members = @event.participants.order("last_name_alphabet")
     respond_to do |format|
       format.js
     end
@@ -387,7 +395,7 @@ class EventsController < ApplicationController
     fee = @event.fee || 0
     participants = @event.participants
     participant = participants.pluck(:id)
-    presenter = @event.relationships.where(status: 3).where(presenter_flg: true).pluck(:member_id)
+    presenter = @event.relationships.where(status: 3).where(presentation_role: 1).pluck(:member_id)
     guest = @event.relationships.where(status: 3).where(guest_flg: true).pluck(:member_id)
     gtic = participants.where(gtic_flg: true).pluck(:id)
     free = (presenter + guest + gtic).uniq
@@ -438,11 +446,7 @@ class EventsController < ApplicationController
   end
 =end
   def members(members)
-    if current_user.language == 0
-      @members = members.sort_by_role_kana
-    else
       @members = members.sort_by_role_alphabet
-    end
   end
 
 
@@ -472,7 +476,6 @@ class EventsController < ApplicationController
         no_show
       end
     end
-
 
  
 

@@ -124,38 +124,45 @@ module EventsHelper
 
   def select_role(member,event)
     record = member.relationships.find_by_event_id(event.id)
-    presenter_flg = record.presenter_flg
-    guest_flg = record.guest_flg
     gtic_flg = member.gtic_flg
-    if gtic_flg
-      content_tag :span, "GTIC"
+    presentation_role = record.presentation_role
+    # Role メニュー 
+    if presentation_role == 2
+      title = ["Panelist", "GTIC", "プレゼンター", "Moderator", "ゲスト", "参加者"]
+      role = [nil, "gtic", "presenter", "moderator", "guest", "participant"]
+    elsif presentation_role == 3
+      title = ["Moderator", "GTIC", "プレゼンター", "Panelist", "ゲスト", "参加者"]
+      role = [nil, "gtic", "presenter", "panelist","guest", "participant"]
+    elsif presentation_role == 1
+      title = ["プレゼンター","GTIC" ,"Panelist", "Moderator", "ゲスト", "参加者"]
+      role = [nil, "gtic", "panelist", "moderator", "guest", "participant"]
+    elsif presentation_role == 4
+      title = ["ゲスト", "GTIC", "プレゼンター", "Panelist", "Moderator", "参加者"]
+      role = [nil, "gtic", "presenter", "panelist", "moderator", "participant"]
+    elsif gtic_flg
+      title = ["GTIC", "プレゼンター", "Panelist", "Moderator", "ゲスト", "参加者"]
+      role = [nil, "presenter", "panelist", "moderator", "guest","participant"]
     else
-      if presenter_flg
-        title = ["プレゼンター","参加者","ゲスト"]
-        role = [nil, "participant", "guest"]
-      elsif guest_flg
-        title = ["ゲスト","プレゼンター","参加者"]
-        role = [nil, "presenter", "participant"]
-      else
-        title = ["参加者","ゲスト","プレゼンター"]
-        role = [nil, "guest", "presenter"]
-      end
+      title = ["参加者", "GTIC", "プレゼンター", "Panelist", "Moderator", "ゲスト"]
+      role = [nil, "gtic", "presenter", "panelist", "moderator", "guest"]
+    end
       content_tag(:div, class: "btn-group") {
         concat content_tag(:button,"#{title[0]} #{content_tag(:span, '', class: 'caret')}".html_safe, :class => "dropdown-toggle btn btn-xs btn-default", data: {:toggle => "dropdown"})
         concat content_tag(:ul, class: "dropdown-menu", role: "menu", :"aria-labelledby" => "dLabel"){ 
           content_tag(:li){
             concat link_to(title[1], change_role_event_path(:member_id => member.id, :role => role[1], referer: @referer), :method => :post, remote: true) 
             concat link_to(title[2], change_role_event_path(:member_id => member.id, :role => role[2], referer: @referer), :method => :post, remote: true) 
+            concat link_to(title[3], change_role_event_path(:member_id => member.id, :role => role[3], referer: @referer), :method => :post, remote: true) 
+            concat link_to(title[4], change_role_event_path(:member_id => member.id, :role => role[4], referer: @referer), :method => :post, remote: true) 
+            concat link_to(title[5], change_role_event_path(:member_id => member.id, :role => role[5], referer: @referer), :method => :post, remote: true) 
           }
         }
       }
-    end
   end
     
   def show_fee(member,event)
     record = member.relationships.find_by_event_id(event.id)
-    presenter_flg = record.presenter_flg
-    guest_flg = record.guest_flg
+    presentation_role = record.presentation_role
     gtic_flg = member.gtic_flg
     if member.birthday
       if member.birthday.strftime("%m") == event.start_time.strftime("%m")
@@ -174,7 +181,7 @@ module EventsHelper
     if birthday_flg
       fee -= 1000
     end
-    if ((presenter_flg || guest_flg) || gtic_flg)
+    if ((presentation_role != 0) || gtic_flg)
       fee = 0
     end
     fee

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161009114542) do
+ActiveRecord::Schema.define(version: 20161010031041) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "title",      limit: 255
@@ -165,24 +165,20 @@ ActiveRecord::Schema.define(version: 20161009114542) do
   create_table "relationships", force: :cascade do |t|
     t.integer  "member_id"
     t.integer  "event_id"
-    t.boolean  "presenter_flg",             default: false
+    t.integer  "presentation_role",             default: 0
     t.integer  "status"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "guest_flg"
-    t.string   "note",          limit: 255
-    t.boolean  "panelist_flg"
-    t.boolean  "moderator_flg"
+    t.string   "note",              limit: 255
   end
 
   add_index "relationships", ["event_id"], name: "index_relationships_on_event_id"
   add_index "relationships", ["guest_flg"], name: "index_relationships_on_guest_flg"
   add_index "relationships", ["member_id", "event_id"], name: "index_relationships_on_member_id_and_event_id", unique: true
   add_index "relationships", ["member_id"], name: "index_relationships_on_member_id"
-  add_index "relationships", ["moderator_flg"], name: "index_relationships_on_moderator_flg"
   add_index "relationships", ["note"], name: "index_relationships_on_note"
-  add_index "relationships", ["panelist_flg"], name: "index_relationships_on_panelist_flg"
-  add_index "relationships", ["presenter_flg"], name: "index_relationships_on_presenter_flg"
+  add_index "relationships", ["presentation_role"], name: "index_relationships_on_presentation_role"
   add_index "relationships", ["status"], name: "index_relationships_on_status"
 
   create_table "schedule_logs", force: :cascade do |t|
