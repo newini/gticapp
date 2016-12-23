@@ -29,7 +29,7 @@ class Event < ActiveRecord::Base
       member = Member.where(last_name: row["last_name"]).find_by_first_name(row["first_name"]) || Member.new
       if member.last_name.blank?
         parameters = ActionController::Parameters.new(row.to_hash)
-        member.update(parameters.permit(:last_name, :first_name, :last_name_kana, :first_name_kana, :facebook_name, :affiliation, :title, :note, :email))
+        member.update(parameters.permit(:last_name, :first_name, :last_name_alphabet, :first_name_alphabet, :facebook_name, :affiliation, :title, :note, :email))
         member.save!
       end
       relationship = Relationship.where(event_id: event_id).find_by_member_id(member.id) || Relationship.new

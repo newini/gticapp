@@ -19,7 +19,7 @@
         <%= content_tag :tr do %>
           <%= hidden_field_tag nil, member.id, name: "member[][id]" %>
           <td><%= i %></td>
-          <td><%= text_field_tag nil, member.last_name_kana, name: "member[][last_name_kana]", class: "form-control input-sm" %></td>
+          <td><%= text_field_tag nil, member.last_name_alphabet, name: "member[][last_name_alphabet]", class: "form-control input-sm" %></td>
           <td><%= text_field_tag nil, member.last_name, name: "member[][last_name]", class: "form-control input-sm" %></td>
           <td><%= text_field_tag nil, member.first_name, name: "member[][first_name]", class: "form-control input-sm" %></td>
           <td><%= link_to image_tag("https://graph.facebook.com/#{member.fb_user_id}/picture?type=square", class: "fb_user_icon") + member.fb_name, member_path(member) %></td>
