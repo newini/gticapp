@@ -111,7 +111,7 @@ class MembersController < ApplicationController
       if member[:last_name_alphabet].present?
         last_name_alphabet = member[:last_name_alphabet]
       else
-        last_name_alphabet = (member[:last_name].present? && @member.last_name_alphabet.nil?) ? Member.alphabet(member[:last_name]) : @member.last_name_alphabet
+        last_name_alphabet = (member[:last_name].present? && @member.last_name_alphabet.nil?) ? Member.kana(member[:last_name]) : @member.last_name_alphabet
       end
       @member.update(first_name: member[:first_name], last_name: member[:last_name], last_name_alphabet: last_name_alphabet,  category_id: member[:category_id], affiliation: member[:affiliation], title: member[:title], note: member[:note], email: member[:email])
       @member.save!
