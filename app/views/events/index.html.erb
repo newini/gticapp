@@ -4,15 +4,18 @@
   </aside>
   <div class="col-md-10">
     <h2><%= "GTICイベント一覧" %></h2>
+
     <div class="btn-group">
       <% date = @last_date%>
       <% while date >= @start_date do %>
-        <%= link_to "#{date.strftime("%Y")}年", events_path(:year => date.strftime("%Y-%m-%d")), class: "btn btn-default", remote: true%>
+        <%= link_to "#{date.strftime("%Y")}年", events_path(:year => date.strftime("%Y-%m-%d")), class: "btn btn-default", remote: true %>
         <% date = date - 1.year %>
       <% end %>
     </div>
+
     <div id="ajax_container">
       <%= render 'events' %>
     </div>
+
   </div>
 </div> 

@@ -9,6 +9,7 @@ class Event < ActiveRecord::Base
 
   # presenter, panelist, moderator
   has_many :presenters, -> {where :relationships => {presentation_role: 1..3}}, through: :relationships, source: :member 
+  has_many :search_presenter, ->(keyword) { where :relationships => {presentation_role: 1..3}}, through: :relationships, source: :member 
   has_many :guests, -> {where :relationships => {guest_flg: true}}, through: :relationships, source: :member
   has_many :participants, -> { where "status = 3"}, through: :relationships, source: :member 
 

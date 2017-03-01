@@ -14,6 +14,9 @@ Gticapp::Application.routes.draw do
   end
 
   resources :events do
+    collection do
+      get :search_event
+    end
     member do
       get :invite
       get :waiting
@@ -56,41 +59,6 @@ Gticapp::Application.routes.draw do
   resources :event_categories, only: [:index, :new, :create, :edit, :update, :destroy]
   resources :accounts
   resources :registers
-
-# chisiki no izumi
-  resources :chisikis do
-    member do
-      get :invite
-      get :waiting
-      get :maybe
-      get :invited
-      get :registed
-      get :participants
-      get :declined
-      get :no_show
-      get :new_member
-      get :search
-      get :update_maybe_member
-      get :update_registed_member
-      get :update_participants
-      get :statistics
-      get :account
-      post :change_status
-      post :switch_black_list_flg
-      post :change_all_waiting_status
-      post :create_member
-      post :import_participants
-      post :import_registed_members
-      post :change_role
-      post :update_facebook
-      post :update_birthday
-    end
-    resources :invitations
-    collection { 
-      post :import
-      get :statistics
-    }
-  end
 
   match '/signin', to: 'sessions#new', via: 'get'
   match '/signup', to: 'users#new', via: 'get'

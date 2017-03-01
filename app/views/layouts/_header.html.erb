@@ -20,7 +20,7 @@
         <% if signed_in? %>
           <li><%= link_to "MANUAL", manuals_index_path %></li> 
           <li><%= link_to "GTIC", events_path %></li> 
-          <li><%= link_to "知識の泉", chisikis_path %></li>
+          <li><%= link_to "イベント検索", search_event_events_path %></li>
           <li><%= link_to "MEMBER", members_path %></li> 
          <li id="fat-menu" class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <%= User.find(current_user).name %> <b class="caret"></b></a>

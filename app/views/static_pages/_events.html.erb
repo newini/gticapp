@@ -1,44 +1,59 @@
 <table class="table">
   <tr>
+    <th class="col-md-1">Total</th>
     <th class="col-md-1">Event</th>
     <th class="col-md-1">Date</th>
     <th class="col-md-2">Presenter</th>
     <th class="col-md-4">Title</th>
   </tr>
+  <% h = 0 %>
   <% @events.each do |event| %>
-
-    <% if event[:event][:event_category_id] != 3 %>
+    <% h += 1 %>
+  <% end %>
+  <% @events.each do |event| %>
     <% if event[:detail].length == 0 %>
+<!--
       <tr>
         <td><%= event[:event][:name] %></td>
         <td><%= event[:event][:date] %></td>
         <td></td>
         <td></td>
-      </tr>
+      </tr> 
+-->
     <% elsif event[:detail].length >= 1 %>
       <% i=0 %>
       <% event[:detail].each do |detail| %>
         <tr>
-          <% if i == 0 %>
-            <%= content_tag :td, event[:event][:name], rowspan: event[:detail].length %>
-            <%= content_tag :td, event[:event][:date], rowspan: event[:detail].length %>
-          <% end %>
-          <td>
-            <% detail[:presenter].each do |presenter| %>
-              <strong><%= presenter[:affiliation] %></strong><br><%= "#{presenter[:title]} #{presenter[:name]} 氏" %><br>
+          <% if detail[:presenter].length >= 1 %>
+            <% if i == 0 %>
+              <%= content_tag :td, rowspan: event[:detail].length do %>
+                <%= "第#{h}回" %>
+                <% h -= 1 %>
+              <% end %>
+              <%= content_tag :td, rowspan: event[:detail].length do %>
+                <%= "#{event[:event][:name]}" %>
+                <% if event[:event][:event_category_id] == 1 %>
+                  <%= "本会" %>
+                <% end %>
+              <% end %>
+              <%= content_tag :td, event[:event][:date], rowspan: event[:detail].length %>
             <% end %>
-          </td>
-          <td>
-            <strong>
-            <%= "#{detail[:title]}" %>
-            </strong>
-            <br>
-            <%= "#{detail[:abstract]}" %>
-          </td>            
+            <td>
+              <% detail[:presenter].each do |presenter| %>
+                <strong><%= presenter[:affiliation] %></strong><br><%= "#{presenter[:title]} #{presenter[:name]} 氏" %><br>
+              <% end %>
+            </td>
+            <td>
+              <strong>
+              <%= "#{detail[:title]}" %>
+              </strong>
+              <br>
+              <%= "#{detail[:abstract]}" %>
+            </td>            
         </tr>
         <% i += 1 %>
+          <% end %>
       <% end %>
-    <% end %>
     <% end %>
   <% end %>
 </table>

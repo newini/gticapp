@@ -1,14 +1,25 @@
 <div class="section">
   <div class="container">
-
+<!--
     <div class="navbar-collapse collapse navbar-default">
       <ul class="nav navbar-nav">
         <li><%= link_to "GTIC PRESENTER", :presenter %></li>
         <li><%= link_to "知識の泉 PRESENTER", :chishikipresenter %></li>
       </ul>
     </div>
-
+-->
     <h1>GTIC PRESENTER</h1>
+
+    <%= form_tag '/presenter', method: 'get', remote: true, class: "form-inline", role: "form" do %>
+       <div class="form-group">
+        <strong>イベント検索　</strong>
+        <span>プレゼンター：</span>
+        <%= text_field_tag :bio, params[:bio], class: "form-control", placeholder: "name or bio" %>
+        <span>タイトル：</span>
+        <%= text_field_tag :keyword, params[:keyword], class: "form-control", placeholder: "keyword" %>
+      </div>
+      <%= submit_tag 'Search', :name => nil, class: 'btn btn-primary' %>
+    <% end %>
 
     <div class="btn-group">
       <% date = @last_date%>
