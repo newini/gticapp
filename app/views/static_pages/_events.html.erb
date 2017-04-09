@@ -6,20 +6,24 @@
     <th class="col-md-2">Presenter</th>
     <th class="col-md-4">Title</th>
   </tr>
-  <% h = 0 %>
+
+  <!-- count -->
+  <% max_id = 1 %>  
   <% @events.each do |event| %>
-    <% h += 1 %>
+    <% max_id += 1 %>
   <% end %>
+
+  <!-- relate id and real id -->
+  <% event_id = Array.new(max_id) %>
+  <% h = max_id - 1 %>
+  <% @events.each do |event| %>
+    <% event_id[h] = event[:event][:id] %>
+    <% h -= 1 %>
+  <% end %>
+
   <% @events.each do |event| %>
     <% if event[:detail].length == 0 %>
-<!--
-      <tr>
-        <td><%= event[:event][:name] %></td>
-        <td><%= event[:event][:date] %></td>
-        <td></td>
-        <td></td>
-      </tr> 
--->
+
     <% elsif event[:detail].length >= 1 %>
       <% i=0 %>
       <% event[:detail].each do |detail| %>
@@ -27,8 +31,12 @@
           <% if detail[:presenter].length >= 1 %>
             <% if i == 0 %>
               <%= content_tag :td, rowspan: event[:detail].length do %>
+                <% for h in 0..max_id do %>
+                  <% if event_id[h] == event[:event][:id] %>
+                    <% break %>
+                  <% end %>
+                <% end %>
                 <%= "第#{h}回" %>
-                <% h -= 1 %>
               <% end %>
               <%= content_tag :td, rowspan: event[:detail].length do %>
                 <%= "#{event[:event][:name]}" %>

@@ -10,10 +10,21 @@
     <th class="col-md-1">会場</th>
     <th class="col-md-1">出席者数</th>
   </tr>
-  <% h = 0%>
+
+  <!-- count -->
+  <% max_id = 1 %>  
   <% @events.each do |event| %>
-    <% h += 1 %>
+    <% max_id += 1 %>
   <% end %>
+
+  <!-- relate id and real id -->
+  <% event_id = Array.new(max_id) %>
+  <% h = max_id - 1 %>
+  <% @events.each do |event| %>
+    <% event_id[h] = event[:event][:id] %>
+    <% h -= 1 %>
+  <% end %>
+
   <% @events.each do |event| %>
     <% if event[:detail].length >= 1 %>
       <% i=0 %>
@@ -22,8 +33,12 @@
           <% if detail[:presenter].length >= 1 %>
             <% if i == 0 %>
               <%= content_tag :td, rowspan: event[:detail].length do %>
+                <% for h in 0..max_id do %>
+                  <% if event_id[h] == event[:event][:id] %>
+                    <% break %>
+                  <% end %>
+                <% end %>
                 <%= "第#{h}回" %>
-                <% h -= 1 %>
               <% end %>
               <%= content_tag :td, rowspan: event[:detail].length do %>
                 <%= link_to event[:event][:name], registed_event_path(event[:event][:id]) %>

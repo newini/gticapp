@@ -112,4 +112,9 @@ class Event < ActiveRecord::Base
       2
     end
   end
+
+  #scope
+  scope :year_between, ->(year) { where(:start_time => Date.parse(year).beginning_of_year..Date.parse(year).end_of_year) }
+
+
 end
