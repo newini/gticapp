@@ -463,6 +463,56 @@ class EventsController < ApplicationController
   end
 
 
+  def download
+    #@title = "#{@event.name} 参加予定者"
+    #members(@event.registed_members)
+    #@referer = "registed" 
+
+    @start_date = Event.order("start_time ASC").first.start_time.beginning_of_year
+    @last_date = Event.order("start_time ASC").last.start_time.end_of_year
+    year = params[:year].present? ? Date.parse(params[:year]) : @last_date 
+    base = Event.where(:start_time => year.beginning_of_year..year.end_of_year).group(:start_time)
+    record = base.order("start_time DESC")
+    @events = record.map{
+      |event| [
+        event: {
+          id: event.id, 
+          name: event.name, 
+          date: event.start_time.strftime("%Y-%m-%d"), 
+          place: event.place_id,
+          participants: event.participants.count,
+          event_category_id: event.event_category_id
+        }, 
+        detail: event.presentations.map{
+          |presentation| [
+            title: presentation.try(:title),
+            abstract: presentation.try(:abstract),
+            note: presentation.try(:note),
+            presenter: presentation.presenters.map{
+              |presenter| [
+                name: [presenter.last_name, presenter.first_name].join(" "), 
+                affiliation: presenter.affiliation, 
+                title: presenter.title,
+              ]
+            }.flatten
+          ]
+        }.flatten
+      ]
+    }.flatten
+    array = Member.where(:gtic_flg => nil).pluck(:id)
+    @total_events = Event.count
+    @total_participants = Relationship.where(member_id: array).where(status: 3).count
+    @participants = Relationship.where(member_id: array).where(status: 3).group(:member_id).pluck(:member_id).count
+ 
+    respond_to do |format|
+      format.html
+      format.xls {send_data render_to_string(partial: "event_download"),  filename: "events.xls"}
+      format.js
+    end
+ 
+  end
+
+
   def fb
     status = "invited"
       #GIFワークショップのイベントID

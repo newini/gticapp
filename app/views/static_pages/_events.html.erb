@@ -21,6 +21,7 @@
     <% h -= 1 %>
   <% end %>
 
+  <!-- table content -->
   <% @events.each do |event| %>
     <% if event[:detail].length == 0 %>
 
@@ -47,7 +48,7 @@
               <%= content_tag :td, event[:event][:date], rowspan: event[:detail].length %>
             <% end %>
             <td>
-              <% detail[:presenter].each do |presenter| %>
+              <% detail[:presenter].reverse_each do |presenter| %>
                 <strong><%= presenter[:affiliation] %></strong><br><%= "#{presenter[:title]} #{presenter[:name]} 氏" %><br>
               <% end %>
             </td>

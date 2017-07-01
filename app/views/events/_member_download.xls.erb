@@ -5,8 +5,32 @@
   xmlns:x="urn:schemas-microsoft-com:office:excel"
   xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
   xmlns:html="http://www.w3.org/TR/REC-html40">
+
   <Styles>
-    <Style ss:ID="s57">
+    <Style ss:ID="s70">
+      <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
+      <Borders>
+        <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+        <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+        <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+        <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+      </Borders>
+      <Font ss:FontName="Calibri" x:CharSet="128" x:Family="Swiss" ss:Color="#000000"/>
+      <Interior ss:Color="#d3d300" ss:Pattern="Solid"/>
+    </Style>
+    <Style ss:ID="s80">
+      <Alignment ss:Horizontal="Center" ss:Vertical="Center" ss:WrapText="1"/>
+      <Borders>
+        <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+        <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+        <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+        <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+      </Borders>
+      <Font ss:FontName="Calibri" x:CharSet="128" x:Family="Swiss" ss:Color="#000000"/>
+      <Interior ss:Color="#d3d300" ss:Pattern="Solid"/>
+    </Style>
+     <Style ss:ID="s100">
+      <Alignment ss:Horizontal="Left" ss:Vertical="Center" ss:WrapText="1"/>
       <Borders>
         <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
         <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
@@ -16,43 +40,81 @@
       <Font ss:FontName="Calibri" x:CharSet="128" x:Family="Swiss" ss:Color="#000000"/>
     </Style>
   </Styles>
+
   <Worksheet ss:Name="Sheet1">
     <Table> 
       <Column ss:AutoFitWidth="0" ss:Width="15"/>
       <Column ss:AutoFitWidth="0" ss:Width="15"/>
+      <Column ss:AutoFitWidth="0" ss:Width="15"/>
+      <Column ss:AutoFitWidth="0" ss:Width="15"/>
+      <Column ss:AutoFitWidth="0" ss:Width="15"/>
       <Column ss:AutoFitWidth="0" ss:Width="60"/>
-      <Column ss:AutoFitWidth="0" ss:Width="40"/>
-      <Column ss:AutoFitWidth="0" ss:Width="40"/>
-      <Column ss:AutoFitWidth="0" ss:Width="40"/>
-      <Column ss:AutoFitWidth="0" ss:Width="150"/>
-      <Column ss:AutoFitWidth="0" ss:Width="150"/>
-      <Column ss:AutoFitWidth="0" ss:Width="200"/>
-      <Row ss:Index="2">
-        <Cell ss:StyleID="s57"><Data ss:Type="String">#</Data></Cell>
-        <Cell ss:StyleID="s57"><Data ss:Type="String">☑</Data></Cell>
-        <Cell ss:StyleID="s57"><Data ss:Type="String">氏名</Data></Cell>
-        <Cell ss:StyleID="s57"><Data ss:Type="String">属性</Data></Cell>
-        <Cell ss:StyleID="s57"><Data ss:Type="String">Role</Data></Cell>
-        <Cell ss:StyleID="s57"><Data ss:Type="String">参加費</Data></Cell>
-        <Cell ss:StyleID="s57"><Data ss:Type="String">所属</Data></Cell>
-        <Cell ss:StyleID="s57"><Data ss:Type="String">肩書</Data></Cell>
-        <Cell ss:StyleID="s57"><Data ss:Type="String">備考</Data></Cell>
+      <Column ss:AutoFitWidth="0" ss:Width="90"/>
+      <Column ss:AutoFitWidth="0" ss:Width="35"/>
+      <Column ss:AutoFitWidth="0" ss:Width="130"/>
+      <Column ss:AutoFitWidth="0" ss:Width="210"/>
+      <Column ss:AutoFitWidth="0" ss:Width="90"/>
+      <Row ss:Index="2" ss:Height="67.5" >
+        <Cell ss:StyleID="s70"><Data ss:Type="String">#</Data></Cell>
+        <Cell ss:StyleID="s80"><Data ss:Type="String">参加</Data></Cell>
+        <Cell ss:StyleID="s80"><Data ss:Type="String">ドタキャン</Data></Cell>
+        <Cell ss:StyleID="s80"><Data ss:Type="String">NS</Data></Cell>
+        <Cell ss:StyleID="s80"><Data ss:Type="String">ドタ参</Data></Cell>
+        <Cell ss:StyleID="s70"><Data ss:Type="String">氏名</Data></Cell>
+        <Cell ss:StyleID="s70"><Data ss:Type="String">属性</Data></Cell>
+        <Cell ss:StyleID="s70"><Data ss:Type="String">参加費</Data></Cell>
+        <Cell ss:StyleID="s70"><Data ss:Type="String">所属</Data></Cell>
+        <Cell ss:StyleID="s70"><Data ss:Type="String">肩書</Data></Cell>
+        <Cell ss:StyleID="s70"><Data ss:Type="String">備考</Data></Cell>
       </Row>
+      <% i = 1 %>
       <% @members.each do |member| %>
         <Row>
-          <Cell ss:StyleID="s57"><Data ss:Type="String"></Data></Cell>
-          <Cell ss:StyleID="s57"><Data ss:Type="String"></Data></Cell>
-          <Cell ss:StyleID="s57"><Data ss:Type="String"><%= "#{member.last_name} #{member.first_name}" %></Data></Cell>
-          <Cell ss:StyleID="s57"><Data ss:Type="String"><%= Category.find(member.category_id).try(:name) if member.category_id.present? %></Data></Cell>
-          <Cell ss:StyleID="s57"><Data ss:Type="String"><%= show_role(member, @event) %></Data></Cell>
-          <Cell ss:StyleID="s57"><Data ss:Type="String"><%= show_currency(show_fee(member, @event)) %></Data></Cell>
-          <Cell ss:StyleID="s57"><Data ss:Type="String"><%= member.affiliation %></Data></Cell>
-          <Cell ss:StyleID="s57"><Data ss:Type="String"><%= member.title %></Data></Cell>
-          <Cell ss:StyleID="s57"><Data ss:Type="String"><%= member.note %></Data></Cell>
+          <Cell ss:StyleID="s100"><Data ss:Type="String"><%= "#{i}" %></Data></Cell>
+          <Cell ss:StyleID="s100"><Data ss:Type="String"></Data></Cell>
+          <Cell ss:StyleID="s100"><Data ss:Type="String"></Data></Cell>
+          <Cell ss:StyleID="s100"><Data ss:Type="String"></Data></Cell>
+          <Cell ss:StyleID="s100"><Data ss:Type="String"></Data></Cell>
+          <Cell ss:StyleID="s100"><Data ss:Type="String"><%= "#{member.last_name} #{member.first_name}" %></Data></Cell>
+          <Cell ss:StyleID="s100"><Data ss:Type="String"><%= Category.find(member.category_id).try(:name) if member.category_id.present? %></Data></Cell>
+          <Cell ss:StyleID="s100"><Data ss:Type="String"><%= show_currency(show_fee(member, @event)) %></Data></Cell>
+          <Cell ss:StyleID="s100"><Data ss:Type="String"><%= member.affiliation %></Data></Cell>
+          <Cell ss:StyleID="s100"><Data ss:Type="String"><%= member.title %></Data></Cell>
+          <Cell ss:StyleID="s100"><Data ss:Type="String"><%= member.note %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= show_role(member, @event) %></Data></Cell> 
           <Cell><Data ss:Type="String"><%= member.fb_name %></Data></Cell>
         </Row>
+        <% i += 1 %>
       <% end %>
     </Table>
+
+  <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+   <PageSetup>
+    <Layout x:Orientation="Landscape"/>
+    <Header x:Margin="0"/>
+    <Footer x:Margin="0"/>
+    <PageMargins x:Bottom="0.20" x:Left="0.20"
+     x:Right="0.20" x:Top="0.20"/>
+   </PageSetup>
+   <Print>
+    <ValidPrinterInfo/>
+    <PaperSizeIndex>9</PaperSizeIndex>
+    <HorizontalResolution>1200</HorizontalResolution>
+    <VerticalResolution>1200</VerticalResolution>
+   </Print>
+   <Zoom>100</Zoom>
+   <Selected/>
+   <Panes>
+    <Pane>
+     <Number>3</Number>
+     <ActiveRow>11</ActiveRow>
+     <ActiveCol>9</ActiveCol>
+    </Pane>
+   </Panes>
+   <ProtectObjects>False</ProtectObjects>
+   <ProtectScenarios>False</ProtectScenarios>
+  </WorksheetOptions>
+
   </Worksheet>
 </Workbook>
 

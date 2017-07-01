@@ -1,25 +1,95 @@
 <div class="full-width-image">
   <div class="logo-wrapper">
     <%= image_tag 'logo200x200.png' %>
-    <h1>「よりオープンに、よりグローバルに、よりイノベイティブに、<br>
-      ベンチャー、起業、スタートアップ、イノベーションを考えよう！」</h1>
+    <h1>よりオープンに、よりグローバルに、よりイノベイティブに、<br>
+      ベンチャー、起業、スタートアップ、イノベーションを考えよう！</h1>
   </div>
 </div><br>
 
-<!--
 <div class="container">
-  <div class="row">
-    <div class="col-lg-9 col-md-9">
-      <fieldset>
-        <legend></legend>
-      </fieldset>
-    </div>
-  </div>
+  <h1>最新イベント情報</h1>
+  <p>詳細は<a href="http://www.facebook.com/GTICafe">こちら</a></p>
+  <table class="table">
+    <tr>
+      <th class="col-md-1">Total</th>
+      <th class="col-md-1">Event</th>
+      <th class="col-md-1">Date</th>
+      <th class="col-md-2">Presenter</th>
+      <th class="col-md-4">Title</th>
+    </tr>
+  
+    <!-- count -->
+    <% max_id = 1 %>  
+    <% @events.each do |event| %>
+      <% max_id += 1 %>
+    <% end %>
+  
+    <!-- relate id and real id -->
+    <% event_id = Array.new(max_id) %>
+    <% h = max_id - 1 %>
+    <% @events.each do |event| %>
+      <% event_id[h] = event[:event][:id] %>
+      <% h -= 1 %>
+    <% end %>
+  
+    <!-- table content -->
+    <% @events.each do |event| %>
+
+      <!-- unheld event -->
+      <% require "active_support/time"%>
+      <% time = Time.now %>
+      <% if event[:event][:date] < time%>
+        <% break %>
+      <% end %>
+
+      <% if event[:detail].length == 0 %>
+  
+      <% elsif event[:detail].length >= 1 %>
+        <% i=0 %>
+        <% event[:detail].each do |detail| %>
+          <tr>
+            <% if detail[:presenter].length >= 1 %>
+              <% if i == 0 %>
+                <%= content_tag :td, rowspan: event[:detail].length do %>
+                  <% for h in 0..max_id do %>
+                    <% if event_id[h] == event[:event][:id] %>
+                      <% break %>
+                    <% end %>
+                  <% end %>
+                  <%= "第#{h}回" %>
+                <% end %>
+                <%= content_tag :td, rowspan: event[:detail].length do %>
+                  <%= "#{event[:event][:name]}" %>
+                  <% if event[:event][:event_category_id] == 1 %>
+                    <%= "本会" %>
+                  <% end %>
+                <% end %>
+                <%= content_tag :td, event[:event][:date], rowspan: event[:detail].length %>
+              <% end %>
+              <td>
+                <% detail[:presenter].reverse_each do |presenter| %>
+                  <strong><%= presenter[:affiliation] %></strong><br><%= "#{presenter[:title]} #{presenter[:name]} 氏" %><br>
+                <% end %>
+              </td>
+              <td>
+                <strong>
+                <%= "#{detail[:title]}" %>
+                </strong>
+                <br>
+                <%= "#{detail[:abstract]}" %>
+              </td>
+          </tr>
+          <% i += 1 %>
+            <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </table>
 </div>
--->
 
 <table width="100%" border="0px">  
   <tr>
+
     <th rowspan="2" width="70%">
       <center>
         <h1><span class="glyphicon glyphicon-globe"></span> CONFERENCE (本会)</h1>
@@ -46,7 +116,9 @@
         </div>
       </div>
     </td>
+
   </tr>
+
   <tr>
     <td>
       <script>(function(d, s, id) {
@@ -67,4 +139,5 @@
       </div>
     </td>
   </tr>  
+
 </table>

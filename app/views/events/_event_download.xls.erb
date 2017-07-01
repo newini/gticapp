@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Styles>
+    <Style ss:ID="s57">
+      <Borders>
+        <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+        <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+        <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+        <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+      </Borders>
+      <Font ss:FontName="Calibri" x:CharSet="128" x:Family="Swiss" ss:Color="#000000"/>
+    </Style>
+  </Styles>
+  <Worksheet ss:Name="Sheet1">
+    <Table> 
+      <Column ss:AutoFitWidth="0" ss:Width="15"/>
+      <Column ss:AutoFitWidth="0" ss:Width="80"/>
+      <Column ss:AutoFitWidth="0" ss:Width="80"/>
+      <Column ss:AutoFitWidth="0" ss:Width="80"/>
+      <Column ss:AutoFitWidth="0" ss:Width="100"/>
+      <Column ss:AutoFitWidth="0" ss:Width="100"/>
+      <Column ss:AutoFitWidth="0" ss:Width="100"/>
+      <Column ss:AutoFitWidth="0" ss:Width="200"/>
+      <Column ss:AutoFitWidth="0" ss:Width="200"/>
+      <Row ss:Index="2">
+        <Cell ss:StyleID="s57"><Data ss:Type="String">#</Data></Cell>
+        <Cell ss:StyleID="s57"><Data ss:Type="String">通算</Data></Cell>
+        <Cell ss:StyleID="s57"><Data ss:Type="String">イベント名</Data></Cell>
+        <Cell ss:StyleID="s57"><Data ss:Type="String">開催日</Data></Cell>
+        <Cell ss:StyleID="s57"><Data ss:Type="String">登壇企業</Data></Cell>
+        <Cell ss:StyleID="s57"><Data ss:Type="String">肩書</Data></Cell>
+        <Cell ss:StyleID="s57"><Data ss:Type="String">登壇者</Data></Cell>
+        <Cell ss:StyleID="s57"><Data ss:Type="String">プレゼン題名</Data></Cell>
+        <Cell ss:StyleID="s57"><Data ss:Type="String">会場</Data></Cell>
+      </Row>
+      <% @events.each do |event| %>
+        <Row>
+          <Cell ss:StyleID="s57"><Data ss:Type="String"></Data></Cell>
+          <Cell ss:StyleID="s57"><Data ss:Type="String"></Data></Cell>
+          <Cell ss:StyleID="s57"><Data ss:Type="String"><%= if event[:event][:event_category_id] == 1 do "GTIC本会#{event[:event][:name]}" else "#{event[:event][:name]}" end%></Data></Cell>
+          <Cell ss:StyleID="s57"><Data ss:Type="String"><%#= Category.find(member.category_id).try(:name) if member.category_id.present? %></Data></Cell>
+          <Cell ss:StyleID="s57"><Data ss:Type="String"><%#= show_role(member, @event) %></Data></Cell>
+          <Cell ss:StyleID="s57"><Data ss:Type="String"><%#= show_currency(show_fee(member, @event)) %></Data></Cell>
+          <Cell ss:StyleID="s57"><Data ss:Type="String"><%#= member.affiliation %></Data></Cell>
+          <Cell ss:StyleID="s57"><Data ss:Type="String"><%#= member.title %></Data></Cell>
+          <Cell ss:StyleID="s57"><Data ss:Type="String"><%#= member.note %></Data></Cell>
+          <Cell><Data ss:Type="String"><%#= member.fb_name %></Data></Cell>
+        </Row>
+      <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>
+
