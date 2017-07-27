@@ -1,6 +1,5 @@
 Gticapp::Application.routes.draw do
 
-
   resources :members do
     collection do
       post :import
@@ -16,6 +15,7 @@ Gticapp::Application.routes.draw do
   resources :events do
     collection do
       get :search_event
+      get :download
     end
     member do
       get :invite
@@ -66,13 +66,10 @@ Gticapp::Application.routes.draw do
   match '/home', to: 'static_pages#home', via: 'get'
   match '/about', to: 'static_pages#about', via: 'get'
   match '/presenter', to: 'static_pages#presenter', via: 'get'
-  match '/chishikipresenter', to: 'static_pages#chishikipresenter', via: 'get'
   match '/organizer', to: 'static_pages#organizer', via: 'get'
   match '/media', to: 'static_pages#media', via: 'get'
-  match '/media_introduce', to: 'static_pages#media_introduce', via: 'get'
   match '/schedule', to: 'static_pages#schedule', via: 'get'
   match '/contact', to: 'static_pages#contact', via: 'get'
-  match '/test', to: 'static_pages#test', via: 'get'
   match '/events/:event_id/send_invitation', to: 'events#send_invitation', as: 'send_invitation',via: 'get'
   match '/events/:event_id/send_invitation', to: 'events#send_email', via: 'post'
 
@@ -84,6 +81,7 @@ Gticapp::Application.routes.draw do
 
 
   get 'manuals/index'
-  get 'manuals/presentation'
+  get 'manuals/add_event'
+  get 'manuals/add_presentation'
 
 end
