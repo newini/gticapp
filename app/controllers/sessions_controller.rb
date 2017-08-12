@@ -4,20 +4,14 @@ class SessionsController < ApplicationController
   def create
 #    raise request.env["omniauth.auth"].to_yaml  
     auth = request.env["omniauth.auth"]
-    logger.debug('auth_infos')
-    logger.debug(auth.to_yaml)
-
     user = User.find_by_uid(auth["uid"])
-    if !user
-      user = User.find_by_email(auth["info"]["email"])
-    end
-    if !user 
-      user = User.create_with_omniauth(auth)
-    end
-    #user = User.find_by_provider_and_uid(auth["provider"], auth["uid"]) || User.create_with_omniauth(auth)
-    logger.debug('user_infos')
-    logger.debug(user.to_yaml)
-    if user
+#    if !user
+#      user = User.find_by_email(auth["info"]["email"])
+#    end
+#    if !user 
+#      user = User.create_with_omniauth(auth)
+#    end
+    if user.provider.nil?
      user.update(provider: auth["provider"],
                       name:      auth["info"]["name"],
                       uid:     auth["uid"],
@@ -27,6 +21,7 @@ class SessionsController < ApplicationController
       user.save
     end
 
+    #user = User.find_by_provider_and_uid(auth["provider"], auth["uid"]) || User.create_with_omniauth(auth)
     session[:user_id] = user.id
     redirect_to root_url, :notice => "サインインしました"
 #    if user && user.authenticate(params[:session][:password])
