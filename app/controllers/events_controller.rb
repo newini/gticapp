@@ -10,7 +10,8 @@ class EventsController < ApplicationController
     :invited, :registed, :participants, :waiting, :maybe, :declined, :no_show, 
     :change_status,:change_all_waiting_status, 
     :send_email, 
-    :update_facebook, :new_member, :search, :account
+    :update_facebook, :new_member, :search, :account,
+    :face_image
   ]
 
   def index
@@ -141,7 +142,6 @@ class EventsController < ApplicationController
 #          @event.relationships.create(member_id: new_member.id, event_id: @event.id, status: 1)
 #      end
 #    end
-
       redirect_to events_path
     else
       render 'new'
@@ -161,7 +161,6 @@ class EventsController < ApplicationController
     Event.import_registed_members(params[:file],params[:id]) 
     redirect_to event_path, :flash => {:success => "インポートされました"}
   end
-
 
   def import_participants
     if params[:file].present?
@@ -305,8 +304,6 @@ class EventsController < ApplicationController
     end
   end
 
-
-
   def change_all_waiting_status
     @members = @event.waiting_members.where(black_list_flg: false).where("email IS NOT NULL").order("last_name_alphabet")
     @members.each do |member|
@@ -323,6 +320,7 @@ class EventsController < ApplicationController
     @event = Event.find(params[:event_id])
     @invitations = Invitation.where(event_id: params[:event_id])
   end
+
   def send_email
     @send_flg = params[:send_flg].to_i
     if @send_flg== 1
@@ -334,6 +332,7 @@ class EventsController < ApplicationController
     end
     redirect_to send_invitation_path(@event)
   end
+
   def update_facebook
     status_array = ["attending", "maybe", "declined"]
     status_array.each do |rsvp_status|
@@ -386,7 +385,6 @@ class EventsController < ApplicationController
     end
   end
 
-
   def update_registed_member
     @title = "#{@event.name} 参加予定者情報編集"
     @members = @event.registed_members.order("last_name_alphabet")
@@ -416,8 +414,6 @@ class EventsController < ApplicationController
       redirect_to :back
     end
   end
-
-
 
   def statistics
     @title = "統計"
@@ -461,7 +457,6 @@ class EventsController < ApplicationController
     @registers_pos = @event.registers.joins(:account).where("accounts.positive =?", true)
     @registers_neg = @event.registers.joins(:account).where("accounts.positive =?", false)
   end
-
 
   def download
     #@title = "#{@event.name} 参加予定者"
@@ -509,9 +504,19 @@ class EventsController < ApplicationController
       format.xls {send_data render_to_string(partial: "event_download"),  filename: "events.xls"}
       format.js
     end
- 
   end
 
+  def face_image
+    @title = "#{@event.name} 参加予定者"
+    members(@event.registed_members)
+    @referer = "registed" 
+    relationship = @event.relationships.find_by_member_id(params[:member_id])
+#    respond_to do |format|
+#      format.html
+#      format.xls {send_data render_to_string(partial: "member_download"),  filename: "#{@title.strip}.xls"}
+#      format.js
+#    end
+  end
 
   def fb
     status = "invited"

@@ -33,6 +33,7 @@ Gticapp::Application.routes.draw do
       get :update_participants
       get :statistics
       get :account
+      get :face_image
       post :change_status
       post :switch_black_list_flg
       post :change_all_waiting_status
