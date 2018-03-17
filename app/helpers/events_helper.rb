@@ -174,13 +174,16 @@ module EventsHelper
       birthday_flg = false
     end
     fee = event.fee || 0
+
     student_flg = member.category_id == 10 ? true : false
     if student_flg
-      fee -= 1000 
+      fee -= 2000 
     end
+
     if birthday_flg
       fee -= 1000
     end
+
     if ((presentation_role != 0) || gtic_flg)
       fee = 0
     end
