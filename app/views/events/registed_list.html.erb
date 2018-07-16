@@ -1,0 +1,49 @@
+<h2><%= @title %></h2>
+  <%= content_tag :table, class: 'table table-condensed table-bordered table-striped' do %>
+    <tr>
+      <th>#</th>
+      <th>参<br>加</th>
+      <th>ド<br>タ<br>キ<br>ャ<br>ン</th>
+      <th>N<br>S</th>
+      <th>ド<br>タ<br>参</th>
+      <th class="col-md-1">氏名</th>
+      <th class="col-md-1">写真</th>
+      <th class="col-md-1">属性</th>
+      <th class="col-md-1">参加費</th>
+      <th class="col-md-2">所属</th>
+      <th class="col-md-2">肩書</th>
+      <th class="col-md-2">備考</th>
+    </tr>
+    <% i = 1 %>
+    <% @members.each do |member| %>
+      <%= content_tag :tr do %>
+        <% if !member.gtic_flg %>
+            <td><%= i %></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><%= "#{member.last_name} #{member.first_name}" %></td>
+            <td><%= image_tag "https://graph.facebook.com/#{member.fb_user_id}/picture?type=normal" %></td>
+            <td><%= Category.find(member.category_id).try(:name) if member.category_id.present? %></td>
+            <td><%= show_currency(show_fee(member, @event)) %></td> 
+            <td><%= truncate(member.affiliation, length: 20) %></td>
+            <td><%= member.title %></td>
+            <td><%= truncate(member.note, length: 30) %></td>
+        <% end %>
+      <% end %>
+      <% i += 1 %>
+    <% end %>
+  <% end %>
+</div>
+<div id="ajax-form">
+</div>
+<script>
+$('.note').popover(
+    {
+      trigger: "hover",
+      placement: "top",
+      toggle: "popover",
+      container: "body"
+    }
+

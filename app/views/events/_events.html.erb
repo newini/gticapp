@@ -1,5 +1,6 @@
 <table class="table table-bordered">
   <tr>
+    <th class="col-md-1">累計</th>
     <th class="col-md-1">イベント名</th>
     <th class="col-md-1">開催日</th>
     <th class="col-md-1">分類</th>
@@ -9,9 +10,33 @@
     <th class="col-md-1">会場</th>
     <th class="col-md-1">出席者数</th>
   </tr>
+
+  <!-- count -->
+  <% max_id = 1 %>  
   <% @events.each do |event| %>
+    <% max_id += 1 %>
+  <% end %>
+
+  <!-- relate id and real id -->
+  <% event_id = Array.new(max_id) %>
+  <% h = max_id - 1 %>
+  <% @events.each do |event| %>
+    <% event_id[h] = event[:event][:id] %>
+    <% h -= 1 %>
+  <% end %>
+
+  <% @events.each do |event| %>
+
     <% if event[:detail].length == 0 %>
       <tr>
+        <%= content_tag :td, rowspan: event[:detail].length do %>
+          <% for h in 0..max_id do %>
+            <% if event_id[h] == event[:event][:id] %>
+              <% break %>
+            <% end %>
+          <% end %>
+          <%= "第#{h}回" %>
+        <% end %>
         <td><%= link_to event[:event][:name], registed_event_path(event[:event][:id]) %></td>
         <td><%= event[:event][:date] %></td>
         <td><%= EventCategory.find(event[:event][:event_category_id]).name if event[:event][:event_category_id].present? and EventCategory.where(id: event[:event][:event_category_id]).present? %></td>
@@ -21,11 +46,20 @@
         <td><%= Place.find(event[:event][:place]).name if event[:event][:place].present? and Place.where(id: event[:event][:place]).present? %></td>
         <td><%= event[:event][:participants] %>名</td>
       </tr>
+
     <% elsif event[:detail].length >= 1 %>
       <% i=0 %>
       <% event[:detail].each do |detail| %>
         <tr>
           <% if i == 0 %>
+            <%= content_tag :td, rowspan: event[:detail].length do %>
+              <% for h in 0..max_id do %>
+                <% if event_id[h] == event[:event][:id] %>
+                  <% break %>
+                <% end %>
+              <% end %>
+              <%= "第#{h}回" %>
+            <% end %>
             <%= content_tag :td, rowspan: event[:detail].length do %>
               <%= link_to event[:event][:name], registed_event_path(event[:event][:id]) %>
             <% end %>
@@ -55,6 +89,7 @@
         <% i += 1 %>
       <% end %>
     <% end %>
+
   <% end %>
 </table>
 

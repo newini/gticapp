@@ -11,14 +11,20 @@ class EventsController < ApplicationController
     :change_status,:change_all_waiting_status, 
     :send_email, 
     :update_facebook, :new_member, :search, :account,
-    :face_image
+    :registed_list
   ]
 
   def index
     @start_date = Event.order("start_time ASC").first.start_time.beginning_of_year
     @last_date = Event.order("start_time ASC").last.start_time.end_of_year
-    year = params[:year].present? ? Date.parse(params[:year]) : @last_date 
-    base = Event.where(:start_time => year.beginning_of_year..year.end_of_year).group(:start_time)
+    if params[:year].present?
+      year = Date.parse(params[:year])  
+      base = Event.where(:start_time => year.beginning_of_year..year.end_of_year).group(:start_time)
+    else
+      base = Event.where(:start_time => @start_date..@last_date).group(:start_time)
+    end
+#    year = params[:year].present? ? Date.parse(params[:year]) : @last_date 
+#    base = Event.where(:start_time => year.beginning_of_year..year.end_of_year).group(:start_time)
     record = base.order("start_time DESC")
     @events = record.map{
       |event| [
@@ -50,6 +56,7 @@ class EventsController < ApplicationController
     @total_events = Event.count
     @total_participants = Relationship.where(member_id: array).where(status: 3).count
     @participants = Relationship.where(member_id: array).where(status: 3).group(:member_id).pluck(:member_id).count
+
     respond_to do |format|
       format.html
       format.js
@@ -208,7 +215,7 @@ class EventsController < ApplicationController
     @referer = "registed" 
     respond_to do |format|
       format.html
-      format.xls {send_data render_to_string(partial: "member_download"),  filename: "#{@title.strip}.xls"}
+      format.xls {send_data render_to_string(partial: "member_download"),  filename: "resisted.xls"}
       format.js
     end
   end
@@ -373,6 +380,7 @@ class EventsController < ApplicationController
       @members = Member.waiting_member(recorded).order("last_name_alphabet")
     end
     respond_to do |format|
+      format.html
       format.js
     end
   end
@@ -381,6 +389,7 @@ class EventsController < ApplicationController
     @title = "#{@event.name} 未定者情報編集"
     @members = @event.maybe_members.order("last_name_alphabet")
     respond_to do |format|
+      format.html
       format.js
     end
   end
@@ -389,6 +398,7 @@ class EventsController < ApplicationController
     @title = "#{@event.name} 参加予定者情報編集"
     @members = @event.registed_members.order("last_name_alphabet")
     respond_to do |format|
+      format.html
       format.js
     end
   end
@@ -397,6 +407,7 @@ class EventsController < ApplicationController
     @title = "#{@event.name} 出席者情報編集"
     @members = @event.participants.order("last_name_alphabet")
     respond_to do |format|
+      format.html
       format.js
     end
   end
@@ -458,6 +469,13 @@ class EventsController < ApplicationController
     @registers_neg = @event.registers.joins(:account).where("accounts.positive =?", false)
   end
 
+  def registed_list
+    @title = "#{@event.name} 参加予定者"
+    members(@event.registed_members)
+    @referer = "registed" 
+    relationship = @event.relationships.find_by_member_id(params[:member_id])
+  end
+
   def download
     #@title = "#{@event.name} 参加予定者"
     #members(@event.registed_members)
@@ -504,18 +522,6 @@ class EventsController < ApplicationController
       format.xls {send_data render_to_string(partial: "event_download"),  filename: "events.xls"}
       format.js
     end
-  end
-
-  def face_image
-    @title = "#{@event.name} 参加予定者"
-    members(@event.registed_members)
-    @referer = "registed" 
-    relationship = @event.relationships.find_by_member_id(params[:member_id])
-#    respond_to do |format|
-#      format.html
-#      format.xls {send_data render_to_string(partial: "member_download"),  filename: "#{@title.strip}.xls"}
-#      format.js
-#    end
   end
 
   def fb

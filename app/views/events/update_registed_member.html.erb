@@ -7,17 +7,17 @@
       <%= link_to registed_event_path, class: "btn btn-default" do %>
         <span class="glyphicon glyphicon-th-list"></span> 参加予定者一覧
       <% end %>
-      <%= link_to update_registed_member_event_path, class: "btn btn-default", remote: true do %>
+      <%= link_to update_registed_member_event_path, class: "btn btn-default", format: "js", remote: true do %>
         <span class="glyphicon glyphicon-edit"></span> 参加予定者情報編集
       <% end %>
-      <%= link_to waiting_event_path, class: "btn btn-default", remote: true do %>
+      <%= link_to waiting_event_path, class: "btn btn-default", remote: true, format: "js" do %>
         <span class="glyphicon glyphicon-plus"></span> 参加予定者追加
       <% end %>
       <%= link_to update_facebook_event_path, method: "post", class:"btn btn-default" do %>
         <span class="glyphicon glyphicon-refresh"></span> facebook情報更新
       <% end %>
       <%= link_to registed_list_event_path, method: "get", class:"btn btn-default" do %>
-        <span class="glyphicon glyphicon-th-list"></span> 参加者リスト
+        <span class="glyphicon glyphicon-th-list"></span> 顔写真
       <% end %>
       <%= link_to registed_event_path(format: 'xls'), method: "get", class: "btn btn-default" do %>
         <span class="glyphicon glyphicon-download"></span> Download
@@ -25,7 +25,7 @@
 
     </div>
     <div id="ajax_container">
-      <%= render'members' %>
+      <%= render'members_form' %>
     </div>
   </div>
 </div>

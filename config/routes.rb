@@ -2,13 +2,13 @@ Gticapp::Application.routes.draw do
 
   resources :members do
     collection do
-      post :import
       get :management
-      post :update_information
-      get :search
-      post :kana_to_roman
+      get :search       
       get :count
       get :category
+      post :import
+      post :update_information
+      post :kana_to_roman
     end
   end
 
@@ -33,7 +33,7 @@ Gticapp::Application.routes.draw do
       get :update_participants
       get :statistics
       get :account
-      get :face_image
+      get :registed_list
       post :change_status
       post :switch_black_list_flg
       post :change_all_waiting_status
@@ -46,8 +46,8 @@ Gticapp::Application.routes.draw do
     end
     resources :invitations
     collection { 
-      post :import
       get :statistics
+      post :import
     }
   end
 
@@ -80,7 +80,7 @@ Gticapp::Application.routes.draw do
   
   root 'static_pages#home'
 
-
+  #manuals
   get 'manuals/index'
   get 'manuals/add_event'
   get 'manuals/add_presentation'

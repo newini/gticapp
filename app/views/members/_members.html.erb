@@ -1,4 +1,5 @@
 <div class="pagination pagination-centered"><%= will_paginate @members, renderer: BootstrapPagination::Rails %></div>
+
 <%= form_tag :search_members, method: 'get', remote: true, class: "form-inline", role: "form" do %>
   <div class="form-group">
     <span>メンバー検索</span>

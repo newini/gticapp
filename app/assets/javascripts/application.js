@@ -13,8 +13,8 @@
 
 //= require jquery
 //= require jquery_ujs
+//= require jquery.spin
 //= require bootstrap
 //= require turbolinks
-//= require jquery.spin
 //= require_tree .
 

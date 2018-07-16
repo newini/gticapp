@@ -126,6 +126,7 @@ class MembersController < ApplicationController
       @members = Member.order("last_name_alphabet").paginate(page: params[:page])
     end
     respond_to do |format|
+      format.html
       format.js
     end
   end

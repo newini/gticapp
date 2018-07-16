@@ -1,9 +1,12 @@
 class SessionsController < ApplicationController
 #  def new
 #  end
+
   def create
 #    raise request.env["omniauth.auth"].to_yaml  
+    # request user info. from facebook
     auth = request.env["omniauth.auth"]
+    # find user by facebook id
     user = User.find_by_uid(auth["uid"])
 #    if !user
 #      user = User.find_by_email(auth["info"]["email"])
@@ -11,15 +14,15 @@ class SessionsController < ApplicationController
 #    if !user 
 #      user = User.create_with_omniauth(auth)
 #    end
-    if user.provider.nil?
-     user.update(provider: auth["provider"],
-                      name:      auth["info"]["name"],
-                      uid:     auth["uid"],
-                      email:     auth["info"]["email"],
-                      image_url: auth["info"]["image"],
-                      access_token: auth["credentials"]["token"])
-      user.save
-    end
+
+    # Update facebook info when sign in 
+    user.update(provider: auth["provider"],
+                    name:      auth["info"]["name"],
+                    uid:     auth["uid"],
+                    email:     auth["info"]["email"],
+                    image_url: auth["info"]["image"],
+                    access_token: auth["credentials"]["token"])
+    user.save
 
     #user = User.find_by_provider_and_uid(auth["provider"], auth["uid"]) || User.create_with_omniauth(auth)
     session[:user_id] = user.id
@@ -34,10 +37,12 @@ class SessionsController < ApplicationController
 #      render 'new'
 #    end
   end
+
   def destroy
     session[:user_id] = nil
+    sign_out
     redirect_to root_url, :notice => "サインアウトしました"
-#    sign_out
 #    redirect_to root_path
   end
+
 end

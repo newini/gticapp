@@ -51,7 +51,7 @@ ActiveRecord::Schema.define(version: 20161010031041) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "event_category_id"
-    t.string   "note",              limit: 255
+    t.string   "note"
   end
 
   add_index "events", ["event_category_id"], name: "index_events_on_event_category_id"
