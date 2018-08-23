@@ -120,7 +120,7 @@ class EventsController < ApplicationController
     @presenters_ary = @presenters.map{|presenter| [[presenter.last_name, presenter.first_name].join(" "), presenter.id]}
     @registed_members = @event.registed_members
     @graph = facebook_objects(@event.fb_event_id)
-    @fb_event_info = @graph[@event.fb_event_id] if @graph.present?
+    #@fb_event_info = @graph[@event.fb_event_id] if @graph.present?
   end
 
   def edit
@@ -568,7 +568,11 @@ class EventsController < ApplicationController
       redirect_to root_path, notice: "Please sign in." unless signed_in?
     end
     def find_selected_event
-      @event = Event.find(params[:id])
+      if params[:id].present?
+        @event = Event.find(params[:id])
+      elsif params[:event_id].present?
+        @event = Event.find(params[:event_id])
+      end
     end
 
     def select_action(referer)

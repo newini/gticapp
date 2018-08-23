@@ -1,13 +1,16 @@
 class InvitationsController < ApplicationController
   before_action :signed_in_user
+
   def index
     @event = Event.find(params[:event_id])
     @invitations = @event.invitations.paginate(page:params[:page]).order("created_at DESC")
   end
+
   def new
     @event = Event.find(params[:event_id])
     @invitation = Invitation.new
   end
+
   def create
     @event = Event.find(params[:event_id])
     @invitation = Invitation.new(invitation_params)
@@ -46,7 +49,5 @@ class InvitationsController < ApplicationController
     def signed_in_user
       redirect_to root_path, notice: "Please sign in." unless signed_in?
     end
-
-
 
 end

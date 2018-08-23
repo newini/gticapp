@@ -1,27 +1,23 @@
-<div class="row-fluid">
-  <aside class="span2">
-    <section>
-      <%= render'events/side' %>
-    </section>
-    <section>
-      <%= render'events/side_info' %>
-    </section>
+<div class="row">
+  <aside class="col-sm-2">
+    <%= render'events/side' %>
   </aside>
-  <div class="span5">
+  <div class="col-sm-10">
     <%= form_tag send_invitation_path, multipart: true do %>
       <%= hidden_field_tag 'send_flg',1 %>
+      <h3>Select invitaion format</h3>
       <% @invitations.each do |invitation| %>
         <label class="radio">
           <%= radio_button_tag 'invitation_id', invitation.id %>
           <%= invitation.title %>
         </label>
       <% end %>
-      <%= submit_tag '送信', class: 'btn btn-large btn-primary btn-block' %>
+      <%= submit_tag 'Send Email', class: 'btn btn-primary btn-block' %>
     <% end %>
     <% if @value == 1 %>
-    <% @members.each do |member| %>
-      <%= member.name %>
-    <% end %>
+      <% @members.each do |member| %>
+        <%= member.name %>
+      <% end %>
     <% end %>
   </div>
 </div>

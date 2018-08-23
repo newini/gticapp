@@ -6,6 +6,7 @@ class Event < ActiveRecord::Base
   has_many :registed_members, -> { where "status = 2"}, through: :relationships, source: :member
   has_many :declined_members, -> {where "status = 0 or status = 4"}, through: :relationships, source: :member 
   has_many :no_show, -> {where "status = 5"}, through: :relationships, source: :member 
+  has_many :invited_members, -> {where "member_id = 1884"}, through: :relationships, source: :member
 
   # presenter, panelist, moderator
   has_many :presenters, -> {where :relationships => {presentation_role: 1..3}}, through: :relationships, source: :member 
@@ -25,6 +26,7 @@ class Event < ActiveRecord::Base
       Event.create! row.to_hash
     end
   end
+
   def self.import_registed_members(file,event_id)
     CSV.foreach(file.path, headers: true) do |row|
       member = Member.where(last_name: row["last_name"]).find_by_first_name(row["first_name"]) || Member.new
@@ -38,7 +40,6 @@ class Event < ActiveRecord::Base
       relationship.save!
     end
   end
-
 
   def self.import_participants(file,event_id)
     CSV.foreach(file.path, headers: true) do |row|
@@ -115,6 +116,5 @@ class Event < ActiveRecord::Base
 
   #scope
   scope :year_between, ->(year) { where(:start_time => Date.parse(year).beginning_of_year..Date.parse(year).end_of_year) }
-
 
 end

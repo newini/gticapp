@@ -80,14 +80,15 @@ Gticapp::Application.configure do
   config.log_formatter = ::Logger::Formatter.new
 
 
-  config.action_mailer.delivery_method =:smtp
-  config.action_mailer.smtp_settings = {
-    :port =>            '587',
-    :address =>         'smtp.mandrillapp.com',
-    :user_name =>       'app21294268@heroku.com',
-    :password =>        '89u07G6G9K0IrkgEHQxq3g',
-    :domain =>          'heroku.com',
-    :authentication =>  :plain
+  ActionMailer::Base.delivery_method = :smtp
+  ActionMailer::Base.smtp_settings = {
+    address:              'smtp.gmail.com',
+    domain:               'gmail.com',
+    port:                 587,
+    user_name:            'gtic.jp@gmail.com',
+    password:             'gtic1704ll',
+    authentication:       'plain',
+    enable_starttls_auto: true
   }
 
 end

@@ -4,18 +4,8 @@
     <%= link_to 'イベント一覧', events_path, class: "btn btn-default btn-block" %>
   </div>
   </section>
-  <% if params[:id].blank? %>
-    <section>
-      <div class="btn-group-vertical btn-block" >
-        <%= link_to "新規登録/CSV読込", new_event_path, class: "btn btn-default btn-block" %>
-        <%= link_to "統計", statistics_events_path, class: "btn btn-default btn-block" %>
-        <%= link_to "会場管理", places_path, class: "btn btn-default btn-block" %>
-        <%= link_to "イベントタイプ管理", event_categories_path, class: "btn btn-default btn-block" %>
-        <%= link_to "会計科目管理", accounts_path, class: "btn btn-default btn-block" %>
-        <%= link_to "イベント情報Download", download_events_path, class: "btn btn-default btn-block" %>
-      </div>
-    </section>
-  <% else %>
+
+  <% if params[:id].present? or params[:event_id].present? %>
     <section>
         <div class="btn-group-vertical btn-block" >
           <%= link_to 'イベント情報', event_path(@event), class: "btn btn-default btn-block " %>
@@ -26,9 +16,25 @@
           <%= link_to "No-show (#{@event.no_show.count})", no_show_event_path(@event), class: "btn btn-default  btn-block" %>
           <%= link_to "統計", statistics_event_path(@event), class: "btn btn-default  btn-block" %>
           <%= link_to "会計", account_event_path(@event), class: "btn btn-default  btn-block" %>
+          <%= link_to "Invitation Body", event_invitations_path(@event), class: "btn btn-default  btn-block" %>
+          <%= link_to "Invited Members", invited_event_path(@event), class: "btn btn-default  btn-block" %>
+          <%= link_to "Send Invitation", "/events/#{@event.id}/send_invitation", class: "btn btn-default  btn-block" %>
         </div>
     </section>
+  <% else %>
+    <section>
+      <div class="btn-group-vertical btn-block" >
+        <%= link_to "新規登録/CSV読込", new_event_path, class: "btn btn-default btn-block" %>
+        <%= link_to "統計", statistics_events_path, class: "btn btn-default btn-block" %>
+        <%= link_to "会場管理", places_path, class: "btn btn-default btn-block" %>
+        <%= link_to "イベントタイプ管理", event_categories_path, class: "btn btn-default btn-block" %>
+        <%= link_to "会計科目管理", accounts_path, class: "btn btn-default btn-block" %>
+        <%= link_to "イベント情報Download", download_events_path, class: "btn btn-default btn-block" %>
+      </div>
+    </section>
   <% end %>
+
+
   <% if request.path_info == "/events" %>
     <div class="well well-small">
       <ul class="list-unstyled">
