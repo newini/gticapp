@@ -24,13 +24,13 @@
       <div class="form-group">
         <%= label_tag :last_name_alphabet, "氏(alphabet)", class: 'col-sm-6 control-label' %> 
         <div class="col-sm-6">
-          <%= text_field_tag nil, @member.last_name_alphabet, name: "member[last_name_kana]", placeholder: @member.errors.any? ? "#{@member.errors.messages[:last_name_kana][0]}" : "Yamada", class: "form-control" %>
+          <%= text_field_tag nil, @member.last_name_alphabet, name: "member[last_name_alphabet]", placeholder: @member.errors.any? ? "#{@member.errors.messages[:last_name_kana][0]}" : "Yamada", class: "form-control" %>
         </div>
       </div>
       <div class="form-group">
         <%= label_tag :first_name_alphabet, "名(alphabet)", class: 'col-sm-6 control-label' %> 
         <div class="col-sm-6">
-          <%= text_field_tag nil, @member.first_name_alphabet, name: "member[first_name_kana]", placeholder: @member.errors.any? ? "#{@member.errors.messages[:first_name_kana][0]}" : "Taro", class: "form-control" %>
+          <%= text_field_tag nil, @member.first_name_alphabet, name: "member[first_name_alphabet]", placeholder: @member.errors.any? ? "#{@member.errors.messages[:first_name_kana][0]}" : "Taro", class: "form-control" %>
         </div>
       </div>
 
@@ -69,6 +69,12 @@
         <%= label_tag :category_id, "属性 / category", class: 'col-sm-6 control-label' %>
         <div class="col-sm-6">
           <%= select_tag nil, options_from_collection_for_select(Category.all, :id, :name, @member.category_id), name:"member[category_id]", class: "form-control", include_blank: true %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= label_tag :birthday, "Birthday", class: 'col-sm-6 control-label' %>
+        <div class="col-sm-6">
+          <%= date_field_tag nil, @member.birthday, name:"member[birthday]", class: "form-control", include_blank: true %>
         </div>
       </div>
 
