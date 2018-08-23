@@ -1,4 +1,3 @@
-@import "bootstrap";
 /* mixins, variables, etc. */ 
 $grayMediumLight: #eaeaea;
 @mixin box_sizing { 
@@ -125,7 +124,7 @@ aside {
 }
 .field_with_errors { 
   @extend .form-group; 
-  @extend .has-error;
+  @extend .has-error !optional;
 }
 
 .td-nowrap{

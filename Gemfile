@@ -1,16 +1,20 @@
 source 'https://rubygems.org'
 
-gem 'rails' , '~> 4.0.0'
+gem 'rails' , '~> 4.2.0'
 gem 'sqlite3'
-gem 'sass-rails' , '~> 4.0'
+gem 'puma', '~> 3.11'
+gem 'sass-rails' , '~> 5.0'
 gem 'uglifier', '~> 1.3.0'
-gem 'coffee-rails', '~> 4.0.0'
+# gem 'mini_racer', platforms: :ruby
+
+gem 'coffee-rails', '~> 4.2.0'
+gem 'turbolinks', '~> 5'
+gem 'jbuilder', '~> 2.5'
+# gem 'redis', '~> 4.0'
+gem 'bcrypt', '~> 3.1.7'
+
 gem 'jquery-rails'
-gem 'turbolinks'
-gem 'jbuilder', '~> 1.2'
 gem 'therubyracer', platforms: :ruby
-gem 'bcrypt', '~> 3.1.2'
-#gem 'bcrypt-ruby', '~> 3.1.2'
 gem 'bootstrap-sass'
 gem 'bootswatch-rails'
 gem 'will_paginate'
@@ -22,6 +26,8 @@ gem 'omniauth-facebook'
 gem 'whenever', :require => false
 gem 'chartkick'
 gem 'spinjs-rails'
+gem "jquery-slick-rails"
+gem 'popper_js', '~> 1.14.3'
 gem 'config', github: 'railsconfig/config' # name changed from rails_config
 
 group :doc do
@@ -30,21 +36,21 @@ group :doc do
 end
 
 group :development, :test do
-  gem 'rspec-rails'
-  gem 'guard-rspec' # , '2.5.0' due to error
-  gem 'spork-rails'
-  gem 'guard-spork'
-  gem 'childprocess'
-  gem "capistrano-bundler"
-  gem "capistrano-rails"
-  gem "capistrano-rbenv"
-  gem 'quiet_assets' 
+#  gem 'rspec-rails'
+#  gem 'guard-rspec' # , '2.5.0' due to error
+#  gem 'spork-rails'
+#  gem 'guard-spork'
+#  gem 'childprocess'
+#  gem "capistrano-bundler"
+#  gem "capistrano-rails"
+#  gem "capistrano-rbenv"
+#  gem 'quiet_assets' 
 end
 
 group :test do
-  gem 'capybara'
-  gem 'selenium-webdriver'
-  gem 'factory_girl_rails'
+#  gem 'capybara'
+#  gem 'selenium-webdriver'
+#  gem 'factory_girl_rails'
 end
 
 group :production do
