@@ -1,5 +1,6 @@
 class PresentationsController < ApplicationController
   before_action :signed_in_user
+
   def index
     @event = Event.find(params[:id])
     @presentations = @event.presentations.order("created_at desc")
