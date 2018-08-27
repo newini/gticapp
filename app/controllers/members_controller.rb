@@ -1,6 +1,7 @@
 class MembersController < ApplicationController
   before_action :signed_in_user
   helper_method :sort_column, :sort_direction
+
   def index
     @members = Member.order(sort_column + ' ' + sort_direction).paginate(page: params[:page])
     if params[:count].present?
@@ -125,10 +126,7 @@ class MembersController < ApplicationController
     else
       @members = Member.order("last_name_alphabet").paginate(page: params[:page])
     end
-    respond_to do |format|
-      format.html
-      format.js
-    end
+    respond_to :js
   end
 
   def alphabet_to_roman

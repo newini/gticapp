@@ -192,7 +192,6 @@ class EventsController < ApplicationController
     @members = Member.waiting_member(recorded)
     @referer = "waiting" 
     respond_to do |format|
-      format.html
       format.js
       format.json { render :json => @members.select(:id, :last_name, :fb_name) }
     end
@@ -379,37 +378,25 @@ class EventsController < ApplicationController
     else
       @members = Member.waiting_member(recorded).order("last_name_alphabet")
     end
-    respond_to do |format|
-      format.html
-      format.js
-    end
+    respond_to :js
   end
 
   def update_maybe_member
     @title = "#{@event.name} 未定者情報編集"
     @members = @event.maybe_members.order("last_name_alphabet")
-    respond_to do |format|
-      format.html
-      format.js
-    end
+    respond_to :js
   end
 
   def update_registed_member
     @title = "#{@event.name} 参加予定者情報編集"
     @members = @event.registed_members.order("last_name_alphabet")
-    respond_to do |format|
-      format.html
-      format.js
-    end
+    respond_to :js
   end
 
   def update_participants
     @title = "#{@event.name} 出席者情報編集"
     @members = @event.participants.order("last_name_alphabet")
-    respond_to do |format|
-      format.html
-      format.js
-    end
+    respond_to :js
   end
 
   def update_birthday
@@ -557,9 +544,8 @@ class EventsController < ApplicationController
   def members(members)
       @members = members.sort_by_role_alphabet
   end
-
-
    
+
   private
     def event_params
       params.require(:event).permit(:name, :start_time, :end_time, :fb_event_id, :place_id, :fee, :event_category_id, :note)
@@ -589,7 +575,4 @@ class EventsController < ApplicationController
         no_show
       end
     end
-
- 
-
 end
