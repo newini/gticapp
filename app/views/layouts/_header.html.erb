@@ -14,6 +14,7 @@
         <% end %>
       <% end %>
     </div>
+
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
         <li><%= link_to "HOME", root_path %></li> 
@@ -22,8 +23,8 @@
           <li><%= link_to "GTIC", events_path %></li> 
           <li><%= link_to "イベント検索", search_event_events_path %></li>
           <li><%= link_to "MEMBER", members_path %></li> 
-         <li id="fat-menu" class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <%= User.find(current_user).name %> <b class="caret"></b></a>
+          <li id="fat-menu" class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <%= User.find(current_user).name %> <b class="caret"></b></a>
             <ul class="dropdown-menu">
               <% if admin? %>
                 <li><%= link_to "USERS*", :users %></li>
@@ -37,7 +38,6 @@
         <% else %>
           <li><%= link_to "ABOUT", :about %></li> 
           <li><%= link_to "PRESENTER", :presenter %></li> 
-<!--          <li><%= link_to "SCHEDULE", :schedule %></li> -->
           <li><%= link_to "ORGANIZER", :organizer %></li> 
           <li><%= link_to "MEDIA ARTICLE", :media %></li>
           <li><%= link_to "CONTACT US", :contact %></li>
