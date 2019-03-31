@@ -1,4 +1,5 @@
 module EventsHelper
+
   def relationship(participant)
     Relationship.where(participated_id: @event.id).find_by_participant_id(participant.id)
   end
@@ -126,25 +127,29 @@ module EventsHelper
     record = member.relationships.find_by_event_id(event.id)
     gtic_flg = member.gtic_flg
     presentation_role = record.presentation_role
+
     # Role メニュー 
-    if presentation_role == 2
-      title = ["Panelist", "GTIC", "プレゼンター", "Moderator", "ゲスト", "参加者"]
-      role = [nil, "gtic", "presenter", "moderator", "guest", "participant"]
+    if presentation_role == 1
+      title = ["Presenter","GTIC" ,"Panelist", "Moderator", "Guest", "過去登壇者", "参加者"]
+      role = [nil, "gtic", "panelist", "moderator", "guest", "past_presenter", "participant"]
+    elsif presentation_role == 2
+      title = ["Panelist", "GTIC", "Presenter", "Moderator", "Guest", "過去登壇者", "参加者"]
+      role = [nil, "gtic", "presenter", "moderator", "guest", "past_presenter", "participant"]
     elsif presentation_role == 3
-      title = ["Moderator", "GTIC", "プレゼンター", "Panelist", "ゲスト", "参加者"]
-      role = [nil, "gtic", "presenter", "panelist","guest", "participant"]
-    elsif presentation_role == 1
-      title = ["プレゼンター","GTIC" ,"Panelist", "Moderator", "ゲスト", "参加者"]
-      role = [nil, "gtic", "panelist", "moderator", "guest", "participant"]
+      title = ["Moderator", "GTIC", "Presenter", "Panelist", "Guest", "過去登壇者", "参加者"]
+      role = [nil, "gtic", "presenter", "panelist","guest", "past_presenter", "participant"]
     elsif presentation_role == 4
-      title = ["ゲスト", "GTIC", "プレゼンター", "Panelist", "Moderator", "参加者"]
-      role = [nil, "gtic", "presenter", "panelist", "moderator", "participant"]
+      title = ["Guest", "GTIC", "Presenter", "Panelist", "Moderator", "過去登壇者", "参加者"]
+      role = [nil, "gtic", "presenter", "panelist", "moderator", "past_presenter", "participant"]
+    elsif presentation_role == 5
+      title = ["過去登壇者", "GTIC", "Presenter", "Panelist", "Moderator", "Guest", "参加者"]
+      role = [nil, "gtic", "presenter", "panelist", "moderator", "guest", "participant"]
     elsif gtic_flg
-      title = ["GTIC", "プレゼンター", "Panelist", "Moderator", "ゲスト", "参加者"]
-      role = [nil, "presenter", "panelist", "moderator", "guest","participant"]
+      title = ["GTIC", "Presenter", "Panelist", "Moderator", "Guest", "過去登壇者", "参加者"]
+      role = [nil, "presenter", "panelist", "moderator", "guest", "past_presenter", "participant"]
     else
-      title = ["参加者", "GTIC", "プレゼンター", "Panelist", "Moderator", "ゲスト"]
-      role = [nil, "gtic", "presenter", "panelist", "moderator", "guest"]
+      title = ["参加者", "GTIC", "Presenter", "Panelist", "Moderator", "Guest", "過去登壇者"]
+      role = [nil, "gtic", "presenter", "panelist", "moderator", "guest", "past_presenter"]
     end
       content_tag(:div, class: "btn-group") {
         concat content_tag(:button,"#{title[0]} #{content_tag(:span, '', class: 'caret')}".html_safe, :class => "dropdown-toggle btn btn-xs btn-default", data: {:toggle => "dropdown"})
@@ -155,15 +160,19 @@ module EventsHelper
             concat link_to(title[3], change_role_event_path(:member_id => member.id, :role => role[3], referer: @referer), :method => :post, remote: true) 
             concat link_to(title[4], change_role_event_path(:member_id => member.id, :role => role[4], referer: @referer), :method => :post, remote: true) 
             concat link_to(title[5], change_role_event_path(:member_id => member.id, :role => role[5], referer: @referer), :method => :post, remote: true) 
+            concat link_to(title[6], change_role_event_path(:member_id => member.id, :role => role[6], referer: @referer), :method => :post, remote: true) 
           }
         }
       }
   end
     
-  def show_fee(member,event)
+  def show_fee(member, event)
     record = member.relationships.find_by_event_id(event.id)
     presentation_role = record.presentation_role
     gtic_flg = member.gtic_flg
+    past_presenter_flg = member.past_presenter_flg
+
+    # Birthday
     if member.birthday
       if member.birthday.strftime("%m") == event.start_time.strftime("%m")
         birthday_flg = true
@@ -175,16 +184,20 @@ module EventsHelper
     end
     fee = event.fee || 0
 
+    if birthday_flg
+      fee -= 1000
+    end
+
     student_flg = member.category_id == 10 ? true : false
     if student_flg
       fee -= 2000 
     end
 
-    if birthday_flg
-      fee -= 1000
+    if past_presenter_flg
+      fee -= 2000
     end
 
-    if ((presentation_role != 0) || gtic_flg)
+    if ((0 < presentation_role) && (presentation_role < 5) || gtic_flg)
       fee = 0
     end
     fee

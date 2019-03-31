@@ -278,25 +278,34 @@ class EventsController < ApplicationController
 
   def change_role
     relationship = @event.relationships.find_by_member_id(params[:member_id])
+    member = Member.find_by_id(params[:member_id])
     case params[:role]
     when "gtic"
       relationship.update(presentation_role: -1)
-    when "presenter"
-      relationship.update(presentation_role: 1)
-    when "panelist"
-      relationship.update(presentation_role: 2)
-    when "moderator"
-      relationship.update(presentation_role: 3)
-    when "guest"
-      relationship.update(presentation_role: 4)
     when "participant"
       relationship.update(presentation_role: 0)
+      member.update(past_presenter_flg: false)
+    when "presenter"
+      relationship.update(presentation_role: 1)
+      member.update(past_presenter_flg: true)
+    when "panelist"
+      relationship.update(presentation_role: 2)
+      member.update(past_presenter_flg: true)
+    when "moderator"
+      relationship.update(presentation_role: 3)
+      member.update(past_presenter_flg: true)
+    when "guest"
+      relationship.update(presentation_role: 4)
+      member.update(past_presenter_flg: false)
+    when "past_presenter"
+      relationship.update(presentation_role: 5)
+      member.update(past_presenter_flg: true)
     end
-    if relationship.save
-      select_action(params[:referer])
-    else
+#    if relationship.save
+#      select_action(params[:referer])
+#    else
       redirect_to :back
-    end
+#    end
   end
 
   def switch_black_list_flg
@@ -544,7 +553,6 @@ class EventsController < ApplicationController
   def members(members)
       @members = members.sort_by_role_alphabet
   end
-   
 
   private
     def event_params

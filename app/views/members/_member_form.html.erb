@@ -20,7 +20,7 @@
         </div>
       </div>
       
-      <p>↓今まで「かな」を入力していましたが、今後はalphabetを入力してください。もし、かなになっている場合はalphabetに直してください。英名の場合もalphabetを書いてください</p>
+          <p>↓今まで「かな」を入力していましたが、今後はalphabetを入力してください。もし、かなになっている場合はalphabetに直してください。英名の場合もalphabetを書いてください</p>
       <div class="form-group">
         <%= label_tag :last_name_alphabet, "氏(alphabet)", class: 'col-sm-6 control-label' %> 
         <div class="col-sm-6">
@@ -56,13 +56,13 @@
       <div class="form-group">
         <%= label_tag :note, "備考 / note", class: 'col-sm-6 control-label' %>
         <div class="col-sm-6">
-          <%= text_area_tag nil, @member.note, name: "member[note]", placeholder:  "備考", class: "form-control" %>
+          <%= text_area_tag nil, @member.note, name: "member[note]", placeholder: "備考", class: "form-control" %>
         </div>
       </div>
       <div class="form-group">
         <%= label_tag :email, "メールアドレス / email", class: 'col-sm-6 control-label' %>
         <div class="col-sm-6">
-          <%= email_field_tag nil, @member.email, name: "member[email]", placeholder:  "test@example.com", class: "form-control" %>
+          <%= email_field_tag nil, @member.email, name: "member[email]", placeholder: "test@example.com", class: "form-control" %>
         </div>
       </div>
       <div class="form-group">
@@ -77,13 +77,19 @@
           <%= date_field_tag nil, @member.birthday, name:"member[birthday]", class: "form-control", include_blank: true %>
         </div>
       </div>
+      <div class="form-group">
+        <%= label_tag :past_presenter_flg, "過去登壇者", class: 'col-sm-6 control-label' %>
+        <div class="col-sm-6">
+          <%= text_area_tag nil, @member.past_presenter_flg, name: "member[past_presenter_flg]", placeholder: "true/false", class: "form-control" %>
+        </div>
+      </div>
 
       <div class="form-group">
         <div class="col-sm-offset-6 col-sm-6">
           <%= submit_tag "送信", class: "btn btn-primary btn-block" %> 
         </div>
       </div>
+
     <% end %>
   </div>
 </div>
-

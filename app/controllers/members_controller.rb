@@ -189,14 +189,15 @@ class MembersController < ApplicationController
   end
 
   def members(members)
-      @members = members.sort_by_role_alphabet
+    @members = members.sort_by_role_alphabet
   end
 
   private
     def member_params
       params.require(:member).permit(
         :first_name, :last_name,:first_name_alphabet, :last_name_alphabet,
-        :facebook_name, :affiliation, :title, :note, :category_id, :email, :black_list_flg, :birthday, :fb_user_id
+        :facebook_name,  :fb_user_id, :affiliation, :title, :note, :category_id, :email, :birthday,
+        :black_list_flg, :past_presenter_flg
       )
     end
     def signed_in_user
@@ -208,7 +209,5 @@ class MembersController < ApplicationController
     def sort_direction
       %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
     end
-
-
 
 end

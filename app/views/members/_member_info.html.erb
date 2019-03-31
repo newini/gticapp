@@ -48,10 +48,12 @@
   <th>誕生日</th>
     <td><%= @member.birthday %></td>
   </tr>
-
+  <tr>
+    <th>過去登壇者</th>
+    <td><%= @member.past_presenter_flg %></td>
+  </tr>
   <tr>
     <th>ブラックリスト</th>
     <td><%= @member.black_list_flg %></td>
   </tr>
-
 </table>
