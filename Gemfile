@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
-gem 'rails' , '~> 4.2.10'
-gem 'sqlite3'
+gem 'rails' , '~> 4.2.11'
+gem 'sqlite3', '~> 1.3.13'
 gem 'puma', '~> 3.11'
 gem 'sass-rails' , '~> 5.0'
 gem 'uglifier'
@@ -15,7 +15,7 @@ gem 'bcrypt', '~> 3.1.7'
 
 gem 'jquery-rails'
 gem 'therubyracer', platforms: :ruby
-gem 'bootstrap-sass'
+gem "bootstrap-sass", ">= 3.4.1"
 gem 'bootswatch-rails'
 gem 'will_paginate'
 gem 'will_paginate-bootstrap'
@@ -28,6 +28,13 @@ gem 'chartkick'
 gem 'spinjs-rails'
 gem "jquery-slick-rails"
 gem 'config', github: 'railsconfig/config' # name changed from rails_config
+
+gem "actionview", ">= 4.2.11.1"
+gem "nokogiri", ">= 1.8.5"
+gem "activejob", ">= 4.2.11"
+gem "rack", ">= 1.6.11"
+gem "loofah", ">= 2.2.3"
+#gem "activesupport", "4.2.10"
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
