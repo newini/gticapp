@@ -186,10 +186,10 @@ class EventsController < ApplicationController
 
   def waiting
     @title = "#{@event.name} 参加予定者追加"
-#    ids = Member.joins(:relationships).where(:relationships =>{event_id: @event.id}).where(:relationships => {status: 2..6}).uniq
-#    @members = Member.where.not(id: ids).order("last_name_alphabet").limit(100)
+    #ids = Member.joins(:relationships).where(:relationships =>{event_id: @event.id}).where(:relationships => {status: 2..6}).uniq
+    #@members = Member.where.not(id: ids).order("last_name_alphabet").limit(50)
     recorded = Member.recorded_member(@event)
-    @members = Member.waiting_member(recorded)
+    @members = Member.waiting_member(recorded).limit(50)
     @referer = "waiting" 
     respond_to do |format|
       format.js
@@ -383,7 +383,15 @@ class EventsController < ApplicationController
     @title = "#{@event.name} 参加予定者追加"
     recorded = Member.recorded_member(@event)
     if params[:search].present? 
-      @members = Member.waiting_member(recorded).find_name(params[:search]).order("last_name_alphabet")
+      words = params[:search].to_s.split(" ")
+      words.each_with_index do |w, index|
+        if index == 0
+          @members = Member.waiting_member(recorded).find_name(w).order("last_name_alphabet")
+        else
+          @members = @members.find_name(w).order("last_name_alphabet")
+        end
+      end
+
     else
       @members = Member.waiting_member(recorded).order("last_name_alphabet")
     end

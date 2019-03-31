@@ -3,7 +3,7 @@
 <%= form_tag :search_members, method: 'get', remote: true, class: "form-inline", role: "form" do %>
   <div class="form-group">
     <span>メンバー検索</span>
-    <%= text_field_tag :search, params[:search], class: "form-control", placeholder: "山田（苗字を入力）" %>
+    <%= text_field_tag :search, params[:search], class: "form-control", placeholder: "name" %>
   </div>
   <%= submit_tag 'Search', :name => nil, class: 'btn btn-primary' %>
 <% end %>

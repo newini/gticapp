@@ -122,7 +122,14 @@ class MembersController < ApplicationController
 
   def search
     if params[:search].present? 
-      @members = Member.find_name(params[:search]).order("last_name_alphabet ASC").paginate(page: params[:page])
+      words = params[:search].to_s.split(" ")
+      words.each_with_index do |w, index|
+        if index == 0
+          @members = Member.find_name(w).order("last_name_alphabet ASC").paginate(page: params[:page])
+        else
+          @members = @members.find_name(w).order("last_name_alphabet").paginate(page: params[:page])
+        end
+      end
     else
       @members = Member.order("last_name_alphabet").paginate(page: params[:page])
     end
