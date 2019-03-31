@@ -72,7 +72,8 @@
           <% end %>
           <td>
             <% detail[:presenter].each do |presenter| %>
-              <%= "#{presenter[:affiliation]}" %><br><%= "#{presenter[:title]} #{presenter[:name]} 氏" %><br>
+                <strong><%= "#{presenter[:affiliation]}" %></strong><br>
+                <%= "#{presenter[:title]} #{presenter[:name]} 氏" %><br>
             <% end %>
           </td>
           <td><%= "#{truncate detail[:title], length: 40}" %></td>
@@ -88,6 +89,7 @@
         </tr>
         <% i += 1 %>
       <% end %>
+
     <% end %>
 
   <% end %>
