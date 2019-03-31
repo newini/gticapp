@@ -9,13 +9,13 @@
   <div class="form-group"> 
     <%= f.label :start_time, '開始日時', class: 'col-sm-6 control-label' %>
     <div class="col-sm-6">
-      <%= f.datetime_select :start_time, {minute_step: 15, start_hour: 17}, {class: "form-control"} %>
+      <%= f.datetime_select :start_time, {minute_step: 15, start_hour: 19}, {class: "form-control"} %>
     </div>
   </div>
   <div class="form-group"> 
     <%= f.label :end_time, '終了日時', class: 'col-sm-6 control-label' %>
     <div class="col-sm-6">
-      <%= f.datetime_select( :end_time, {discard_month: true, discard_year: true, minute_step: 15, start_hour: 17}, {class: "form-control"}) %>
+      <%= f.datetime_select( :end_time, {discard_month: true, discard_year: true, minute_step: 15, start_hour: 22}, {class: "form-control"}) %>
     </div>
   </div>
   <div class="form-group"> 
@@ -33,7 +33,7 @@
   <div class="form-group"> 
     <%= f.label :fee, '参加費', class: 'col-sm-6 control-label' %>
     <div class="col-sm-6">
-      <%= f.number_field :fee, class: "form-control" %>
+        <%= f.number_field :fee, class: "form-control", :value => 5000 %>
     </div>
   </div>
   <div class="form-group"> 
