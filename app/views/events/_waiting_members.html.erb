@@ -31,7 +31,12 @@
       <td><%= member.affiliation %></td>
       <td><%= member.title %></td>
       <td><%= member.note %></td>
-      <td><%= select_status(member)  %></td>
+      <td>
+        <% if @recorded.find_by_id(member.id) %>
+          <%= "Already registed" %>
+        <% end %>
+        <%= select_status(member) %>
+      </td>
     <% end %>
     <% i += 1 %>
   <% end %>
