@@ -381,13 +381,23 @@ class EventsController < ApplicationController
     @title = "#{@event.name} 参加予定者追加"
     @recorded = Member.recorded_member(@event)
     if params[:search].present? 
-      words = params[:search].to_s.split(" ")
-      words.each_with_index do |w, index|
-        if index == 0
-          @members = Member.find_name(w).order("last_name_alphabet")
-        else
-          @members = @members.find_name(w).order("last_name_alphabet")
+      @members = []
+      names = params[:search].to_s.split(",")
+      names.each do |name|
+        words = name.to_s.split(" ")
+        words.each_with_index do |w, index|
+          if index == 0
+            @member = Member.find_name(w).order("last_name_alphabet")
+          else
+            @member = @member.find_name(w).order("last_name_alphabet")
+          end
         end
+        if @member.empty?
+          temp = Member.find_by_id(100)
+          temp.update(fb_name: name+" not found!", last_name: name, last_name_alphabet: "%")
+          @member = Member.find_name("floccinaucinihilipilification")
+        end
+        @members += @member
       end
     else
       @members = Member.order("last_name_alphabet").limit(50)
