@@ -43,6 +43,7 @@ Gticapp::Application.routes.draw do
       post :change_role
       post :update_facebook
       post :update_birthday
+      post :update_black_list
     end
     resources :invitations
     collection { 

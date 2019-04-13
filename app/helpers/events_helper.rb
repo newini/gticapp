@@ -221,6 +221,18 @@ module EventsHelper
     end
   end
 
+  def select_black_list(member, event)
+    if member.black_list_flg
+      link_to update_black_list_event_path(member_id: member.id, referer: @referer), method: "post", remote: true, class:"btn btn-primary btn-xs" do
+        content_tag(:span, "", class:"glyphicon glyphicon-check") 
+      end
+    else
+      link_to update_black_list_event_path(member_id: member.id, referer: @referer, black_list_flg: true), method: "post", remote: true, class:"btn btn-default btn-xs" do
+        content_tag(:span, "", class:"glyphicon glyphicon-unchecked")
+      end
+    end
+  end
+
   def show_birthday(member, event)
     if member.birthday
       if member.birthday.strftime("%m") == event.start_time.strftime("%m")
@@ -233,7 +245,7 @@ module EventsHelper
     end
   end
 
-  def show_note(member, event)
+  def show_note(member, event) # Not use since 2019-04-13
     relationship = member.relationships.find_by_event_id(event.id)
     if relationship.note
       link_to edit_relationship_path(relationship.id), class: "btn btn-primary btn-xs", remote: true do

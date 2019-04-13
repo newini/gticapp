@@ -437,6 +437,16 @@ class EventsController < ApplicationController
     end
   end
 
+  def update_black_list
+    member = Member.find(params[:member_id])
+    if params[:black_list_flg]
+      member.update(black_list_flg: true)
+    else
+      member.update(black_list_flg: false)
+    end
+    redirect_to :back
+  end
+
   def statistics
     @title = "統計"
     if params[:id].present?
