@@ -45,6 +45,29 @@ class MembersController < ApplicationController
 =end
   end
 
+  def no_show_list
+    @no_show_members = []
+    ids = []
+    #2014年1月1日以降のイベント
+    events = Event.where("start_time > ?", Date.parse("2014-01-01"))
+    #No showの全id（重複あり)の配列
+    all_participant = events.map{|event| event.no_show.map{|member| member.id}}.flatten
+    #GTICメンバーのidの配列
+    gtic = Member.where(gtic_flg: true).map{|member| member.id}
+    #GTICメンバーを排除した参加者idの配列
+    participant = all_participant - gtic
+    #参加者のidごとにカウントした配列
+    no_show_members = participant.map{|id| [id, participant.count(id)]}
+    #出席回数でソートした配列(ソートの順番は大->小)
+    sorted_repeater =no_show_members.sort{|a,b| b[1] <=> a[1]}.uniq
+    #出席回数をキーにした配列
+    transposed_repeater = sorted_repeater.map{|a| [a[1], a[0]]}
+    #出席回数でグループ化した配列
+    counted_grouped_repeater = transposed_repeater.group_by{|a| a[0]}.map{|k,v| [k,v.map{|a| a[1]}]}
+    #配列をハッシュに{回数 => [id, id, ...], 回数 => [id, id, ...], ...}
+    @no_show_members = Hash[counted_grouped_repeater]
+  end
+
   def category
   end
 

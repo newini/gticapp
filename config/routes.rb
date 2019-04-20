@@ -5,6 +5,7 @@ Gticapp::Application.routes.draw do
       get :management
       get :search       
       get :count
+      get :no_show_list
       get :category
       post :import
       post :update_information
