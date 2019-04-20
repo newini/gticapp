@@ -68,6 +68,10 @@ class MembersController < ApplicationController
     @no_show_members = Hash[counted_grouped_repeater]
   end
 
+  def black_list
+    @black_list_members = Member.where(black_list_flg: true)
+  end
+
   def category
   end
 
