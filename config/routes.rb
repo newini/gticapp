@@ -37,6 +37,7 @@ Gticapp::Application.routes.draw do
       get :account
       get :registed_list
       post :change_status
+      post :destroy_relationship
       post :switch_black_list_flg
       post :change_all_waiting_status
       post :create_member

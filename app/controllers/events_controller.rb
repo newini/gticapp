@@ -9,6 +9,7 @@ class EventsController < ApplicationController
     :update_birthday,
     :invited, :registed, :participants, :waiting, :maybe, :declined, :no_show, 
     :change_status,:change_all_waiting_status, 
+    :destroy_relationship,
     :send_email, 
     :update_facebook, :new_member, :search, :account,
     :registed_list
@@ -272,6 +273,14 @@ class EventsController < ApplicationController
     else
       redirect_to :back
     end
+  end
+
+  def destroy_relationship
+    relationship = @event.relationships.find_by_member_id(params[:member_id])
+    if relationship.present?
+      relationship.destroy
+    end
+    redirect_to :back
   end
 
   def change_role
