@@ -25,12 +25,12 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id
 
       # Update gtic flag
-      member = Member.find_by_email(user.email)
+      member = Member.find_by_id(user.member_id)
       if member
           member.update(gtic_flg: t)
           redirect_to root_url, :notice => "Welcome! [sys] Updated gtic flag."
       else
-          redirect_to root_url, :notice => "Welcome! [sys] Cannot find member by fb uid, UID: " + user.uid
+          redirect_to root_url, :notice => "Welcome! [sys] Cannot update gtic flg!"
       end
     end
 

@@ -14,17 +14,11 @@
       <div class="form-group">
         <%= f.label :email, "Email", class: 'col-sm-4 control-label' %>
         <div class="col-sm-6">
-          <%= f.text_field :email, placeholder: "Name", class: "form-control" %>
+          <%= f.text_field :email, placeholder: "Email", class: "form-control" %>
           <%= @user.errors.messages[:email][0] if @user.errors.any?%>
         </div>
       </div>
-      <div class="form-group">
-        <%= f.label :admin, "Admin", class: 'col-sm-4 control-label' %>
-        <div class="col-sm-6">
-          <%= f.text_field :admin, placeholder: "t / f", class: "form-control" %>
-          <%= @user.errors.messages[:admin][0] if @user.errors.any?%>
-        </div>
-      </div>
+
       <% if admin? %>
         <div class="form-group">
           <%= f.label :uid, "Facebook ID", class: 'col-sm-4 control-label' %>
@@ -33,7 +27,22 @@
             <%= @user.errors.messages[:uid][0] if @user.errors.any?%>
           </div>
         </div>
+        <div class="form-group">
+          <%= f.label :member_id, "Member ID", class: 'col-sm-4 control-label' %>
+          <div class="col-sm-6">
+            <%= f.text_field :member_id, placeholder: "Member ID", class: "form-control" %>
+            <%= @user.errors.messages[:member_id][0] if @user.errors.any?%>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= f.label :admin, "Admin", class: 'col-sm-4 control-label' %>
+          <div class="col-sm-6">
+            <%= f.text_field :admin, placeholder: "t / f", class: "form-control" %>
+            <%= @user.errors.messages[:admin][0] if @user.errors.any?%>
+          </div>
+        </div>
       <% end %>
+
       <div class="form-group">
         <div class="col-sm-offset-4 col-sm-6">
           <%= f.submit "送信", class: "btn btn-primary btn-block" %> 
