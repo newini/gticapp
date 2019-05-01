@@ -6,7 +6,7 @@ class PresentationsController < ApplicationController
     @presentations = @event.presentations.order("created_at desc")
     @presenters = @event.presenters
     @presenters_ary = @presenters.map{|presenter| [[presenter.last_name, presenter.first_name].join(" "), presenter.id]}
-    respond_to :js
+    redirect_to :back
   end
 
   def new
