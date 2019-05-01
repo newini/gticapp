@@ -27,7 +27,7 @@ class SessionsController < ApplicationController
       # Update gtic flag
       member = Member.find_by_id(user.member_id)
       if member
-          member.update(gtic_flg: t)
+          member.update(gtic_flg: true)
           redirect_to root_url, :notice => "Welcome! [sys] Updated gtic flag."
       else
           redirect_to root_url, :notice => "Welcome! [sys] Cannot update gtic flg!"
