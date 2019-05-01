@@ -8,6 +8,8 @@ Gticapp::Application.routes.draw do
       get :no_show_list
       get :black_list
       get :category
+      get :participated_events_list
+      get :search_participated
       post :import
       post :update_information
       post :kana_to_roman

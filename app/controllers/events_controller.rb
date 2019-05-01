@@ -396,15 +396,15 @@ class EventsController < ApplicationController
         words = name.to_s.split(" ")
         words.each_with_index do |w, index|
           if index == 0
-            @member = Member.find_name(w).order("last_name_alphabet")
+            @member = Member.find_member(w).order("last_name_alphabet")
           else
-            @member = @member.find_name(w).order("last_name_alphabet")
+            @member = @member.find_member(w).order("last_name_alphabet")
           end
         end
         if @member.empty?
           temp = Member.find_by_id(100)
           temp.update(fb_name: name+" not found!", last_name: name, last_name_alphabet: "%")
-          @member = Member.find_name("floccinaucinihilipilification")
+          @member = Member.find_member("floccinaucinihilipilification")
         end
         @members += @member
       end
