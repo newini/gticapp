@@ -86,6 +86,9 @@ class MembersController < ApplicationController
 
   def update
     @member = Member.find(params[:id])
+    if member_params[:fb_user_id].to_i.to_s == member_params[:fb_user_id].to_s
+      @member.update(fb_name: get_facebook_name(member_params[:fb_user_id]))
+    end
     if @member.update_attributes(member_params)
       redirect_to member_path , :flash => {:success => '変更しました'}
     else
@@ -261,6 +264,13 @@ class MembersController < ApplicationController
     end
     def sort_direction
       %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
+    end
+
+    def get_facebook_name(uid)
+      key = current_user.access_token
+      graph = Koala::Facebook::API.new(key)
+      fb_profile = graph.get_object(member_params[:fb_user_id])
+      return fb_profile['name']
     end
 
 end
