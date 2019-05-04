@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190429053002) do
+ActiveRecord::Schema.define(version: 20190504095701) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "title",      limit: 255
@@ -82,23 +82,24 @@ ActiveRecord::Schema.define(version: 20190429053002) do
   add_index "member_relationships", ["introducer_id"], name: "index_member_relationships_on_introducer_id"
 
   create_table "members", force: :cascade do |t|
-    t.string   "last_name",           limit: 255
-    t.string   "first_name",          limit: 255
-    t.string   "last_name_alphabet",  limit: 255
-    t.string   "first_name_alphabet", limit: 255
-    t.string   "email",               limit: 255
+    t.string   "last_name",            limit: 255
+    t.string   "first_name",           limit: 255
+    t.string   "last_name_alphabet",   limit: 255
+    t.string   "first_name_alphabet",  limit: 255
+    t.string   "email",                limit: 255
     t.integer  "category_id"
-    t.string   "affiliation",         limit: 255
-    t.string   "title",               limit: 255
-    t.string   "note",                limit: 255
-    t.string   "fb_name",             limit: 255
-    t.string   "fb_user_id",          limit: 255
+    t.string   "affiliation",          limit: 255
+    t.string   "title",                limit: 255
+    t.string   "note",                 limit: 255
+    t.string   "fb_name",              limit: 255
+    t.string   "fb_user_id",           limit: 255
     t.boolean  "black_list_flg"
     t.boolean  "gtic_flg"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "birthday"
     t.boolean  "past_presenter_flg"
+    t.string   "previous_affiliation"
   end
 
   add_index "members", ["affiliation"], name: "index_members_on_affiliation"
