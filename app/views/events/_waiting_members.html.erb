@@ -44,4 +44,10 @@
   <% end %>
 <% end %>
 
+<hr>
+<h3>Not found list ...</h3>
+<% @not_found_members.each do |not_found_member| %>
+  <p><%= not_found_member %></p>
+<% end %>
+
 <span>見つからない場合は...    </span><%= link_to "メンバー新規登録", new_member_path(event_id: @event.id), remote: true, class: "btn btn-primary" %>

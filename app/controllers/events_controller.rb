@@ -189,6 +189,7 @@ class EventsController < ApplicationController
     @title = "#{@event.name} 参加予定者追加"
     @recorded = Member.recorded_member(@event)
     @members = Member.limit(50)
+    @not_found_members = []
     @referer = "waiting" 
     respond_to do |format|
       format.js
@@ -391,6 +392,7 @@ class EventsController < ApplicationController
     @recorded = Member.recorded_member(@event)
     if params[:search].present? 
       @members = []
+      @not_found_members = []
       names = params[:search].to_s.split(",")
       names.each do |name|
         words = name.to_s.split(" ")
@@ -402,9 +404,7 @@ class EventsController < ApplicationController
           end
         end
         if @member.empty?
-          temp = Member.find_by_id(100)
-          temp.update(fb_name: name+" not found!", last_name: name, last_name_alphabet: "%")
-          @member = Member.find_member("floccinaucinihilipilification")
+          @not_found_members.push(name)
         end
         @members += @member
       end
