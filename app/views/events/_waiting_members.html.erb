@@ -26,7 +26,7 @@
     <%= content_tag :tr do %>
       <td><%= i %></td>
       <td><%= member.last_name_alphabet[0] if member.last_name_alphabet.present? %></td>
-      <td><%= "#{member.last_name} #{member.first_name}" %></td>
+      <td><%= link_to "#{member.last_name} #{member.first_name}", member_path(member) %></td>
       <td><%= link_to image_tag("https://graph.facebook.com/#{member.fb_user_id}/picture", class: "fb_user_icon") + "#{member.fb_name}", "https://facebook.com/#{member.fb_user_id}", target: :blank %></td>
       <td><%= Category.find(member.category_id).try(:name) if member.category_id.present? %></td>
       <td><%= member.affiliation %></td>
@@ -35,8 +35,9 @@
       <td>
         <% if @recorded.find_by_id(member.id) %>
           <%= "Already registed" %>
+        <% else %>
+          <%= select_status(member) %>
         <% end %>
-        <%= select_status(member) %>
       </td>
     <% end %>
     <% i += 1 %>
