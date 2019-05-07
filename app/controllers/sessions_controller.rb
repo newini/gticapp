@@ -24,6 +24,10 @@ class SessionsController < ApplicationController
 
       session[:user_id] = user.id
 
+      if !user.active_flg
+        redirect_to root_url, :notice => "Cannot login! You don't have access authority! Please contact to admin!"
+      end
+
       # Update gtic flag
       member = Member.find_by_id(user.member_id)
       if member

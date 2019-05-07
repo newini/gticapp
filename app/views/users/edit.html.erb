@@ -41,6 +41,13 @@
             <%= @user.errors.messages[:admin][0] if @user.errors.any?%>
           </div>
         </div>
+        <div class="form-group">
+          <%= f.label :active_flg, "Active?", class: 'col-sm-4 control-label' %>
+          <div class="col-sm-6">
+            <%= f.text_field :active_flg, placeholder: "t / f", class: "form-control" %>
+            <%= @user.errors.messages[:active_flg][0] if @user.errors.any?%>
+          </div>
+        </div>
       <% end %>
 
       <div class="form-group">

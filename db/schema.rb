@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190504095701) do
+ActiveRecord::Schema.define(version: 20190507020827) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "title",      limit: 255
@@ -209,6 +209,7 @@ ActiveRecord::Schema.define(version: 20190504095701) do
     t.datetime "updated_at"
     t.boolean  "admin"
     t.integer  "member_id"
+    t.boolean  "active_flg"
   end
 
   add_index "users", ["access_token"], name: "index_users_on_access_token"
