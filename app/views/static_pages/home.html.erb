@@ -39,13 +39,11 @@
       <!-- unheld event -->
       <% require "active_support/time"%>
       <% time = Time.now %>
-      <% if event[:event][:date] < time%>
+      <% if event[:event][:date] < time - 24*60*60 %>
         <% break %>
       <% end %>
 
-      <% if event[:detail].length == 0 %>
-  
-      <% elsif event[:detail].length >= 1 %>
+      <% if event[:detail].length >= 1 %>
         <% i=0 %>
         <% event[:detail].each do |detail| %>
           <tr>
@@ -68,16 +66,14 @@
                 <%= content_tag :td, event[:event][:date], rowspan: event[:detail].length %>
               <% end %>
               <td>
-                <% detail[:presenter].each do |presenter| %>
-                <% #detail[:presenter].reverse_each do |presenter| %>
+                <% #detail[:presenter].each do |presenter| %>
+                <% detail[:presenter].reverse_each do |presenter| %>
                   <strong><%= presenter[:affiliation] %></strong><br>
                   <%= "#{presenter[:title]} #{presenter[:name]} 氏" %><br>
                 <% end %>
               </td>
               <td>
-                <strong>
-                <%= "#{detail[:title]}" %>
-                </strong>
+                <strong><%= "#{detail[:title]}" %></strong>
                 <br>
                 <%= "#{detail[:abstract]}" %>
               </td>
