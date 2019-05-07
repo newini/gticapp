@@ -54,31 +54,55 @@
       <div class="col-lg-8 col-md-8">
         <p>不定期でビジネスマンに役立つ勉強会を開催しています。</p>
         <p><strong>これまでの開催実績</strong></p>
-            　第71回　名刺管理アプリEightとスキャンマンをとことん使い切る！！            　
-        <br>　第55回　非エンジニアのためのプログラミング講座
-        <br>　第53回　すべては伝える力から　今日からできる表現力UP術
-        <br>　第47回　姿勢矯正ワークショップ「9割の体調不良は、姿勢で良くなる」
-        <br>　第45回　3Dプリントの概要を学び、3Dデータを作成する
-        <br>　第39回　"スポーツを科学する第2弾＜できるビジネスパーソンのための姿勢改善　通勤 外回り＆デスクワーク＞"
-        <br>　第36回　プロの通訳者による英語によるコミュニケーションの効果的なノウハウの秘密＆Elevetor Pich in English3
-        <br>　第30回　知っているようで知らないワインマナー
-        <br>　第25回　英文resumeとLinkedInのSummary page(英文） の作成法を学ぶ
-        <br>　第23回　Elevetor Pich in English2
-        <br>　第21回　Linkedin実践編＆Elevetor Pich in English1
-        <br>　第19回　ベンチャー企業のための商標の取得及び活用入門セミナー
-        <br>　第17回　LinkedIn活用方法をリンクトイン・ジャパン社の講師から直接学ぶ
-        <br>　第14回　特許庁がリリースしているシステム、「IPDL」の使用方法について学ぶ
-        <br>　第12回　リンクトインの英語での使い方を英語で学ぶ
+
+    <% @events.each do |event| %>
+      <!-- bunkakai event -->
+      <% if event[:event][:event_category_id] == 2 %>
+        <% if event[:detail].length >= 1 %>
+          <% i=0 %>
+          <% event[:detail].each do |detail| %>
+            <% if detail[:presenter].length >= 1 %>
+              <% if i == 0 %>
+                <%= content_tag :td, rowspan: event[:detail].length do %>
+                  <%= "#{event[:event][:name]}" %>
+                <% end %>
+                <td><strong><%= "　#{detail[:title]}" %></strong></td>
+              <% else %>
+                <strong><%= " / #{detail[:title]}" %></strong>
+              <% end %>
+              <% i += 1 %>
+            <% end %>
+          <% end %>
+          <br>
+        <% end %>
+      <% end %>
+    <% end %>
+
         <br><br><strong>また、上の会合に加えて、2014年からは 実践英語セミナー「知識の泉」も、開始。
                         毎月、毎回英語に関するプロの方々(通訳者、同時通訳者、大学教官、130冊超の英語学習書を出版してきた人気作家、英語によるプレゼン講師、元NYの大手ファッション会社の広報だった方などなど)を講師にお迎えして開催しています。</strong><br><br>
-              　第8回知識の泉　Practical English セミナー　『危ない英語』～痛い表現～
-        <br>　第7回知識の泉　Practical English セミナー　『ファシリテーション・イングリッシュ(実践演習)と婉曲表現』
-        <br>　第6回知識の泉　Practical English セミナー　『英語による、自分の動画resumeを作ろう！！』
-        <br>　第5回知識の泉　Practical English セミナー　『多人数での会議や議論の時の英語 Facilitation English』
-        <br>　第4回知識の泉　Practical English セミナー　『134冊書いて見えてきた英語学習法とは？』
-        <br>　第3回知識の泉　Practical English セミナー　『プレゼンテーション英語後編』
-        <br>　第2回知識の泉　Practical English セミナー　『プレゼンテーション英語前編』
-        <br>　第1回知識の泉　Practical English セミナー　『English for the Networking Party』
+
+    <% @events.each do |event| %>
+      <!-- bunkakai event -->
+      <% if event[:event][:event_category_id] == 3 %>
+        <% if event[:detail].length >= 1 %>
+          <% i=0 %>
+          <% event[:detail].each do |detail| %>
+            <% if detail[:presenter].length >= 1 %>
+              <% if i == 0 %>
+                <%= content_tag :td, rowspan: event[:detail].length do %>
+                  <%= "#{event[:event][:name]}" %>
+                <% end %>
+                <td><strong><%= "　#{detail[:title]}" %></strong></td>
+              <% else %>
+                <strong><%= " / #{detail[:title]}" %></strong>
+              <% end %>
+              <% i += 1 %>
+            <% end %>
+          <% end %>
+          <br>
+        <% end %>
+      <% end %>
+    <% end %>
 
       </div>
     </div> 
