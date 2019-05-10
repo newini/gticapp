@@ -29,4 +29,16 @@ module MembersHelper
     #value
   end
 
+  def select_azsa(member)
+    if member.azsa_flg
+      link_to update_azsa_members_path(id: member.id), method: "post", remote: true, class:"btn btn-primary btn-xs" do
+        content_tag(:span, "", class:"glyphicon glyphicon-check") 
+      end
+    else
+      link_to update_azsa_members_path(id: member.id, azsa_flg: true), method: "post", remote: true, class:"btn btn-default btn-xs" do
+        content_tag(:span, "", class:"glyphicon glyphicon-unchecked")
+      end
+    end
+  end
+
 end

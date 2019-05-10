@@ -10,9 +10,11 @@ Gticapp::Application.routes.draw do
       get :category
       get :participated_events_list
       get :search_participated
+      get :azsa_list
       post :import
       post :update_information
       post :kana_to_roman
+      post :update_azsa
     end
   end
 

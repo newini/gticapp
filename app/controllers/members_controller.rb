@@ -248,6 +248,21 @@ class MembersController < ApplicationController
     @members = members.sort_by_role_alphabet
   end
 
+  def update_azsa
+    member = Member.find(params[:id])
+    if params[:azsa_flg]
+      member.update(azsa_flg: true)
+    else
+      member.update(azsa_flg: false)
+    end
+    redirect_to :back
+  end
+
+  def azsa_list
+    @members = Member.where(azsa_flg: true)
+  end
+
+
   private
     def member_params
       params.require(:member).permit(
