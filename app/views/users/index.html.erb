@@ -26,11 +26,14 @@
             <td><%= select_active(user) %></td>
             <td><%= select_admin(user) %></td>
           <% end %>
-          <td><%= user.description[0] if user.description.present? %></td>
+          <td><%= user.description[0..9] + "..." if user.description.present? %></td>
           <td><%= link_to "編集", edit_user_path(user) %></td>
         </tr>
       <% end %>
     </table>
-    <div><%= link_to "新規追加", new_user_path %></div>
+
+    <% if admin? %>
+      <div><%= link_to "新規追加", new_user_path %></div>
+    <% end %>
   </div>
 </div>
