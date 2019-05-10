@@ -258,6 +258,26 @@ class MembersController < ApplicationController
     redirect_to :back
   end
 
+  def update_past_presenter
+    member = Member.find(params[:id])
+    if params[:past_presenter_flg]
+      member.update(past_presenter_flg: true)
+    else
+      member.update(past_presenter_flg: false)
+    end
+    redirect_to :back
+  end
+
+  def update_black_list
+    member = Member.find(params[:id])
+    if params[:black_list_flg]
+      member.update(black_list_flg: true)
+    else
+      member.update(black_list_flg: false)
+    end
+    redirect_to :back
+  end
+
   def azsa_list
     @members = Member.where(azsa_flg: true)
   end

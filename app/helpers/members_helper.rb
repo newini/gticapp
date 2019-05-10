@@ -32,7 +32,7 @@ module MembersHelper
   def select_azsa(member)
     if member.azsa_flg
       link_to update_azsa_members_path(id: member.id), method: "post", remote: true, class:"btn btn-primary btn-xs" do
-        content_tag(:span, "", class:"glyphicon glyphicon-check") 
+        content_tag(:span, "", class:"glyphicon glyphicon-check")
       end
     else
       link_to update_azsa_members_path(id: member.id, azsa_flg: true), method: "post", remote: true, class:"btn btn-default btn-xs" do
@@ -40,5 +40,30 @@ module MembersHelper
       end
     end
   end
+
+  def select_past_presenter(member)
+    if member.past_presenter_flg
+      link_to update_past_presenter_members_path(id: member.id), method: "post", remote: true, class:"btn btn-primary btn-xs" do
+        content_tag(:span, "", class:"glyphicon glyphicon-check")
+      end
+    else
+      link_to update_past_presenter_members_path(id: member.id, past_presenter_flg: true), method: "post", remote: true, class:"btn btn-default btn-xs" do
+        content_tag(:span, "", class:"glyphicon glyphicon-unchecked")
+      end
+    end
+  end
+
+  def select_black_list(member)
+    if member.black_list_flg
+      link_to update_black_list_members_path(id: member.id), method: "post", remote: true, class:"btn btn-primary btn-xs" do
+        content_tag(:span, "", class:"glyphicon glyphicon-check")
+      end
+    else
+      link_to update_black_list_members_path(id: member.id, black_list_flg: true), method: "post", remote: true, class:"btn btn-default btn-xs" do
+        content_tag(:span, "", class:"glyphicon glyphicon-unchecked")
+      end
+    end
+  end
+
 
 end

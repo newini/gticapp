@@ -50,7 +50,7 @@
   </tr>
   <tr>
     <th>過去登壇者</th>
-    <td><%= @member.past_presenter_flg %></td>
+    <td><%= select_past_presenter(@member) %></td>
   </tr>
   <tr>
     <th>Azsa?</th>
@@ -58,6 +58,6 @@
   </tr>
   <tr>
     <th>ブラックリスト</th>
-    <td><%= @member.black_list_flg %></td>
+    <td><%= select_black_list(@member) %></td>
   </tr>
 </table>

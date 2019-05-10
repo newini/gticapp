@@ -77,10 +77,11 @@
           <%= date_field_tag nil, @member.birthday, name:"member[birthday]", class: "form-control", include_blank: true %>
         </div>
       </div>
+
       <div class="form-group">
         <%= label_tag :past_presenter_flg, "過去登壇者", class: 'col-sm-6 control-label' %>
         <div class="col-sm-6">
-          <%= text_area_tag nil, @member.past_presenter_flg, name: "member[past_presenter_flg]", placeholder: "true/false", class: "form-control" %>
+          <%= select_past_presenter(@member) %>
         </div>
       </div>
       <div class="form-group">
@@ -93,7 +94,7 @@
       <div class="form-group">
         <%= label_tag :black_list_flg, "Black list", class: 'col-sm-6 control-label' %>
         <div class="col-sm-6">
-          <%= text_area_tag nil, @member.black_list_flg, name: "member[black_list_flg]", placeholder: "true/false", class: "form-control" %>
+          <%= select_black_list(@member) %>
         </div>
       </div>
 

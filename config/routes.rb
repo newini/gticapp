@@ -15,6 +15,8 @@ Gticapp::Application.routes.draw do
       post :update_information
       post :kana_to_roman
       post :update_azsa
+      post :update_past_presenter
+      post :update_black_list
     end
   end
 
