@@ -9,8 +9,11 @@
         <th>Name</th>
         <th>Facebook ID</th>
         <th>Member ID</th>
-        <th>Admin</th>
-        <th>Active</th>
+        <% if admin? %>
+          <th>Active</th>
+          <th>Admin</th>
+        <% end %>
+        <th>Description</th>
         <th></th>
       </tr>
       <% @users.each do |user| %>
@@ -19,8 +22,11 @@
           <td><%= user.name %></td>
           <td><%= user.uid %></td>
           <td><%= user.member_id %></td>
-          <td><%= user.admin %></td>
-          <td><%= user.active_flg %></td>
+          <% if admin? %>
+            <td><%= select_active(user) %></td>
+            <td><%= select_admin(user) %></td>
+          <% end %>
+          <td><%= user.description[0] if user.description.present? %></td>
           <td><%= link_to "編集", edit_user_path(user) %></td>
         </tr>
       <% end %>

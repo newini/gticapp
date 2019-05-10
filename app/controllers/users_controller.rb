@@ -41,6 +41,27 @@ class UsersController < ApplicationController
     end
   end
 
+  def update_active
+    user = User.find(params[:id])
+    if params[:active_flg]
+      user.update(active_flg: true)
+    else
+      user.update(active_flg: false)
+    end
+    redirect_to :back
+  end
+
+  def update_admin
+    user = User.find(params[:id])
+    if params[:admin]
+      user.update(admin: true)
+    else
+      user.update(admin: false)
+    end
+    redirect_to :back
+  end
+
+
   private
     def user_params
       params.require(:user).permit(:name, :email, :uid, :member_id, :description, :admin, :active_flg, :password, :password_confirmation)

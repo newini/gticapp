@@ -61,8 +61,15 @@ Gticapp::Application.routes.draw do
     }
   end
 
+  resources :users do
+    collection do
+      post :update_active
+      post :update_admin
+    end
+  end
+
+
   resources :relationships, only: [:create, :edit, :update, :destroy]
-  resources :users
   resources :sessions, only: [:new, :create, :destroy]
   resources :places, only: [:index, :new, :create, :edit, :update, :destroy]
   resources :categories, only: [:index, :new, :create, :edit, :update, :destroy]
