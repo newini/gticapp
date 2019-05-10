@@ -71,7 +71,8 @@
             <% end %>
           <% end %>
           <td>
-            <% detail[:presenter].each do |presenter| %>
+            <% #detail[:presenter].each do |presenter| %>
+            <% detail[:presenter].reverse_each do |presenter| %>
                 <strong><%= "#{presenter[:affiliation]}" %></strong><br>
                 <%= "#{presenter[:title]} #{presenter[:name]} 氏" %><br>
             <% end %>
