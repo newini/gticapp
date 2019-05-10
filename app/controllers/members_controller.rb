@@ -185,28 +185,39 @@ class MembersController < ApplicationController
   def participated_events_list
   end
 
-  def alphabet_to_roman
-    Rails.logger.level = Logger::DEBUG 
-    @members = Member.where.not(last_name_alphabet: nil)
+  # Change member's kanji or hiragana to alphabet
+  def name_to_alphabet
+    #@members = Member.where.not(last_name_alphabet: nil)
+    @members = Member.where.not(last_name: [nil, ""], first_name: [nil, ""])
     total = @members.count
     i = 0
     @members.each do |member|
+      if member.last_name_alphabet.present? && member.first_name_alphabet.present?
+        if member.last_name_alphabet.ascii_only? && member.first_name_alphabet.ascii_only? # alphabet
+          next
+        end
+      end
+
       if member.last_name_alphabet.present?
-        if member.last_name_alphabet.ascii_only?
+        if member.last_name_alphabet.ascii_only? # alphabet
           last_name_alphabet = member.last_name_alphabet
         else
-          last_name_alphabet = roman(member.last_name_alphabet)
+          last_name_alphabet = convert_to_alphabet(member.last_name_alphabet)
         end
+      else
+        last_name_alphabet = convert_to_alphabet(member.last_name)
       end
+
       if member.first_name_alphabet.present?
-        if member.first_name_alphabet.ascii_only?
+        if member.first_name_alphabet.ascii_only? # alphabet
           first_name_alphabet = member.first_name_alphabet
         else
-          first_name_alphabet = roman(member.first_name_alphabet)
+          first_name_alphabet = convert_to_alphabet(member.first_name_alphabet)
         end
+      else
+        first_name_alphabet = convert_to_alphabet(member.first_name)
       end
-      member.update(last_name_alphabet: last_name_alphabet,
-                   first_name_alphabet: first_name_alphabet)
+      member.update(last_name_alphabet: last_name_alphabet, first_name_alphabet: first_name_alphabet)
       if member.save
         i += 1
       end
@@ -214,34 +225,36 @@ class MembersController < ApplicationController
     redirect_to members_path, :flash => {:success => "#{i} / #{total}件更新しました" }
   end
 
-  def roman(alphabet)
-    Rails.logger.level = Logger::DEBUG 
-    sentence = URI.encode(alphabet)
+  # Change kanji and hiragana to alphabet
+  def convert_to_alphabet(word)
+    sentence = URI.encode(word)
     key = 'dj0zaiZpPVR3TzJrbEJzRjRwTCZzPWNvbnN1bWVyc2VjcmV0Jng9OTg-'
     base_url = 'http://jlp.yahooapis.jp/FuriganaService/V1/furigana'
     req_url = "#{base_url}?sentence=#{sentence}&appid=#{key}"
     response = Net::HTTP.get_response(URI.parse(req_url))
     status = Hash.from_xml(response.body)
-    words = status["ResultSet"]["Result"]["WordList"]["Word"]
-    value = String.new
-    logger.debug(words)
-    if words.instance_of?(Array)
-      words.each do |word|
-        if word["Roman"].nil?
-          value << word["Surface"]
+    if status["ResultSet"].present?
+      words = status["ResultSet"]["Result"]["WordList"]["Word"]
+      value = String.new
+      if words.instance_of?(Array)
+        words.each do |word|
+          if word["Roman"].nil?
+            value << word["Surface"]
+          else
+            value << word["Roman"]
+          end
+        end
+      else
+        if words["Roman"].nil?
+          value << words["Surface"]
         else
-          value << word["Roman"]
+          value << words["Roman"]
         end
       end
+      value.capitalize
     else
-      if words["Roman"].nil?
-        value << words["Surface"]
-      else
-        value << words["Roman"]
-      end
+      ""
     end
-    value
-
   end
 
   def members(members)

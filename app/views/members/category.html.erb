@@ -4,11 +4,8 @@
       <%= render'members/side' %>
     </section>
   </div>
+
   <div class="col-md-10">
-    <%= link_to 'ダウンロード', members_path(format: 'xls'), class: "btn btn-primary" %>
-    <% if admin? %>
-      <%= link_to 'かな->ローマ字', :kana_to_roman_members, class: "btn btn-primary", method: "POST" %>
-    <% end %>
     <div id="ajax_container">
       <li><%= "登録者数：#{Member.count}名" %></li>
       <li><%= "GTIC：#{Member.where(:gtic_flg => true).count}名" %></li>

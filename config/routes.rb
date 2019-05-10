@@ -13,7 +13,7 @@ Gticapp::Application.routes.draw do
       get :azsa_list
       post :import
       post :update_information
-      post :kana_to_roman
+      post :name_to_alphabet
       post :update_azsa
       post :update_past_presenter
       post :update_black_list

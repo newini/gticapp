@@ -6,9 +6,6 @@
   </div>
   <div class="col-md-10">
     <%= link_to 'ダウンロード', members_path(format: 'xls'), class: "btn btn-primary" %>
-    <% if admin? %>
-      <%= link_to 'かな->ローマ字', :kana_to_roman_members, class: "btn btn-primary", method: "POST" %>
-    <% end %>
     <div id="ajax_container">
       <h2>2014年1月からの出席者</h2>
       <table class="table table-bordered">
