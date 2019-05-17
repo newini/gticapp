@@ -81,20 +81,20 @@
       <div class="form-group">
         <%= label_tag :past_presenter_flg, "過去登壇者", class: 'col-sm-6 control-label' %>
         <div class="col-sm-6">
-          <%= select_past_presenter(@member) %>
+          <%= @member.past_presenter_flg %>
         </div>
       </div>
       <div class="form-group">
         <%= label_tag :azsa_flg, "Azsa?", class: 'col-sm-6 control-label' %>
         <div class="col-sm-6">
-          <%= select_azsa(@member) %>
+          <%= @member.azsa_flg %>
         </div>
       </div>
 
       <div class="form-group">
         <%= label_tag :black_list_flg, "Black list", class: 'col-sm-6 control-label' %>
         <div class="col-sm-6">
-          <%= select_black_list_member(@member) %>
+          <%= @member.black_list_flg %>
         </div>
       </div>
 
