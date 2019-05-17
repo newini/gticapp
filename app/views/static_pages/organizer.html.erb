@@ -37,351 +37,68 @@
 
 
     <h1>Organizer</h1>
-    <div class="row">
-      <div class="col-md-4">
-        <%= image_tag "https://graph.facebook.com/1192373388/picture?height=200&width=200" %>
-      </div>
-      <div class="col-md-8">
-        <div class="col">
-          <h3><nobr>秋山 智紀</nobr><br><small>Tomo AKIYAMA</small></h3>
-        </div>
-        <div class="col">
-          <A HREF="JavaScript:hiraku('tuzuki-tomo');">▼略歴</A><BR>
-          <DIV CLASS="tuzukiwaku" ID="tuzuki-tomo">
-	          <p>
-分野・国籍・年齢を超えて具体的に一歩踏み出す』をスローガンにしている起業家集団GTIC（Global Techno Innovation Cafe）の創設者・代表。<br><br>
+    <% @organizers.each do |organizer| %>
+      <% if organizer.active_flg %>
+        <% if organizer.id == 44 %><% next %><% end %>
 
-東京工業大学・大学院で電気電子工学を専攻。集積回路LSIの自動設計の研究に従事。 在学中に経営戦略コンサルティング会社マッキンゼーでのインターンでの経験に触発され、卒業後金融業界に進む。その後米MITのMBA留学。在学中にリーマン・ブラザーズの香港・東京オフィスでインターンを経験。　MBA時代の全世界から集まっていたクラスメートや、リーマンブラザーズのインターン時代に会ったプロフェッショナル達から、世界にはとんでもない優秀な人材が存在している、と衝撃的なカルチャーショックを受けた。<br><br>
+        <div class="row">
+          <div class="col-md-4">
+            <%= image_tag "https://graph.facebook.com/#{organizer.uid}/picture?height=200&width=200" %>
+          </div>
+          <div class="col-md-8">
+            <div class="col">
+              <h3>
+                <% @members.each do |member| %>
+                  <% if organizer.member_id == member.id %>
+                    <%= "#{member.last_name} #{member.first_name}" %>
+                  <% end %>
+                <% end %>
+                <br><small><%= organizer.name %></small></h3>
+            </div>
+            <div class="col">
+              <A HREF="JavaScript:hiraku('tuzuki-<%= organizer.id %>');">▼略歴</A><BR>
+              <DIV CLASS="tuzukiwaku" ID="tuzuki-<%= organizer.id %>">
+                <p><%= organizer.description %></p>
+                <A href="JavaScript:tatamu('tuzuki-<%= organizer.id %>');">閉じる</A>
+              </DIV>
+            </div>
+          </div>
+        </div>
 
-卒業後、米系投資銀行であるメリルリンチ証券、欧州投資銀行UBS証券などでシンジケート部門の責任者を歴任。その後、MITのクラスメート等とともにVCファンド複数社の経営への参画を経て、現在はメリルリンチ時代に個人として始めたエンジェル投資活動とともにスタートアップ・アクセラレーターとして活動。<br><br>
-
-全世界に散らばるMITのOBで組織しているMIT エンタープライズ・フォーラムの日本支部MIT-VFJのメンター、米国NPOのStartup Weekendの審査員や、東大EDGE Programのメンターなども務める。　Globis 大学院のMBAコース、東京工業大学、静岡大学、琉球大学、沖縄科学技術大学大学院（OIST）、青山学院大学、法政大学、テンプル大学、大阪大学、BBT大学院などで国際経済、財務・ファイナンス、企業戦略論、アントレプレナーシップ論、グローバルキャリア論等の講師も務める。　GTICの姉妹プロジェクトとしてグローバルに活躍できる人材育成のため、実践英語セミナー「知識の泉」も主催。<br><br>
-
-その他、メリルリンチ、UBS時代に多くの海外の顧客を担当しており、接待の時のワインの選び方を学ぶため、ワインスクールに通い、ワイン・エキスパートの資格を取得。その後、日本人で唯一の世界ソムリエ大会優勝経験を持っている田崎真也氏に師事。そこから食文化に傾倒し、ユネスコから和食が無形文化遺産に選ばれたのを機に、和食文化の追求と啓蒙のため、江戸前握り鮨と、和食料理の2つのコースがある料理教室「実践！料理研究会」を築地場内などで主催。マスターズ水泳にもエントリー。
-            </p>
-            <A href="JavaScript:tatamu('tuzuki-tomo');">閉じる</A>
-          </DIV>
-        </div>
-      </div>
-    </div>
-      
-    <div class="row">
-      <div class="col-md-4">
-        <%= image_tag "https://graph.facebook.com/100000508162493/picture?height=200&width=200" %>
-      </div>
-      <div class="col-md-8">
-        <div class="col">
-          <h3>綾部 貴仁<br><small>Takahito AYABE</small></h3>
-        </div>
-        <div class="col">
-          <A HREF="JavaScript:hiraku('tuzuki-ayabe');">▼略歴</A><BR>
-          <DIV CLASS="tuzukiwaku" ID="tuzuki-ayabe">
-            <p>
-2016年4月より参画。東工大物理学系にて物性物理卒。同大学のGlobal理工人コース修了。かつて、Tokyo Gakugeidai University International Secondary Schoolに在学していた。現官庁勤務。
-<br>
-Graduated Tokyo Gakugeidai University International Secondary School in 2013. Participated in GTIC April 2016. Undergoing research on topological insulator in Tokyo Institute of Physics. Completed the Global Scientists and Engineers Course at the same university.
-            </p>
-           <A href="JavaScript:tatamu('tuzuki-ayabe');">閉じる</A>
-          </DIV>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-4">
-        <%= image_tag "https://graph.facebook.com/100004773005387/picture?height=200&width=200" %>
-      </div>
-      <div class="col-md-8">
-        <div class="col">
-          <h3>金 恩寵<br><small>Eunchong KIM</small></h3>
-        </div>
-        <div class="col">
-          <A HREF="JavaScript:hiraku('tuzuki-kim');">▼略歴</A><BR>
-          <DIV CLASS="tuzukiwaku" ID="tuzuki-kim">
-            <p>
-東京工業大学大学院素粒子物理学実験を専攻。博士後期課程。2016年4月よりGTIC参画。Home Page管理者三代目。 
-<br>
-Major in Elementary Particle Physics in Tokyo Tech. Involved in ATLAS@CERN Experiment. Also the 3rd admin of <a href="http://gtic.jp">Home page</a>.
-            </p>
-           <A href="JavaScript:tatamu('tuzuki-kim');">閉じる</A>
-          </DIV>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-4">
-        <%= image_tag "https://graph.facebook.com/100005998114339/picture?height=200&width=200" %>
-      </div>
-      <div class="col-md-8">
-        <div class="col">
-          <h3>岡崎 俊樹<br><small>Toshiki OKAZAKI</small></h3>
-        </div>
-        <div class="col">
-          <A HREF="JavaScript:hiraku('tuzuki-okazaki');">▼略歴</A><BR>
-          <DIV CLASS="tuzukiwaku" ID="tuzuki-okazaki">
-            <p>
-東京工業大学大学院卒。2017年2月GTIC参画。化学系製品を用いたビジネス、エネルギー産業、及び起業。現オリンパス勤務。
-            </p>
-           <A href="JavaScript:tatamu('tuzuki-okazaki');">閉じる</A>
-          </DIV>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-4">
-        <%= image_tag "https://graph.facebook.com/739814902889649/picture?height=200&width=200" %>
-      </div>
-      <div class="col-md-8">
-        <div class="col">
-          <h3>平野 達哉<br><small>Tatsuya Hirano</small></h3>
-        </div>
-        <div class="col">
-          <A HREF="JavaScript:hiraku('tuzuki-thirano');">▼略歴</A><BR>
-          <DIV CLASS="tuzukiwaku" ID="tuzuki-thirano">
-            <p>
-獨協大学経営学科4年<br>
-スタートアップ、2018年6月よりGTICに参加<br>
-Dokkyo University , Department of Business Administration , Junior<br>
-I wanted to deepen knowledge about startup, and I joined GTIC June 2018.
-            </p>
-           <A href="JavaScript:tatamu('tuzuki-thirano');">閉じる</A>
-          </DIV>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-4">
-        <%= image_tag "https://graph.facebook.com/2324901321073361/picture?height=200&width=200" %>
-      </div>
-      <div class="col-md-8">
-        <div class="col">
-          <h3>奥谷 紗弥<br><small>Saya Okutani</small></h3>
-        </div>
-        <div class="col">
-          <A HREF="JavaScript:hiraku('tuzuki-sokutani');">▼略歴</A><BR>
-          <DIV CLASS="tuzukiwaku" ID="tuzuki-sokutani">
-            <p>
-2019年2月よりGTICに参加。
-東京工業大学大学院で情報通信を専攻。
-経営コンサルティング、スタートアップ企業。
-Participated in GTIC February 2019.
-Major in information and communication engineering in Tokyo Institute of Technology.
-Management consulting and startup company.
-            </p>
-           <A href="JavaScript:tatamu('tuzuki-sokutani');">閉じる</A>
-          </DIV>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-4">
-        <%= image_tag "https://graph.facebook.com/100004655222804/picture?height=200&width=200" %>
-      </div>
-      <div class="col-md-8">
-        <div class="col">
-          <h3>内匠 杏奈<br><small>Anna TAKUMI</small></h3>
-        </div>
-        <div class="col">
-          <A HREF="JavaScript:hiraku('tuzuki-anna');">▼略歴</A><BR>
-          <DIV CLASS="tuzukiwaku" ID="tuzuki-anna">
-            <p>
-明治大学経済学部卒。グローバル時代における世界経済の動態を専門。GTICの多岐に渡る活動に参加。現マツダ勤務。
-            </p>
-           <A href="JavaScript:tatamu('tuzuki-anna');">閉じる</A>
-          </DIV>
-        </div>
-      </div>
-    </div>
-
-
+      <% end %>
+    <% end %>
 
     <h1>過去の幹事たち</h1>
+    <% @organizers.reverse_each do |organizer| %>
+      <% if not organizer.active_flg %>
+        <% if organizer.id == 44 %><% next %><% end %>
 
-    <div class="row">
-      <div class="col-md-4">
-        <%= image_tag "https://graph.facebook.com/100001781966894/picture?height=150&width=150" %>
-      </div>
-      <div class="col-md-8">
-        <div class="col">
-          <h3>清水 雅士<br><small>Masashi SHIMIZU</small></h3>
+        <div class="row">
+          <div class="col-md-4">
+            <%= image_tag "https://graph.facebook.com/#{organizer.uid}/picture?height=100&width=100" %>
+          </div>
+          <div class="col-md-8">
+            <div class="col">
+              <h3>
+                <% @members.each do |member| %>
+                  <% if organizer.member_id == member.id %>
+                    <%= "#{member.last_name} #{member.first_name}" %>
+                  <% end %>
+                <% end %>
+                <br><small><%= organizer.name %></small></h3>
+            </div>
+            <div class="col">
+              <A HREF="JavaScript:hiraku('tuzuki-<%= organizer.id %>');">▼略歴</A><BR>
+              <DIV CLASS="tuzukiwaku" ID="tuzuki-<%= organizer.id %>">
+                <p><%= organizer.description %></p>
+                <A href="JavaScript:tatamu('tuzuki-<%= organizer.id %>');">閉じる</A>
+              </DIV>
+            </div>
+          </div>
         </div>
-        <div class="col">
-          <A HREF="JavaScript:hiraku('tuzuki-shimizu');">▼略歴</A><BR>
-          <DIV CLASS="tuzukiwaku" ID="tuzuki-shimizu">
-            <p>
-2013年東京理科大学大学院で生物工専攻を修了。工学修士。<br>
-大学院卒業後は大手通信系商社勤務を経て、2014年よりバイオリファイナリー技術を専門とするバイオベンチャーであるGreen Earth Institteに勤務。バイオリファイナリーの商業化に向けた研究開発/事業計画に携わる。
-            </p>
-            <p>
-            GTICには大学院在籍中の2012年4月より幹事として参画。
-            </p>
-           <A href="JavaScript:tatamu('tuzuki-shimizu');">閉じる</A>
-          </DIV>
-        </div>
-      </div>
-    </div>
 
-    <div class="row">
-      <div class="col-md-4">
-        <%= image_tag "https://graph.facebook.com/100005576163874/picture?height=150&width=150" %>
-      </div>
-      <div class="col-md-8">
-        <div class="col">
-          <h3>中村 伊吹<br><small>Ibuki NAKAMURA</small></h3>
-        </div>
-        <div class="col">
-          <A HREF="JavaScript:hiraku('tuzuki-ibuki');">▼略歴</A><BR>
-          <DIV CLASS="tuzukiwaku" ID="tuzuki-ibuki">
-            <p>
-慶應義塾大学環境情報学部4年。大学では上山信一研究会に所属し、社会科学を専攻。某IT系ベンチャー企業にてコンテンツプロデューサーを務める。2014年9月よりGTICに参画。
-            </p>
-            <A href="JavaScript:tatamu('tuzuki-ibuki');">閉じる</A>
-          </DIV>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-4">
-        <%= image_tag "https://graph.facebook.com/100000201793317/picture?height=150&width=150" %>
-      </div>
-      <div class="col-md-8">
-        <div class="col">
-          <h3>坂井 悠里<br><small>Yuri SAKAI</small></h3>
-        </div>
-        <div class="col">
-          <A HREF="JavaScript:hiraku('tuzuki-yuri');">▼略歴</A><BR>
-          <DIV CLASS="tuzukiwaku" ID="tuzuki-yuri">
-            <p>
-            </p>
-           <A href="JavaScript:tatamu('tuzuki-yuri');">閉じる</A>
-          </DIV>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-4">
-        <%= image_tag "https://graph.facebook.com/1619260885023470/picture?height=150&width=150"%>
-      </div>
-      <div class="col-md-8">
-        <div class="col">
-          <h3>徳江 俊樹<br><small>Toshiki TOKUE</small></h3>
-        </div>
-        <div class="col">
-          <A HREF="JavaScript:hiraku('tuzuki-tokue');">▼略歴</A><BR>
-          <DIV CLASS="tuzukiwaku" ID="tuzuki-tokue">
-            <p>
-早稲田大学政治経済学部4年生。一般社団法人Bizjapanにて世界12カ国15団体とのネットワークを活かし、海外学生が参加する「アントレプレナーシップ」をテーマにした国際サミットを開催。日本の"のびしろ"を世界に発信するべく活動。同団体2015年度代表。2015年6月よりGTICに参画。
-            </p>
-           <A href="JavaScript:tatamu('tuzuki-tokue');">閉じる</A>
-          </DIV>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-4">
-        <%= image_tag "https://graph.facebook.com/100014859369320/picture?height=150&width=150" %>
-      </div>
-      <div class="col-md-8">
-        <div class="col">
-          <h3>宮本 和幸<br><small>Kazuyuki MIYAMOTO</small></h3>
-        </div>
-        <div class="col">
-          <A HREF="JavaScript:hiraku('tuzuki-wakou');">▼略歴</A><BR>
-          <DIV CLASS="tuzukiwaku" ID="tuzuki-wakou">
-            <p>
-大学で学ぶこと以上に、実践的なビジネス、生きた経営を経験したいと考えGTICに参加。
-            </p>
-           <A href="JavaScript:tatamu('tuzuki-wakou');">閉じる</A>
-          </DIV>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-4">
-        <%= image_tag "https://graph.facebook.com/1099740796823706/picture?height=150&width=150" %>
-      </div>
-      <div class="col-md-8">
-        <div class="col">
-          <h3>高居 舞香<br><small>Maika TAKAI</small></h3>
-        </div>
-        <div class="col">
-          <A HREF="JavaScript:hiraku('tuzuki-maika');">▼略歴</A><BR>
-          <DIV CLASS="tuzukiwaku" ID="tuzuki-maika">
-            <p>
-            </p>
-           <A href="JavaScript:tatamu('tuzuki-maika');">閉じる</A>
-          </DIV>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-4">
-        <%= image_tag "https://graph.facebook.com/521924501485562/picture?height=150&width=150" %>
-      </div>
-      <div class="col-md-8">
-        <div class="col">
-          <h3>南 和樹<br><small>Kazuki MINAMI</small></h3>
-        </div>
-        <div class="col">
-          <A HREF="JavaScript:hiraku('tuzuki-kazukiminami');">▼略歴</A><BR>
-          <DIV CLASS="tuzukiwaku" ID="tuzuki-kazukiminami">
-            <p>
-            </p>
-           <A href="JavaScript:tatamu('tuzuki-kazukiminami');">閉じる</A>
-          </DIV>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-4">
-        <%= image_tag "https://graph.facebook.com/976115035861354/picture?height=150&width=150" %>
-      </div>
-      <div class="col-md-8">
-        <div class="col">
-          <h3>田中 紫織<br><small>Shiori Tanaka</small></h3>
-        </div>
-        <div class="col">
-          <A HREF="JavaScript:hiraku('tuzuki-stanaka');">▼略歴</A><BR>
-          <DIV CLASS="tuzukiwaku" ID="tuzuki-stanaka">
-            <p>
-Accenture ビジネスコンサルタント1年目、兼 Latona株式会社  共同創業者。起業とテクノロジートレンドの変遷への興味から、GTICに参加。<br>
-Analyst in Accenture Inc. and Co-Founder for Latona Inc. Joining GTIC as an organizer with deep interest regarding to start-up company and transformation of emerging technology trends.
-            </p>
-           <A href="JavaScript:tatamu('tuzuki-stanaka');">閉じる</A>
-          </DIV>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-4">
-        <%= image_tag "https://graph.facebook.com/100006804493034/picture?height=150&width=150" %>
-      </div>
-      <div class="col-md-8">
-        <div class="col">
-          <h3>古川 一貴<br><small>Kazuki FURUKAWA</small></h3>
-        </div>
-        <div class="col">
-          <A HREF="JavaScript:hiraku('tuzuki-kazuki');">▼略歴</A><BR>
-          <DIV CLASS="tuzukiwaku" ID="tuzuki-kazuki">
-            <p>
-横浜国立大学経営学部卒。大学では主に経営システム管理を専攻。太陽光ビジネスをしているベンチャー、クリーンテック、ITの運用。GTICには2014年4月より幹事として参画。HPの管理者二代目。現IT企業勤務。</a>
-            </p>
-          <A href="JavaScript:tatamu('tuzuki-kazuki');">閉じる</A>
-          </DIV>
-        </div>
-      </div>
-    </div>
+      <% end %>
+    <% end %>
 
   </div>
 </div>
