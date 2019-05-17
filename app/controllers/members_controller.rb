@@ -294,7 +294,7 @@ class MembersController < ApplicationController
   end
 
   def azsa_list
-    @members = Member.where(azsa_flg: true)
+    @members = Member.where(azsa_flg: true).order("last_name_alphabet")
   end
 
 
