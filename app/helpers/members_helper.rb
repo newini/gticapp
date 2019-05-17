@@ -53,7 +53,7 @@ module MembersHelper
     end
   end
 
-  def select_black_list(member)
+  def select_black_list_member(member)
     if member.black_list_flg
       link_to update_black_list_members_path(id: member.id), method: "post", remote: true, class:"btn btn-primary btn-xs" do
         content_tag(:span, "", class:"glyphicon glyphicon-check")
