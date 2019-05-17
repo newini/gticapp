@@ -65,5 +65,17 @@ module MembersHelper
     end
   end
 
+  def select_contributor(member)
+    if member.contributor_flg
+      link_to update_contributor_members_path(id: member.id), method: "post", remote: true, class:"btn btn-primary btn-xs" do
+        content_tag(:span, "", class:"glyphicon glyphicon-check")
+      end
+    else
+      link_to update_contributor_members_path(id: member.id, contributor_flg: true), method: "post", remote: true, class:"btn btn-default btn-xs" do
+        content_tag(:span, "", class:"glyphicon glyphicon-unchecked")
+      end
+    end
+  end
+
 
 end

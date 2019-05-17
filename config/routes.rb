@@ -15,6 +15,7 @@ Gticapp::Application.routes.draw do
       post :update_information
       post :name_to_alphabet
       post :update_azsa
+      post :update_contributor
       post :update_past_presenter
       post :update_black_list
     end

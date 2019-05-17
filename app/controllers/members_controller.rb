@@ -293,6 +293,16 @@ class MembersController < ApplicationController
     redirect_to :back
   end
 
+  def update_contributor
+    member = Member.find(params[:id])
+    if params[:contributor_flg]
+      member.update(contributor_flg: true)
+    else
+      member.update(contributor_flg: false)
+    end
+    redirect_to :back
+  end
+
   def azsa_list
     @members = Member.where(azsa_flg: true).order("last_name_alphabet")
   end
