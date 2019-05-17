@@ -17,7 +17,9 @@ class MembersController < ApplicationController
     @repeater = []
     ids = []
     #2014年1月1日以降のイベント
-    events = Event.where("start_time > ?", Date.parse("2014-01-01"))
+    #events = Event.where("start_time > ?", Date.parse("2014-01-01"))
+    # All events
+    events = Event.all
     #参加者の全id（重複あり)の配列
     all_participant = events.map{|event| event.participants.map{|member| member.id}}.flatten
     #GTICメンバーのidの配列
@@ -48,8 +50,8 @@ class MembersController < ApplicationController
   def no_show_list
     @no_show_members = []
     ids = []
-    #2014年1月1日以降のイベント
-    events = Event.where("start_time > ?", Date.parse("2014-01-01"))
+    # All events
+    events = Event.all
     #No showの全id（重複あり)の配列
     all_participant = events.map{|event| event.no_show.map{|member| member.id}}.flatten
     #GTICメンバーのidの配列
