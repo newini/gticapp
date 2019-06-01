@@ -6,7 +6,7 @@ class EventsController < ApplicationController
     :show, :edit, :update, :destroy,
     :change_role, :switch_black_list_flg,
     :update_maybe_member, :update_registed_member, :update_participants,
-    :update_birthday,
+    :update_birthday, :find_birth_month,
     :invited, :registed, :participants, :waiting, :maybe, :declined, :no_show, 
     :change_status,:change_all_waiting_status, 
     :destroy_relationship,
@@ -504,6 +504,11 @@ class EventsController < ApplicationController
     members(@event.registed_members)
     @referer = "registed" 
     relationship = @event.relationships.find_by_member_id(params[:member_id])
+  end
+
+  def find_birth_month
+    @title = "誕生月者リスト"
+    @members = Member.where('strftime("%m", birthday) = ?', @event.start_time.strftime("%m"))
   end
 
   def download

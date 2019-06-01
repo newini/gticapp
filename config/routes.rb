@@ -43,6 +43,7 @@ Gticapp::Application.routes.draw do
       get :statistics
       get :account
       get :registed_list
+      get :find_birth_month
       post :change_status
       post :destroy_relationship
       post :switch_black_list_flg
