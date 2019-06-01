@@ -14,6 +14,7 @@
         <%= link_to "出席 (#{@event.participants.count})", participants_event_path(@event), class: "btn btn-default  btn-block" %>
         <%= link_to "ドタ参 (#{@event.dotasan.count})", dotasan_event_path(@event), class: "btn btn-default  btn-block" %>
         <%= link_to "欠席 (#{@event.declined_members.count})", declined_event_path(@event), class: "btn btn-default  btn-block" %>
+        <%= link_to "ドタキャン (#{@event.dotacan.count})", dotacan_event_path(@event), class: "btn btn-default  btn-block" %>
         <%= link_to "No-show (#{@event.no_show.count})", no_show_event_path(@event), class: "btn btn-default  btn-block" %>
         <%= link_to "統計", statistics_event_path(@event), class: "btn btn-default  btn-block" %>
         <%= link_to "会計", account_event_path(@event), class: "btn btn-default  btn-block" %>

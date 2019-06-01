@@ -76,6 +76,7 @@ module EventsHelper
             concat link_to("出席", change_status_event_path(:member_id => member.id, :direction => 3, referer: @referer), :method => :post, remote: true)
             concat link_to("ドタ参", change_status_event_path(:member_id => member.id, :direction => 6, referer: @referer), :method => :post, remote: true)
             concat link_to("欠席", change_status_event_path(:member_id => member.id, :direction => 4, referer: @referer), :method => :post, remote: true)
+            concat link_to "ドタキャン", change_status_event_path(:member_id => member.id, :direction => 7, referer: @referer), :method => :post, remote: true
             concat link_to("No-show", change_status_event_path(:member_id => member.id, :direction => 5, referer: @referer), :method => :post, remote: true)
             concat link_to("Delete", destroy_relationship_event_path(:member_id => member.id), :method => :post, remote: true)
           }
@@ -92,6 +93,7 @@ module EventsHelper
             concat link_to("参加予定", change_status_event_path(:member_id => member.id, :direction => 2, referer: @referer), :method => :post, remote: true)
             concat link_to("ドタ参", change_status_event_path(:member_id => member.id, :direction => 6, referer: @referer), :method => :post, remote: true)
             concat link_to "欠席", change_status_event_path(:member_id => member.id, :direction => 4, referer: @referer), :method => :post, remote: true
+            concat link_to "ドタキャン", change_status_event_path(:member_id => member.id, :direction => 7, referer: @referer), :method => :post, remote: true
             concat link_to("No-show", change_status_event_path(:member_id => member.id, :direction => 5, referer: @referer), :method => :post, remote: true)
             concat link_to("Delete", destroy_relationship_event_path(:member_id => member.id), :method => :post, remote: true)
           }
@@ -108,6 +110,7 @@ module EventsHelper
             concat link_to("参加予定", change_status_event_path(:member_id => member.id, :direction => 2, referer: @referer), :method => :post, remote: true)
             concat link_to("出席", change_status_event_path(:member_id => member.id, :direction => 3, referer: @referer), :method => :post, remote: true)
             concat link_to("ドタ参", change_status_event_path(:member_id => member.id, :direction => 6, referer: @referer), :method => :post, remote: true)
+            concat link_to "ドタキャン", change_status_event_path(:member_id => member.id, :direction => 7, referer: @referer), :method => :post, remote: true
             concat link_to("No-show", change_status_event_path(:member_id => member.id, :direction => 5, referer: @referer), :method => :post, remote: true)
             concat link_to("Delete", destroy_relationship_event_path(:member_id => member.id), :method => :post, remote: true)
           }
@@ -127,6 +130,7 @@ module EventsHelper
             concat link_to("出席", change_status_event_path(:member_id => member.id, :direction => 3, referer: @referer), :method => :post, remote: true)
             concat link_to("ドタ参", change_status_event_path(:member_id => member.id, :direction => 6, referer: @referer), :method => :post, remote: true)
             concat link_to("欠席", change_status_event_path(:member_id => member.id, :direction => 4, referer: @referer), :method => :post, remote: true)
+            concat link_to "ドタキャン", change_status_event_path(:member_id => member.id, :direction => 7, referer: @referer), :method => :post, remote: true
             concat link_to("Delete", destroy_relationship_event_path(:member_id => member.id), :method => :post, remote: true)
           }
         }
@@ -142,6 +146,24 @@ module EventsHelper
             concat link_to("参加予定", change_status_event_path(:member_id => member.id, :direction => 2, referer: @referer), :method => :post, remote: true)
             concat link_to("出席", change_status_event_path(:member_id => member.id, :direction => 3, referer: @referer), :method => :post, remote: true)
             concat link_to "欠席", change_status_event_path(:member_id => member.id, :direction => 4, referer: @referer), :method => :post, remote: true
+            concat link_to "ドタキャン", change_status_event_path(:member_id => member.id, :direction => 7, referer: @referer), :method => :post, remote: true
+            concat link_to("No-show", change_status_event_path(:member_id => member.id, :direction => 5, referer: @referer), :method => :post, remote: true)
+            concat link_to("Delete", destroy_relationship_event_path(:member_id => member.id), :method => :post, remote: true)
+          }
+        }
+      }
+    when 7
+      content_tag(:div, class: "btn-group") {
+        concat link_to("ドタキャン", change_status_event_path(:member_id => member.id, :direction => 7, referer: @referer), :method => :post, :class => "btn btn-xs btn-primary ", remote: true)
+        concat content_tag(:button, class: "btn dropdown-toggle btn-primary btn-xs", :"data-toggle" => "dropdown") {
+          content_tag(:span,"", class: "caret")
+        }
+        concat content_tag(:ul, class: "dropdown-menu", role: "menu") {
+          content_tag(:li) {
+            concat link_to("参加予定", change_status_event_path(:member_id => member.id, :direction => 2, referer: @referer), :method => :post, remote: true)
+            concat link_to("出席", change_status_event_path(:member_id => member.id, :direction => 3, referer: @referer), :method => :post, remote: true)
+            concat link_to("ドタ参", change_status_event_path(:member_id => member.id, :direction => 6, referer: @referer), :method => :post, remote: true)
+            concat link_to("欠席", change_status_event_path(:member_id => member.id, :direction => 4, referer: @referer), :method => :post, remote: true)
             concat link_to("No-show", change_status_event_path(:member_id => member.id, :direction => 5, referer: @referer), :method => :post, remote: true)
             concat link_to("Delete", destroy_relationship_event_path(:member_id => member.id), :method => :post, remote: true)
           }

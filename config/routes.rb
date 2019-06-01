@@ -35,6 +35,7 @@ Gticapp::Application.routes.draw do
       get :participants
       get :dotasan
       get :declined
+      get :dotacan
       get :no_show
       get :new_member
       get :search
