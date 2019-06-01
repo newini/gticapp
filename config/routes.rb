@@ -33,6 +33,7 @@ Gticapp::Application.routes.draw do
       get :invited
       get :registed
       get :participants
+      get :dotasan
       get :declined
       get :no_show
       get :new_member

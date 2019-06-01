@@ -7,7 +7,7 @@ class EventsController < ApplicationController
     :change_role, :switch_black_list_flg,
     :update_maybe_member, :update_registed_member, :update_participants,
     :update_birthday, :find_birth_month,
-    :invited, :registed, :participants, :waiting, :maybe, :declined, :no_show, 
+    :invited, :registed, :participants, :dotasan, :waiting, :maybe, :declined, :no_show, 
     :change_status,:change_all_waiting_status, 
     :destroy_relationship,
     :send_email, 
@@ -230,6 +230,16 @@ class EventsController < ApplicationController
     end
   end
 
+  def dotasan
+    @title = "#{@event.name} ドタ参"
+    members(@event.dotasan)
+    @referer = "dotasan" 
+    respond_to do |format|
+      format.html
+      format.js
+    end
+  end
+
   def declined
     @title = "#{@event.name} 欠席者"
     members(@event.declined_members)
@@ -267,6 +277,8 @@ class EventsController < ApplicationController
         relationship.update(status: 4)
       when 5 
         relationship.update(status: 5)
+      when 6
+        relationship.update(status: 6)
       end
     end
     if relationship.save
@@ -616,6 +628,8 @@ class EventsController < ApplicationController
         registed
       when "participants"
         participants
+      when "dotasan"
+        dotasan
       when "declined"
         declined
       when "no_show"

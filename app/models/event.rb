@@ -4,6 +4,7 @@ class Event < ActiveRecord::Base
   has_many :members, through: :relationships, source: :member
   has_many :maybe_members, -> { where "status = 1"}, through: :relationships, source: :member 
   has_many :registed_members, -> { where "status = 2"}, through: :relationships, source: :member
+  has_many :dotasan, -> {where "status = 6"}, through: :relationships, source: :member
   has_many :declined_members, -> {where "status = 0 or status = 4"}, through: :relationships, source: :member 
   has_many :no_show, -> {where "status = 5"}, through: :relationships, source: :member 
   has_many :invited_members, -> {where "member_id = 1884"}, through: :relationships, source: :member
