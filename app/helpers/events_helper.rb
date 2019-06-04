@@ -250,8 +250,10 @@ module EventsHelper
       fee -= 1000
     end
 
-    if ((0 < presentation_role) && (presentation_role < 5) || gtic_flg)
-      fee = 0
+    if gtic_flg.present?
+      if ((0 < presentation_role) && (presentation_role < 5) || gtic_flg)
+        fee = 0
+      end
     end
     fee
   end
