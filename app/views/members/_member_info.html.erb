@@ -46,7 +46,7 @@
   </tr>
   <tr>
   <th>誕生日</th>
-    <td><%= @member.birthday %></td>
+    <td><%= @member.birthday.strftime('%Y-%m-%d') if @member.birthday.present? %></td>
   </tr>
   <tr>
     <th>過去登壇者</th>
