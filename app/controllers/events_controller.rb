@@ -172,8 +172,17 @@ class EventsController < ApplicationController
 
   def import_participants
     if params[:file].present?
-      Event.import_participants(params[:file],params[:id])
-      redirect_to participants_event_path, :flash => {:success => "インポートされました"}
+      i, total, problem_names = Event.import_participants(params[:file], params[:id])
+      redirect_to participants_event_path, :flash => {:success => "Imported #{i} / #{total} participants. #{problem_names.count} participants with problem: #{problem_names.join("', '")}."}
+    else
+      redirect_to participants_event_path
+    end
+  end
+
+  def import_from_questionnaire
+    if params[:file].present?
+      i, total, problem_names = Event.import_from_questionnaire(params[:file], params[:id])
+      redirect_to participants_event_path, :flash => {:success => "Imported #{i} / #{total} participants. #{problem_names.count} participants with problem: #{problem_names.join("', '")}."}
     else
       redirect_to participants_event_path
     end

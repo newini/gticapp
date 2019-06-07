@@ -14,7 +14,7 @@ class Event < ActiveRecord::Base
   has_many :presenters, -> {where :relationships => {presentation_role: 1..3}}, through: :relationships, source: :member 
   has_many :search_presenter, ->(keyword) { where :relationships => {presentation_role: 1..3}}, through: :relationships, source: :member 
   has_many :guests, -> {where :relationships => {guest_flg: true}}, through: :relationships, source: :member
-  has_many :participants, -> { where "status = 3"}, through: :relationships, source: :member 
+  has_many :participants, -> { where "status = 3 or status = 6"}, through: :relationships, source: :member 
 
   has_many :invitations, dependent: :destroy
   has_many :presentationships, foreign_key: "event_id", dependent: :destroy
@@ -43,18 +43,99 @@ class Event < ActiveRecord::Base
     end
   end
 
-  def self.import_participants(file,event_id)
-    CSV.foreach(file.path, headers: true) do |row|
-      member = Event.find(event_id).participants.where(last_name: row["last_name"]).find_by_first_name(row["first_name"]) || nil
-      if member.present?
-        parameters = ActionController::Parameters.new(row.to_hash)
-        member.update(parameters.permit(:affiliation)) if member.affiliation.blank?
-        member.update(parameters.permit(:title)) if member.title.blank?
-        member.update(parameters.permit(:note)) if member.note.blank?
-        member.update(parameters.permit(:email)) if member.email.blank?
-        member.save!
+  def self.import_participants(file, event_id)
+    i = total = 0
+    problem_names = []
+    CSV.foreach(file.path) do |row| # Array, 0-->name, afflication, title, mail1, mail2, mail3, mail4, tel1, ...
+      members = []
+      name = row[0].gsub(/　/, " ") # convert zenkaku space to space
+      words = name.to_s.lstrip.rstrip.split(" ") # name --> to string --> remove space left leading --> remove space right tailing --> split by space
+      words.each_with_index do |w, index|
+        if index == 0
+          members = Event.find(event_id).participants.find_member_name(w)
+        else
+          members = members.find_member_name(w)
+        end
       end
+
+      if members.count == 1
+        member = members[0]
+        member.update(row[1]) if member.affiliation.blank?
+        member.update(row[2]) if member.title.blank?
+        member.update(row[3]) if member.email.blank?
+      else
+        problem_names.push(row[1])
+      end
+      total += 1
     end
+    return i, total, problem_names
+  end
+
+  def self.import_from_questionnaire(file, event_id)
+    i = total = 0
+    problem_names = []
+    CSV.foreach(file.path) do |row| # Array = 0-->time, name, gender, birthmonth, company, title, ...
+      members = []
+      name = row[1].gsub(/　/, " ") # convert zenkaku space to space
+      words = name.to_s.lstrip.rstrip.split(" ") # name --> to string --> remove space left leading --> remove space right tailing --> split by space
+      words.each_with_index do |w, index|
+        if index == 0
+          members = Event.find(event_id).participants.find_member_name(w)
+        else
+          members = members.find_member_name(w)
+        end
+      end
+
+      if members.count == 1
+        member = members[0]
+        if row[4].present? && member.birthday.blank? # Birth Month
+          if row[4].include? "Jan"
+            member.update(birthday: "2000-01-01")
+          elsif row[4].include? "Feb"
+            member.update(birthday: "2000-02-01")
+          elsif row[4].include? "Mar"
+            member.update(birthday: "2000-03-01")
+          elsif row[4].include? "Apr"
+            member.update(birthday: "2000-04-01")
+          elsif row[4].include? "May"
+            member.update(birthday: "2000-05-01")
+          elsif row[4].include? "Jun"
+            member.update(birthday: "2000-06-01")
+          elsif row[4].include? "Jul"
+            member.update(birthday: "2000-07-01")
+          elsif row[4].include? "Aug"
+            member.update(birthday: "2000-08-01")
+          elsif row[4].include? "Sep"
+            member.update(birthday: "2000-09-01")
+          elsif row[4].include? "Oct"
+            member.update(birthday: "2000-10-01")
+          elsif row[4].include? "Nov"
+            member.update(birthday: "2000-11-01")
+          elsif row[4].include? "Dec"
+            member.update(birthday: "2000-12-01")
+          end
+          i += 1
+        end
+
+        if row[5].present? && member.affiliation.blank? # Affiliation
+          member.update(affiliation: row[5])
+        end
+
+        if row[6].present? && member.title.blank? # Title
+          member.update(title: row[6])
+        end
+
+        if row[7].present? && member.category_id.blank? # Category
+          category_id = Category.find_by_name(row[7])
+          member.update(category_id: category_id)
+        end
+
+      else
+        problem_names.push(row[1])
+      end
+      total += 1
+    end
+    return i, total, problem_names
   end
 
   def self.check_facebook_update

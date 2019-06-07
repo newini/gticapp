@@ -53,6 +53,7 @@ Gticapp::Application.routes.draw do
       post :create_member
       post :import_participants
       post :import_registed_members
+      post :import_from_questionnaire
       post :change_role
       post :update_facebook
       post :update_birthday

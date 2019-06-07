@@ -14,7 +14,10 @@
         <span class="glyphicon glyphicon-download"></span> Download
       <% end %>
       <%= button_tag data: {target: "#myModal", toggle: "modal"}, class: "btn btn-default" do %>
-        <span class="glyphicon glyphicon-upload"></span> Upload CSV
+        <span class="glyphicon glyphicon-upload"></span> Upload Name Card CSV
+      <% end %>
+      <%= button_tag data: {target: "#questionnaire_modal", toggle: "modal"}, class: "btn btn-default" do %>
+        <span class="glyphicon glyphicon-upload"></span> Upload Qustionnaire CSV
       <% end %>
     </div>
     <div id="ajax_container">
@@ -22,6 +25,7 @@
     </div>
   </div>
 </div>
+
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -33,7 +37,8 @@
         <%= form_tag :import_participants_event, multipart: true do %>
           <div class="form-group">
             <%= file_field_tag :file %>
-            <p><strong>csvファイルの形式:</strong>last_name, first_name, affiliation, title, note, email</p>
+            <p><strong>csvファイルの形式:</strong>(Wantely People csv format)name, affiliation, title, e-mail 1, ...</p>
+            <p>参加者の名前は先に登録しておく必要がある。</p>
             <%= submit_tag "CSVファイルを読み込む", class: "btn btn-default" %>
           </div>
         <% end %>
@@ -42,4 +47,23 @@
   </div>
 </div>
 
-
+<div class="modal fade" id="questionnaire_modal" tabindex="-1" role="dialog" aria-labelledby="questionnaire_modal_label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">CSVデータUpload</h4>
+      </div>
+      <div class="modal-body">
+        <%= form_tag :import_from_questionnaire_event, multipart: true do %>
+          <div class="form-group">
+            <%= file_field_tag :file %>
+            <p><strong>csvファイルの形式:</strong>（アンケートの順）date time, name, sex, age, birth month, afflication, title, ... </p>
+            <p>※参加者の名前の表記、誤字などに注意!</p>
+            <%= submit_tag "CSVファイルを読み込む", class: "btn btn-default" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -17,6 +17,8 @@ class Member < ActiveRecord::Base
   scope :find_member, ->(name) { where("fb_name like ? OR last_name like ? OR last_name_alphabet like ? OR first_name like ? OR first_name_alphabet like ? OR last_name||first_name like ?
                                      OR affiliation like ? OR title like ? OR note like ?",
                                      "%#{name}%", "%#{name}%", "%#{name}%", "%#{name}%", "%#{name}%", "%#{name}%", "%#{name}%", "%#{name}%", "%#{name}%") }
+  scope :find_member_name, ->(name) {where("fb_name like ? OR last_name like ? OR last_name_alphabet like ? OR first_name like ? OR first_name_alphabet like ? OR last_name||first_name like ?",
+                                     "%#{name}%", "%#{name}%", "%#{name}%", "%#{name}%", "%#{name}%", "%#{name}%") }
   scope :sort_by_role_alphabet, -> { order("gtic_flg desc")
                                      .order("relationships.presentation_role = 1 desc")
                                      .order("relationships.presentation_role = 2 desc")
