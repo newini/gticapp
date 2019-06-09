@@ -60,11 +60,11 @@ class Event < ActiveRecord::Base
 
       if members.count == 1
         member = members[0]
-        member.update(row[1]) if member.affiliation.blank?
-        member.update(row[2]) if member.title.blank?
-        member.update(row[3]) if member.email.blank?
+        member.update(affiliation: row[1]) if member.affiliation.blank?
+        member.update(title: row[2]) if member.title.blank?
+        member.update(email: row[3]) if member.email.blank?
       else
-        problem_names.push(row[1])
+        problem_names.push(row[0])
       end
       total += 1
     end
