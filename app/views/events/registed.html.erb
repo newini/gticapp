@@ -22,10 +22,33 @@
       <%= link_to registed_event_path(format: 'xls'), method: "get", class: "btn btn-default" do %>
         <span class="glyphicon glyphicon-download"></span> Download
       <% end %>
-
+      <%= button_tag data: {target: "#registed_modal", toggle: "modal"}, class: "btn btn-default" do %>
+        <span class="glyphicon glyphicon-upload"></span> Upload Registed Members CSV
+      <% end %>
     </div>
     <div id="ajax_container">
       <%= render'members' %>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="registed_modal" tabindex="-1" role="dialog" aria-labelledby="questionnaire_modal_label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">CSVデータUpload</h4>
+      </div>
+      <div class="modal-body">
+        <%= form_tag :import_registed_members_event, multipart: true do %>
+          <div class="form-group">
+            <%= file_field_tag :file %>
+            <p><strong>csvファイルの形式:</strong>（FBイベントページの参加者リストをエクスポート）名前, ステータス </p>
+            <p>※参加者の名前の表記、誤字などに注意!</p>
+            <%= submit_tag "CSVファイルを読み込む", class: "btn btn-default" %>
+          </div>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>

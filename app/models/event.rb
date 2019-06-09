@@ -29,18 +29,35 @@ class Event < ActiveRecord::Base
     end
   end
 
+  # Import registed members from FB event page in CSV
   def self.import_registed_members(file,event_id)
-    CSV.foreach(file.path, headers: true) do |row|
-      member = Member.where(last_name: row["last_name"]).find_by_first_name(row["first_name"]) || Member.new
-      if member.last_name.blank?
-        parameters = ActionController::Parameters.new(row.to_hash)
-        member.update(parameters.permit(:last_name, :first_name, :last_name_alphabet, :first_name_alphabet, :facebook_name, :affiliation, :title, :note, :email))
-        member.save!
+    i = total = 0
+    problem_names = []
+    CSV.foreach(file.path) do |row| # Array, 0-->name, status
+      if row[1].include? "参加予定"
+        members = []
+        name = row[0].gsub(/　/, " ") # convert zenkaku space to space
+        words = name.to_s.lstrip.rstrip.split(" ") # name --> to string --> remove space left leading --> remove space right tailing --> split by space
+        words.each_with_index do |w, index|
+          if index == 0
+            members = Member.find_member_name(w)
+          else
+            members = members.find_member_name(w)
+          end
+        end
+
+        if members.count == 1
+          member = members[0]
+          relationship = Relationship.where(event_id: event_id).find_by_member_id(member.id) || Relationship.new
+          relationship.update(member_id: member.id, event_id: event_id, status: 2 )
+          i += 1
+        else
+          problem_names.push(row[0])
+        end
+        total += 1
       end
-      relationship = Relationship.where(event_id: event_id).find_by_member_id(member.id) || Relationship.new
-      relationship.update(member_id: member.id, event_id: event_id, status: 2 )
-      relationship.save!
     end
+    return i, total, problem_names
   end
 
   def self.import_participants(file, event_id)
