@@ -259,6 +259,59 @@ class MembersController < ApplicationController
     end
   end
 
+  ####################################################################
+  # Convert string fb url to fb id
+  def convert_fb_str_to_id
+    members = Member.where.not(fb_user_id: [nil, ""])
+    total = members.count
+    i = 0
+    logger.info("2019060801")
+    members.each do |member|
+      if i > 100
+        break # limit 200 per hour
+      end
+      if member.fb_user_id.to_i == 0 # If contains alphabet
+        logger.info(member.fb_user_id)
+        fb_id = get_fb_id_from_str(member.fb_user_id)
+        logger.info(fb_id)
+        if fb_id.is_a? Integer # Check if integer
+          fb_name = get_facebook_name(fb_id.to_s)
+          logger.info(fb_name)
+          member.update(fb_name: fb_name) if fb_name != ""
+          member.update(fb_user_id: fb_id)
+          i += 1
+        end
+      end
+    end
+    logger.info("2019060801")
+    redirect_to members_path, :flash => {:success => "#{i} / #{total}件更新しました" }
+  end
+
+  def get_fb_id_from_str(fb_str)
+    uri = URI.parse("https://findmyfbid.com/")
+    http = Net::HTTP.new(uri.host, uri.port)
+
+    http.use_ssl = true
+    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+    req = Net::HTTP::Post.new(uri.request_uri)
+    req["Content-Type"] = "application/json"
+
+    data = {
+          "url" => "https://facebook.com/#{fb_str}"
+    }.to_json
+
+    req.body = data
+    res = http.request(req)
+
+    if res.body.nil? || res.body == "[]"
+      return "FAIL"
+    else
+      id_hash = JSON.parse(res.body)
+      return id_hash["id"]
+    end
+  end
+
   def members(members)
     @members = members.sort_by_role_alphabet
   end
@@ -330,7 +383,11 @@ class MembersController < ApplicationController
     def get_facebook_name(uid)
       key = current_user.access_token
       graph = Koala::Facebook::API.new(key)
-      fb_profile = graph.get_object(member_params[:fb_user_id])
+      begin
+        fb_profile = graph.get_object(uid)
+      rescue => e
+        return ""
+      end
       return fb_profile['name']
     end
 

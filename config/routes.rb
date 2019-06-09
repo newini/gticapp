@@ -14,6 +14,7 @@ Gticapp::Application.routes.draw do
       post :import
       post :update_information
       post :name_to_alphabet
+      post :convert_fb_str_to_id
       post :update_azsa
       post :update_contributor
       post :update_past_presenter
