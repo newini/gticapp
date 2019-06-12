@@ -169,8 +169,8 @@ class EventsController < ApplicationController
   # Import registed members from FB event page in CSV
   def import_registed_members
     if params[:file].present?
-      i, total, problem_names = Event.import_registed_members(params[:file], params[:id])
-      redirect_to registed_event_path, :flash => {:success => "Imported #{i} / #{total} participants. #{problem_names.count} participants with problem: #{problem_names.join("', '")}."}
+      i, total, problem_names, not_registed_names = Event.import_registed_members(params[:file], params[:id])
+      redirect_to registed_event_path, :flash => {:success => "Imported #{i} / #{total} participants. #{problem_names.count} participants with problem: #{problem_names.join("', '")}. Not registed: #{not_registed_names.join("', '")}."}
     else
       redirect_to registed_event_path
     end

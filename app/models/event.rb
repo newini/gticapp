@@ -30,9 +30,11 @@ class Event < ActiveRecord::Base
   end
 
   # Import registed members from FB event page in CSV
-  def self.import_registed_members(file,event_id)
+  def self.import_registed_members(file, event_id)
     i = total = 0
     problem_names = []
+    registed_members = Event.find(event_id).registed_members
+
     CSV.foreach(file.path) do |row| # Array, 0-->name, status
       if row[1].include? "参加予定"
         members = []
@@ -50,6 +52,11 @@ class Event < ActiveRecord::Base
           member = members[0]
           relationship = Relationship.where(event_id: event_id).find_by_member_id(member.id) || Relationship.new
           relationship.update(member_id: member.id, event_id: event_id, status: 2 )
+
+          if registed_members.include?(member)
+            registed_members.delete(member)
+          end
+
           i += 1
         else
           problem_names.push(row[0])
@@ -57,7 +64,13 @@ class Event < ActiveRecord::Base
         total += 1
       end
     end
-    return i, total, problem_names
+
+    not_registed_names = []
+    registed_members.each do |member|
+      not_registed_names.push(member.last_name+member.first_name)
+    end
+
+    return i, total, problem_names, not_registed_names
   end
 
   def self.import_participants(file, event_id)
