@@ -119,6 +119,14 @@ class Event < ActiveRecord::Base
       if members.count == 1
         member = members[0]
 
+        if row[2].present? && member.gender.blank? # Gender
+          if row[2].include? "Male"
+            member.update(gender: 1)
+          elsif row[2].include? "Female"
+            member.update(gender: 2)
+          end
+        end
+ 
         if row[3].present? && member.age.blank? # Age
           if row[3].include? "20s"
             member.update(age: 1)

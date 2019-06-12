@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190612122553) do
+ActiveRecord::Schema.define(version: 20190612123719) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "title",      limit: 255
@@ -102,6 +102,7 @@ ActiveRecord::Schema.define(version: 20190612122553) do
     t.boolean  "azsa_flg",                        default: false
     t.boolean  "contributor_flg",                 default: false
     t.integer  "age"
+    t.integer  "gender"
   end
 
   add_index "members", ["affiliation"], name: "index_members_on_affiliation"

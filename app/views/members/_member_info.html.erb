@@ -25,6 +25,10 @@
     <td><%= @member.fb_user_id %></td>
   </tr>
   <tr>
+    <th>Gender</th>
+    <td><%= show_gender(@member.gender) if @member.gender.present? %></td>
+  </tr>
+  <tr>
     <th>Age</th>
     <td><%= show_age(@member.age) if @member.age.present? %></td>
   </tr>
