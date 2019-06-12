@@ -25,6 +25,10 @@
     <td><%= @member.fb_user_id %></td>
   </tr>
   <tr>
+    <th>Age</th>
+    <td><%= show_age(@member.age) if @member.age.present? %></td>
+  </tr>
+  <tr>
     <th>属性</th>
     <td><%= Category.find(@member.category_id).name if @member.category_id.present? %></td>
   </tr>

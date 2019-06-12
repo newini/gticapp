@@ -118,6 +118,21 @@ class Event < ActiveRecord::Base
 
       if members.count == 1
         member = members[0]
+
+        if row[3].present? && member.age.blank? # Age
+          if row[3].include? "20s"
+            member.update(age: 1)
+          elsif row[3].include? "30s"
+            member.update(age: 2)
+          elsif row[3].include? "40s"
+            member.update(age: 3)
+          elsif row[3].include? "50s"
+            member.update(age: 4)
+          elsif row[3].include? "60s"
+            member.update(age: 5)
+          end
+        end
+
         if row[4].present? && member.birthday.blank? # Birth Month
           if row[4].include? "Jan"
             member.update(birthday: "2000-01-01")
