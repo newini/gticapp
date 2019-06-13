@@ -36,6 +36,8 @@ gem "rack", ">= 1.6.11"
 gem "loofah", ">= 2.2.3"
 #gem "activesupport", "4.2.10"
 
+gem "roo" # Import xlsx file
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false

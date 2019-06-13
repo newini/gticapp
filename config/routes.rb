@@ -53,6 +53,7 @@ Gticapp::Application.routes.draw do
       post :change_all_waiting_status
       post :create_member
       post :import_participants
+      post :import_participants_from_xlsx
       post :import_registed_members
       post :import_from_questionnaire
       post :change_role

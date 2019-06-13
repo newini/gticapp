@@ -93,8 +93,40 @@ class Event < ActiveRecord::Base
         member.update(affiliation: row[1]) if member.affiliation.blank?
         member.update(title: row[2]) if member.title.blank?
         member.update(email: row[3]) if member.email.blank?
+        i += 1
       else
         problem_names.push(row[0])
+      end
+      total += 1
+    end
+    return i, total, problem_names
+  end
+
+  def self.import_participants_from_xlsx(file, event_id) # CamCard
+    i = total = 0
+    problem_names = []
+
+    xlsx = Roo::Excelx.new(file.path)
+    xlsx.each(name: "Name", companay1: "Company1", department1: "Department1", title1: "Title1", email1: "Email1") do |row|
+      members = []
+      name = row[:name].gsub(/　/, " ") # convert zenkaku space to space
+      words = name.to_s.lstrip.rstrip.split(" ") # name --> to string --> remove space left leading --> remove space right tailing --> split by space
+      words.each_with_index do |w, index|
+        if index == 0
+          members = Event.find(event_id).participants.find_member_name(w)
+        else
+          members = members.find_member_name(w)
+        end
+      end
+
+      if members.count == 1
+        member = members[0]
+        member.update(affiliation: row[:companay1]) if member.affiliation.blank?
+        member.update(title: row[:title1]) if member.title.blank?
+        member.update(email: row[:email1]) if member.email.blank?
+        i += 1
+      else
+        problem_names.push(row[:name])
       end
       total += 1
     end
