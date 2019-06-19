@@ -110,7 +110,6 @@ class StaticPagesController < ApplicationController
 
   def organizer
     @organizers = User.all
-    @members = Member.where(gtic_flg: true)
   end
 
   def schedule
