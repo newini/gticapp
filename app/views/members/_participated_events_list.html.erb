@@ -8,8 +8,6 @@
  
 <% if @members.present? %>
 
-  <div class="pagination pagination-centered"><%= will_paginate @members, renderer: BootstrapPagination::Rails %></div>
- 
   <%= content_tag :table, class: 'table table-condensed table-bordered table-striped' do %>
     <tr>
       <th><%= sortable('last_name_alphabet',"頭") %></th>
@@ -49,9 +47,6 @@
       <% end %>
     <% end %>
   <% end %>
-
-  <div class="pagination pagination-centered"><%= will_paginate @members, renderer: BootstrapPagination::Rails %></div>
-
 <% end %>
 
 
