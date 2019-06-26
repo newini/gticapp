@@ -33,7 +33,11 @@ class Event < ActiveRecord::Base
   def self.import_registed_members(file, event_id)
     i = total = 0
     problem_names = []
+    not_registed_names = []
     registed_members = Event.find(event_id).registed_members
+    registed_members.each do |member|
+      not_registed_names.push(member.last_name+member.first_name)
+    end
 
     CSV.foreach(file.path) do |row| # Array, 0-->name, status
       if row[1].include? "参加予定"
@@ -53,8 +57,8 @@ class Event < ActiveRecord::Base
           relationship = Relationship.where(event_id: event_id).find_by_member_id(member.id) || Relationship.new
           relationship.update(member_id: member.id, event_id: event_id, status: 2 )
 
-          if registed_members.include?(member)
-            registed_members.delete(member)
+          if not_registed_names.include?(member.last_name+member.first_name)
+            not_registed_names.delete(member.last_name+member.first_name)
           end
 
           i += 1
@@ -63,11 +67,6 @@ class Event < ActiveRecord::Base
         end
         total += 1
       end
-    end
-
-    not_registed_names = []
-    registed_members.each do |member|
-      not_registed_names.push(member.last_name+member.first_name)
     end
 
     return i, total, problem_names, not_registed_names
