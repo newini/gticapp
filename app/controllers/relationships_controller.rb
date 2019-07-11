@@ -3,7 +3,7 @@ class RelationshipsController < ApplicationController
     @relationship = Relationship.find(params[:id])
     respond_to :js
   end
-  
+
   def update
     @relationship = Relationship.find(params[:id])
     if params[:delete]

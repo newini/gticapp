@@ -8,9 +8,9 @@ class EventsController < ApplicationController
     :update_maybe_member, :update_registed_member, :update_participants,
     :update_birthday, :find_birth_month,
     :invited, :registed, :participants, :dotasan, :waiting, :maybe, :declined, :dotacan,:no_show,
-    :change_status,:change_all_waiting_status, 
+    :change_status,:change_all_waiting_status,
     :destroy_relationship,
-    :send_email, 
+    :send_email,
     :update_facebook, :new_member, :search, :account,
     :registed_list
   ]
@@ -19,24 +19,24 @@ class EventsController < ApplicationController
     @start_date = Event.order("start_time ASC").first.start_time.beginning_of_year
     @last_date = Event.order("start_time ASC").last.start_time.end_of_year
     if params[:year].present?
-      year = Date.parse(params[:year])  
+      year = Date.parse(params[:year])
       base = Event.where(:start_time => year.beginning_of_year..year.end_of_year).group(:start_time)
     else
       base = Event.where(:start_time => @start_date..@last_date).group(:start_time)
     end
-#    year = params[:year].present? ? Date.parse(params[:year]) : @last_date 
+#    year = params[:year].present? ? Date.parse(params[:year]) : @last_date
 #    base = Event.where(:start_time => year.beginning_of_year..year.end_of_year).group(:start_time)
     record = base.order("start_time DESC")
     @events = record.map{
       |event| [
         event: {
-          id: event.id, 
-          name: event.name, 
-          date: event.start_time.strftime("%Y-%m-%d"), 
+          id: event.id,
+          name: event.name,
+          date: event.start_time.strftime("%Y-%m-%d"),
           place: event.place_id,
           participants: event.participants.count,
           event_category_id: event.event_category_id
-        }, 
+        },
         detail: event.presentations.map{
           |presentation| [
             title: presentation.try(:title),
@@ -44,8 +44,8 @@ class EventsController < ApplicationController
             note: presentation.try(:note),
             presenter: presentation.presenters.map{
               |presenter| [
-                name: [presenter.last_name, presenter.first_name].join(" "), 
-                affiliation: presenter.affiliation, 
+                name: [presenter.last_name, presenter.first_name].join(" "),
+                affiliation: presenter.affiliation,
                 title: presenter.title,
               ]
             }.flatten
@@ -69,7 +69,7 @@ class EventsController < ApplicationController
     @start_date = Event.order("start_time ASC").first.start_time.beginning_of_year
     @last_date = Event.order("start_time ASC").last.start_time.end_of_year
     if params[:year].present?
-      year = Date.parse(params[:year])  
+      year = Date.parse(params[:year])
       base = Event.where(:start_time => year.beginning_of_year..year.end_of_year).group(:start_time)
     else
       base = Event.where(:start_time => @start_date..@last_date).group(:start_time)
@@ -78,13 +78,13 @@ class EventsController < ApplicationController
     @events = record.map{
       |event| [
         event: {
-          id: event.id, 
-          name: event.name, 
-          date: event.start_time.strftime("%Y-%m-%d"), 
+          id: event.id,
+          name: event.name,
+          date: event.start_time.strftime("%Y-%m-%d"),
           place: event.place_id,
           participants: event.participants.count,
           event_category_id: event.event_category_id
-        }, 
+        },
         detail: event.presentations.search_presentation(params[:keyword]).map{
           |presentation| [
             title: presentation.try(:title),
@@ -92,8 +92,8 @@ class EventsController < ApplicationController
             note: presentation.try(:note),
             presenter: presentation.presenters.search_presenter(params[:bio]).map{
               |presenter| [
-                name: [presenter.last_name, presenter.first_name].join(" "), 
-                affiliation: presenter.affiliation, 
+                name: [presenter.last_name, presenter.first_name].join(" "),
+                affiliation: presenter.affiliation,
                 title: presenter.title,
               ]
             }.flatten
@@ -143,7 +143,7 @@ class EventsController < ApplicationController
 
   def create
     @event = Event.new(event_params)
-    if @event.save 
+    if @event.save
 #      @new_members = Member.where.not(:id => @event.relationships.select(:member_id).map(&:member_id))
 #      if @new_members.present?
 #        @new_members.each do |new_member|
@@ -160,7 +160,7 @@ class EventsController < ApplicationController
     @event.destroy
     redirect_to events_path
   end
-  
+
   def import
     Event.import(params[:file])
     redirect_to events_path, :flash => {:success => "インポートされました" }
@@ -203,7 +203,7 @@ class EventsController < ApplicationController
     end
   end
 
-  def invited 
+  def invited
     @title = "#{@event.name} 招待済みメンバー"
     members(@event.invited_members)
     @referer = action_name
@@ -214,7 +214,7 @@ class EventsController < ApplicationController
     @recorded = Member.recorded_member(@event)
     @members = Member.limit(50)
     @not_found_members = []
-    @referer = "waiting" 
+    @referer = "waiting"
     respond_to do |format|
       format.js
       format.json { render :json => @members.select(:id, :last_name, :fb_name) }
@@ -224,7 +224,7 @@ class EventsController < ApplicationController
   def maybe
     @title = "#{@event.name} 未定"
     members(@event.maybe_members)
-    @referer = "maybe" 
+    @referer = "maybe"
     respond_to do |format|
       format.html
       format.xls {send_data render_to_string(partial: "member_download"),  filename: "#{@title.strip}.xls"}
@@ -235,7 +235,7 @@ class EventsController < ApplicationController
   def registed
     @title = "#{@event.name} 参加予定者"
     members(@event.registed_members)
-    @referer = "registed" 
+    @referer = "registed"
     respond_to do |format|
       format.html
       format.xls {send_data render_to_string(partial: "member_download"),  filename: "resisted.xls"}
@@ -246,7 +246,7 @@ class EventsController < ApplicationController
   def participants
     @title = "#{@event.name} 出席者"
     members(@event.participants)
-    @referer = "participants" 
+    @referer = "participants"
     respond_to do |format|
       format.html
       format.xls {send_data render_to_string(partial: "member_download"),  filename: "#{@title.strip}.xls"}
@@ -257,7 +257,7 @@ class EventsController < ApplicationController
   def dotasan
     @title = "#{@event.name} ドタ参"
     members(@event.dotasan)
-    @referer = "dotasan" 
+    @referer = "dotasan"
     respond_to do |format|
       format.html
       format.js
@@ -267,7 +267,7 @@ class EventsController < ApplicationController
   def declined
     @title = "#{@event.name} 欠席者"
     members(@event.declined_members)
-    @referer = "declined" 
+    @referer = "declined"
     respond_to do |format|
       format.html
       format.js
@@ -287,7 +287,7 @@ class EventsController < ApplicationController
   def no_show
     @title = "#{@event.name} No-show"
     members(@event.no_show)
-    @referer = "no_show" 
+    @referer = "no_show"
     respond_to do |format|
       format.html
       format.js
@@ -307,9 +307,9 @@ class EventsController < ApplicationController
         relationship.update(status: 2)
       when 3
         relationship.update(status: 3)
-      when 4 
+      when 4
         relationship.update(status: 4)
-      when 5 
+      when 5
         relationship.update(status: 5)
       when 6
         relationship.update(status: 6)
@@ -438,7 +438,7 @@ class EventsController < ApplicationController
   def search
     @title = "#{@event.name} 参加予定者追加"
     @recorded = Member.recorded_member(@event)
-    if params[:search].present? 
+    if params[:search].present?
       @members = []
       @not_found_members = []
       names = params[:search].to_s.split(",")
@@ -550,7 +550,7 @@ class EventsController < ApplicationController
   def registed_list
     @title = "#{@event.name} 参加予定者"
     members(@event.registed_members)
-    @referer = "registed" 
+    @referer = "registed"
     relationship = @event.relationships.find_by_member_id(params[:member_id])
   end
 
@@ -562,23 +562,23 @@ class EventsController < ApplicationController
   def download
     #@title = "#{@event.name} 参加予定者"
     #members(@event.registed_members)
-    #@referer = "registed" 
+    #@referer = "registed"
 
     @start_date = Event.order("start_time ASC").first.start_time.beginning_of_year
     @last_date = Event.order("start_time ASC").last.start_time.end_of_year
-    year = params[:year].present? ? Date.parse(params[:year]) : @last_date 
+    year = params[:year].present? ? Date.parse(params[:year]) : @last_date
     base = Event.where(:start_time => year.beginning_of_year..year.end_of_year).group(:start_time)
     record = base.order("start_time DESC")
     @events = record.map{
       |event| [
         event: {
-          id: event.id, 
-          name: event.name, 
-          date: event.start_time.strftime("%Y-%m-%d"), 
+          id: event.id,
+          name: event.name,
+          date: event.start_time.strftime("%Y-%m-%d"),
           place: event.place_id,
           participants: event.participants.count,
           event_category_id: event.event_category_id
-        }, 
+        },
         detail: event.presentations.map{
           |presentation| [
             title: presentation.try(:title),
@@ -586,8 +586,8 @@ class EventsController < ApplicationController
             note: presentation.try(:note),
             presenter: presentation.presenters.map{
               |presenter| [
-                name: [presenter.last_name, presenter.first_name].join(" "), 
-                affiliation: presenter.affiliation, 
+                name: [presenter.last_name, presenter.first_name].join(" "),
+                affiliation: presenter.affiliation,
                 title: presenter.title,
               ]
             }.flatten
@@ -599,7 +599,7 @@ class EventsController < ApplicationController
     @total_events = Event.count
     @total_participants = Relationship.where(member_id: array).where(status: 3).count
     @participants = Relationship.where(member_id: array).where(status: 3).group(:member_id).pluck(:member_id).count
- 
+
     respond_to do |format|
       format.html
       format.xls {send_data render_to_string(partial: "event_download"),  filename: "events.xls"}
@@ -621,7 +621,7 @@ class EventsController < ApplicationController
     @deleting = invited - organizer
     @app_id = Settings.OmniAuth.facebook.app_id
     access_token = "CAAKLIo4ZCd3gBAJpRrnGhyUeWV3KWehqezNdLXGP7eZBPy9uJ4LLmKnT0Pbu2sdLz78OYG1UyhKLLHZB1Wq9oqjLuIkqSxI2fgQbcvYhrBmJ3E7qmBTSPl8y7QnVTnRDYgJZCOJnqtPEmxOVaqfRXa4kyKhGJJ04h9i1EbkyhggEGcEROyHq"
-  end 
+  end
 
 =begin
   def convert

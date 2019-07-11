@@ -11,7 +11,7 @@ class AccountsController < ApplicationController
     @title = "科目名変更"
     @account = Account.find(params[:id])
     @num = params[:num].to_i
-    respond_to :js 
+    respond_to :js
   end
 
   def update
@@ -26,12 +26,12 @@ class AccountsController < ApplicationController
   def new
     @title = "会計科目登録"
     @num = params[:num].to_i
-    if @num == 0 
+    if @num == 0
       @account = Account.new(positive: true)
     else
       @account = Account.new(positive: false)
     end
-    respond_to :js 
+    respond_to :js
   end
 
   def create

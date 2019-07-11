@@ -8,7 +8,7 @@
     <%= form_for @member, html: {class: "form-horizontal"} do %>
       <%= hidden_field_tag :event, @event.id, name: "event[id]" if @event.present? %>
       <div class="form-group">
-        <%= label_tag :last_name, "氏（漢字） or First name (alphabet)", class: 'col-sm-6 control-label' %> 
+        <%= label_tag :last_name, "氏（漢字） or First name (alphabet)", class: 'col-sm-6 control-label' %>
         <div class="col-sm-6">
           <%= text_field_tag nil, @member.last_name, name: "member[last_name]", placeholder: @member.errors.any? ? "#{@member.errors.messages[:last_name][0]}" : "山田/John", class: "form-control", :required => 'required' %>
         </div>
@@ -19,16 +19,16 @@
           <%= text_field_tag nil, @member.first_name, name: "member[first_name]", placeholder: @member.errors.any? ? "#{@member.errors.messages[:first_name][0]}" : "太郎/SMITH", class: "form-control", :required => 'required' %>
         </div>
       </div>
-      
+
           <p>↓今まで「かな」を入力していましたが、今後はalphabetを入力してください。もし、かなになっている場合はalphabetに直してください。英名の場合もalphabetを書いてください</p>
       <div class="form-group">
-        <%= label_tag :last_name_alphabet, "氏(alphabet)", class: 'col-sm-6 control-label' %> 
+        <%= label_tag :last_name_alphabet, "氏(alphabet)", class: 'col-sm-6 control-label' %>
         <div class="col-sm-6">
           <%= text_field_tag nil, @member.last_name_alphabet, name: "member[last_name_alphabet]", placeholder: @member.errors.any? ? "#{@member.errors.messages[:last_name_kana][0]}" : "Yamada", class: "form-control" %>
         </div>
       </div>
       <div class="form-group">
-        <%= label_tag :first_name_alphabet, "名(alphabet)", class: 'col-sm-6 control-label' %> 
+        <%= label_tag :first_name_alphabet, "名(alphabet)", class: 'col-sm-6 control-label' %>
         <div class="col-sm-6">
           <%= text_field_tag nil, @member.first_name_alphabet, name: "member[first_name_alphabet]", placeholder: @member.errors.any? ? "#{@member.errors.messages[:first_name_kana][0]}" : "Taro", class: "form-control" %>
         </div>
@@ -106,7 +106,7 @@
 
       <div class="form-group">
         <div class="col-sm-offset-6 col-sm-6">
-          <%= submit_tag "送信", class: "btn btn-primary btn-block" %> 
+          <%= submit_tag "送信", class: "btn btn-primary btn-block" %>
         </div>
       </div>
 

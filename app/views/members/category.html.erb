@@ -9,7 +9,7 @@
     <div id="ajax_container">
       <li><%= "登録者数：#{Member.count}名" %></li>
       <li><%= "GTIC：#{Member.where(:gtic_flg => true).count}名" %></li>
-      <% Category.all.each do |category| %> 
+      <% Category.all.each do |category| %>
         <%= content_tag :li do %>
           <%= "#{category.name}：#{Member.where(:gtic_flg => nil).where(:category_id => category.id).count}名" %>
         <% end %>
@@ -17,5 +17,5 @@
       <li><%= "未分類：#{Member.where(:gtic_flg => nil).where(:category_id => nil).count}名" %></li>
     </div>
   </div>
-</div> 
+</div>
 

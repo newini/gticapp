@@ -26,7 +26,7 @@
             <td><%= "#{member.last_name} #{member.first_name}" %></td>
             <td><%= image_tag "https://graph.facebook.com/#{member.fb_user_id}/picture?type=normal" %></td>
             <td><%= Category.find(member.category_id).try(:name) if member.category_id.present? %></td>
-            <td><%= show_currency(show_fee(member, @event)) %></td> 
+            <td><%= show_currency(show_fee(member, @event)) %></td>
             <td><%= truncate(member.affiliation, length: 20) %></td>
             <td><%= member.title %></td>
             <td><%= truncate(member.note, length: 30) %></td>

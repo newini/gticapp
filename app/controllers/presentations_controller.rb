@@ -38,7 +38,7 @@ class PresentationsController < ApplicationController
     @presenters = @event.presenters
     @presenters_ary = @presenters.map{|presenter| [[presenter.last_name, presenter.first_name].join(" "), presenter.id]}
     respond_to do |format|
-      format.js 
+      format.js
     end
   end
 

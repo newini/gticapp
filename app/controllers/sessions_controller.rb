@@ -14,7 +14,7 @@ class SessionsController < ApplicationController
       # Show user id
       redirect_to root_url, :notice => "Cannot login! Please contact to admin! ID: " + auth["uid"]
     else
-      # Update facebook info when sign in 
+      # Update facebook info when sign in
       user.update(provider: auth["provider"],
                   name:      auth["info"]["name"],
                   uid:     auth["uid"],
@@ -43,7 +43,7 @@ class SessionsController < ApplicationController
 #    end
 
     # comment out below when not use
-#    if !user 
+#    if !user
 #      user = User.create_with_omniauth(auth)
 #    end
 
@@ -51,7 +51,7 @@ class SessionsController < ApplicationController
 #    user = User.find_by(email: params[:session][:email].downcase)
 #    if user && user.authenticate(params[:session][:password])
 #      sign_in user
-#      redirect_to members_path 
+#      redirect_to members_path
 #    else
 #      flash.now[:error] = 'Invalid email/password combination'
 #      render 'new'

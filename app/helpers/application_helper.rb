@@ -12,7 +12,7 @@ module ApplicationHelper
   end
 
   def show_time(time)
-    time.strftime("%H:%M") if time.present? 
+    time.strftime("%H:%M") if time.present?
   end
 
   def show_datetime(datetime)
@@ -31,13 +31,13 @@ module ApplicationHelper
     if gtic_flg
       return "GTIC"
     else
-      if presentation_role == 1 
-        return "プレゼンター" 
-      elsif presentation_role == 2 
-        return "Panelist" 
-      elsif presentation_role == 3 
-        return "Moderator" 
-      elsif presentation_role == 4 
+      if presentation_role == 1
+        return "プレゼンター"
+      elsif presentation_role == 2
+        return "Panelist"
+      elsif presentation_role == 3
+        return "Moderator"
+      elsif presentation_role == 4
         return "ゲスト"
       elsif student_flg
         return "学生"

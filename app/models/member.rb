@@ -2,7 +2,7 @@ class Member < ActiveRecord::Base
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   has_many :relationships, foreign_key: "member_id", dependent: :destroy
   has_many :events, through: :relationships, source: :event
-  has_many :registed_events, -> { where "status = 2"}, through: :relationships, source: :event 
+  has_many :registed_events, -> { where "status = 2"}, through: :relationships, source: :event
   has_many :participated_events, -> { where "status = 3 or status = 6"}, through: :relationships, source: :event # with dotasan
 #紹介者同士のrelation
   has_many :member_relationships, foreign_key: "introduced_id", dependent: :destroy

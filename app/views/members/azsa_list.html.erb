@@ -11,7 +11,7 @@
     <h2>Participated List</h2>
 
 <% if @members.present? %>
- 
+
   <%= content_tag :table, class: 'table table-condensed table-bordered table-striped' do %>
     <tr>
       <th><%= sortable('last_name_alphabet',"頭") %></th>
@@ -43,7 +43,7 @@
             <tr>
               <td><%= link_to event.name, event_path(event) %></td>
               <td><%= event.start_time.strftime("%Y/%m/%d") %></td>
-              <td><%= show_role(member,event) %></td> 
+              <td><%= show_role(member,event) %></td>
             </tr>
           <% end %>
           </table>
@@ -57,4 +57,4 @@
 
 
   </div>
-</div> 
+</div>

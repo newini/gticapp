@@ -5,7 +5,7 @@
   </div>
   <%= submit_tag 'Search', :name => nil, class: 'btn btn-primary' %>
 <% end %>
- 
+
 <% if @members.present? %>
 
   <%= content_tag :table, class: 'table table-condensed table-bordered table-striped' do %>
@@ -39,7 +39,7 @@
             <tr>
               <td><%= link_to event.name, event_path(event) %></td>
               <td><%= event.start_time.strftime("%Y/%m/%d") %></td>
-              <td><%= show_role(member,event) %></td> 
+              <td><%= show_role(member,event) %></td>
             </tr>
           <% end %>
           </table>

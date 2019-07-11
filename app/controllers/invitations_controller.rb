@@ -21,15 +21,15 @@ class InvitationsController < ApplicationController
       render 'new'
     end
   end
-  
-  def show 
+
+  def show
     @event = Event.find(params[:event_id])
     @invitation = @event.invitations.find(params[:id])
   end
 
   def edit
     @event = Event.find(params[:event_id])
-    @invitation = @event.invitations.find(params[:id]) 
+    @invitation = @event.invitations.find(params[:id])
   end
 
   def update

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-fixed-top navbar-default" role="navigation"> 
+<nav class="navbar navbar-fixed-top navbar-default" role="navigation">
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -17,32 +17,32 @@
 
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
-        <li><%= link_to "HOME", root_path %></li> 
+        <li><%= link_to "HOME", root_path %></li>
         <% if signed_in? %>
-          <li><%= link_to "MANUAL", manuals_index_path %></li> 
-          <li><%= link_to "GTIC", events_path %></li> 
+          <li><%= link_to "MANUAL", manuals_index_path %></li>
+          <li><%= link_to "GTIC", events_path %></li>
           <li><%= link_to "イベント検索", search_event_events_path %></li>
-          <li><%= link_to "MEMBER", members_path %></li> 
+          <li><%= link_to "MEMBER", members_path %></li>
           <li id="fat-menu" class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <%= User.find(current_user).name %> <b class="caret"></b></a>
             <ul class="dropdown-menu">
               <% if admin? %>
                 <li><%= link_to "USERS*", :users %></li>
               <% end %>
-              <li><%= link_to "PROFILE", current_user %></li> 
+              <li><%= link_to "PROFILE", current_user %></li>
               <li><%= link_to "SETTING", edit_user_path(@current_user) %></li>
               <li class="divider"></li>
               <li><%= link_to "SIGNOUT", '/signout', method: "delete" %> </li>
-            </ul> 
+            </ul>
           </li>
         <% else %>
-          <li><%= link_to "ABOUT", :about %></li> 
-          <li><%= link_to "PRESENTER", :presenter %></li> 
-          <li><%= link_to "ORGANIZER", :organizer %></li> 
+          <li><%= link_to "ABOUT", :about %></li>
+          <li><%= link_to "PRESENTER", :presenter %></li>
+          <li><%= link_to "ORGANIZER", :organizer %></li>
           <li><%= link_to "MEDIA ARTICLE", :media %></li>
           <li><%= link_to "CONTACT US", :contact %></li>
         <% end %>
-      </ul> 
+      </ul>
     </div>
   </div>
 </nav>

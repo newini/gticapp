@@ -14,10 +14,10 @@
     <td><%= link_to participant.name, member_path(participant) %></td>
     <td><%= participant.facebook_name %></td>
     <td><%= participant.affiliation %></td>
-    <td><%= link_to check_event_flg(participant), 
+    <td><%= link_to check_event_flg(participant),
             change_status_event_path(
-              :participant_id => participant.id, 
-              :status => relationship(participant).presenter_flg), 
+              :participant_id => participant.id,
+              :status => relationship(participant).presenter_flg),
               :method => :post,
               :class => "btn btn-small"%></td>
   </tr>

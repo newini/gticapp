@@ -9,7 +9,7 @@
     <tr>
       <td><%= link_to event.name, event_path(event) %></td>
       <td><%= event.start_time.strftime("%Y/%m/%d") %></td>
-      <td><%= show_role(@member,event) %></td> 
+      <td><%= show_role(@member,event) %></td>
     </tr>
   <% end %>
 </table>

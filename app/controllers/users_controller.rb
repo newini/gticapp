@@ -37,7 +37,7 @@ class UsersController < ApplicationController
       flash[:success] = "ユーザー情報を更新しました"
       redirect_to "/users"
     else
-      render 'edit' 
+      render 'edit'
     end
   end
 

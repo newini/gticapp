@@ -83,7 +83,7 @@ class MembersController < ApplicationController
 
   def edit
     @title = "メンバー情報編集"
-    @member = Member.find(params[:id]) 
+    @member = Member.find(params[:id])
   end
 
   def update
@@ -113,8 +113,8 @@ class MembersController < ApplicationController
     @member = Member.new(member_params)
     if @member.save
       if params[:event].present?
-        @member.relationships.create(event_id: params[:event][:id], status: 2) 
-        redirect_to :back 
+        @member.relationships.create(event_id: params[:event][:id], status: 2)
+        redirect_to :back
       else
         redirect_to :members
       end
@@ -153,7 +153,7 @@ class MembersController < ApplicationController
   end
 
   def search
-    if params[:search].present? 
+    if params[:search].present?
       words = params[:search].to_s.split(" ")
       words.each_with_index do |w, index|
         if index == 0

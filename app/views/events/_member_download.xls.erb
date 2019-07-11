@@ -42,7 +42,7 @@
   </Styles>
 
   <Worksheet ss:Name="Sheet1">
-    <Table> 
+    <Table>
       <Column ss:AutoFitWidth="0" ss:Width="15"/>
       <Column ss:AutoFitWidth="0" ss:Width="15"/>
       <Column ss:AutoFitWidth="0" ss:Width="15"/>
@@ -84,7 +84,7 @@
           <Cell ss:StyleID="s100"><Data ss:Type="String"><%= member.title %></Data></Cell>
           <Cell ss:StyleID="s100"><Data ss:Type="String"><%= member.note %></Data></Cell>
           <Cell ss:StyleID="s100"><Data ss:Type="Number"><%= member.participated_events.where("start_time > ?", Date.parse("2014-01-01").beginning_of_month).count+1 %></Data></Cell>
-          <Cell><Data ss:Type="String"><%= show_role(member, @event) %></Data></Cell> 
+          <Cell><Data ss:Type="String"><%= show_role(member, @event) %></Data></Cell>
           <Cell><Data ss:Type="String"><%= member.fb_name %></Data></Cell>
         </Row>
         <% i += 1 %>

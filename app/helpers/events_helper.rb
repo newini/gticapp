@@ -51,7 +51,7 @@ module EventsHelper
   def convert_status(rsvp_status)
     case rsvp_status
     when "declined"
-      0 
+      0
     when "maybe"
       1
     when "attending"
@@ -70,7 +70,7 @@ module EventsHelper
         concat link_to("参加予定", change_status_event_path(:member_id => member.id, :direction => 2, referer: @referer), :method => :post, :class => "btn btn-xs btn-primary ", remote: true)
         concat content_tag(:button, class: "btn dropdown-toggle btn-primary btn-xs", data: {:toggle => "dropdown"}) {
           content_tag( :span, "", class: "caret")
-        } 
+        }
         concat content_tag(:ul, class: "dropdown-menu", role: "menu") {
           content_tag(:li) {
             concat link_to("出席", change_status_event_path(:member_id => member.id, :direction => 3, referer: @referer), :method => :post, remote: true)
@@ -117,9 +117,9 @@ module EventsHelper
         }
       }
     when 5
-      content_tag(:div, class: "btn-group") { 
+      content_tag(:div, class: "btn-group") {
         concat link_to(switch_black_list_flg_event_path(member_id: member.id, referer: @referer), method: :post, class: "btn btn-xs btn-primary ", remote: true){
-          member.black_list_flg ? "B-L解除" : "B-L" 
+          member.black_list_flg ? "B-L解除" : "B-L"
         }
         concat content_tag(:button, class: "btn dropdown-toggle btn-primary btn-xs", :"data-toggle" => "dropdown") {
           content_tag(:span,"", class: "caret")
@@ -177,7 +177,7 @@ module EventsHelper
     gtic_flg = member.gtic_flg
     presentation_role = record.presentation_role
 
-    # Role メニュー 
+    # Role メニュー
     if presentation_role == 1
       title = ["Presenter","GTIC" ,"Panelist", "Moderator", "Guest", "過去登壇者", "参加者"]
       role = [nil, "gtic", "panelist", "moderator", "guest", "past_presenter", "participant"]
@@ -202,19 +202,19 @@ module EventsHelper
     end
       content_tag(:div, class: "btn-group") {
         concat content_tag(:button,"#{title[0]} #{content_tag(:span, '', class: 'caret')}".html_safe, :class => "dropdown-toggle btn btn-xs btn-default", data: {:toggle => "dropdown"})
-        concat content_tag(:ul, class: "dropdown-menu", role: "menu", :"aria-labelledby" => "dLabel"){ 
+        concat content_tag(:ul, class: "dropdown-menu", role: "menu", :"aria-labelledby" => "dLabel"){
           content_tag(:li){
-            concat link_to(title[1], change_role_event_path(:member_id => member.id, :role => role[1], referer: @referer), :method => :post, remote: true) 
-            concat link_to(title[2], change_role_event_path(:member_id => member.id, :role => role[2], referer: @referer), :method => :post, remote: true) 
-            concat link_to(title[3], change_role_event_path(:member_id => member.id, :role => role[3], referer: @referer), :method => :post, remote: true) 
-            concat link_to(title[4], change_role_event_path(:member_id => member.id, :role => role[4], referer: @referer), :method => :post, remote: true) 
-            concat link_to(title[5], change_role_event_path(:member_id => member.id, :role => role[5], referer: @referer), :method => :post, remote: true) 
-            concat link_to(title[6], change_role_event_path(:member_id => member.id, :role => role[6], referer: @referer), :method => :post, remote: true) 
+            concat link_to(title[1], change_role_event_path(:member_id => member.id, :role => role[1], referer: @referer), :method => :post, remote: true)
+            concat link_to(title[2], change_role_event_path(:member_id => member.id, :role => role[2], referer: @referer), :method => :post, remote: true)
+            concat link_to(title[3], change_role_event_path(:member_id => member.id, :role => role[3], referer: @referer), :method => :post, remote: true)
+            concat link_to(title[4], change_role_event_path(:member_id => member.id, :role => role[4], referer: @referer), :method => :post, remote: true)
+            concat link_to(title[5], change_role_event_path(:member_id => member.id, :role => role[5], referer: @referer), :method => :post, remote: true)
+            concat link_to(title[6], change_role_event_path(:member_id => member.id, :role => role[6], referer: @referer), :method => :post, remote: true)
           }
         }
       }
   end
-    
+
   def show_fee(member, event)
     record = member.relationships.find_by_event_id(event.id)
     presentation_role = record.presentation_role
@@ -239,7 +239,7 @@ module EventsHelper
 
     student_flg = member.category_id == 10 ? true : false
     if student_flg
-      fee -= 2000 
+      fee -= 2000
     end
 
     if past_presenter_flg
@@ -260,7 +260,7 @@ module EventsHelper
     if member.birthday
       if member.birthday.strftime("%m") == event.start_time.strftime("%m")
         link_to update_birthday_event_path(member_id: member.id, referer: @referer), method: "post", remote: true, class:"btn btn-primary btn-xs" do
-          content_tag(:span, "", class:"glyphicon glyphicon-check") 
+          content_tag(:span, "", class:"glyphicon glyphicon-check")
         end
       else
         content_tag :button, disabled: "disabled", class: "btn btn-default btn-xs" do
@@ -277,7 +277,7 @@ module EventsHelper
   def select_black_list(member, event)
     if member.black_list_flg
       link_to update_black_list_event_path(member_id: member.id, referer: @referer), method: "post", remote: true, class:"btn btn-primary btn-xs" do
-        content_tag(:span, "", class:"glyphicon glyphicon-check") 
+        content_tag(:span, "", class:"glyphicon glyphicon-check")
       end
     else
       link_to update_black_list_event_path(member_id: member.id, referer: @referer, black_list_flg: true), method: "post", remote: true, class:"btn btn-default btn-xs" do
@@ -289,7 +289,7 @@ module EventsHelper
   def show_birthday(member, event)
     if member.birthday
       if member.birthday.strftime("%m") == event.start_time.strftime("%m")
-        return "B" 
+        return "B"
       else
         return ""
       end

@@ -21,7 +21,7 @@ appId      : <%= @app_id %>,
 function deleteTest(){
   var deleting = <%= @deleting %>;
   for (var elem in deleting){
-    var element = document.createElement('p'); 
+    var element = document.createElement('p');
     var str = document.createTextNode(deleting[elem]);
     FB.api(
         "/<%= @event_id %>/invited",
@@ -32,7 +32,7 @@ function deleteTest(){
       function(response){
         str += JSON.stringify(response);
         element.appendChild(str);
-        document.getElementById('result').appendChild(element);		
+        document.getElementById('result').appendChild(element);
       }
     );
 

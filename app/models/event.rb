@@ -2,19 +2,19 @@ class Event < ActiveRecord::Base
   validates :name, presence:true, length: { maximum: 50 }
   has_many :relationships, foreign_key: "event_id", dependent: :destroy
   has_many :members, through: :relationships, source: :member
-  has_many :maybe_members, -> { where "status = 1"}, through: :relationships, source: :member 
+  has_many :maybe_members, -> { where "status = 1"}, through: :relationships, source: :member
   has_many :registed_members, -> { where "status = 2"}, through: :relationships, source: :member
   has_many :dotasan, -> {where "status = 6"}, through: :relationships, source: :member
-  has_many :declined_members, -> {where "status = 0 or status = 4"}, through: :relationships, source: :member 
+  has_many :declined_members, -> {where "status = 0 or status = 4"}, through: :relationships, source: :member
   has_many :dotacan, -> {where "status = 7"}, through: :relationships, source: :member
-  has_many :no_show, -> {where "status = 5"}, through: :relationships, source: :member 
+  has_many :no_show, -> {where "status = 5"}, through: :relationships, source: :member
   has_many :invited_members, -> {where "member_id = 1884"}, through: :relationships, source: :member
 
   # presenter, panelist, moderator
-  has_many :presenters, -> {where :relationships => {presentation_role: 1..3}}, through: :relationships, source: :member 
-  has_many :search_presenter, ->(keyword) { where :relationships => {presentation_role: 1..3}}, through: :relationships, source: :member 
+  has_many :presenters, -> {where :relationships => {presentation_role: 1..3}}, through: :relationships, source: :member
+  has_many :search_presenter, ->(keyword) { where :relationships => {presentation_role: 1..3}}, through: :relationships, source: :member
   has_many :guests, -> {where :relationships => {guest_flg: true}}, through: :relationships, source: :member
-  has_many :participants, -> { where "status = 3 or status = 6"}, through: :relationships, source: :member 
+  has_many :participants, -> { where "status = 3 or status = 6"}, through: :relationships, source: :member
 
   has_many :invitations, dependent: :destroy
   has_many :presentationships, foreign_key: "event_id", dependent: :destroy
@@ -157,7 +157,7 @@ class Event < ActiveRecord::Base
             member.update(gender: 2)
           end
         end
- 
+
         if row[3].present? && member.age.blank? # Age
           if row[3].include? "20s"
             member.update(age: 1)
