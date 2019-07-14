@@ -23,6 +23,7 @@ gem 'mandrill-api'
 gem 'koala'
 gem 'omniauth'
 gem 'omniauth-facebook'
+gem "omniauth-rails_csrf_protection" # Rails CSRF Protection for omniauth
 gem 'whenever', :require => false
 gem 'chartkick'
 gem 'spinjs-rails'
