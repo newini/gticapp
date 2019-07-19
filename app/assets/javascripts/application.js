@@ -16,3 +16,7 @@
 //= require turbolinks
 //= require bootstrap
 //= require jquery_ujs
+
+// Chartkick
+//= require chartkick
+//= require Chart.bundle
