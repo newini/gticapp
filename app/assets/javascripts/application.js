@@ -17,6 +17,6 @@
 //= require bootstrap
 //= require jquery_ujs
 
-// Chartkick
+// Plot a chart
 //= require chartkick
 //= require Chart.bundle

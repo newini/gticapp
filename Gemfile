@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+# Must included
 gem 'rails' , '~> 4.2.11'
 gem 'sqlite3', '~> 1.3.13'
 gem 'puma', '~> 3.11'
@@ -23,9 +24,12 @@ gem 'mandrill-api'
 gem 'koala'
 gem 'omniauth'
 gem 'omniauth-facebook'
-gem "omniauth-rails_csrf_protection" # Rails CSRF Protection for omniauth
+#gem "omniauth-rails_csrf_protection" # Rails CSRF Protection for omniauth
 gem 'whenever', :require => false
-gem 'chartkick'
+
+# Graphs
+gem 'chartkick' # Create beautiful JavaScript charts with one line of Ruby
+
 gem 'spinjs-rails'
 gem "jquery-slick-rails"
 gem 'config', github: 'railsconfig/config' # name changed from rails_config

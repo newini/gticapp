@@ -6,58 +6,35 @@
     <h2><%= @title %></h2>
     <div id="ajax_container">
       <% if params[:id].present? %>
-        <%= pie_chart @category, library: {
-          chart: {
+        <%= pie_chart @category,
+          title: "出席者の属性",
+          library: {
             backgroundColor: "#eee"
-          },
-          title: {
-            text: "出席者の属性"
           }
-        }%>
+        %>
         <br>
-        <%= column_chart @date_count, library: {
-          chart: {
+        <%= column_chart @date_count,
+          title: "登録した出席者／参加予定者数の推移",
+          library: {
             backgroundColor: "#eee"
           },
-          title: {
-            text: "登録した出席者／参加予定者数の推移"
-          },
-          xAxis: {
-            title: {
-              text: "年月日"
-            }
-          },
-          yAxis: {
-            title: {
-              text: "人数"
-            }
-          }
-        } %>
+          xtitle: "年月日",
+          ytitle: "人数"
+        %>
       <% else %>
         <%= column_chart [
-          {name: "出席", data: @participants},
-          {name: "No-show", data: @no_show},
-          {name: "欠席", data: @declined},
-          {name: "未定", data: @maybe}
-        ],
-        library: {
-          chart: {
+            {name: "出席", data: @participants},
+            {name: "No-show", data: @no_show},
+            {name: "欠席", data: @declined},
+            {name: "未定", data: @maybe}
+          ],
+          title: "出席者／No-show数の推移",
+          xtitle: "イベント#",
+          ytitle: "人数",
+          library: {
             backbroundColor: "#eee"
-          },
-          title: {
-            text: "出席者／No-show数の推移"
-          },
-          xAxis: {
-            title: {
-              text: "イベント#"
-            }
-          },
-          yAxis: {
-            title: {
-              text: "人数"
-            }
           }
-        }%>
+        %>
       <% end %>
     </div>
   </div>
