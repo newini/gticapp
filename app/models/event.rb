@@ -107,6 +107,10 @@ class Event < ActiveRecord::Base
 
     xlsx = Roo::Excelx.new(file.path)
     xlsx.each(name: "Name", companay1: "Company1", department1: "Department1", title1: "Title1", email1: "Email1") do |row|
+      if row[:name] == "Name"
+        next
+      end
+
       members = []
       name = row[:name].gsub(/　/, " ") # convert zenkaku space to space
       words = name.to_s.lstrip.rstrip.split(" ") # name --> to string --> remove space left leading --> remove space right tailing --> split by space
@@ -122,6 +126,7 @@ class Event < ActiveRecord::Base
         member = members[0]
         member.update(affiliation: row[:companay1]) if member.affiliation.blank?
         member.update(title: row[:title1]) if member.title.blank?
+        member.update(title: row[:department1]) if member.title.blank?
         member.update(email: row[:email1]) if member.email.blank?
         i += 1
       else
