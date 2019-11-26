@@ -1,3 +1,9 @@
+<!-- count -->
+<% max_id = 1 %>
+<% @events.each do |event| %>
+  <% max_id += 1 %>
+<% end %>
+
 <?xml version="1.0" encoding="UTF-8"?>
 <?mso-application progid="Excel.Sheet"?>
 <Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
@@ -19,7 +25,7 @@
   <Worksheet ss:Name="Sheet1">
     <Table>
       <Column ss:AutoFitWidth="0" ss:Width="15"/>
-      <Column ss:AutoFitWidth="0" ss:Width="80"/>
+      <Column ss:AutoFitWidth="0" ss:Width="40"/>
       <Column ss:AutoFitWidth="0" ss:Width="80"/>
       <Column ss:AutoFitWidth="0" ss:Width="80"/>
       <Column ss:AutoFitWidth="0" ss:Width="100"/>
@@ -38,21 +44,25 @@
         <Cell ss:StyleID="s57"><Data ss:Type="String">プレゼン題名</Data></Cell>
         <Cell ss:StyleID="s57"><Data ss:Type="String">会場</Data></Cell>
       </Row>
+      <% i = 0 %>
       <% @events.each do |event| %>
-        <Row>
-          <Cell ss:StyleID="s57"><Data ss:Type="String"></Data></Cell>
-          <Cell ss:StyleID="s57"><Data ss:Type="String"></Data></Cell>
-          <Cell ss:StyleID="s57"><Data ss:Type="String"><%= if event[:event][:event_category_id] == 1 do "GTIC本会#{event[:event][:name]}" else "#{event[:event][:name]}" end%></Data></Cell>
-          <Cell ss:StyleID="s57"><Data ss:Type="String"><%#= Category.find(member.category_id).try(:name) if member.category_id.present? %></Data></Cell>
-          <Cell ss:StyleID="s57"><Data ss:Type="String"><%#= show_role(member, @event) %></Data></Cell>
-          <Cell ss:StyleID="s57"><Data ss:Type="String"><%#= show_currency(show_fee(member, @event)) %></Data></Cell>
-          <Cell ss:StyleID="s57"><Data ss:Type="String"><%#= member.affiliation %></Data></Cell>
-          <Cell ss:StyleID="s57"><Data ss:Type="String"><%#= member.title %></Data></Cell>
-          <Cell ss:StyleID="s57"><Data ss:Type="String"><%#= member.note %></Data></Cell>
-          <Cell><Data ss:Type="String"><%#= member.fb_name %></Data></Cell>
-        </Row>
+        <% event[:detail].reverse_each do |detail| %>
+          <% detail[:presenter].reverse_each do |presenter| %>
+            <Row>
+              <Cell ss:StyleID="s57"><Data ss:Type="String"></Data></Cell>
+              <Cell ss:StyleID="s57"><Data ss:Type="String"><%= "第#{max_id-i}回" %></Data></Cell>
+              <Cell ss:StyleID="s57"><Data ss:Type="String"><%= if event[:event][:event_category_id] == 1 then "GTIC本会#{event[:event][:name]}" else "#{event[:event][:name]}" end %></Data></Cell>
+              <Cell ss:StyleID="s57"><Data ss:Type="String"><%= event[:event][:date] %></Data></Cell>
+              <Cell ss:StyleID="s57"><Data ss:Type="String"><%= "#{presenter[:affiliation]}" %></Data></Cell>
+              <Cell ss:StyleID="s57"><Data ss:Type="String"><%= "#{presenter[:title]}" %></Data></Cell>
+              <Cell ss:StyleID="s57"><Data ss:Type="String"><%= "#{presenter[:name]}" %></Data></Cell>
+              <Cell ss:StyleID="s57"><Data ss:Type="String"><%= "#{detail[:title]}" %></Data></Cell>
+              <Cell ss:StyleID="s57"><Data ss:Type="String"><%#= "#{detail[:abstract]}" %></Data></Cell>
+            </Row>
+          <% end %>
+        <% end %>
+        <% i = i+1 %>
       <% end %>
     </Table>
   </Worksheet>
 </Workbook>
-

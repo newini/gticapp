@@ -560,14 +560,16 @@ class EventsController < ApplicationController
   end
 
   def download
-    #@title = "#{@event.name} 参加予定者"
-    #members(@event.registed_members)
-    #@referer = "registed"
-
     @start_date = Event.order("start_time ASC").first.start_time.beginning_of_year
     @last_date = Event.order("start_time ASC").last.start_time.end_of_year
-    year = params[:year].present? ? Date.parse(params[:year]) : @last_date
-    base = Event.where(:start_time => year.beginning_of_year..year.end_of_year).group(:start_time)
+    if params[:year].present?
+      year = Date.parse(params[:year])
+      base = Event.where(:start_time => year.beginning_of_year..year.end_of_year).group(:start_time)
+    else
+      base = Event.where(:start_time => @start_date..@last_date).group(:start_time)
+    end
+#    year = params[:year].present? ? Date.parse(params[:year]) : @last_date
+#    base = Event.where(:start_time => year.beginning_of_year..year.end_of_year).group(:start_time)
     record = base.order("start_time DESC")
     @events = record.map{
       |event| [
