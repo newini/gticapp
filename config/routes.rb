@@ -3,7 +3,7 @@ Gticapp::Application.routes.draw do
   resources :members do
     collection do
       get :management
-      get :search       
+      get :search
       get :count
       get :no_show_list
       get :black_list
@@ -62,7 +62,7 @@ Gticapp::Application.routes.draw do
       post :update_black_list
     end
     resources :invitations
-    collection { 
+    collection {
       get :statistics
       post :import
     }
@@ -101,7 +101,7 @@ Gticapp::Application.routes.draw do
 
   #omniauth
   match '/auth/:provider/callback', to: 'sessions#create', via: 'get'
-  
+
   root 'static_pages#home'
 
   #manuals
