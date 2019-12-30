@@ -84,11 +84,11 @@ Gticapp::Application.configure do
 
   ActionMailer::Base.delivery_method = :smtp
   ActionMailer::Base.smtp_settings = {
-    address:              'smtp.gmail.com',
-    domain:               'gmail.com',
-    port:                 587,
-    user_name:            'gtic.jp@gmail.com',
-    password:             'gtic1704ll',
+    address:              ENV['MAIL_ADDRESS'],
+    domain:               ENV['MAIL_DOMAIN'],
+    port:                 ENV['MAIL_PORT'],
+    user_name:            ENV['MAIL_USER_NAME'],
+    password:             ENV['MAIL_PASSWORD'],
     authentication:       'plain',
     enable_starttls_auto: true
   }

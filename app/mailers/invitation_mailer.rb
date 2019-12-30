@@ -1,5 +1,5 @@
 class InvitationMailer < ActionMailer::Base
-  default from: "gtic.jp@gmail.com"
+  default from: ENV['MAIL_ADDRESS']
 
   def welcome_email(user)
     @user = user
