@@ -49,8 +49,7 @@
 
     <% elsif event[:detail].length >= 1 %>
       <% i=0 %>
-      <%# event[:detail].each do |detail| %>
-      <% event[:detail].reverse_each do |detail| %>
+      <% event[:detail].sort_by{|e| e[:id]}.each do |detail| %>
         <tr>
           <% if i == 0 %>
             <%= content_tag :td, rowspan: event[:detail].length do %>

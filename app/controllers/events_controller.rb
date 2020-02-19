@@ -39,6 +39,7 @@ class EventsController < ApplicationController
         },
         detail: event.presentations.map{
           |presentation| [
+            id: presentation.id,
             title: presentation.try(:title),
             abstract: presentation.try(:abstract),
             note: presentation.try(:note),

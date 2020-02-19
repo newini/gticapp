@@ -1,4 +1,5 @@
 class StaticPagesController < ApplicationController
+
   def home
     if signed_in?
       redirect_to events_path
@@ -18,6 +19,7 @@ class StaticPagesController < ApplicationController
         },
         detail: event.presentations.search_presentation(params[:keyword]).map{
           |presentation| [
+            id: presentation.id,
             title: presentation.try(:title),
             abstract: presentation.try(:abstract),
             note: presentation.try(:note),
@@ -88,6 +90,7 @@ class StaticPagesController < ApplicationController
         },
         detail: event.presentations.search_presentation(params[:keyword]).map{
           |presentation| [
+            id: presentation.id,
             title: presentation.try(:title),
             abstract: presentation.try(:abstract),
             note: presentation.try(:note),

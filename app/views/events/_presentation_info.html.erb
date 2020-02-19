@@ -1,6 +1,6 @@
 <div id="presentations">
   <% n = 1 %>
-  <% @presentations.each do |presentation| %>
+  <% @presentations.sort_by{|e| e[:id]}.each do |presentation| %>
     <%= content_tag :div, id: "presentation#{n}" do %>
       <%= content_tag :table, class: 'table table-condensed table-bordered table-striped' do %>
         <tr>
