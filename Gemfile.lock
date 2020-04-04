@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/railsconfig/config.git
-  revision: 9a670d4fb8e77f890422fba3570e45f5eae46803
+  revision: 80edee33b1d24710f22a9d4745d672c4ca97ce2f
   specs:
     config (2.2.1)
       deep_merge (~> 1.2, >= 1.2.1)
@@ -234,7 +234,7 @@ GEM
     turbolinks (5.2.1)
       turbolinks-source (~> 5.2)
     turbolinks-source (5.2.0)
-    tzinfo (1.2.6)
+    tzinfo (1.2.7)
       thread_safe (~> 0.1)
     uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
