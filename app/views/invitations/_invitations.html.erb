@@ -1,19 +1,16 @@
 <h2><%= will_paginate @invitations %></h2>
-<table class="table table-hover table-bordered table-condensed">
+<table class="table table-hover table-bordered table-condensed table-striped ">
   <tr>
-    <th>ID</th>
-    <th>タイトル</th>
-    <th>挨拶</th>
-    <th colspan="2">内容</th>
-
+    <th class="col-md-3">メールタイトル</th>
+    <th class="col-md-5">メール本文</th>
+    <th class="col-md-1"></th>
   </tr>
+
   <% @invitations.each do |invitation| %>
     <tr>
-      <td><%= invitation.id %></td>
       <td><%= link_to invitation.title, event_invitation_path(event_id: @event.id, id: invitation.id) %></td>
-      <td><%= simple_format(truncate(invitation.greeting)) %></td>
       <td><%= simple_format(truncate(invitation.content)) %></td>
-      <td><%= link_to '編集', edit_event_invitation_path(@event,invitation), class:"btn btn-block btn-primary" %></td>
+      <td><%= link_to '編集', edit_event_invitation_path(@event, invitation), class:"btn btn-block btn-primary" %></td>
     </tr>
   <% end %>
 </table>

@@ -3,13 +3,15 @@
     <section>
       <%= render'events/side' %>
     </section>
-    <section>
-      <%= link_to "新規イベント案内作成", new_event_invitation_path, class:
-        "btn btn-large btn-primary btn-block" %>
-    </section>
   </aside>
+
   <div class="col-md-10">
     <h2>イベント案内</h2>
+
     <%= render 'invitations' %>
+
+    <section>
+      <%= link_to "新規イベント案内作成", new_event_invitation_path, class:"btn btn-large btn-primary btn-block" %>
+    </section>
   </div>
 </div>

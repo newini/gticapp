@@ -4,28 +4,25 @@
       <%= render'events/side' %>
     </section>
   </aside>
-  <div class="span8">
-    <h2>イベント案内文</h2>
-    <section>
-      <p><%= @invitation.title %></p>
-    </section>
-    <section>
-      <p>　　　　様</p>
-      <p><%= simple_format(@invitation.greeting) %></p>
-      <p>さて、<%= @event.name %>を<%= @event.start_time.strftime("%Y/%m/%d") %>に開催致します。</p>
-      <p>どうぞ奮ってご参加下さい。</p>
-      <p>----概要----</p>
-      <p>開催日：<%= @event.start_time.strftime("%Y/%m/%d") if @event.start_time.present? %></p>
-      <p>開始時刻：<%= @event.start_time.strftime("%H:%M") if @event.start_time.present? %> ( <%= (@event.start_time - 60*30).strftime("%H:%M") if @event.start_time.present? %> 受付開始 )</p>
-      <p>会場：<%= Place.find(@event.place_id).name if @event.place_id.present? and Place.where(id: @event.place_id).present? %></p>
-      <p>参加費：<%= number_to_currency(@event.fee, unit:"￥", format:"%u%n", separetor:",", precision:0) %></p>
-      <p>参加申し込み：<%= "https://www.facebook.com/events/#{@event.fb_event_id}" %></p>
-      <p>----詳細----</p>
-      <p><%= simple_format(@invitation.content) %></p>
-      <p>----参加登録----</p>
-      <p><%= "https://www.facebook.com/events/#{@event.fb_event_id}" %></p>
 
-    </section>
-    <%= link_to "戻る", :back, class: "btn btn-primary btn-large btn-block"%>
+  <!-- ここで修正したのもは、必ずinvitation_mailer/invitation.html.erbに同じく修正すること！ -->
+  <div class="col-md-10">
+    <h2>イベント案内文</h2>
+    <h3>メールタイトル</h3>
+    <hr>
+    <p><%= @invitation.title %></p>
+    <hr>
+    <h3>メール本文</h3>
+    <hr>
+    <p>（自動的に苗字が入る）様</p>
+    <p></p>
+    <p><%= simple_format(@invitation.content) %></p>
+    <hr>
+
+    <div class="col-md-2"><%= link_to "戻る", :back, class: "btn btn-primary btn-large btn-block"%></div>
+    <div class="col-md-2"></div>
+    <div class="col-md-2"><%= link_to '編集', edit_event_invitation_path(@event, @invitation), class:"btn btn-block btn-primary" %></div>
+    <div class="col-md-2"></div>
+    <div class="col-md-2"><%= link_to '削除', event_invitation_path(@event, @invitation), method: :delete, class:"btn btn-block btn-primary" %></div>
   </div>
 </div>

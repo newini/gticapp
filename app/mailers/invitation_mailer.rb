@@ -12,5 +12,6 @@ class InvitationMailer < ActionMailer::Base
     @event = event
     @invitation = Invitation.find(invitation)
     mail(to: @member.email, subject: @invitation.title)
+    logger.info("InvitationMailer sent: event id:  #{@event.id}, invitation id: #{@invitation.id}, member id: #{@member.id} , first_name: #{@member.first_name}")
   end
 end

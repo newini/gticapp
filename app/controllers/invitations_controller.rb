@@ -16,7 +16,7 @@ class InvitationsController < ApplicationController
     @invitation = Invitation.new(invitation_params)
     @invitation.event_id = @event.id
     if @invitation.save
-      redirect_to event_invitation_path(@event, @invitation)
+      redirect_to event_invitations_path(@event)
     else
       render 'new'
     end
@@ -40,6 +40,13 @@ class InvitationsController < ApplicationController
     else
       render 'edit'
     end
+  end
+
+  def destroy
+    @event = Event.find(params[:event_id])
+    @invitation = @event.invitations.find(params[:id])
+    @invitation.destroy
+    redirect_to event_invitations_path(@event), :flash => {:success => '削除しました'}
   end
 
   private

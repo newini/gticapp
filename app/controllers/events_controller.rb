@@ -397,9 +397,14 @@ class EventsController < ApplicationController
     @send_flg = params[:send_flg].to_i
     if @send_flg== 1
       @members = @event.invited_members
+      member_mail_address_empty = []
       @members.each do |member|
-        InvitationMailer.invitation(member,@event,params[:invitation_id]).deliver
-        flash[:success] = "メール送信完了！"
+        if member.email.present?
+          InvitationMailer.invitation(member,@event,params[:invitation_id]).deliver
+        else
+          member_mail_address_empty.push(member.last_name + member.first_name)
+        end
+        flash[:success] = "メール送信完了！ 以下の方々はメールアドレスが空欄のために送信できませんでした。#{member_mail_address_empty.join(', ')}"
       end
     end
     redirect_to send_invitation_path(@event)

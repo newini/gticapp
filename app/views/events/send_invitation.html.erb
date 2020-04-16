@@ -2,18 +2,27 @@
   <aside class="col-sm-2">
     <%= render'events/side' %>
   </aside>
+
   <div class="col-sm-10">
     <%= form_tag send_invitation_path, multipart: true do %>
       <%= hidden_field_tag 'send_flg',1 %>
+
       <h3>Select invitaion format</h3>
+      <br>
+
       <% @invitations.each do |invitation| %>
-        <label class="radio">
-          <%= radio_button_tag 'invitation_id', invitation.id %>
+        <label class="radio form-check-label label-info">
+          <%= radio_button_tag 'invitation_id', invitation.id, class: "form-check-input" %>
           <%= invitation.title %>
+          <%= invitation.content %>
         </label>
+        <br>
       <% end %>
+      <br>
+
       <%= submit_tag 'Send Email', class: 'btn btn-primary btn-block' %>
     <% end %>
+
     <% if @value == 1 %>
       <% @members.each do |member| %>
         <%= member.name %>

@@ -1,22 +1,19 @@
 <h2>イベント案内</h2>
+
 <%= form_for [@event, @invitation], :html => { :class => 'form-horizontal center' } do |f| %>
   <div class="control-group">
-    <%= f.label :title, 'タイトル', class: 'control-label' %>
+    <%= f.label :title, 'メールタイトル', class: 'control-label' %>
     <div class="controls">
-      <%= f.text_field :title %>
+      <%= f.text_area :title, size: "120x10" %>
     </div>
   </div>
+
   <div class="control-group">
-    <%= f.label :greeting, '挨拶', class: 'control-label' %>
+    <%= f.label :content, 'メール本文', class: 'control-label' %>
     <div class="controls">
-      <%= f.text_area :greeting %>
+      <%= f.text_area :content, size: "120x50" %>
     </div>
   </div>
-  <div class="control-group">
-    <%= f.label :content, '内容', class: 'control-label' %>
-    <div class="controls">
-      <%= f.text_area :content %>
-    </div>
-  </div>
-  <%= f.submit "送信", class: "btn btn-large btn-primary btn-block" %>
+
+  <%= f.submit "保存", class: "btn btn-large btn-primary btn-block" %>
 <% end %>
