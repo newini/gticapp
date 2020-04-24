@@ -1,0 +1,9 @@
+<div id="side-nav">
+  <section>
+    <div class="btn-group-vertical btn-block" >
+      <%= link_to "新規作成", new_invitation_path(), class: "btn btn-default  btn-block" %>
+      <%= link_to "メールドラフト（一時保存）", invitations_path(), class: "btn btn-default  btn-block" %>
+      <%= link_to "送信済み", view_sent_emails_invitations_path(), class: "btn btn-default  btn-block" %>
+    </div>
+  </section>
+</div>

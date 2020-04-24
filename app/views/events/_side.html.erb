@@ -20,11 +20,6 @@
         <br>
         <%= link_to "統計", statistics_event_path(@event), class: "btn btn-default  btn-block" %>
         <%= link_to "会計", account_event_path(@event), class: "btn btn-default  btn-block" %>
-        <br>
-        <%= link_to "誕生月メンバーリスト", find_birth_month_event_path(@event), class: "btn btn-default  btn-block" %>
-        <%= link_to "招待メール対象者", invited_event_path(@event), class: "btn btn-default  btn-block" %>
-        <%= link_to "招待メール文面管理", event_invitations_path(@event), class: "btn btn-default  btn-block" %>
-        <%= link_to "招待メール送信", "/events/#{@event.id}/send_invitation", class: "btn btn-default  btn-block" %>
         </div>
     </section>
   <% else %>

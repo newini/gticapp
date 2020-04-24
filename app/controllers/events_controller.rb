@@ -388,28 +388,6 @@ class EventsController < ApplicationController
     redirect_to :back, :flash => {:success => "更新しました"}
   end
 
-  def send_invitation
-    @event = Event.find(params[:event_id])
-    @invitations = Invitation.where(event_id: params[:event_id])
-  end
-
-  def send_email
-    @send_flg = params[:send_flg].to_i
-    if @send_flg== 1
-      @members = @event.invited_members
-      member_mail_address_empty = []
-      @members.each do |member|
-        if member.email.present?
-          InvitationMailer.invitation(member,@event,params[:invitation_id]).deliver
-        else
-          member_mail_address_empty.push(member.last_name + member.first_name)
-        end
-        flash[:success] = "メール送信完了！ 以下の方々はメールアドレスが空欄のために送信できませんでした。#{member_mail_address_empty.join(', ')}"
-      end
-    end
-    redirect_to send_invitation_path(@event)
-  end
-
   def update_facebook
     status_array = ["attending", "maybe", "declined"]
     status_array.each do |rsvp_status|

@@ -12,14 +12,16 @@ class SessionsController < ApplicationController
     # Check if loged
     if !user
       # Show user id
+      logger.info("[sesstions_info] Unknown gtic user name: " + auth['info']['name'] + ", uid: " + auth["uid"])
       redirect_to root_url, :notice => "Cannot login! Please contact to admin! ID: " + auth["uid"]
     else
+      logger.info("[sesstions_info] Gtic user name: " + auth['info']['name'] + ", uid: " + auth["uid"])
       # Update facebook info when sign in
-      user.update(provider: auth["provider"],
-                  name:      auth["info"]["name"],
-                  uid:     auth["uid"],
-                  email:     auth["info"]["email"],
-                  image_url: auth["info"]["image"],
+      user.update(provider:     auth["provider"],
+                  name:         auth["info"]["name"],
+                  uid:          auth["uid"],
+                  email:        auth["info"]["email"],
+                  image_url:    auth["info"]["image"],
                   access_token: auth["credentials"]["token"])
 
       session[:user_id] = user.id

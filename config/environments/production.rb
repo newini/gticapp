@@ -43,6 +43,20 @@ Gticapp::Application.configure do
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   # config.force_ssl = true
 
+
+
+
+
+  # =================================================================================================================
+  #
+  #                                                  log
+  #
+  # =================================================================================================================
+
+  # 日付でログローテート
+  # log/production.log.yyyymmdd
+  config.logger = Logger.new("log/#{Rails.env}.log", 'monthly')
+
   # Set to :debug to see everything in the log.
 #  config.log_level = :error
   config.log_level = :info
@@ -82,6 +96,7 @@ Gticapp::Application.configure do
   config.log_formatter = ::Logger::Formatter.new
 
 
+  # The env is set in /etc/apache2/sites-available/gticapp-le-ssl.conf
   ActionMailer::Base.delivery_method = :smtp
   ActionMailer::Base.smtp_settings = {
     address:              ENV['MAIL_ADDRESS'],

@@ -1,4 +1,4 @@
-<h2><%= will_paginate @invitations %></h2>
+<h2><%#= will_paginate @invitations %></h2>
 <table class="table table-hover table-bordered table-condensed table-striped ">
   <tr>
     <th class="col-md-3">メールタイトル</th>
@@ -6,12 +6,14 @@
     <th class="col-md-1"></th>
   </tr>
 
-  <% @invitations.each do |invitation| %>
-    <tr>
-      <td><%= link_to invitation.title, event_invitation_path(event_id: @event.id, id: invitation.id) %></td>
-      <td><%= simple_format(truncate(invitation.content)) %></td>
-      <td><%= link_to '編集', edit_event_invitation_path(@event, invitation), class:"btn btn-block btn-primary" %></td>
-    </tr>
+  <% if @invitations.present? %>
+    <% @invitations.each do |invitation| %>
+      <tr>
+        <td><%= link_to invitation.title, invitation_path(id: invitation.id) %></td>
+        <td><%= link_to simple_format(truncate(invitation.content)), invitation_path(id: invitation.id) %></td>
+        <td><%= link_to '選択', invitation_path(invitation), class:"btn btn-block btn-primary" %></td>
+      </tr>
+    <% end %>
   <% end %>
 </table>
 

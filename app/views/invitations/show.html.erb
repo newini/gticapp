@@ -1,13 +1,41 @@
 <div class="row">
   <aside class="col-md-2">
     <section>
-      <%= render'events/side' %>
+      <%= render'side' %>
     </section>
   </aside>
 
-  <!-- ここで修正したのもは、必ずinvitation_mailer/invitation.html.erbに同じく修正すること！ -->
+
   <div class="col-md-10">
-    <h2>イベント案内文</h2>
+    <h2>メール</h2>
+    <br>
+    <div class="row">
+      <div class="col-md-2"><%= link_to "戻る", :back, class: "btn btn-primary btn-large btn-block"%></div>
+      <div class="col-md-2"></div>
+      <div class="col-md-2"><%= link_to '編集', edit_invitation_path(@invitation), class:"btn btn-block btn-primary" %></div>
+      <div class="col-md-2"></div>
+      <div class="col-md-2"><%= link_to '削除', invitation_path(@invitation), method: :delete, class:"btn btn-block btn-primary" %></div>
+    </div>
+    <div class="col-md-2"></div>
+
+    <br>
+    <hr>
+
+    <div class="row">
+      <div class="btn-group">
+        <%= link_to send_all_invitation_path(@invitation), class:"btn btn-default", data: { confirm: '全員に送信します。よろしいでしょうか？' } do %>
+          <span class="glyphicon glyphicon-download"></span>全員に送信（ブラックリストメンバーを除く）
+        <% end %>
+        <%= link_to send_test_invitation_path(@invitation), class:"btn btn-default", data: { confirm: 'ActiveなGTICメンバーに送信します。よろしいでしょうか？' } do %>
+          <span class="glyphicon glyphicon-download"></span>[TEST] ActiveなGTICメンバーに送信（画面右上名前->USERSから確認可能）
+        <% end %>
+      </div>
+    </div>
+
+    <br>
+    <hr>
+
+    <!-- ここで修正したのもは、必ずinvitation_mailer/invitation.html.erbに同じく修正すること！ -->
     <h3>メールタイトル</h3>
     <hr>
     <p><%= @invitation.title %></p>
@@ -18,11 +46,5 @@
     <p></p>
     <p><%= simple_format(@invitation.content) %></p>
     <hr>
-
-    <div class="col-md-2"><%= link_to "戻る", :back, class: "btn btn-primary btn-large btn-block"%></div>
-    <div class="col-md-2"></div>
-    <div class="col-md-2"><%= link_to '編集', edit_event_invitation_path(@event, @invitation), class:"btn btn-block btn-primary" %></div>
-    <div class="col-md-2"></div>
-    <div class="col-md-2"><%= link_to '削除', event_invitation_path(@event, @invitation), method: :delete, class:"btn btn-block btn-primary" %></div>
   </div>
 </div>

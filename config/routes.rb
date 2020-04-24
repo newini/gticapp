@@ -61,7 +61,6 @@ Gticapp::Application.routes.draw do
       post :update_birthday
       post :update_black_list
     end
-    resources :invitations
     collection {
       get :statistics
       post :import
@@ -75,6 +74,16 @@ Gticapp::Application.routes.draw do
     end
   end
 
+  resources :invitations do
+    collection do
+      get 'view_sent_emails' => 'invitations#view_sent_emails', as: :view_sent_emails
+
+    end
+    member do
+      get :send_all
+      get :send_test
+    end
+  end
 
   resources :relationships, only: [:create, :edit, :update, :destroy]
   resources :sessions, only: [:new, :create, :destroy]
@@ -95,8 +104,7 @@ Gticapp::Application.routes.draw do
   match '/media', to: 'static_pages#media', via: 'get'
   match '/schedule', to: 'static_pages#schedule', via: 'get'
   match '/contact', to: 'static_pages#contact', via: 'get'
-  match '/events/:event_id/send_invitation', to: 'events#send_invitation', as: 'send_invitation',via: 'get'
-  match '/events/:event_id/send_invitation', to: 'events#send_email', via: 'post'
+  #match '/events/:event_id/send_invitation', to: 'events#send_invitation', as: 'send_invitation',via: 'get'
 
 
   #omniauth

@@ -21,7 +21,7 @@
           <td><%= user.id %></td>
           <td><%= user.name %></td>
           <td><%= user.uid %></td>
-          <td><%= user.member_id %></td>
+          <td><%= link_to user.member_id, "/members/#{user.member_id}" %></td>
           <% if admin? %>
             <td><%= select_active(user) %></td>
             <td><%= select_admin(user) %></td>

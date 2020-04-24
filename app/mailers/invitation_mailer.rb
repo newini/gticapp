@@ -1,17 +1,11 @@
 class InvitationMailer < ActionMailer::Base
   default from: ENV['MAIL_ADDRESS']
 
-  def welcome_email(user)
-    @user = user
-    @url  = 'http://example.com/login'
-    mail(to: @user.email, subject: 'Welcome to My Awesome Site')
+  def send_email_to_each_member(member, invitation)
+    @member = member
+    @invitation = invitation
+    mail(to: @member.email, subject: @invitation.title)
+    logger.info("InvitationMailer sent: invitation id: #{@invitation.id}, member id: #{@member.id} , first_name: #{@member.first_name}")
   end
 
-  def invitation(member,event,invitation)
-    @member = member
-    @event = event
-    @invitation = Invitation.find(invitation)
-    mail(to: @member.email, subject: @invitation.title)
-    logger.info("InvitationMailer sent: event id:  #{@event.id}, invitation id: #{@invitation.id}, member id: #{@member.id} , first_name: #{@member.first_name}")
-  end
 end
