@@ -108,6 +108,7 @@ class InvitationsController < ApplicationController
 
   def send_event
     @invitation = Invitation.find(params[:id])
+#    @new_members = Member.where.not(:id => @event.relationships.select(:member_id).map(&:member_id))
     @relationships = Relationship.where(event_id: params[:event_id]).where(status: 3) # 出席者
     @members = []
     @relationships.each do |relationship|

@@ -24,8 +24,8 @@ Gticapp::Application.routes.draw do
 
   resources :events do
     collection do
-      get :search_event
       get :download
+      get :search_event
     end
     member do
       get :invite
@@ -99,6 +99,7 @@ Gticapp::Application.routes.draw do
   match '/home', to: 'static_pages#home', via: 'get'
   match '/about', to: 'static_pages#about', via: 'get'
   match '/presenter', to: 'static_pages#presenter', via: 'get'
+  match '/search_event', to: 'static_pages#search_event', via: 'get'
   match '/organizer', to: 'static_pages#organizer', via: 'get'
   match '/media', to: 'static_pages#media', via: 'get'
   match '/schedule', to: 'static_pages#schedule', via: 'get'

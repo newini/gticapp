@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200425030447) do
+ActiveRecord::Schema.define(version: 20200425150242) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "title",      limit: 255
@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(version: 20200425030447) do
     t.datetime "updated_at"
     t.integer  "event_category_id"
     t.string   "note",              limit: 255
+    t.integer  "cumulative_number"
   end
 
   add_index "events", ["event_category_id"], name: "index_events_on_event_category_id"

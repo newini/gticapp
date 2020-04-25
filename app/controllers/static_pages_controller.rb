@@ -84,6 +84,7 @@ class StaticPagesController < ApplicationController
         event: {
           id: event.id,
           name: event.name,
+          cumulative_number: event.cumulative_number,
           date: event.start_time.strftime("%Y-%m-%d"),
           place: event.place_id,
           event_category_id: event.event_category_id
@@ -109,7 +110,57 @@ class StaticPagesController < ApplicationController
       format.html
       format.js
     end
-  end
+  end # End of presenter
+
+  def search_event
+    record = Event.group(:start_time).order("start_time DESC")
+    events_count = record.count
+    # Search algorithm
+    if params[:keyword].present?
+      record = []
+      Event.all.order("start_time DESC").each do |event|
+        if event.presentations.search_presentation(params[:keyword]).present? # Search in presentation
+          record.push(event)
+        end
+        event.presentations.each do |presentation|
+          if presentation.presenters.search_presenter(params[:keyword]).present? # search in presenter's member
+            if !record.include? event # check duplicate
+              record.push(event)
+            end
+          end
+        end
+      end
+    end
+    @events = record.map{
+      |event| [
+        event: {
+          id: event.id,
+          name: event.name,
+          cumulative_number: event.cumulative_number,
+          date: event.start_time.strftime("%Y-%m-%d"),
+          place: event.place_id,
+          participants: event.participants.count,
+          event_category_id: event.event_category_id
+        },
+        detail: event.presentations.map{
+          |presentation| [
+            title: presentation.try(:title),
+            abstract: presentation.try(:abstract),
+            note: presentation.try(:note),
+            presenter: presentation.presenters.map{
+              |presenter| [
+                name: [presenter.last_name, presenter.first_name].join(" "),
+                affiliation: presenter.affiliation,
+                title: presenter.title,
+              ]
+            }.flatten
+          ]
+        }.flatten
+      ]
+    }.flatten
+    respond_to :js
+  end # End of search_event
+
 
   def organizer
     @organizers = User.all
@@ -123,8 +174,5 @@ class StaticPagesController < ApplicationController
 
   def contact
   end
-
-
-
 
 end

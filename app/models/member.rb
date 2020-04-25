@@ -28,7 +28,9 @@ class Member < ActiveRecord::Base
                                      .order("last_name_alphabet asc") }
   scope :recorded_member, ->(event) { joins(:relationships).where(relationships: {event_id: event.id}).where(relationships: {status: 2..6}).uniq }
   scope :waiting_member, ->(member) { where.not(id: member).order("last_name_alphabet") }
-  scope :search_presenter, ->(keyword) { where("fb_name like ? OR last_name like ? OR last_name_alphabet like ? OR first_name like ? OR first_name_alphabet like ? OR affiliation like ? OR title like ?", "%#{keyword}%", "%#{keyword}%", "%#{keyword}%", "%#{keyword}%", "%#{keyword}%", "%#{keyword}%", "%#{keyword}%") }
+  scope :search_presenter, ->(keyword) { where("fb_name like ? OR last_name like ? OR last_name_alphabet like ? OR first_name like ? OR first_name_alphabet like ?
+                                               OR last_name||first_name like ? OR affiliation like ? OR title like ? OR note like ?",
+                                               "%#{keyword}%", "%#{keyword}%", "%#{keyword}%", "%#{keyword}%", "%#{keyword}%", "%#{keyword}%", "%#{keyword}%", "%#{keyword}%", "%#{keyword}%") }
 
 
   def self.import(file)

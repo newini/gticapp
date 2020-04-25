@@ -5,6 +5,16 @@
 
   <div class="col-md-10">
     <h2><%= "GTICイベント一覧" %></h2>
+
+    <h3><%= "イベント検索" %></h2>
+    <%= form_tag :search_event_events, method: 'get', remote: true, class: "form-inline", role: "form" do %>
+      <div class="form-group">
+        <span>Keyword: </span>
+        <%= text_field_tag :keyword, params[:keyword], class: "form-control", placeholder: "keyword" %>
+      </div>
+      <%= submit_tag 'Search', :name => nil, class: 'btn btn-primary' %>
+    <% end %>
+
 <!--
     <div class="btn-group">
       <% date = @last_date%>

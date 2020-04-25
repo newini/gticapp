@@ -24,14 +24,13 @@ class EventsController < ApplicationController
     else
       base = Event.where(:start_time => @start_date..@last_date).group(:start_time)
     end
-#    year = params[:year].present? ? Date.parse(params[:year]) : @last_date
-#    base = Event.where(:start_time => year.beginning_of_year..year.end_of_year).group(:start_time)
     record = base.order("start_time DESC")
     @events = record.map{
       |event| [
         event: {
           id: event.id,
           name: event.name,
+          cumulative_number: event.cumulative_number,
           date: event.start_time.strftime("%Y-%m-%d"),
           place: event.place_id,
           participants: event.participants.count,
@@ -59,39 +58,68 @@ class EventsController < ApplicationController
     @total_participants = Relationship.where(member_id: array).where(status: 3).count
     @participants = Relationship.where(member_id: array).where(status: 3).group(:member_id).pluck(:member_id).count
 
+    #max_id = @events.count
+    #event_id = []
+    #h = max_id
+    #@events.each do |event|
+    #  event_id[h] = event[:event][:id]
+    #  h -= 1
+    #end
+    #record.each do |event|
+    #  k = 0
+    #  for h in 0..max_id do
+    #    if event_id[h] == event.id
+    #      k = h
+    #      break
+    #    end
+    #  end
+    #  logger.info(k)
+    #  event.update(cumulative_number: k)
+    #  event.save
+    #end
+
     respond_to do |format|
       format.html
       format.js
     end
   end
 
-  # search event
   def search_event
-    @start_date = Event.order("start_time ASC").first.start_time.beginning_of_year
-    @last_date = Event.order("start_time ASC").last.start_time.end_of_year
-    if params[:year].present?
-      year = Date.parse(params[:year])
-      base = Event.where(:start_time => year.beginning_of_year..year.end_of_year).group(:start_time)
-    else
-      base = Event.where(:start_time => @start_date..@last_date).group(:start_time)
+    record = Event.group(:start_time).order("start_time DESC")
+    events_count = record.count
+    # Search algorithm
+    if params[:keyword].present?
+      record = []
+      Event.all.order("start_time DESC").each do |event|
+        if event.presentations.search_presentation(params[:keyword]).present? # Search in presentation
+          record.push(event)
+        end
+        event.presentations.each do |presentation|
+          if presentation.presenters.search_presenter(params[:keyword]).present? # search in presenter's member
+            if !record.include? event # check duplicate
+              record.push(event)
+            end
+          end
+        end
+      end
     end
-    record = base.order("start_time DESC")
     @events = record.map{
       |event| [
         event: {
           id: event.id,
           name: event.name,
+          cumulative_number: event.cumulative_number,
           date: event.start_time.strftime("%Y-%m-%d"),
           place: event.place_id,
           participants: event.participants.count,
           event_category_id: event.event_category_id
         },
-        detail: event.presentations.search_presentation(params[:keyword]).map{
+        detail: event.presentations.map{
           |presentation| [
             title: presentation.try(:title),
             abstract: presentation.try(:abstract),
             note: presentation.try(:note),
-            presenter: presentation.presenters.search_presenter(params[:bio]).map{
+            presenter: presentation.presenters.map{
               |presenter| [
                 name: [presenter.last_name, presenter.first_name].join(" "),
                 affiliation: presenter.affiliation,
@@ -102,11 +130,8 @@ class EventsController < ApplicationController
         }.flatten
       ]
     }.flatten
-    array = Member.where(:gtic_flg => nil).pluck(:id)
-    @total_events = Event.count
-    @total_participants = Relationship.where(member_id: array).where(status: 3).count
-    @participants = Relationship.where(member_id: array).where(status: 3).group(:member_id).pluck(:member_id).count
-  end
+    respond_to :js
+  end # End of search_event
 
   def show
     relationship = @event.relationships.find_by_member_id(params[:member_id])
@@ -413,9 +438,9 @@ class EventsController < ApplicationController
         words = name.to_s.split(" ")
         words.each_with_index do |w, index|
           if index == 0
-            @member = Member.find_member(w).order("last_name_alphabet")
+            @member = Member.find_member_name(w).order("last_name_alphabet")
           else
-            @member = @member.find_member(w).order("last_name_alphabet")
+            @member = @member.find_member_name(w).order("last_name_alphabet")
           end
         end
         if @member.empty?
@@ -519,7 +544,6 @@ class EventsController < ApplicationController
     relationship = @event.relationships.find_by_member_id(params[:member_id])
   end
 
-
   def download
     @start_date = Event.order("start_time ASC").first.start_time.beginning_of_year
     @last_date = Event.order("start_time ASC").last.start_time.end_of_year
@@ -529,8 +553,6 @@ class EventsController < ApplicationController
     else
       base = Event.where(:start_time => @start_date..@last_date).group(:start_time)
     end
-#    year = params[:year].present? ? Date.parse(params[:year]) : @last_date
-#    base = Event.where(:start_time => year.beginning_of_year..year.end_of_year).group(:start_time)
     record = base.order("start_time DESC")
     @events = record.map{
       |event| [
@@ -606,7 +628,7 @@ class EventsController < ApplicationController
 
   private
     def event_params
-      params.require(:event).permit(:name, :start_time, :end_time, :fb_event_id, :place_id, :fee, :event_category_id, :note)
+      params.require(:event).permit(:name, :cumulative_number, :start_time, :end_time, :fb_event_id, :place_id, :fee, :event_category_id, :note)
     end
     def signed_in_user
       redirect_to root_path, notice: "Please sign in." unless signed_in?
