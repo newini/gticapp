@@ -31,14 +31,12 @@ Gticapp::Application.routes.draw do
       get :invite
       get :waiting
       get :maybe
-      get :invited
       get :registed
       get :participants
       get :dotasan
       get :declined
       get :dotacan
       get :no_show
-      get :new_member
       get :search
       get :update_maybe_member
       get :update_registed_member

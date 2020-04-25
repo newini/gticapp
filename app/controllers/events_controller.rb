@@ -11,7 +11,7 @@ class EventsController < ApplicationController
     :change_status,:change_all_waiting_status,
     :destroy_relationship,
     :send_email,
-    :update_facebook, :new_member, :search, :account,
+    :update_facebook, :search, :account,
     :registed_list
   ]
 
@@ -106,12 +106,7 @@ class EventsController < ApplicationController
     @total_events = Event.count
     @total_participants = Relationship.where(member_id: array).where(status: 3).count
     @participants = Relationship.where(member_id: array).where(status: 3).group(:member_id).pluck(:member_id).count
-    respond_to do |format|
-      format.html
-      format.js
-    end
   end
-  ########
 
   def show
     relationship = @event.relationships.find_by_member_id(params[:member_id])
@@ -145,12 +140,6 @@ class EventsController < ApplicationController
   def create
     @event = Event.new(event_params)
     if @event.save
-#      @new_members = Member.where.not(:id => @event.relationships.select(:member_id).map(&:member_id))
-#      if @new_members.present?
-#        @new_members.each do |new_member|
-#          @event.relationships.create(member_id: new_member.id, event_id: @event.id, status: 1)
-#      end
-#    end
       redirect_to events_path
     else
       render 'new'
@@ -202,12 +191,6 @@ class EventsController < ApplicationController
     else
       redirect_to participants_event_path
     end
-  end
-
-  def invited
-    @title = "#{@event.name} 招待済みメンバー"
-    members(@event.invited_members)
-    @referer = action_name
   end
 
   def waiting
@@ -320,9 +303,9 @@ class EventsController < ApplicationController
     end
     if relationship.save
       select_action(params[:referer])
-    else
-      redirect_to :back
     end
+    #redirect_to :back
+    render 'waiting'
   end
 
   def destroy_relationship
@@ -473,8 +456,6 @@ class EventsController < ApplicationController
     end
     if member.save
       select_action(params[:referer])
-    else
-      redirect_to :back
     end
   end
 
