@@ -8,6 +8,7 @@ class Event < ActiveRecord::Base
   has_many :declined_members, -> {where "status = 0 or status = 4"}, through: :relationships, source: :member
   has_many :dotacan, -> {where "status = 7"}, through: :relationships, source: :member
   has_many :no_show, -> {where "status = 5"}, through: :relationships, source: :member
+  has_many :invited_members, -> {where "status = 1"}, through: :relationships, source: :member # 未定者
 
   # presenter, panelist, moderator
   has_many :presenters, -> {where :relationships => {presentation_role: 1..3}}, through: :relationships, source: :member

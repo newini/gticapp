@@ -46,7 +46,6 @@ Gticapp::Application.routes.draw do
       get :statistics
       get :account
       get :registed_list
-      get :find_birth_month
       post :change_status
       post :destroy_relationship
       post :switch_black_list_flg
@@ -77,11 +76,13 @@ Gticapp::Application.routes.draw do
   resources :invitations do
     collection do
       get 'view_sent_emails' => 'invitations#view_sent_emails', as: :view_sent_emails
-
     end
     member do
       get :send_all
       get :send_test
+      post :send_birth_month
+      post :send_event
+      post :update_include_gtic_flg
     end
   end
 
@@ -104,8 +105,6 @@ Gticapp::Application.routes.draw do
   match '/media', to: 'static_pages#media', via: 'get'
   match '/schedule', to: 'static_pages#schedule', via: 'get'
   match '/contact', to: 'static_pages#contact', via: 'get'
-  #match '/events/:event_id/send_invitation', to: 'events#send_invitation', as: 'send_invitation',via: 'get'
-
 
   #omniauth
   match '/auth/:provider/callback', to: 'sessions#create', via: 'get'
