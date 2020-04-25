@@ -57,7 +57,7 @@ group :development, :test do
 #  gem "capistrano-bundler"
 #  gem "capistrano-rails"
 #  gem "capistrano-rbenv"
-#  gem 'quiet_assets' 
+#  gem 'quiet_assets'
 end
 
 group :test do
