@@ -1,21 +1,28 @@
 <div class="row">
   <aside class="col-lg-2">
   </aside>
+
   <div class="col-lg-10">
     <h2>User情報</h2>
+
+    <% if admin? %>
+      <div><%= link_to "新規追加", new_user_path, class: "btn btn-primary" %></div>
+    <% end %>
+
     <table class="table table-bordered">
       <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Facebook ID</th>
-        <th>Member ID</th>
+        <th class="col-md-1">ID</th>
+        <th class="col-md-2">Name</th>
+        <th class="col-md-1">Facebook ID</th>
+        <th class="col-md-1">Member ID</th>
         <% if admin? %>
-          <th>Active</th>
-          <th>Admin</th>
+          <th class="col-md-1">Active（管理者画面にアクセス可能）</th>
+          <th class="col-md-1">Admin（管理者画面を変更可能）</th>
         <% end %>
-        <th>Description</th>
+        <th class="col-md-3">Description（ここを変更すると、幹事紹介ページに反映）</th>
         <th></th>
       </tr>
+
       <% @users.each do |user| %>
         <tr>
           <td><%= user.id %></td>
@@ -33,7 +40,8 @@
     </table>
 
     <% if admin? %>
-      <div><%= link_to "新規追加", new_user_path %></div>
+      <div><%= link_to "update users' information from MEMBERs' data", update_users_users_path, method: "post", class: "btn btn-default" %></div>
     <% end %>
+
   </div>
 </div>

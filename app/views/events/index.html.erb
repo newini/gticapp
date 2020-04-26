@@ -9,6 +9,7 @@
     <h3><%= "イベント検索" %></h2>
     <%= form_tag :search_event_events, method: 'get', remote: true, class: "form-inline", role: "form" do %>
       <div class="form-group">
+        <p>アルファベットによる検索もOK（ひらがな、カタカナは未対応）</p>
         <span>Keyword: </span>
         <%= text_field_tag :keyword, params[:keyword], class: "form-control", placeholder: "keyword" %>
       </div>

@@ -2,6 +2,7 @@
   <tr>
     <th class="col-md-1">Total</th>
     <th class="col-md-1">Event</th>
+    <th class="col-md-1">会場</th>
     <th class="col-md-1">Date</th>
     <th class="col-md-2">Presenter</th>
     <th class="col-md-4">Title</th>
@@ -23,6 +24,9 @@
                 <% if event[:event][:event_category_id] == 1 %>
                   <%= "本会" %>
                 <% end %>
+              <% end %>
+              <%= content_tag :td, rowspan: event[:detail].length do %>
+                <%= Place.find(event[:event][:place]).name if event[:event][:place].present? and Place.where(id: event[:event][:place]).present? %></td>
               <% end %>
               <%= content_tag :td, event[:event][:date], rowspan: event[:detail].length %>
             <% end %>

@@ -38,12 +38,12 @@
           <p>㊟ブラックリストメンバーは自動的に除かれる</p>
           <div class="btn-group">
             <%= link_to send_all_invitation_path(@invitation), class:"btn btn-default", data: { confirm: '全員に送信します。よろしいでしょうか？' } do %>
-              <span class="glyphicon glyphicon-align-justify"></span>全員に送信
+              <span class="glyphicon glyphicon-align-justify"></span>参加者全員に送信
             <% end %>
             <%= select_month(@invitation) %>
             <%= select_event(@invitation, @events) %>
-            <%= link_to send_test_invitation_path(@invitation), class:"btn btn-default", data: { confirm: '[TEST]GTICメンバーに送信しますか？' } do %>
-              <span class="glyphicon glyphicon-info-sign"></span>[TEST] ActiveなGTICメンバーに送信（画面右上名前->USERSから確認可能）
+            <%= link_to send_test_invitation_path(@invitation), class:"btn btn-default", data: { confirm: 'GTIC幹事メンバーに送信しますか？' } do %>
+              <span class="glyphicon glyphicon-info-sign"></span>GTIC幹事メンバーから選択して送信（画面右上名前をクリック->USERS->Activeボックス選択）
             <% end %>
           </div>
         </div>
@@ -56,7 +56,7 @@
           <h3>オプション</h3>
           <table class="table table-bordered">
             <tr>
-              <th>GTICメンバーを含める：</th>
+              <th>GTIC幹事メンバーの中でActiveになっている人を含める：</th>
               <td><%= select_include_gtic_members(@invitation) %></td>
             </tr>
           </table>

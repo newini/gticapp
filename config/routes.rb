@@ -68,6 +68,7 @@ Gticapp::Application.routes.draw do
     collection do
       post :update_active
       post :update_admin
+      post :update_users
     end
   end
 

@@ -7,7 +7,6 @@ class UsersController < ApplicationController
   end
 
   def show
-#    @user = User.find(params[:id])
     @user = current_user
   end
 
@@ -17,11 +16,10 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
+    @member = Member.find(@user.member_id)
+    update_else(@user, @member)
     if @user.save
-      #InvitationMailer.welcome_email(@user).deliver
-      sign_in @user
-      flash[:success] = "ようこそ GTIC App"
-      redirect_to @user
+      redirect_to users_path
     else
       render 'new'
     end
@@ -29,10 +27,13 @@ class UsersController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
+    @member = Member.find(@user.member_id)
   end
 
   def update
     @user = User.find(params[:id])
+    @member = Member.find(@user.member_id)
+    update_else(@user, @member)
     if @user.update_attributes(user_params)
       flash[:success] = "ユーザー情報を更新しました"
       redirect_to "/users"
@@ -61,6 +62,20 @@ class UsersController < ApplicationController
     redirect_to :back
   end
 
+  def update_users
+    @users = User.all
+    @users.each do |user|
+      logger.info(user.id)
+      if user.member_id.present?
+        logger.info(user.member_id)
+        member = Member.find(user.member_id)
+        update_else(user, member)
+      end
+    end
+    redirect_to :back
+    #redirect_to users_path
+  end
+
 
   private
     def user_params
@@ -69,6 +84,17 @@ class UsersController < ApplicationController
 
     def signed_in_user
       redirect_to root_path, notice: "Please sign in." unless signed_in?
+    end
+
+    def update_else(user, member)
+      if member.last_name_alphabet.present? and member.first_name_alphabet.present?
+        user.update(name: member.first_name_alphabet + " " + member.last_name_alphabet)
+      end
+      user.update(uid: member.fb_user_id)
+      if member.email.present?
+        user.update(email: member.email)
+      end
+      user.save
     end
 
 end

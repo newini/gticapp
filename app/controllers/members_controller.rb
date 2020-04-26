@@ -3,7 +3,8 @@ class MembersController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   def index
-    @members = Member.order(sort_column + ' ' + sort_direction).paginate(page: params[:page])
+    #@members = Member.order(sort_column + ' ' + sort_direction).paginate(page: params[:page])
+    @members = Member.paginate(page: params[:page])
     if params[:count].present?
       @members = Member.joins(:participated_events).group(:member_id).order("count(event_id) DESC").paginate(page: params[:page])
     end
