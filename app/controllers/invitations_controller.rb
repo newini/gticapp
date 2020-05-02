@@ -44,6 +44,7 @@ class InvitationsController < ApplicationController
   def destroy
     @invitation = Invitation.find(params[:id])
     @invitation.destroy
+    MemberInvitationRelationship.where(invitation_id: @invitation.id).delete_all
     redirect_to invitations_path(), :flash => {:success => '削除しました'}
   end
 
@@ -167,7 +168,7 @@ class InvitationsController < ApplicationController
       member = Member.find(member_invitation_relationship.member_id)
       if member.email.present?
         member_invitation_relationship.update(sent_flg: true)
-        #InvitationMailer.send_email_to_each_member(member, @invitation).deliver
+        InvitationMailer.send_email_to_each_member(member, @invitation).deliver
         sent_cnt = sent_cnt + 1
       else
         blank_email_cnt = blank_email_cnt + 1
