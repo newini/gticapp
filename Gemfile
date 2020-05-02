@@ -1,16 +1,16 @@
 source 'https://rubygems.org'
 
 # Must included
-gem 'rails' , '~> 4.2.11'
+gem 'rails' , '~> 6.0.2'
 gem 'sqlite3', '~> 1.3.13'
 gem 'puma', '~> 3.11'
-gem 'sass-rails' , '~> 5.0'
+gem 'sass-rails' , '~> 6.0'
 gem 'uglifier'
 # gem 'mini_racer', platforms: :ruby
 
-gem 'coffee-rails', '~> 4.2.0'
+gem 'coffee-rails', '~> 5.0.0'
 gem 'turbolinks', '~> 5'
-gem 'jbuilder', '~> 2.5'
+gem 'jbuilder', '~> 2.10'
 # gem 'redis', '~> 4.0'
 gem 'bcrypt', '~> 3.1.7'
 
