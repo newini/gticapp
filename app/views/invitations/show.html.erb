@@ -23,10 +23,33 @@
     <% if @invitation.sent_flg %>
       <div class="row">
         <div class="col-md-12">
+          <h3>送信済み</h3>
+          <p>詳細</p>
+
           <table class="table table-bordered">
             <tr>
               <th>送信時間</th>
               <td><%= @invitation.sent_at %></td>
+            </tr>
+
+            <tr>
+              <th>参加者全員含め</th>
+              <td><%= @invitation.include_all_flg %></td>
+            </tr>
+
+            <tr>
+              <th>誕生月者を含め</th>
+              <td><%= "#{@invitation.birth_month}月" if @invitation.birth_month >= 1 %></td>
+            </tr>
+
+            <tr>
+              <th>イベント会合出席者含め</th>
+              <td><%= Event.find(@invitation.event_id).name if !@invitation.event_id.nil? && @invitation.event_id >= 1 %></td>
+            </tr>
+
+            <tr>
+              <th>GTIC幹事メンバー含め</th>
+              <td><%= @invitation.include_gtic_flg %></td>
             </tr>
           </table>
         </div>
@@ -34,18 +57,35 @@
     <% else %>
       <div class="row">
         <div class="col-md-12">
-          <h3>送信</h3>
+          <h3>送信オプション</h3>
           <p>㊟ブラックリストメンバーは自動的に除かれる</p>
-          <div class="btn-group">
-            <%= link_to send_all_invitation_path(@invitation), class:"btn btn-default", data: { confirm: '全員に送信します。よろしいでしょうか？' } do %>
-              <span class="glyphicon glyphicon-align-justify"></span>参加者全員に送信
-            <% end %>
-            <%= select_month(@invitation) %>
-            <%= select_event(@invitation, @events) %>
-            <%= link_to send_test_invitation_path(@invitation), class:"btn btn-default", data: { confirm: 'GTIC幹事メンバーに送信しますか？' } do %>
-              <span class="glyphicon glyphicon-info-sign"></span>GTIC幹事メンバーから選択して送信（画面右上名前をクリック->USERS->Activeボックス選択）
-            <% end %>
-          </div>
+
+          <table class="table table-bordered">
+            <tr>
+              <th>参加者全員を宛名に入れる：</th>
+              <td><%= select_include_all_members(@invitation) %></td>
+            </tr>
+
+            <tr>
+              <th>誕生月ごとに宛名に入れる：</th>
+              <td><%= select_month(@invitation) %></td>
+            </tr>
+
+            <tr>
+              <th>イベント会合別に宛名を入れる：</th>
+              <td><%= select_event(@invitation, @events) %></td>
+            </tr>
+
+            <tr>
+              <th>GTIC幹事メンバーの中でActiveになっている人を含める<br>
+              （右上の名前をプルダウンメニューの幹事リストの中でActiveになってる）：</th>
+              <td><%= select_include_gtic_members(@invitation) %></td>
+            </tr>
+          </table>
+
+          <%= link_to send_email_invitation_path(@invitation), class:"btn btn-default btn-lg btn-block", data: { confirm: '送信しますか？' } do %>
+            <span class="glyphicon glyphicon-info-sign"></span>送信
+          <% end %>
         </div>
       </div>
 
@@ -54,13 +94,7 @@
       <div class="row">
         <div class="col-md-4">
           <h3>オプション</h3>
-          <table class="table table-bordered">
-            <tr>
-              <th>GTIC幹事メンバーの中でActiveになっている人を含める：</th>
-              <td><%= select_include_gtic_members(@invitation) %></td>
-            </tr>
-          </table>
-        </div>
+       </div>
       </div>
     <% end %>
 

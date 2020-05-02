@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200425150242) do
+ActiveRecord::Schema.define(version: 20200502052659) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "title",      limit: 255
@@ -61,7 +61,7 @@ ActiveRecord::Schema.define(version: 20200425150242) do
   add_index "events", ["start_time"], name: "index_events_on_start_time"
 
   create_table "invitations", force: :cascade do |t|
-    t.integer  "event_id"
+    t.integer  "event_id",                     default: 0
     t.string   "title",            limit: 255
     t.text     "content"
     t.datetime "created_at"
@@ -69,6 +69,9 @@ ActiveRecord::Schema.define(version: 20200425150242) do
     t.boolean  "sent_flg"
     t.boolean  "include_gtic_flg",             default: true
     t.time     "sent_at"
+    t.boolean  "include_all_flg",              default: false
+    t.integer  "birth_month",                  default: 0
+    t.integer  "sent_cnt"
   end
 
   add_index "invitations", ["event_id"], name: "index_invitations_on_event_id"

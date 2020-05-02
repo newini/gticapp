@@ -1,19 +1,18 @@
 <h2>イベント案内作成</h2>
+<p>作成して保存して次に進む</p>
 
 <div class='row'>
   <div class='col-md-2'>
-    <h3>メール本文に書く内容</h3>
-    <ul>
-      <li>季節の挨拶</li>
-      <li>第◯◯回GTIC開催のご案内です。</li>
-      <li>講演内容、講演者の説明</li>
-      <li>日時</li>
-      <li>会場</li>
-      <li>参加費</li>
-      <li>締めの挨拶</li>
-    </ul>
-    <strong>注意：冒頭は常に「〇〇様」が自動的に入る</strong>
-    <hr>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <strong>注意：メール本文冒頭は常に「〇〇様」が自動的に入る  ➡</strong>
   </div>
 
   <div class='col-md-10'>
@@ -32,6 +31,8 @@
       <div class="control-group">
         <%= f.label :content, 'メール本文', class: 'control-label' %>
         <div class="controls">
+          <%= f.text_area :content,  style: 'width:90%;', rows: 1, readonly: true,
+            value: "【メール送信時は、メール本文の1行目に、〇〇様と個別名が自動的に挿入されます。】" %>
           <%= f.text_area :content,  style: 'width:90%;', rows: 40 %>
         </div>
       </div>

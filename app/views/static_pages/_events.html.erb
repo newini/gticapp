@@ -2,10 +2,10 @@
   <tr>
     <th class="col-md-1">Total</th>
     <th class="col-md-1">Event</th>
-    <th class="col-md-1">会場</th>
     <th class="col-md-1">Date</th>
     <th class="col-md-2">Presenter</th>
     <th class="col-md-4">Title</th>
+    <th class="col-md-1">会場</th>
   </tr>
 
   <!-- table content -->
@@ -25,9 +25,6 @@
                   <%= "本会" %>
                 <% end %>
               <% end %>
-              <%= content_tag :td, rowspan: event[:detail].length do %>
-                <%= Place.find(event[:event][:place]).name if event[:event][:place].present? and Place.where(id: event[:event][:place]).present? %></td>
-              <% end %>
               <%= content_tag :td, event[:event][:date], rowspan: event[:detail].length %>
             <% end %>
             <td>
@@ -43,6 +40,11 @@
               <br>
               <%= "#{detail[:abstract]}" %>
             </td>
+          <% if i == 0 %>
+            <%= content_tag :td, rowspan: event[:detail].length do %>
+              <%= Place.find(event[:event][:place]).name if event[:event][:place].present? and Place.where(id: event[:event][:place]).present? %></td>
+            <% end %>
+          <% end %>
         </tr>
         <% i += 1 %>
           <% end %>

@@ -20,7 +20,7 @@ class InvitationsController < ApplicationController
 
   def show
     @invitation = Invitation.find(params[:id])
-    @events = Event.all.order("created_at DESC")
+    @events = Event.where.not(cumulative_number: nil).order("created_at DESC")
   end
 
   def edit
@@ -46,6 +46,37 @@ class InvitationsController < ApplicationController
     @invitations = Invitation.where(sent_flg: true).order("created_at DESC")
   end
 
+  def update_include_all_flg
+    @invitation = Invitation.find(params[:id])
+    if @invitation.include_all_flg
+      @invitation.update(include_all_flg: false)
+      redirect_to invitation_path(@invitation), :flash => {:success => "参加者全員を外しました。"}
+    else
+      @invitation.update(include_all_flg: true)
+      redirect_to invitation_path(@invitation), :flash => {:success => "参加者全員を含めました。"}
+    end
+  end
+
+  def update_birth_month
+    @invitation = Invitation.find(params[:id])
+    @invitation.update(birth_month: params[:birth_month])
+    if params[:birth_month] == 0
+      redirect_to invitation_path(@invitation), :flash => {:success => "誕生月者を外しました。"}
+    else
+      redirect_to invitation_path(@invitation), :flash => {:success => "誕生月者を含めました。"}
+    end
+  end
+
+  def update_event_id
+    @invitation = Invitation.find(params[:id])
+    @invitation.update(event_id: params[:event_id])
+    if params[:event_id] == 0
+      redirect_to invitation_path(@invitation), :flash => {:success => "イベント会合出席者を外しました。"}
+    else
+      redirect_to invitation_path(@invitation), :flash => {:success => "イベント会合出席者を含めました。"}
+    end
+  end
+
   def update_include_gtic_flg
     @invitation = Invitation.find(params[:id])
     if @invitation.include_gtic_flg
@@ -57,17 +88,46 @@ class InvitationsController < ApplicationController
     end
   end
 
-  def send_all
+  def send_email
     @invitation = Invitation.find(params[:id])
     @invitation.update(sent_flg: true)
-    @invitation.update(sent_at: Time.now)
+    @invitation.update(sent_at: DateTime.now)
+
+    all_members = []
+    if @invitation.include_all_flg
+      all_members = Member.where(black_list_flg: [nil, false]).where(gtic_flg: [false, nil])
+    end
+
+    birth_month_members = []
+    if @invitation.birth_month >= 1
+      birth_month_str = @invitation.birth_month.to_s.rjust(2, "0")
+      birth_month_members = Member.where(black_list_flg: [nil, false]).where('strftime("%m", birthday) = ?', birth_month_str)
+    end
+
+    event_members = []
+    if @invitation.event_id >= 1
+#      @new_members = Member.where.not(:id => @event.relationships.select(:member_id).map(&:member_id))
+      @relationships = Relationship.where(event_id: @invitation.event_id).where(status: 3) # 出席者
+      @relationships.each do |relationship|
+        event_members.push(Member.where(black_list_flg: [nil, false]).find(relationship.member_id))
+      end
+    end
+
+    gtic_members = []
+    gtic_flg = @invitation.include_gtic_flg
+    if gtic_flg
+      User.where(active_flg: true).each do |user|
+        gtic_members.push(Member.find(user.member_id))
+      end
+    end
+
+    members = all_members + birth_month_members + event_members + gtic_members
+    # Remove duplicated members
+    @members = members.uniq
+
     sent_cnt = 0
     blank_email_cnt = 0
-    @members = Member.where(black_list_flg: [nil, false])
-    if !@invitation.include_gtic_flg
-      @members = @members.where(gtic_flg: [false, nil])
-    end
-    @member.each do |member| # Be careful
+    @members.each do |member|
       if member.email.present?
         InvitationMailer.send_email_to_each_member(member, @invitation).deliver
         sent_cnt = sent_cnt + 1
@@ -75,83 +135,7 @@ class InvitationsController < ApplicationController
         blank_email_cnt = blank_email_cnt + 1
       end
     end
-    logger.info("send_all, send_cnt: #{sent_cnt}, blank_email_cnt: #{blank_email_cnt}")
-    redirect_to invitation_path(@invitation), :flash => {:success =>
-                                                         "#{sent_cnt}名の方に送信成功！ #{blank_email_cnt} 名の方にはメールアドレスが空欄であるため送信できませんでした。"}
-  end
-
-  def send_birth_month
-    @invitation = Invitation.find(params[:id])
-    @invitation.update(sent_flg: true)
-    @invitation.update(sent_at: Time.now)
-    @month = params[:month]
-    @members = Member.where(black_list_flg: [nil, false]).where('strftime("%m", birthday) = ?', @month)
-    if @invitation.include_gtic_flg
-      active_users = User.where(active_flg: true)
-      active_users.each do |user|
-        @members.push(Member.find(user.member_id))
-      end
-    end
-    sent_cnt = 0
-    blank_email_cnt = 0
-    @members.each do |member|
-      if member.email.present?
-        InvitationMailer.invitation(member, @invitation).deliver
-        sent_cnt = sent_cnt + 1
-      else
-        blank_email_cnt = blank_email_cnt + 1
-      end
-    end
-    redirect_to invitation_path(@invitation), :flash => {:success =>
-                                                         "[TEST] #{sent_cnt}名の方に送信成功！ #{blank_email_cnt} 名の方にはメールアドレスが空欄であるため送信できませんでした。"}
-  end
-
-  def send_event
-    @invitation = Invitation.find(params[:id])
-    @invitation.update(sent_flg: true)
-    @invitation.update(sent_at: DateTime.now)
-#    @new_members = Member.where.not(:id => @event.relationships.select(:member_id).map(&:member_id))
-    @relationships = Relationship.where(event_id: params[:event_id]).where(status: 3) # 出席者
-    @members = []
-    @relationships.each do |relationship|
-      @members.push(Member.find(relationship.member_id))
-    end
-    if @invitation.include_gtic_flg
-      active_users = User.where(active_flg: true)
-      active_users.each do |user|
-        @members.push(Member.find(user.member_id))
-      end
-    end
-    sent_cnt = 0
-    blank_email_cnt = 0
-    @members.each do |member|
-      if member.email.present?
-        InvitationMailer.invitation(member, @invitation).deliver
-        sent_cnt = sent_cnt + 1
-      else
-        blank_email_cnt = blank_email_cnt + 1
-      end
-    end
-    redirect_to invitation_path(@invitation), :flash => {:success =>
-                                                         "[TEST] #{sent_cnt}名の方に送信成功！ #{blank_email_cnt} 名の方にはメールアドレスが空欄であるため送信できませんでした。"}
-  end
-
-  def send_test
-    @invitation = Invitation.find(params[:id])
-    @invitation.update(sent_flg: true)
-    @invitation.update(sent_at: DateTime.now)
-    active_users = User.where(active_flg: true)
-    sent_cnt = 0
-    blank_email_cnt = 0
-    active_users.each do |user|
-      member = Member.find(user.member_id)
-      if member.email.present?
-        InvitationMailer.send_email_to_each_member(member, @invitation).deliver
-        sent_cnt = sent_cnt + 1
-      else
-        blank_email_cnt = blank_email_cnt + 1
-      end
-    end
+    @invitation.update(sent_cnt: sent_cnt)
     redirect_to invitation_path(@invitation), :flash => {:success =>
                                                          "[TEST] #{sent_cnt}名の方に送信成功！ #{blank_email_cnt} 名の方にはメールアドレスが空欄であるため送信できませんでした。"}
   end

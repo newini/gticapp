@@ -77,10 +77,10 @@ Gticapp::Application.routes.draw do
       get 'view_sent_emails' => 'invitations#view_sent_emails', as: :view_sent_emails
     end
     member do
-      get :send_all
-      get :send_test
-      post :send_birth_month
-      post :send_event
+      get :send_email
+      post :update_include_all_flg
+      post :update_birth_month
+      post :update_event_id
       post :update_include_gtic_flg
     end
   end

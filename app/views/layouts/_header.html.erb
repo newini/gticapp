@@ -27,10 +27,10 @@
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <%= User.find(current_user).name %> <b class="caret"></b></a>
             <ul class="dropdown-menu">
               <% if admin? %>
-                <li><%= link_to "USERS*", :users %></li>
+                <li><%= link_to "幹事リスト", :users %></li>
               <% end %>
-              <li><%= link_to "PROFILE", current_user %></li>
-              <li><%= link_to "SETTING", edit_user_path(@current_user) %></li>
+              <li><%= link_to "MY PROFILE", current_user %></li>
+              <li><%= link_to "EDIT MY PROFILE", edit_user_path(@current_user) %></li>
               <li class="divider"></li>
               <li><%= link_to "SIGNOUT", '/signout', method: "delete" %> </li>
             </ul>
