@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/railsconfig/config.git
-  revision: 80edee33b1d24710f22a9d4745d672c4ca97ce2f
+  revision: c8bfc4858aa62f41ade749996f57c45b68a04a6e
   specs:
     config (2.2.1)
       deep_merge (~> 1.2, >= 1.2.1)
@@ -191,7 +191,7 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     rake (13.0.1)
-    rb-fsevent (0.10.3)
+    rb-fsevent (0.10.4)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     rdoc (6.2.1)
