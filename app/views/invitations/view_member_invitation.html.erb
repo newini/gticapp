@@ -1,0 +1,18 @@
+<div class="row">
+  <aside class="col-md-2">
+    <section>
+      <%= render'side' %>
+    </section>
+  </aside>
+
+  <div class="col-md-10">
+    <% if @invitation.sent_flg %>
+      <h3>送信済み</h3>
+    <% else %>
+      <h3>送信予定者</h3>
+    <% end %>
+    <div id="ajax_container">
+      <%= render'members' %>
+    </div>
+  </div>
+</div>

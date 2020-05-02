@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200502052659) do
+ActiveRecord::Schema.define(version: 20200502164819) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "title",      limit: 255
@@ -67,7 +67,7 @@ ActiveRecord::Schema.define(version: 20200502052659) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "sent_flg"
-    t.boolean  "include_gtic_flg",             default: true
+    t.boolean  "include_gtic_flg",             default: false
     t.time     "sent_at"
     t.boolean  "include_all_flg",              default: false
     t.integer  "birth_month",                  default: 0
@@ -75,6 +75,18 @@ ActiveRecord::Schema.define(version: 20200502052659) do
   end
 
   add_index "invitations", ["event_id"], name: "index_invitations_on_event_id"
+
+  create_table "member_invitation_relationships", force: :cascade do |t|
+    t.integer  "member_id"
+    t.integer  "invitation_id"
+    t.boolean  "sent_flg",         default: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.boolean  "include_all_flg",  default: false
+    t.boolean  "include_gtic_flg", default: false
+    t.integer  "birth_month",      default: 0
+    t.integer  "event_id",         default: 0
+  end
 
   create_table "member_relationships", force: :cascade do |t|
     t.integer  "introduced_id"

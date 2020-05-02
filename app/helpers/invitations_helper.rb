@@ -17,15 +17,11 @@ module InvitationsHelper
       concat content_tag(:button, class: "btn dropdown-toggle btn-default btn-xs", data: {:toggle => "dropdown"}) {
         content_tag(:span, "", class: "caret")
         content_tag(:span, "", class: "glyphicon glyphicon-birthday-cake")
-        if invitation.birth_month.nil? || invitation.birth_month == 0
-          content_tag(:p, "クリックして誕生月選択")
-        else
-          content_tag(:p, "#{invitation.birth_month}月（クリックして誕生月変更）")
-        end
+        content_tag(:p, "クリックして誕生月選択")
       }
       concat content_tag(:ul, "asd", class: "dropdown-menu", role: "menu") {
         content_tag(:li) {
-          concat link_to("外す", update_birth_month_invitation_path(invitation, :birth_month => "00"), :method => :post, :class => "btn btn-xs", remote: true)
+          concat link_to("全ての誕生月者を外す", update_birth_month_invitation_path(invitation, :birth_month => "00"), :method => :post, :class => "btn btn-xs", remote: true)
           concat link_to("Jan.", update_birth_month_invitation_path(invitation, :birth_month => "01"), :method => :post, :class => "btn btn-xs", remote: true)
           concat link_to("Feb.", update_birth_month_invitation_path(invitation, :birth_month => "02"), :method => :post, :class => "btn btn-xs", remote: true)
           concat link_to("Mar.", update_birth_month_invitation_path(invitation, :birth_month => "03"), :method => :post, :class => "btn btn-xs", remote: true)
@@ -48,15 +44,11 @@ module InvitationsHelper
       concat content_tag(:button, class: "btn dropdown-toggle btn-default btn-xs", data: {:toggle => "dropdown"}) {
         content_tag(:span, "", class: "glyphicon glyphicon-download")
         content_tag(:span, "", class: "caret")
-        if invitation.event_id.nil? || invitation.event_id == 0
-          content_tag(:p, "クリックしてイベント選択")
-        else
-          content_tag(:p, "#{Event.find(invitation.event_id).name}（クリックしてイベント変更）")
-        end
+        content_tag(:p, "クリックしてイベント選択")
       }
       concat content_tag(:ul, "asd", class: "dropdown-menu", role: "menu", style: "max-height: 400px; overflow: scroll;") {
         content_tag(:li) {
-          concat link_to("外す", update_event_id_invitation_path(invitation, :event_id => 0), :method => :post, :class => "btn btn-xs", remote: true)
+          concat link_to("全てのイベント会合出席者を外す", update_event_id_invitation_path(invitation, :event_id => 0), :method => :post, :class => "btn btn-xs", remote: true)
           events.each do |event|
             concat link_to("第#{event.cumulative_number}回", update_event_id_invitation_path(invitation, :event_id => event.id), :method => :post, :class => "btn btn-xs", remote: true)
           end
@@ -77,5 +69,7 @@ module InvitationsHelper
     end
   end
 
+  def find_member(invitation)
+  end
 
 end

@@ -78,6 +78,7 @@ Gticapp::Application.routes.draw do
     end
     member do
       get :send_email
+      get :view_member_invitation
       post :update_include_all_flg
       post :update_birth_month
       post :update_event_id

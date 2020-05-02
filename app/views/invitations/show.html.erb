@@ -33,26 +33,42 @@
             </tr>
 
             <tr>
-              <th>参加者全員含め</th>
+              <th>参加者全員</th>
               <td><%= @invitation.include_all_flg %></td>
             </tr>
 
             <tr>
-              <th>誕生月者を含め</th>
-              <td><%= "#{@invitation.birth_month}月" if @invitation.birth_month >= 1 %></td>
+              <th>誕生月</th>
+              <td>
+                <% @birth_months.each do |birth_month| %>
+                  <%= "#{birth_month}月" %>
+                <% end %>
+              </td>
             </tr>
 
             <tr>
-              <th>イベント会合出席者含め</th>
-              <td><%= Event.find(@invitation.event_id).name if !@invitation.event_id.nil? && @invitation.event_id >= 1 %></td>
+              <th>イベント会合</th>
+              <td>
+                <% @event_ids.each do |event_id| %>
+                  <%= "第#{Event.find(event_id).cumulative_number}回" %>
+                <% end %>
+              </td>
             </tr>
 
             <tr>
-              <th>GTIC幹事メンバー含め</th>
+              <th>GTIC幹事メンバー</th>
               <td><%= @invitation.include_gtic_flg %></td>
             </tr>
           </table>
         </div>
+      </div>
+
+      <hr>
+
+      <div class="row">
+        <div class="col-md-4">
+          <%= link_to "送信成功者リスト", view_member_invitation_invitation_path(@invitation), class: "btn btn-default btn-lg" %>
+       </div>
       </div>
     <% else %>
       <div class="row">
@@ -68,18 +84,33 @@
 
             <tr>
               <th>誕生月ごとに宛名に入れる：</th>
-              <td><%= select_month(@invitation) %></td>
+              <td>
+                <% @birth_months.each do |birth_month| %>
+                  <%= "#{birth_month}月" %>
+                <% end %>
+                <%= select_month(@invitation) %>
+              </td>
             </tr>
 
             <tr>
               <th>イベント会合別に宛名を入れる：</th>
-              <td><%= select_event(@invitation, @events) %></td>
+              <td>
+                <% @event_ids.each do |event_id| %>
+                  <%= "第#{Event.find(event_id).cumulative_number}回" %>
+                <% end %>
+                <%= select_event(@invitation, @events) %>
+              </td>
             </tr>
 
             <tr>
               <th>GTIC幹事メンバーの中でActiveになっている人を含める<br>
               （右上の名前をプルダウンメニューの幹事リストの中でActiveになってる）：</th>
               <td><%= select_include_gtic_members(@invitation) %></td>
+            </tr>
+
+            <tr>
+              <th>手動で追加</th>
+              <td><%= find_member(@invitation) %></td>
             </tr>
           </table>
 
@@ -93,7 +124,7 @@
 
       <div class="row">
         <div class="col-md-4">
-          <h3>オプション</h3>
+          <%= link_to "送信予定者", view_member_invitation_invitation_path(@invitation), class: "btn btn-default btn-lg" %>
        </div>
       </div>
     <% end %>
