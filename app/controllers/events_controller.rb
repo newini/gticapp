@@ -42,7 +42,7 @@ class EventsController < ApplicationController
             title: presentation.try(:title),
             abstract: presentation.try(:abstract),
             note: presentation.try(:note),
-            presenter: presentation.presenters.map{
+            presenter: presentation.presenters.order('id asc').map{
               |presenter| [
                 name: [presenter.last_name, presenter.first_name].join(" "),
                 affiliation: presenter.affiliation,
@@ -119,7 +119,7 @@ class EventsController < ApplicationController
             title: presentation.try(:title),
             abstract: presentation.try(:abstract),
             note: presentation.try(:note),
-            presenter: presentation.presenters.map{
+            presenter: presentation.presenters.order('id asc').map{
               |presenter| [
                 name: [presenter.last_name, presenter.first_name].join(" "),
                 affiliation: presenter.affiliation,
@@ -569,7 +569,7 @@ class EventsController < ApplicationController
             title: presentation.try(:title),
             abstract: presentation.try(:abstract),
             note: presentation.try(:note),
-            presenter: presentation.presenters.map{
+            presenter: presentation.presenters.order('id asc').map{
               |presenter| [
                 name: [presenter.last_name, presenter.first_name].join(" "),
                 affiliation: presenter.affiliation,

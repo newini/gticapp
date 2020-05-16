@@ -16,6 +16,7 @@
 //= require turbolinks
 //= require bootstrap
 //= require jquery_ujs
+//= require bootstrap-sprockets
 
 // Plot a chart
 //= require chartkick

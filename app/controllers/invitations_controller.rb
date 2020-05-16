@@ -64,6 +64,62 @@ class InvitationsController < ApplicationController
     end
   end
 
+  def find_members
+    @invitation = Invitation.find(params[:id])
+    @member_invitation_relationships = MemberInvitationRelationship.where(invitation_id: @invitation.id)
+    @members = Member.limit(50)
+  end
+
+  def search
+    @invitation = Invitation.find(params[:id])
+    @member_invitation_relationships = MemberInvitationRelationship.where(invitation_id: @invitation.id)
+    if params[:search].present?
+      @members = []
+      names = params[:search].to_s.split(",")
+      names.each do |name|
+        words = name.to_s.split(" ")
+        words.each_with_index do |w, index|
+          if index == 0
+            @member = Member.find_member_name(w).order("last_name_alphabet")
+          else
+            @member = @member.find_member_name(w).order("last_name_alphabet")
+          end
+        end
+        if @member.empty?
+          @not_found_members.push(name)
+        end
+        @members += @member
+      end
+    else
+      @members = Member.order("last_name_alphabet").limit(50)
+    end
+    respond_to :js
+  end
+
+  def update_member_invitation
+    invitation = Invitation.find(params[:id])
+    member = Member.find(params[:member_id])
+    if !checkDuplicatedMember(member.id, invitation.id)
+      MemberInvitationRelationship.new(member_id: member.id, invitation_id: invitation.id).save
+    end
+    redirect_to view_member_invitation_invitation_path(invitation), :flash => {:success => "追加しました"}
+  end
+
+  def delete_member_invitation
+    invitation = Invitation.find(params[:id])
+    member = Member.find(params[:member_id])
+    if checkDuplicatedMember(member.id, invitation.id)
+      MemberInvitationRelationship.where(invitation_id: invitation.id).find_by_member_id(member.id).destroy
+    end
+    redirect_to view_member_invitation_invitation_path(invitation), :flash => {:success => "削除しました"}
+  end
+
+  def add_emails
+    invitation = Invitation.find(params[:id])
+    invitation.update(emails: params[:emails])
+    redirect_to invitation_path(invitation), :flash => {:success => "保存しました"}
+  end
+
   def update_include_all_flg
     @invitation = Invitation.find(params[:id])
     if @invitation.include_all_flg
@@ -75,7 +131,6 @@ class InvitationsController < ApplicationController
     else
       # Add
       members = Member.where(black_list_flg: [nil, false]).where.not(email: [nil, ""])
-      logger.info(members.length)
       members.each do |member|
         if !checkDuplicatedMember(member.id, @invitation.id)
           MemberInvitationRelationship.new(member_id: member.id, invitation_id: @invitation.id, include_all_flg: true).save
@@ -162,6 +217,25 @@ class InvitationsController < ApplicationController
     @invitation.update(sent_at: DateTime.now)
 
     sent_cnt = 0
+
+    # First, send to invitation.emails
+    if @invitation.emails.present?
+      emails = @invitation.emails.to_s.split(";") # Separate emails
+      emails.each do |email|
+        if email.present?
+          res = email.to_s.split("<")
+          name = res[0]
+          email_address = res[1].tr(">", "").tr(" ", "") # Remove ">" and spaces in email
+          member = Member.find(1) # TODO shold be improved
+          member.last_name = name
+          member.email = email_address
+          InvitationMailer.send_email_to_each_member(member, @invitation).deliver
+          sent_cnt = sent_cnt + 1
+        end
+      end
+    end
+
+    # Then, send one by one from member_invitation_relationships
     blank_email_cnt = 0
     member_invitation_relationships = MemberInvitationRelationship.where(invitation_id: @invitation.id)
     member_invitation_relationships.each do |member_invitation_relationship|
@@ -182,7 +256,7 @@ class InvitationsController < ApplicationController
 
   private
     def invitation_params
-      params.require(:invitation).permit(:title, :content, :month)
+      params.require(:invitation).permit(:title, :content)
     end
 
     def signed_in_user

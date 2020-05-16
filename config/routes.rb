@@ -77,9 +77,14 @@ Gticapp::Application.routes.draw do
       get 'view_sent_emails' => 'invitations#view_sent_emails', as: :view_sent_emails
     end
     member do
+      get :find_members
+      get :search
       get :send_email
       get :view_member_invitation
+      post :add_emails
+      post :delete_member_invitation
       post :update_include_all_flg
+      post :update_member_invitation
       post :update_birth_month
       post :update_event_id
       post :update_include_gtic_flg
@@ -102,6 +107,7 @@ Gticapp::Application.routes.draw do
   match '/about', to: 'static_pages#about', via: 'get'
   match '/presenter', to: 'static_pages#presenter', via: 'get'
   match '/search_event', to: 'static_pages#search_event', via: 'get'
+  match '/ceo_message', to: 'static_pages#ceo_message', via: 'get'
   match '/organizer', to: 'static_pages#organizer', via: 'get'
   match '/media', to: 'static_pages#media', via: 'get'
   match '/schedule', to: 'static_pages#schedule', via: 'get'

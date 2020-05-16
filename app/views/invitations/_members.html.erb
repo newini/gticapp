@@ -9,6 +9,7 @@
     <th class="col-md-1">備考</th>
     <th class="col-md-1"><%= link_to "出席回数", count: true %></th>
     <th></th>
+    <th></th>
   </tr>
   <% @members.each do |member| %>
     <%= content_tag :tr do %>
@@ -21,6 +22,7 @@
       <td><%= member.note %></td>
       <td><%= member.participated_events.count %></td>
       <td><%= link_to "詳細", member_path(member), class:"btn btn-primary btn-xs" %></td>
+      <td><%= select_to_delete(@invitation, member) %></td>
     <% end %>
   <% end %>
 <% end %>

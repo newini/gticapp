@@ -59,6 +59,11 @@
               <th>GTIC幹事メンバー</th>
               <td><%= @invitation.include_gtic_flg %></td>
             </tr>
+
+            <tr>
+              <th>入力したメールアドレス</th>
+              <td><%= @invitation.emails %></td>
+            </tr>
           </table>
         </div>
       </div>
@@ -70,7 +75,9 @@
           <%= link_to "送信成功者リスト", view_member_invitation_invitation_path(@invitation), class: "btn btn-default btn-lg" %>
        </div>
       </div>
-    <% else %>
+
+    <% else %> <!-- # If not sent -->
+
       <div class="row">
         <div class="col-md-12">
           <h3>送信オプション</h3>
@@ -109,10 +116,22 @@
             </tr>
 
             <tr>
-              <th>手動で追加</th>
-              <td><%= find_member(@invitation) %></td>
+              <th>メンバーを個別に追加</th>
+              <td><%= link_to "ここをクリックしてメンバーを探す", find_members_invitation_path(@invitation), class: "btn btn-default" %></td>
             </tr>
           </table>
+
+          <p>手動でメールアドレスを入力して保存する。下の欄には苗字<メールアドレス>のように記入する。複数人に送る場合は間を「;(半角セミコロン)」で区切る。</p>
+          <p>examples: Lemon&lt;lemon@gmail.com&gt;; Cat&lt;neko@yahoo.com&gt;</p>
+          <p>注意：全角英文字、全角記号は使わないこと<p>
+          <%= form_tag(add_emails_invitation_path, class: 'form-horizontal center', method: 'post') do %>
+            <%= label_tag :Email %>
+            <%= text_field_tag :emails, @invitation.emails, style: 'width:90%;' %>
+            <%= submit_tag "保存", class: "btn btn-info" %>
+          <% end %>
+
+          <br>
+          <hr>
 
           <%= link_to send_email_invitation_path(@invitation), class:"btn btn-default btn-lg btn-block", data: { confirm: '送信しますか？' } do %>
             <span class="glyphicon glyphicon-info-sign"></span>送信
@@ -124,7 +143,7 @@
 
       <div class="row">
         <div class="col-md-4">
-          <%= link_to "送信予定者", view_member_invitation_invitation_path(@invitation), class: "btn btn-default btn-lg" %>
+          <%= link_to "送信予定者リスト", view_member_invitation_invitation_path(@invitation), class: "btn btn-default btn-lg" %>
        </div>
       </div>
     <% end %>

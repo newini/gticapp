@@ -17,13 +17,13 @@ class StaticPagesController < ApplicationController
           place: event.place_id,
           event_category_id: event.event_category_id
         },
-        detail: event.presentations.search_presentation(params[:keyword]).map{
+        detail: event.presentations.map{
           |presentation| [
             id: presentation.id,
             title: presentation.try(:title),
             abstract: presentation.try(:abstract),
             note: presentation.try(:note),
-            presenter: presentation.presenters.search_presenter(params[:bio]).map{
+            presenter: presentation.presenters.order('id asc').map{
               |presenter| [
                 name: [presenter.last_name, presenter.first_name].join(" "),
                 affiliation: presenter.affiliation,
@@ -50,12 +50,12 @@ class StaticPagesController < ApplicationController
           place: event.place_id,
           event_category_id: event.event_category_id
         },
-        detail: event.presentations.search_presentation(params[:keyword]).map{
+        detail: event.presentations.map{
           |presentation| [
             title: presentation.try(:title),
             abstract: presentation.try(:abstract),
             note: presentation.try(:note),
-            presenter: presentation.presenters.search_presenter(params[:bio]).map{
+            presenter: presentation.presenters.order('id asc').map{
               |presenter| [
                 name: [presenter.last_name, presenter.first_name].join(" "),
                 affiliation: presenter.affiliation,
@@ -89,13 +89,13 @@ class StaticPagesController < ApplicationController
           place: event.place_id,
           event_category_id: event.event_category_id
         },
-        detail: event.presentations.search_presentation(params[:keyword]).map{
+        detail: event.presentations.map{
           |presentation| [
             id: presentation.id,
             title: presentation.try(:title),
             abstract: presentation.try(:abstract),
             note: presentation.try(:note),
-            presenter: presentation.presenters.search_presenter(params[:bio]).map{
+            presenter: presentation.presenters.order('id asc').map{
               |presenter| [
                 name: [presenter.last_name, presenter.first_name].join(" "),
                 affiliation: presenter.affiliation,
@@ -147,7 +147,7 @@ class StaticPagesController < ApplicationController
             title: presentation.try(:title),
             abstract: presentation.try(:abstract),
             note: presentation.try(:note),
-            presenter: presentation.presenters.map{
+            presenter: presentation.presenters.order('id asc').map{
               |presenter| [
                 name: [presenter.last_name, presenter.first_name].join(" "),
                 affiliation: presenter.affiliation,
