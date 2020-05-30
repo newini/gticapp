@@ -92,10 +92,14 @@ class MembersController < ApplicationController
     if member_params[:fb_user_id].to_i.to_s == member_params[:fb_user_id].to_s
       @member.update(fb_name: get_facebook_name(member_params[:fb_user_id]))
     end
-    if @member.update_attributes(member_params)
-      redirect_to member_path , :flash => {:success => '変更しました'}
+    # Validate email address
+    mailRegex = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
+    if member_params[:email].match? mailRegex
+      if @member.update_attributes(member_params)
+        redirect_to member_path , :flash => {:success => '変更しました'}
+      end
     else
-      flash.now[:error] = 'Invalid email/password combination'
+      flash.now[:error] = 'Invalid email combination'
       render 'edit'
     end
   end

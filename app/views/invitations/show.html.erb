@@ -11,7 +11,9 @@
     <div class="row">
       <div class="col-md-2"><%= link_to "戻る", :back, class: "btn btn-primary btn-large btn-block"%></div>
       <div class="col-md-2"></div>
-      <div class="col-md-2"><%= link_to '編集', edit_invitation_path(@invitation), class:"btn btn-block btn-primary" %></div>
+      <% if not @invitation.sent_flg %>
+        <div class="col-md-2"><%= link_to '編集', edit_invitation_path(@invitation), class:"btn btn-block btn-primary" %></div>
+      <% end %>
       <div class="col-md-2"></div>
       <div class="col-md-2"><%= link_to '削除', invitation_path(@invitation), method: :delete, class:"btn btn-block btn-primary",
                                 data: {confirm: '削除します。よろしいでしょうか？'} %></div>
@@ -64,6 +66,7 @@
               <th>入力したメールアドレス</th>
               <td><%= @invitation.emails %></td>
             </tr>
+
           </table>
         </div>
       </div>
@@ -72,7 +75,7 @@
 
       <div class="row">
         <div class="col-md-4">
-          <%= link_to "送信成功者リスト", view_member_invitation_invitation_path(@invitation), class: "btn btn-default btn-lg" %>
+          <%= link_to "送信成功者リスト（手入力した人は反映されない）", view_member_invitation_invitation_path(@invitation), class: "btn btn-default btn-lg" %>
        </div>
       </div>
 
@@ -85,7 +88,7 @@
 
           <table class="table table-bordered">
             <tr>
-              <th>参加者全員を宛名に入れる：</th>
+              <th>参加者全員を宛名に入れる（幹事は含まない）：</th>
               <td><%= select_include_all_members(@invitation) %></td>
             </tr>
 
@@ -122,7 +125,7 @@
           </table>
 
           <p>手動でメールアドレスを入力して保存する。下の欄には苗字<メールアドレス>のように記入する。複数人に送る場合は間を「;(半角セミコロン)」で区切る。</p>
-          <p>examples: Lemon&lt;lemon@gmail.com&gt;; Cat&lt;neko@yahoo.com&gt;</p>
+          <p>examples: 山田&lt;lemon@gmail.com&gt;; 秋山&lt;neko@yahoo.com&gt;</p>
           <p>注意：全角英文字、全角記号は使わないこと<p>
           <%= form_tag(add_emails_invitation_path, class: 'form-horizontal center', method: 'post') do %>
             <%= label_tag :Email %>

@@ -116,7 +116,23 @@ class InvitationsController < ApplicationController
 
   def add_emails
     invitation = Invitation.find(params[:id])
-    invitation.update(emails: params[:emails])
+    emails_origin = params[:emails].to_s.split(";") # Separate emails
+    emails = ""
+    emails_origin.each do |email|
+      if not email.nil?
+        if email.include?("<") && email.include?(">")
+          res = email.to_s.split("<")
+          name = res[0]
+          email_address = res[1].tr(">", "").tr(" ", "") # Remove ">" and spaces in email
+          mailRegex = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
+          if email_address.match? mailRegex
+            emails += ";" if emails != ""
+            emails += email
+          end
+        end
+      end
+    end
+    invitation.update(emails: emails)
     redirect_to invitation_path(invitation), :flash => {:success => "保存しました"}
   end
 
@@ -130,7 +146,7 @@ class InvitationsController < ApplicationController
       redirect_to invitation_path(@invitation), :flash => {:success => "参加者全員を外しました。"}
     else
       # Add
-      members = Member.where(black_list_flg: [nil, false]).where.not(email: [nil, ""])
+      members = Member.where(gtic_flg: [nil, false]).where(black_list_flg: [nil, false]).where.not(email: [nil, ""])
       members.each do |member|
         if !checkDuplicatedMember(member.id, @invitation.id)
           MemberInvitationRelationship.new(member_id: member.id, invitation_id: @invitation.id, include_all_flg: true).save
@@ -212,13 +228,14 @@ class InvitationsController < ApplicationController
   end
 
   def send_email
+    logger.info("Begin of send_email")
     @invitation = Invitation.find(params[:id])
-    @invitation.update(sent_flg: true)
     @invitation.update(sent_at: DateTime.now)
 
     sent_cnt = 0
 
     # First, send to invitation.emails
+    logger.info("at invitation.emails in send_email")
     if @invitation.emails.present?
       emails = @invitation.emails.to_s.split(";") # Separate emails
       emails.each do |email|
@@ -226,7 +243,7 @@ class InvitationsController < ApplicationController
           res = email.to_s.split("<")
           name = res[0]
           email_address = res[1].tr(">", "").tr(" ", "") # Remove ">" and spaces in email
-          member = Member.find(1) # TODO shold be improved
+          member = Member.find(3347) # Use dami member!
           member.last_name = name
           member.email = email_address
           InvitationMailer.send_email_to_each_member(member, @invitation).deliver
@@ -236,22 +253,50 @@ class InvitationsController < ApplicationController
     end
 
     # Then, send one by one from member_invitation_relationships
+    logger.info("at send member_invitation_relationships in send_email")
+    sent_failed_members = []
     blank_email_cnt = 0
     member_invitation_relationships = MemberInvitationRelationship.where(invitation_id: @invitation.id)
     member_invitation_relationships.each do |member_invitation_relationship|
       member = Member.find(member_invitation_relationship.member_id)
       if member.email.present?
-        member_invitation_relationship.update(sent_flg: true)
-        InvitationMailer.send_email_to_each_member(member, @invitation).deliver
-        sent_cnt = sent_cnt + 1
+        # Validate email address
+        mailRegex = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
+        if member.email.match? mailRegex
+          begin
+            InvitationMailer.send_email_to_each_member(member, @invitation).deliver
+            member_invitation_relationship.update(sent_flg: true)
+            sent_cnt = sent_cnt + 1
+          rescue Net::SMTPAuthenticationError
+            sleep(1)
+            sent_failed_members.push(member)
+          end
+        end
       else
         blank_email_cnt = blank_email_cnt + 1
       end
     end
+
+    # Try again for failed
+    logger.info("at send again in send_email")
+    sent_failed_members.each do |member|
+      begin
+        InvitationMailer.send_email_to_each_member(member, @invitation).deliver
+        member_invitation_relationship = MemberInvitationRelationship.where(invitation_id: @invitation.id).find_by_member_id(member.id)
+        member_invitation_relationship.update(sent_flg: true)
+        sent_cnt = sent_cnt + 1
+      rescue
+        sleep(1)
+      end
+    end
+
+    # Final
+    @invitation.update(sent_flg: true)
     @invitation.update(sent_cnt: sent_cnt)
+    logger.info("End of send_email")
     redirect_to invitation_path(@invitation), :flash => {:success =>
                                                          "[TEST] #{sent_cnt}名の方に送信成功！ #{blank_email_cnt} 名の方にはメールアドレスが空欄であるため送信できませんでした。"}
-  end
+  end # End of send_email
 
 
   private
