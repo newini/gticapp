@@ -94,13 +94,17 @@ class MembersController < ApplicationController
     end
     # Validate email address
     mailRegex = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
-    if member_params[:email].match? mailRegex
-      if @member.update_attributes(member_params)
+    if member_params[:email].present?
+      if member_params[:email].match? mailRegex
+        @member.update_attributes(member_params)
         redirect_to member_path , :flash => {:success => '変更しました'}
+      else
+        flash.now[:error] = 'Invalid email combination'
+        render 'edit'
       end
     else
-      flash.now[:error] = 'Invalid email combination'
-      render 'edit'
+      @member.update_attributes(member_params)
+      redirect_to member_path , :flash => {:success => '変更しました'}
     end
   end
 
