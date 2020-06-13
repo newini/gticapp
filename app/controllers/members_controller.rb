@@ -379,12 +379,15 @@ class MembersController < ApplicationController
         :black_list_flg, :past_presenter_flg
       )
     end
+
     def signed_in_user
       redirect_to root_path, notice: "Please sign in." unless signed_in?
     end
+
     def sort_column
       Member.column_names.include?(params[:sort]) ? params[:sort] : 'last_name_alphabet'
     end
+
     def sort_direction
       %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
     end

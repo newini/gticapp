@@ -169,7 +169,8 @@ class StaticPagesController < ApplicationController
   def schedule
   end
 
-  def media_introduce
+  def media
+    @media_articles = MediaArticle.all.order(date: :desc)
   end
 
   def contact

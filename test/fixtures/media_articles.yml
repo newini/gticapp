@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  datetime: 2020-06-13 15:12:36
+  media: MyString
+  url: MyString
+  title: MyString
+  content: MyString
+
+two:
+  datetime: 2020-06-13 15:12:36
+  media: MyString
+  url: MyString
+  title: MyString
+  content: MyString

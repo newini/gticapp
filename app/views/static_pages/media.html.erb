@@ -1,99 +1,55 @@
 <div class="section">
   <div class="container">
     <h1>MEDIA</h1>
+
     <table class="table">
       <tr>
-        <th>Date</th>
-        <th>Media</th>
-        <th>Title</th>
+        <th class="col-md-1">Date</th>
+        <th class="col-md-1">Media</th>
+        <th class="col-md-4">Media title</th>
+        <th class="col-md-2">GTIC Presenter<br>（会社）</th>
+        <th class="col-md-2">GTIC Presenter<br>（氏名）</th>
+        <th class="col-md-2">GTIC Presenter<br>（回号, 年月日）</th>
       </tr>
-      <tr>
-        <td>2015/04/01</td>
-        <td>pamphlet</td>
-        <td>新宿住友ビルディングのコワーキングスペース、「World Lounge」のパンフレットにて紹介</td>
-      </tr>
-      <tr>
-        <td>2015/02/16</td>
-        <td>blog</td>
-        <td><%= link_to "第67回GTICに登壇のKLab Ventures 長野社長のブログ「鴻鵠の志」", "http://www.myeyestokyo.com/6578", target: :blank %>にて紹介</td>
-      </tr>
-      <tr>
-        <td>2014年 11/12月号</td>
-        <td>FRAUD</td>
-        <td><%= link_to "Vol. 41, 2014年11/12月号 インタビュー記事 (後編)", "https://www.d-quest.co.jp/helpline/mag/contents/akiyamatomonori2.html", target: :blank %></td>
-      </tr>
-      <tr>
-        <td>2014年 7/8月号</td>
-        <td>FRAUD</td>
-        <td><%= link_to "Vol. 39, 2014年7/8月号 インタビュー記事 (前編)", "https://www.d-quest.co.jp/helpline/mag/contents/akiyamatomonori.html", target: :blank %></td>
-      </tr>
-      <tr>
-        <td>2013/11/06</td>
-        <td>My eyes Tokyo</td>
-        <td><%= link_to "GTIC x Bangladesh!", "http://www.myeyestokyo.com/6578", target: :blank %></td>
-      </tr>
-      <tr>
-        <td>2013/11/06</td>
-        <td>My eyes Tokyo</td>
-        <td><%= link_to "GTIC feat. バングラデシュ！","http://www.myeyestokyo.jp/18274", target: :blank %></td>
-      </tr>
-      <tr>
-        <td>2013/06/18</td>
-        <td>My eyes Tokyo</td>
-        <td><%= link_to "為末大さん @ GTIC 4 陸上競技 vs ベンチャービジネス　トークバトル！", "http://www.myeyestokyo.jp/7541", target: :blank %></td>
-      </tr>
-      <tr>
-        <td>2013/06/18</td>
-        <td>My eyes Tokyo</td>
-        <td><%= link_to "為末大さん @ GTIC 3 世界で勝つということ", "http://www.myeyestokyo.jp/7532", target: :blank %></td>
-      </tr>
-      <tr>
-        <td>2013/06/18</td>
-        <td>My eyes Tokyo</td>
-        <td><%= link_to "為末大さん @ GTIC 2 世界への険しい道のり","http://www.myeyestokyo.jp/7528", target: :blank %></td>
-      </tr>
-      <tr>
-        <td>2013/06/18</td>
-        <td>My eyes Tokyo</td>
-        <td><%= link_to "為末大さん @ GTIC 1 ハードラー前夜", "http://www.myeyestokyo.jp/7525", target: :blank %></td>
-      </tr>
-      <tr>
-        <td>2013/06/10</td>
-        <td>DEALWATCH ロイター</td>
-        <td>未来を創造する力、インキュベーション・オフィスを開設</td>
-      </tr>
-      <tr>
-        <td>2013/06/07</td>
-        <td>My eyes Tokyo</td>
-        <td><%= link_to "GTIC スーパープレゼンテーションに行ってきました！", "http://www.myeyestokyo.jp/6849", target: :blank %></td>
-      </tr>
-      <tr>
-        <td>2013/02/18</td>
-        <td>My eyes Tokyo</td>
-        <td><%= link_to "「傷だらけの英語習得術」秋山智紀さん", "http://www.myeyestokyo.jp/6494", target: :blank %></td>
-      </tr>
-      <tr>
-        <td>2012/06/28</td>
-        <td>My eyes Tokyo</td>
-        <td><%= link_to "秋山智紀さん & GTIC", "http://www.myeyestokyo.jp/4464", target: :blank %></td>
-      </tr>
-      <tr>
-        <td>2012/06/28</td>
-        <td>My eyes Tokyo</td>
-        <td><%= link_to "Tomo Akiyama & GTIC", "http://www.myeyestokyo.com/4384", target: :blank %></td>
-      </tr>
-      <tr>
-        <td>2012/01/23</td>
-        <td>金融ファクシミリ新聞</td>
-        <td><%= link_to "財務人 第14回「イノベーション・カフェを開催」", "http://docs.com/HJRL", target: :blank %>
-      </tr>
-      <tr>
-        <td>2011/11/22</td>
-        <td>DEALWATCH ロイター</td>
-        <td><%= link_to "Equity Market Pointer: 日本のベンチャーを元気に　人材交流の場「GTIC」開催", "http://ja.scribd.com/doc/73568177/20111122dealwatchgtic%E7%AC%AC1%E5%9B%9E", target: :blank %></td>
-      </tr>
+
+      <% if @media_articles.present? %>
+        <% @media_articles.each do |media_article| %>
+          <tr>
+            <td><%= media_article.date.strftime('%Y-%m-%d') %></td>
+            <td><%= media_article.media %></td>
+            <td>
+              <%= media_article.title %>
+              <%= link_to "（記事URL版）", "#{media_article.url}" if media_article.url.present? %>
+              <%= link_to "（記事PDF版）", "/assets/media_articles/#{media_article.file_path}" if media_article.file_path.present? %>
+            </td>
+
+            <% if media_article.member_id.present? %>
+              <% member = Member.find(media_article.member_id) %>
+              <td><%= member.affiliation %></td>
+              <td><%= "#{member.title} #{member.last_name} #{member.first_name} 氏" %></td>
+              <td>
+                <% presentationships = Presentationship.where(member_id: member.id) %>
+                <% previous_event_id = 0 %>
+                <% presentationships.each do |presentationship| %>
+                  <% if not previous_event_id == presentationship.event_id %>
+                    <% event = Event.find(presentationship.event_id) %>
+                    <%= "第#{event.cumulative_number}回GTIC, #{event.start_time.strftime('%Y-%m-%d')}" %><br>
+                  <% end %>
+                  <% previous_event_id = presentationship.event_id %>
+                <% end %>
+              </td>
+            <% else %>
+              <td></td>
+              <td></td>
+              <td></td>
+            <% end %>
+          </tr>
+        <% end %>
+      <% end %>
     </table>
+
     <br><br><br>
+
     <h1>CHIEF ORGANIZER'S ACTIVETY</h1>
     <table class="table">
       <tr>
@@ -113,20 +69,22 @@
         <td><%= link_to "BBT大学 資産形成力養成講座 @東京（市ヶ谷） セミナー『元外資系インベストメントバンカーが解説する資産運用の仕組みと本質』", "http://www.ohmae.ac.jp/ex/asset/guide/event/996/http://www.cbi.osaka-u.ac.jp/choikijijo/article/school20th/", target: :blank %></td>
       </tr>
     </table>
+
   </div>
 </div>
 
 <div class = "section">
   <div class = "container"><br><br>
-  <h1>メディアに取材してもらいたい方へ</h1><br>
-  <br>
+    <h1>メディアに取材してもらいたい方へ</h1>
+    <br><br>
     <div align = center>
-     <img src="/assets/media_introduce.png" height="75%" width="75%" />
-    </div><br><br>
-    <div align = center>
-    <h3></h3><br>
-<h3>ご興味ある企業の担当者様は<a href = "https://www.facebook.com/GTICafe">GTIC　Facebookページ</a>よりご連絡ください。</h3><br>
+      <img src="/assets/media_introduce.png" height="75%" width="75%" />
     </div>
-</div>
+    <br><br>
+    <div align = center>
+      <h3></h3><br>
+      <h3>ご興味ある企業の担当者様は<a href = "https://www.facebook.com/GTICafe">GTIC　Facebookページ</a>よりご連絡ください。</h3><br>
+    </div>
+  </div>
 </div>
 <br><br><br><br>

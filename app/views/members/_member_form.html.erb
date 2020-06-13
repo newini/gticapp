@@ -5,6 +5,7 @@
       漢字の名前の場合は「氏」、「名」順に、<br>
       英名の場合はalphabetを「first」, 「last」順に、<br>
       書き込んでください。</p>
+
     <%= form_for @member, html: {class: "form-horizontal"} do %>
       <%= hidden_field_tag :event, @event.id, name: "event[id]" if @event.present? %>
       <div class="form-group">

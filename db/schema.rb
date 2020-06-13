@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200516080229) do
+ActiveRecord::Schema.define(version: 20200613081148) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "title",      limit: 255
@@ -76,6 +76,17 @@ ActiveRecord::Schema.define(version: 20200516080229) do
   end
 
   add_index "invitations", ["event_id"], name: "index_invitations_on_event_id"
+
+  create_table "media_articles", force: :cascade do |t|
+    t.string   "media"
+    t.string   "url"
+    t.string   "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "file_path"
+    t.datetime "date"
+    t.integer  "member_id"
+  end
 
   create_table "member_invitation_relationships", force: :cascade do |t|
     t.integer  "member_id"

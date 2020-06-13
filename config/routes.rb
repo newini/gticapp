@@ -100,6 +100,8 @@ Gticapp::Application.routes.draw do
   resources :accounts
   resources :registers
 
+  resources :media_articles
+
   match '/signin', to: 'sessions#new', via: 'get'
   match '/signup', to: 'users#new', via: 'get'
   match '/signout', to: 'sessions#destroy', via: 'delete'
