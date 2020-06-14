@@ -91,6 +91,12 @@ Gticapp::Application.routes.draw do
     end
   end
 
+  resources :media_articles do
+    member do
+      post :delete_file_path
+    end
+  end
+
   resources :relationships, only: [:create, :edit, :update, :destroy]
   resources :sessions, only: [:new, :create, :destroy]
   resources :places, only: [:index, :new, :create, :edit, :update, :destroy]
@@ -100,7 +106,6 @@ Gticapp::Application.routes.draw do
   resources :accounts
   resources :registers
 
-  resources :media_articles
 
   match '/signin', to: 'sessions#new', via: 'get'
   match '/signup', to: 'users#new', via: 'get'

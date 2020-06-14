@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200613081148) do
+ActiveRecord::Schema.define(version: 20200614105905) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "title",      limit: 255
@@ -68,7 +68,7 @@ ActiveRecord::Schema.define(version: 20200613081148) do
     t.datetime "updated_at"
     t.boolean  "sent_flg"
     t.boolean  "include_gtic_flg",             default: false
-    t.time     "sent_at"
+    t.datetime "sent_at"
     t.boolean  "include_all_flg",              default: false
     t.integer  "birth_month",                  default: 0
     t.integer  "sent_cnt"

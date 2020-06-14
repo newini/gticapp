@@ -31,7 +31,7 @@
           <table class="table table-bordered">
             <tr>
               <th>送信時間</th>
-              <td><%= @invitation.sent_at %></td>
+              <td><%= @invitation.sent_at.strftime('%Y-%m-%d %H:%M') %></td>
             </tr>
 
             <tr>
