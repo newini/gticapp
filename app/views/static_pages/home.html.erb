@@ -8,6 +8,16 @@
   </div>
 </div><br>
 
+<!-- time -->
+<% require "active_support/time"%>
+<% time = Time.now %>
+
+<% if @media_article.date > time - 31*24*60*60 %>
+  <div class="container">
+    <h3>新しい記事が登録されました。詳細は<a href="'/media">MEDIA ARTICLEページで</a></h3>
+  </div>
+<% end %>
+
 <div class="container">
   <h1>最新イベント情報</h1>
   <table class="table">
@@ -19,26 +29,10 @@
       <th class="col-md-4">Title</th>
     </tr>
 
-    <!-- count -->
-    <% max_id = 1 %>
-    <% @events.each do |event| %>
-      <% max_id += 1 %>
-    <% end %>
-
-    <!-- relate id and real id -->
-    <% event_id = Array.new(max_id) %>
-    <% h = max_id - 1 %>
-    <% @events.each do |event| %>
-      <% event_id[h] = event[:event][:id] %>
-      <% h -= 1 %>
-    <% end %>
-
     <!-- table content -->
     <% @events.each do |event| %>
 
       <!-- unheld event -->
-      <% require "active_support/time"%>
-      <% time = Time.now %>
       <% if event[:event][:date] < time - 24*60*60 %>
         <% break %>
       <% end %>
@@ -49,14 +43,7 @@
           <tr>
             <% if detail[:presenter].length >= 1 %>
               <% if i == 0 %>
-                <%= content_tag :td, rowspan: event[:detail].length do %>
-                  <% for h in 0..max_id do %>
-                    <% if event_id[h] == event[:event][:id] %>
-                      <% break %>
-                    <% end %>
-                  <% end %>
-                  <%= "第#{h}回" %>
-                <% end %>
+                <%= content_tag :td, "第#{event[:event][:cumulative_number]}回", rowspan: event[:detail].length %>
                 <%= content_tag :td, rowspan: event[:detail].length do %>
                   <%= "#{event[:event][:name]}" %>
                   <% if event[:event][:event_category_id] == 1 %>

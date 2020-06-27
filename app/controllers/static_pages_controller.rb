@@ -4,6 +4,8 @@ class StaticPagesController < ApplicationController
     if signed_in?
       redirect_to events_path
     end
+
+    # Get events
     @start_date = Event.order("start_time ASC").first.start_time.beginning_of_year
     @last_date = Event.order("start_time ASC").last.start_time.end_of_year
     base = Event.where(:start_time => @start_date..@last_date).group(:start_time)
@@ -34,6 +36,9 @@ class StaticPagesController < ApplicationController
         }.flatten
       ]
     }.flatten
+
+    # Get one media article
+    @media_article = MediaArticle.all.order(date: :DESC)[0]
   end
 
   def about
