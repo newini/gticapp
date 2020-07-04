@@ -35,35 +35,53 @@
             </tr>
 
             <tr>
-              <th>参加者全員</th>
-              <td><%= @invitation.include_all_flg %></td>
+              <th>参加者全員（gticメンバーは含まない）：</th>
+              <% if @invitation.include_all_flg %>
+                <td><%= "送信済み" %></td>
+              <% else %>
+                <td><%= "送信せず" %></td>
+              <% end %>
             </tr>
 
             <tr>
-              <th>誕生月</th>
-              <td>
-                <% @birth_months.each do |birth_month| %>
-                  <%= "#{birth_month}月" %>
-                <% end %>
-              </td>
+              <th>誕生月：</th>
+              <% if @birth_months.present? %>
+                <td>
+                  <% @birth_months.each do |birth_month| %>
+                    <%= "#{birth_month}月" %>
+                  <% end %>
+                </td>
+              <% else %>
+                <td><%= "送信せず" %></td>
+              <% end %>
             </tr>
 
             <tr>
-              <th>イベント会合</th>
-              <td>
-                <% @event_ids.each do |event_id| %>
-                  <%= "第#{Event.find(event_id).cumulative_number}回" %>
-                <% end %>
-              </td>
+              <th>イベント会合別：</th>
+              <% if @event_ids.present? %>
+                <td>
+                  <% @event_ids.each do |event_id| %>
+                    <%= "第#{Event.find(event_id).cumulative_number}回" %>
+                  <% end %>
+                </td>
+              <% else %>
+                <td><%= "送信せず" %></td>
+              <% end %>
+
             </tr>
 
             <tr>
-              <th>GTIC幹事メンバー</th>
-              <td><%= @invitation.include_gtic_flg %></td>
+              <th>GTIC幹事メンバーの中でActiveになっている人<br>
+              （右上の名前をプルダウンメニューの幹事リストの中でActiveになってる人）：</th>
+              <% if @invitation.include_gtic_flg %>
+                <td><%= "送信済み" %></td>
+              <% else %>
+                <td><%= "送信せず" %></td>
+              <% end %>
             </tr>
 
             <tr>
-              <th>入力したメールアドレス</th>
+              <th>手動入力したメールアドレス</th>
               <td><%= @invitation.emails %></td>
             </tr>
 

@@ -238,17 +238,20 @@ class InvitationsController < ApplicationController
     logger.info("at invitation.emails in send_email")
     if @invitation.emails.present?
       emails = @invitation.emails.to_s.split(";") # Separate emails
-      emails.each do |email|
-        if email.present?
-          res = email.to_s.split("<")
-          name = res[0]
-          email_address = res[1].tr(">", "").tr(" ", "") # Remove ">" and spaces in email
-          member = Member.find(3347) # Use dami member!
-          member.last_name = name
-          member.email = email_address
-          InvitationMailer.send_email_to_each_member(member, @invitation).deliver
-          sent_cnt = sent_cnt + 1
-        end
+      emails.push("GTIC<gtic.information@gmail.com>")
+    else
+      emails = ["GTIC<gtic.information@gmail.com>"]
+    end
+    emails.each do |email|
+      if email.present?
+        res = email.to_s.split("<")
+        name = res[0]
+        email_address = res[1].tr(">", "").tr(" ", "") # Remove ">" and spaces in email
+        member = Member.find(3347) # Use dami member!
+        member.last_name = name
+        member.email = email_address
+        InvitationMailer.send_email_to_each_member(member, @invitation).deliver
+        sent_cnt = sent_cnt + 1
       end
     end
 
