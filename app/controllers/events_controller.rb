@@ -2,7 +2,7 @@ class EventsController < ApplicationController
   include EventsHelper
   include MembersHelper
   before_action :signed_in_user
-  before_action :find_selected_event,only: [
+  before_action :find_selected_event, only: [
     :show, :edit, :update, :destroy,
     :change_role, :switch_black_list_flg,
     :update_maybe_member, :update_registed_member, :update_participants,

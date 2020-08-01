@@ -1,5 +1,6 @@
 class GmailsController < ApplicationController
   include GmailsHelper
+  before_action :signed_in_user
 
   def redirect
     client = Signet::OAuth2::Client.new({
