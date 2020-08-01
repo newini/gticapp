@@ -16,7 +16,7 @@ gem 'bcrypt', '~> 3.1.7'
 
 gem 'jquery-rails'
 gem 'therubyracer', platforms: :ruby
-gem "bootstrap-sass", ">= 3.4.1"
+gem "bootstrap-sass"
 gem 'bootswatch-rails'
 gem 'will_paginate'
 gem 'will_paginate-bootstrap'
@@ -43,6 +43,8 @@ gem "loofah", ">= 2.2.3"
 
 gem "roo" # Import xlsx file
 
+gem "google-api-client" # Gmail API
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
@@ -58,12 +60,6 @@ group :development, :test do
 #  gem "capistrano-rails"
 #  gem "capistrano-rbenv"
 #  gem 'quiet_assets'
-end
-
-group :test do
-#  gem 'capybara'
-#  gem 'selenium-webdriver'
-#  gem 'factory_girl_rails'
 end
 
 group :production do

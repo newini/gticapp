@@ -97,6 +97,11 @@ Gticapp::Application.routes.draw do
     end
   end
 
+  # Gmail
+  get '/gmails/redirect'
+  get '/gmails/callback'
+  get '/gmails/getmail'
+
   resources :relationships, only: [:create, :edit, :update, :destroy]
   resources :sessions, only: [:new, :create, :destroy]
   resources :places, only: [:index, :new, :create, :edit, :update, :destroy]
