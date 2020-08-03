@@ -26,6 +26,9 @@ class SessionsController < ApplicationController
 
       session[:user_id] = user.id
 
+      # Expire time
+      session[:expires_at] = Time.current + 24.hours
+
       if !user.active_flg
         redirect_to root_url, :notice => "Cannot login! You don't have access authority! Please contact to admin!"
       end
@@ -39,26 +42,6 @@ class SessionsController < ApplicationController
           redirect_to root_url, :notice => "Welcome! [sys] Cannot update gtic flg!"
       end
     end
-
-#    if !user
-#      user = User.find_by_email(auth["info"]["email"])
-#    end
-
-    # comment out below when not use
-#    if !user
-#      user = User.create_with_omniauth(auth)
-#    end
-
-#    if user && user.authenticate(params[:session][:password])
-#    user = User.find_by(email: params[:session][:email].downcase)
-#    if user && user.authenticate(params[:session][:password])
-#      sign_in user
-#      redirect_to members_path
-#    else
-#      flash.now[:error] = 'Invalid email/password combination'
-#      render 'new'
-#    end
-
   end
 
   def destroy

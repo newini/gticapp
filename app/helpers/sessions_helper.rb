@@ -8,7 +8,14 @@ module SessionsHelper
   end
 
   def signed_in?
-    !current_user.nil?
+    if current_user.present?
+      if session[:expires_at].present?
+        if session[:expires_at].to_time > Time.current
+          return true
+        end
+      end
+    end
+    return false
   end
 
   def current_user=(user)
