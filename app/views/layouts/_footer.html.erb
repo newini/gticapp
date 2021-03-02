@@ -7,7 +7,7 @@
     </div>
     <div class="col-md-2">
       <% unless signed_in? %>
-        <small><p class="text-right"><%= link_to "管理者", "/auth/facebook" %></p></small>
+        <small><p class="text-right"><%= link_to "管理者", "/auth/facebook", method: :post %></p></small>
       <% end %>
     </div>
   </div>
