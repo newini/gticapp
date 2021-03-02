@@ -1,8 +1,8 @@
 GIT
   remote: git://github.com/railsconfig/config.git
-  revision: 2748274b187aa86e71d8b88951a9ab57d7f988d0
+  revision: 618c839ccca454d419b0587f8a113e2fe6f3ebcd
   specs:
-    config (2.2.3)
+    config (3.0.0)
       deep_merge (~> 1.2, >= 1.2.1)
       dry-validation (~> 1.0, >= 1.0.0)
 
@@ -69,7 +69,7 @@ GEM
     declarative (0.0.20)
     declarative-option (0.1.0)
     deep_merge (1.2.1)
-    dry-configurable (0.12.0)
+    dry-configurable (0.12.1)
       concurrent-ruby (~> 1.0)
       dry-core (~> 0.5, >= 0.5.0)
     dry-container (0.7.2)
@@ -90,7 +90,7 @@ GEM
       dry-initializer (~> 3.0)
       dry-logic (~> 1.0)
       dry-types (~> 1.5)
-    dry-types (1.5.0)
+    dry-types (1.5.1)
       concurrent-ruby (~> 1.0)
       dry-container (~> 0.3)
       dry-core (~> 0.5, >= 0.5)
@@ -160,7 +160,7 @@ GEM
     memoist (0.16.2)
     mini_mime (1.0.2)
     mini_portile2 (2.5.0)
-    minitest (5.14.3)
+    minitest (5.14.4)
     multi_json (1.15.0)
     multi_xml (0.6.0)
     multipart-post (2.1.1)
@@ -173,7 +173,7 @@ GEM
       multi_json (~> 1.3)
       multi_xml (~> 0.5)
       rack (>= 1.2, < 3)
-    omniauth (2.0.2)
+    omniauth (2.0.3)
       hashie (>= 3.4.6)
       rack (>= 1.6.2, < 3)
       rack-protection
@@ -202,7 +202,7 @@ GEM
       bundler (>= 1.3.0, < 2.0)
       railties (= 4.2.11.3)
       sprockets-rails
-    rails-deprecated_sanitizer (1.0.3)
+    rails-deprecated_sanitizer (1.0.4)
       activesupport (>= 4.2.0.alpha)
     rails-dom-testing (1.0.9)
       activesupport (>= 4.2.0, < 5.0)
@@ -245,7 +245,7 @@ GEM
       tilt (>= 1.1, < 3)
     sassc (2.4.0)
       ffi (~> 1.9)
-    sdoc (2.0.3)
+    sdoc (2.0.4)
       rdoc (>= 5.0)
     signet (0.14.1)
       addressable (~> 2.3)
@@ -286,7 +286,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  actionview (>= 4.2.11.1)
+  actionview (>= 4.2.11)
   activejob (>= 4.2.11)
   bcrypt (~> 3.1.7)
   bootstrap-sass
@@ -320,4 +320,4 @@ DEPENDENCIES
   will_paginate-bootstrap
 
 BUNDLED WITH
-   1.16.4
+   1.17.3

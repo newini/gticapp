@@ -22,9 +22,11 @@ gem 'will_paginate'
 gem 'will_paginate-bootstrap'
 gem 'mandrill-api'
 gem 'koala'
+
+# 認証
 gem 'omniauth'
 gem 'omniauth-facebook'
-#gem "omniauth-rails_csrf_protection" # Rails CSRF Protection for omniauth
+
 gem 'whenever', :require => false
 
 # Graphs
@@ -34,9 +36,11 @@ gem 'spinjs-rails'
 gem "jquery-slick-rails"
 gem 'config', github: 'railsconfig/config' # name changed from rails_config
 
-gem "actionview", ">= 4.2.11.1"
-gem "nokogiri", ">= 1.8.5"
+# Depends on rails version
+gem "actionview", ">= 4.2.11"
 gem "activejob", ">= 4.2.11"
+
+gem "nokogiri", ">= 1.8.5"
 gem "rack", ">= 1.6.11"
 gem "loofah", ">= 2.2.3"
 #gem "activesupport", "4.2.10"
