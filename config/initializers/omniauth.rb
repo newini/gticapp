@@ -1,7 +1,9 @@
+OmniAuth.config.logger = Rails.logger
+
 Rails.application.config.middleware.use OmniAuth::Builder do
   provider :facebook,
-    Settings.OmniAuth.facebook.app_id,
-    Settings.OmniAuth.facebook.app_secret,
+    ENV['FACEBOOK_APP_ID'],
+    ENV['FACEBOOK_APP_SECRET'],
+    :scope => 'email'
     #:scope => 'email,user_birthday,user_events'
-    :scope => 'email,user_birthday'
 end
