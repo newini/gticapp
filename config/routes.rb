@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
+  # For authentication
+  devise_for :users, controllers: {
+    omniauth_callbacks: 'users/omniauth_callbacks'
+    #sessions: 'users/sessions'
+  }
+
   resources :members do
     collection do
       get :management

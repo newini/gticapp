@@ -58,7 +58,9 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 
 # 認証
-gem 'omniauth'
+#gem 'devise'
+gem 'devise', github: 'heartcombo/devise', branch: 'ca-omniauth-2' # Use this ver. due to omniauth ver. problem
+#gem 'omniauth'
 gem 'omniauth-facebook'
 
 # Graphs
