@@ -1,5 +1,5 @@
 class InvitationsController < ApplicationController
-  before_action :signed_in_user
+  before_action :signed_in_staff
 
   def index
     @invitations = Invitation.where(sent_flg: [nil, false]).order("created_at DESC")
@@ -216,9 +216,9 @@ class InvitationsController < ApplicationController
       redirect_to invitation_path(@invitation), :flash => {:success => "GTICメンバーを外しました。"}
     else
       # Add
-      User.where(active_flg: true).each do |user|
-        if !checkDuplicatedMember(user.member_id, @invitation.id)
-          MemberInvitationRelationship.new(member_id: user.member_id, invitation_id: @invitation.id, include_gtic_flg: true).save
+      Staff.where(active_flg: true).each do |staff|
+        if !checkDuplicatedMember(staff.member_id, @invitation.id)
+          MemberInvitationRelationship.new(member_id: staff.member_id, invitation_id: @invitation.id, include_gtic_flg: true).save
         end
       end
       # Update
@@ -307,7 +307,7 @@ class InvitationsController < ApplicationController
       params.require(:invitation).permit(:title, :content)
     end
 
-    def signed_in_user
+    def signed_in_staff
       redirect_to root_path, notice: "Please sign in." unless signed_in?
     end
 

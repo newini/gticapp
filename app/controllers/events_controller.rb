@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
   include EventsHelper
   include MembersHelper
-  before_action :signed_in_user
+  before_action :signed_in_staff
   before_action :find_selected_event, only: [
     :show, :edit, :update, :destroy,
     :change_role, :switch_black_list_flg,
@@ -599,7 +599,7 @@ class EventsController < ApplicationController
       #招待された人を格納["id",...]
     invited = facebook(@event_id, status).map{|v| v["id"].to_i}
       #GTICメンバーを格納["uid",...]
-    organizer = User.all.map{|v| v.uid.to_i}
+    organizer = Staff.all.map{|v| v.uid.to_i}
       #大野さんを追加
     organizer.push(100001988359323)
       #削除する人を格納["id",...]
@@ -630,7 +630,7 @@ class EventsController < ApplicationController
     def event_params
       params.require(:event).permit(:name, :cumulative_number, :start_time, :end_time, :fb_event_id, :place_id, :fee, :event_category_id, :note)
     end
-    def signed_in_user
+    def signed_in_staff
       redirect_to root_path, notice: "Please sign in." unless signed_in?
     end
     def find_selected_event

@@ -1,6 +1,6 @@
 class GmailsController < ApplicationController
   include GmailsHelper
-  before_action :signed_in_user
+  before_action :signed_in_staff
 
   def redirect
     client = Signet::OAuth2::Client.new({
@@ -35,7 +35,7 @@ class GmailsController < ApplicationController
     client = Signet::OAuth2::Client.new(access_token: session[:access_token])
     service = Google::Apis::GmailV1::GmailService.new
     service.authorization = client
-    @labels_list = service.list_user_labels('me')
+    @labels_list = service.list_staff_labels('me')
   end
 
 end

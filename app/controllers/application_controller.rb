@@ -5,11 +5,11 @@ class ApplicationController < ActionController::Base
   include SessionsHelper
 
   private
-  def signed_in_user
+  def signed_in_staff
     redirect_to root_path, notice: "Please sign in." unless signed_in?
   end
 
-  def admin_user
+  def admin_staff
     redirect_to root_path, notice: "Admin only." unless admin?
   end
 

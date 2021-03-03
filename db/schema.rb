@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_14_105905) do
+ActiveRecord::Schema.define(version: 2021_03_03_100900) do
 
   create_table "accounts", force: :cascade do |t|
     t.string "title", limit: 255
@@ -215,7 +215,7 @@ ActiveRecord::Schema.define(version: 2020_06_14_105905) do
     t.index ["status"], name: "index_schedule_logs_on_status"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "staffs", force: :cascade do |t|
     t.string "name", limit: 255
     t.string "email", limit: 255
     t.string "password", limit: 255
@@ -231,11 +231,11 @@ ActiveRecord::Schema.define(version: 2020_06_14_105905) do
     t.integer "member_id"
     t.boolean "active_flg"
     t.string "description"
-    t.index ["access_token"], name: "index_users_on_access_token"
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["provider"], name: "index_users_on_provider"
-    t.index ["remember_token"], name: "index_users_on_remember_token"
-    t.index ["uid"], name: "index_users_on_uid", unique: true
+    t.index ["access_token"], name: "index_staffs_on_access_token"
+    t.index ["email"], name: "index_staffs_on_email", unique: true
+    t.index ["provider"], name: "index_staffs_on_provider"
+    t.index ["remember_token"], name: "index_staffs_on_remember_token"
+    t.index ["uid"], name: "index_staffs_on_uid", unique: true
   end
 
 end

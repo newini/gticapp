@@ -1,5 +1,5 @@
 class MembersController < ApplicationController
-  before_action :signed_in_user
+  before_action :signed_in_staff
   helper_method :sort_column, :sort_direction
 
   def index
@@ -380,7 +380,7 @@ class MembersController < ApplicationController
       )
     end
 
-    def signed_in_user
+    def signed_in_staff
       redirect_to root_path, notice: "Please sign in." unless signed_in?
     end
 
@@ -393,7 +393,7 @@ class MembersController < ApplicationController
     end
 
     def get_facebook_name(uid)
-      key = current_user.access_token
+      key = current_staff.access_token
       graph = Koala::Facebook::API.new(key)
       begin
         fb_profile = graph.get_object(uid)

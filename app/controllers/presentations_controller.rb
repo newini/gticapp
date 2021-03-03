@@ -1,5 +1,5 @@
 class PresentationsController < ApplicationController
-  before_action :signed_in_user
+  before_action :signed_in_staff
 
   def index
     @event = Event.find(params[:id])

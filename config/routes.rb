@@ -64,11 +64,11 @@ Rails.application.routes.draw do
     }
   end
 
-  resources :users do
+  resources :staffs do
     collection do
       post :update_active
       post :update_admin
-      post :update_users
+      post :update_staffs
     end
   end
 
@@ -113,7 +113,7 @@ Rails.application.routes.draw do
 
 
   match '/signin', to: 'sessions#new', via: 'get'
-  match '/signup', to: 'users#new', via: 'get'
+  match '/signup', to: 'staffs#new', via: 'get'
   match '/signout', to: 'sessions#destroy', via: 'delete'
   match '/home', to: 'static_pages#home', via: 'get'
   match '/about', to: 'static_pages#about', via: 'get'

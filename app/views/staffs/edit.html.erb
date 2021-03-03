@@ -3,10 +3,10 @@
   </aside>
 
   <div class="col-lg-5">
-    <h2>User情報</h2>
+    <h2>Staff情報</h2>
 
     <strong>㊟Name, Email, Facebook IDはMEMBERのデータを編集すること</strong>
-    <%= form_for @user, :html => { :class => 'form-horizontal' } do |f| %>
+    <%= form_for @staff, :html => { :class => 'form-horizontal' } do |f| %>
       <table class="table table-bordered">
         <tr>
           <th>Name</th>
@@ -25,19 +25,19 @@
           <td class="form-group">
             <div class="col-sm-6">
               <%= f.text_field :member_id, placeholder: "Member ID", class: "form-control", :required => 'required' %>
-              <%= @user.errors.messages[:member_id][0] if @user.errors.any?%>
+              <%= @staff.errors.messages[:member_id][0] if @staff.errors.any?%>
             </div>
           </td>
         </tr>
         <% if admin? %>
           <tr>
             <th class="col-md-2">Active?</th>
-            <td><%= select_active(@user) %></td>
+            <td><%= select_active(@staff) %></td>
           </td>
           </tr>
           <tr>
             <th class="col-md-2">Admin?</th>
-            <td><%= select_admin(@user) %></td>
+            <td><%= select_admin(@staff) %></td>
           </tr>
         <% end %>
         <tr>
@@ -46,7 +46,7 @@
             <div class="col-sm-6">
               <%#= f.text_field :description, placeholder: "...", class: "form-control" %>
               <%= f.text_area :description, size: "100x10", class: "form-control", placeholder: "......" %>
-              <%= @user.errors.messages[:description][0] if @user.errors.any?%>
+              <%= @staff.errors.messages[:description][0] if @staff.errors.any?%>
             </div>
           </td>
         </tr>

@@ -168,7 +168,7 @@ class StaticPagesController < ApplicationController
 
 
   def organizer
-    @organizers = User.all
+    @organizers = Staff.all
   end
 
   def schedule

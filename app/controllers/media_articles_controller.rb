@@ -1,5 +1,5 @@
 class MediaArticlesController < ApplicationController
-  before_action :signed_in_user
+  before_action :signed_in_staff
 
   def index
     @media_articles = MediaArticle.all.order(date: :desc)

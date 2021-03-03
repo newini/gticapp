@@ -1,5 +1,5 @@
 class EventCategoriesController < ApplicationController
-  before_action :signed_in_user
+  before_action :signed_in_staff
   def index
     @title = "イベントタイプ一覧"
     @event_categories = EventCategory.all

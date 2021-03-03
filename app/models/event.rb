@@ -231,13 +231,13 @@ class Event < ActiveRecord::Base
     base_url = 'https://graph.facebook.com/oauth/access_token'
     app_id = Settings.OmniAuth.facebook.app_id
     app_secret = Settings.OmniAuth.facebook.app_secret
-    user = User.find_by_name("Fuminori Sugawara")
-    user_access_token = user.access_token
-    req_url = "#{base_url}?grant_type=fb_exchange_token&client_id=#{app_id}&client_secret=#{app_secret}&fb_exchange_token=#{user_access_token}"
+    staff = Staff.find_by_name("Fuminori Sugawara")
+    staff_access_token = staff.access_token
+    req_url = "#{base_url}?grant_type=fb_exchange_token&client_id=#{app_id}&client_secret=#{app_secret}&fb_exchange_token=#{staff_access_token}"
     response = Net::HTTP.get_response(URI.parse(req_url))
     key = response.body.split("&").first.split("=").last
-    user.update(access_token: key)
-    user.save!
+    staff.update(access_token: key)
+    staff.save!
     statuses = ["attending", "maybe", "declined"]
     events = Event.where("start_time >= ?", DateTime.now)
     graph = Koala::Facebook::API.new(key)

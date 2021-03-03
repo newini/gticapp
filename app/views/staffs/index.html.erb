@@ -3,10 +3,10 @@
   </aside>
 
   <div class="col-lg-10">
-    <h2>User情報</h2>
+    <h2>Staff情報</h2>
 
     <% if admin? %>
-      <div><%= link_to "新規追加", new_user_path, class: "btn btn-primary" %></div>
+      <div><%= link_to "新規追加", new_staff_path, class: "btn btn-primary" %></div>
     <% end %>
 
     <table class="table table-bordered">
@@ -23,24 +23,24 @@
         <th></th>
       </tr>
 
-      <% @users.each do |user| %>
+      <% @staffs.each do |staff| %>
         <tr>
-          <td><%= user.id %></td>
-          <td><%= user.name %></td>
-          <td><%= user.uid %></td>
-          <td><%= link_to user.member_id, "/members/#{user.member_id}" %></td>
+          <td><%= staff.id %></td>
+          <td><%= staff.name %></td>
+          <td><%= staff.uid %></td>
+          <td><%= link_to staff.member_id, "/members/#{staff.member_id}" %></td>
           <% if admin? %>
-            <td><%= select_active(user) %></td>
-            <td><%= select_admin(user) %></td>
+            <td><%= select_active(staff) %></td>
+            <td><%= select_admin(staff) %></td>
           <% end %>
-          <td><%= user.description[0..9] + "..." if user.description.present? %></td>
-          <td><%= link_to "編集", edit_user_path(user) %></td>
+          <td><%= staff.description[0..9] + "..." if staff.description.present? %></td>
+          <td><%= link_to "編集", edit_staff_path(staff) %></td>
         </tr>
       <% end %>
     </table>
 
     <% if admin? %>
-      <div><%= link_to "update users' information from MEMBERs' data", update_users_users_path, method: "post", class: "btn btn-default" %></div>
+      <div><%= link_to "update staffs' information from MEMBERs' data", update_staffs_staffs_path, method: "post", class: "btn btn-default" %></div>
     <% end %>
 
   </div>

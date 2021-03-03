@@ -26,8 +26,8 @@ function deleteTest(){
     FB.api(
         "/<%= @event_id %>/invited",
       "DELETE",
-      {"access_token": "<%= current_user.access_token %>",
-        "user": deleting[elem]
+      {"access_token": "<%= current_staff.access_token %>",
+        "staff": deleting[elem]
       },
       function(response){
         str += JSON.stringify(response);
@@ -46,8 +46,8 @@ function deleteInvited(){
     FB.api(
         "/<%= @event_id %>/invited",
       "DELETE",
-      {"access_token": "<%= current_user.access_token %>",
-        "user": elem
+      {"access_token": "<%= current_staff.access_token %>",
+        "staff": elem
       },
       function(response){
         document.getElementById('result').innerHTML = JSON.stringify(response);
@@ -58,7 +58,7 @@ function deleteInvited(){
 function getEvent(){
   FB.api(
       "/<%= @event_id %>",
-    {access_token: "<%= current_user.access_token %>"},
+    {access_token: "<%= current_staff.access_token %>"},
     function(response){
         document.getElementById('result').innerHTML = JSON.stringify(response);
     }
@@ -67,7 +67,7 @@ function getEvent(){
  function getInvited(){
   FB.api(
       "/<%= @event_id %>/invited",
-    {access_token: "<%= current_user.access_token %>"},
+    {access_token: "<%= current_staff.access_token %>"},
     function(response){
       if (response && !response.error) {
       var contents = '<ul>';
@@ -85,7 +85,7 @@ function getEvent(){
 }
 function getWall(){
   FB.api("/me/feed",
-      {access_token: "<%= current_user.access_token %>"},
+      {access_token: "<%= current_staff.access_token %>"},
     function(response){
       var contents = '';
       for (var i = 0; i < response.data.length; i++) {

@@ -1,5 +1,5 @@
 class PlacesController < ApplicationController
-  before_action :signed_in_user
+  before_action :signed_in_staff
   def index
     @title = "会場一覧"
     @places = Place.all
