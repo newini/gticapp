@@ -5,9 +5,8 @@ application up and running.
 
 Things you may want to cover:
 
-* Ruby version: 2.5.1
-
-* Rails version: '~> 4.2.11'
+* Ruby version: 3.0.0
+* Rails version: 6.1.3
 
 * System dependencies
 
@@ -27,15 +26,189 @@ Things you may want to cover:
 Please feel free to use a different markup language if you do not plan to run
 `rake doc:app`
 
-
-# Useful commands
-## bundle
+# 1. Full Installation
+## a. Install Ruby
+Install requirements.
 ```
+sudo apt install curl
+curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+
+sudo apt-get update
+sudo apt-get install git-core zlib1g-dev build-essential \
+    libssl-dev libreadline-dev libyaml-dev libsqlite3-dev \
+    sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev \
+    software-properties-common libffi-dev nodejs yarn -y
+
+```
+
+Install Ruby via rvenv (RuBy ENVironment).
+```
+cd
+git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
+echo 'eval "$(rbenv init -)"' >> ~/.bashrc
+exec $SHELL
+
+git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
+echo 'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"' >> ~/.bashrc
+exec $SHELL
+
+rbenv install 3.0.0
+rbenv global 3.0.0
+ruby -v
+
+```
+Install bundler
+```
+gem install bundler
+```
+
+## b. Install Rails
+```
+gem install rails -v 6.1.3
+
+rbenv rehash
+
+rails -v
+# Rails 6.1.3
+
+```
+
+## c. Install apache2
+```
+sudo apt install apache2 apache2-utils -y
+```
+
+### Edit apache2 directory config (may not need?)
+```
+sudo vim /etc/apache2/mods-enabled/dir.conf
+```
+Change as like below:
+```
+<IfModule mod_dir.c>
+
+    DirectoryIndex index.php index.html index.cgi index.pl index.xhtml index.htm
+
+</IfModule>
+```
+
+## d. Install passenger (railsをapache2で使うためのプログラム)
+```
+sudo apt install libcurl4-openssl-dev apache2-threaded-dev
+
+gem install passenger
+
+passenger-install-apache2-module
+```
+The command `passenger-install-apache2-module` will take about 30 min.
+
+If it says lack of memory. Add swap.
+```
+sudo dd if=/dev/zero of=/swap bs=1M count=1024
+sudo mkswap /swap
+sudo swapon /swap
+```
+
+### Edit apache2 config
+```
+sudo vim /etc/apache2/apache2.conf
+```
+Add output of `passenger-install-apache2-module` like below. (attention! the path is depended on your user name!)
+```
+LoadModule passenger_module /home/your_user_name/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/passenger-6.0.7/buildout/apache2/mod_passenger.so
+<IfModule mod_passenger.c>
+  PassengerRoot /home/your_user_name/.rbenv/versions/3.0.0/lib/ruby/gems/3.0.0/gems/passenger-6.0.7
+  PassengerDefaultRuby /home/your_user_name/.rbenv/versions/3.0.0/bin/ruby
+</IfModule>
+```
+
+If you missed output of `passenger-install-apache2-module`, type `passenger-install-apache2-module --snippet` to output again.
+
+## e. Add gticapp config (for HTTP)
+```
+sudo vim /etc/apache2/sites-available/gticapp.conf
+```
+Add below lines.
+```
+<VirtualHost *:80>
+    ServerName gtic.jp
+    ServerAlias gtic.jp
+    ServerAdmin webmaster@localhost
+
+    # !!! Be sure to point DocumentRoot to 'public'!
+    DocumentRoot /var/www/html/gticapp/public
+
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+    <Directory /var/www/html/gticapp/public>
+        # This relaxes Apache security settings.
+        AllowOverride all
+
+        # MultiViews must be turned off.
+        Options -MultiViews
+
+        # Uncomment this if you're on Apache >= 2.4:
+        # Require all granted
+    </Directory>
+</VirtualHost>
+
+```
+
+## f. Enable HTTPS by using Let's Encrypt
+Goto [Let's Encrypt](https://letsencrypt.org), followo the instuctions to enable HTTPS. It will generate new gticapp config at `/etc/apache2/sites-available/gticapp-le-ssl.conf`.
+
+
+## g. Add environment variables in config
+Open gticapp ssl config
+```
+sudo vim /etc/apache2/sites-available/gticapp-le-ssl.conf
+```
+Add variable name and values like below:
+```
+SetEnv VARIABLE_NAME some_value
+```
+
+## h. Enable gticapp site
+```
+# ポートを通す使うアプリ指定
+sudo a2ensite gticapp
+
+# 使わないアプリを取り除く
+sudo a2dissite (gticapp以外は全部取り除く)
+```
+
+## i. Download gticapp
+```
+cd /var/www/html
+sudo git clone https://github.com/newini/gticapp.git
+sudo chown your_user_name:your_user_name gticapp
+```
+
+## j. Install gems
+```
+cd /var/www/html/gticapp
 bundle install
+```
+
+## k. Restart apache2
+```
+sudo service apache2 restart
+```
+
+
+# 2. Useful commands to maintain
+## a. bundle
+Update gems on /vendor
+```
 bundle update
 ```
+If you added new gems in `Gemfile`, use `bundle install` to install.
 
-## SQL
+
+## b. SQL
 1. change db: `bundle exec rails g migration AddUserIdToPosts`
 
 2. open migration file:
@@ -57,4 +230,10 @@ end
 
 
 # MEMO
-* sqlite 1.4.0 occurs error, install 1.3.13
+```
+The google-api-client gem is deprecated and will likely not be updated further.
+
+Instead, please install the gem corresponding to the specific service to use.
+For example, to use the Google Drive V3 client, install google-apis-drive_v3.
+For more information, see the FAQ in the OVERVIEW.md file or the YARD docs.
+```
