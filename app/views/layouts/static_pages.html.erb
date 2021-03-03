@@ -32,17 +32,44 @@
       -->
     </STYLE>
   </NOSCRIPT>
+
+  <!-- Facebook Analytics -->
+  <script>
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId      : <%= ENV['FACEBOOK_APP_ID'] %>,
+        xfbml      : true,
+        version    : 'v10.0'
+      });
+
+      FB.AppEvents.logPageView();
+
+    };
+
+    (function(d, s, id){
+       var js, fjs = d.getElementsByTagName(s)[0];
+       if (d.getElementById(id)) {return;}
+       js = d.createElement(s); js.id = id;
+       js.src = "https://connect.facebook.net/en_US/sdk.js";
+       fjs.parentNode.insertBefore(js, fjs);
+     }(document, 'script', 'facebook-jssdk'));
+  </script>
+
 </head>
 
 <body>
   <%= render 'layouts/header' %>
+
   <br><br><br>
+
   <div class="container">
     <% flash.each do |key,value| %>
       <%= content_tag(:div, value, class: "alert alert-#{key}") %>
     <% end %>
   </div>
-    <%= yield %>
+
+  <%= yield %>
+
   <div class="container">
     <%= render 'layouts/footer' %>
     <%= debug(params) if Rails.env.development? %>
