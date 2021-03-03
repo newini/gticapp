@@ -229,6 +229,18 @@ end
 4. if want to go back: `rake db:rollback`
 
 
+## c. Compile assets (may not need)
+```
+bundle exec rake assets:clean
+
+bundle exec rake assets:clobber
+#bundle exec rake assets:clobber RAILS_ENV=production
+
+bundle exec rake assets:precompile
+#bundle exec rake assets:precompile RAILS_ENV=production
+```
+
+
 # MEMO
 ```
 The google-api-client gem is deprecated and will likely not be updated further.
