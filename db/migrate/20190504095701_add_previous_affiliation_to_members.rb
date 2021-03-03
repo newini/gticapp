@@ -1,4 +1,4 @@
-class AddPreviousAffiliationToMembers < ActiveRecord::Migration
+class AddPreviousAffiliationToMembers < ActiveRecord::Migration[4.2]
   def change
     add_column :members, :previous_affiliation, :string
   end

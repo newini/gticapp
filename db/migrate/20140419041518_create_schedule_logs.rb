@@ -1,4 +1,4 @@
-class CreateScheduleLogs < ActiveRecord::Migration
+class CreateScheduleLogs < ActiveRecord::Migration[4.2]
   def change
     create_table :schedule_logs do |t|
       t.integer :event_id

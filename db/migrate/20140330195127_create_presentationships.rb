@@ -1,4 +1,4 @@
-class CreatePresentationships < ActiveRecord::Migration
+class CreatePresentationships < ActiveRecord::Migration[4.2]
   def change
     create_table :presentationships do |t|
       t.integer :member_id

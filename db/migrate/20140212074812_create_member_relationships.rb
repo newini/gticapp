@@ -1,4 +1,4 @@
-class CreateMemberRelationships < ActiveRecord::Migration
+class CreateMemberRelationships < ActiveRecord::Migration[4.2]
   def change
     create_table :member_relationships do |t|
       t.integer :introduced_id
