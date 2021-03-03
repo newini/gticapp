@@ -1,4 +1,4 @@
-class ChangeSomethingToMediaArticles < ActiveRecord::Migration
+class ChangeSomethingToMediaArticles < ActiveRecord::Migration[4.2]
   def change
     remove_column :media_articles, :datetime, :string
     add_column :media_articles, :date, :datetime

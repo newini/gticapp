@@ -1,4 +1,4 @@
-class CreateMediaArticles < ActiveRecord::Migration
+class CreateMediaArticles < ActiveRecord::Migration[4.2]
   def change
     create_table :media_articles do |t|
       t.datetime :datetime
