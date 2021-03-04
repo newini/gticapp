@@ -50,9 +50,9 @@
           <li><%= link_to "MEDIA ARTICLE", :media %></li>
           <li><%= link_to "CONTACT US", :contact %></li>
           <% if signed_in? %>
-            <li id="fat-menu" class="dropdown">
-              <a href class="dropdown-toggle" data-toggle="dropdown"> <%= current_user.email %> <b class="caret"></b></a>
-              <ul class="dropdown-menu">
+            <li class="dropdown">
+              <a href class="dropdown-toggle" type="button" data-toggle="dropdown" id="dropdownUserMenu" aria-expanded="false"> <%= current_user.email %> <b class="caret"></b></a>
+              <ul class="dropdown-menu" aria-labelledby="dropdownUserMenu">
                 <li><%= link_to "My Page", current_user %></li>
                 <li><%= link_to "SIGN OUT", destroy_user_session_path, method: :delete %></li>
               </ul>
