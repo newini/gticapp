@@ -11,6 +11,7 @@
 // about supported directives.
 //
 
+// jquery.js file must be added before bootstrap.js file.
 //= require jquery
 //= require jquery.slick
 //= require turbolinks

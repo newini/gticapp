@@ -1,11 +1,16 @@
 Rails.application.routes.draw do
+  get 'users/show'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   # For authentication
   devise_for :users, controllers: {
-    omniauth_callbacks: 'users/omniauth_callbacks'
-    #sessions: 'users/sessions'
+    omniauth_callbacks: 'users/omniauth_callbacks',
+    passwords: 'users/passwords',
+    registrations: 'users/registrations',
+    sessions: 'users/sessions'
   }
+  # User page
+  resources :users, :only => [:show]
 
   resources :members do
     collection do
@@ -110,7 +115,7 @@ Rails.application.routes.draw do
   get '/gmails/getmail'
 
   resources :relationships, only: [:create, :edit, :update, :destroy]
-  resources :sessions, only: [:new, :create, :destroy]
+  #resources :sessions, only: [:new, :create, :destroy]
   resources :places, only: [:index, :new, :create, :edit, :update, :destroy]
   resources :categories, only: [:index, :new, :create, :edit, :update, :destroy]
   resources :presentations, only: [:index, :new, :create, :edit, :update, :destroy]
@@ -119,9 +124,9 @@ Rails.application.routes.draw do
   resources :registers
 
 
-  match '/signin', to: 'sessions#new', via: 'get'
-  match '/signup', to: 'staffs#new', via: 'get'
-  match '/signout', to: 'sessions#destroy', via: 'delete'
+  #match '/signin', to: 'sessions#new', via: 'get'
+  #match '/signup', to: 'staffs#new', via: 'get'
+  #match '/signout', to: 'sessions#destroy', via: 'delete'
   match '/home', to: 'static_pages#home', via: 'get'
   match '/about', to: 'static_pages#about', via: 'get'
   match '/presenter', to: 'static_pages#presenter', via: 'get'
@@ -133,7 +138,7 @@ Rails.application.routes.draw do
   match '/contact', to: 'static_pages#contact', via: 'get'
 
   #omniauth
-  match '/auth/:provider/callback', to: 'sessions#create', via: 'get'
+  #match '/auth/:provider/callback', to: 'sessions#create', via: 'get'
 
   root 'static_pages#home'
 

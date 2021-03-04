@@ -1,6 +1,18 @@
 # frozen_string_literal: true
 
 class Users::SessionsController < Devise::SessionsController
+  # reCAPTCHA
+  # See, https://github.com/heartcombo/devise/wiki/How-To:-Use-Recaptcha-with-Devise
+  prepend_before_action :check_captcha, only: [:create] # Change this to be any actions you want to protect.
+
+  private
+    def check_captcha
+      unless verify_recaptcha
+        self.resource = resource_class.new sign_in_params
+        respond_with_navigational(resource) { render :new }
+      end
+    end
+
   # before_action :configure_sign_in_params, only: [:create]
 
   # GET /resource/sign_in

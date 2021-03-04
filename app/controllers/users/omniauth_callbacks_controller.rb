@@ -24,9 +24,9 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   # protected
 
   # The path used when OmniAuth fails
-  def after_omniauth_failure_path_for(scope)
-    super(scope)
-  end
+  #def after_omniauth_failure_path_for(scope)
+  #  super(scope)
+  #end
 
   def facebook
     @user = User.from_omniauth(request.env["omniauth.auth"])

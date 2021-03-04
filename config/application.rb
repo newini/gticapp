@@ -29,5 +29,8 @@ module Gticapp
     config.time_zone = 'Tokyo'
     # config.eager_load_paths << Rails.root.join("extras")
     #config.active_record.default_timezone = :local
+
+    # deviseの日本語化
+    config.i18n.default_locale = :ja
   end
 end

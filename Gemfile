@@ -62,6 +62,11 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'devise', github: 'heartcombo/devise', branch: 'ca-omniauth-2' # Use this ver. due to omniauth ver. problem
 #gem 'omniauth'
 gem 'omniauth-facebook'
+gem 'recaptcha'
+
+# deviseの日本語化
+gem 'devise-i18n'
+gem 'devise-i18n-views'
 
 # Graphs
 gem 'chartkick' # Create beautiful JavaScript charts with one line of Ruby
@@ -74,7 +79,6 @@ gem "roo"
 
 # Style
 #gem 'bootstrap'
-#gem "sass-rails"
 gem "bootstrap-sass"
 gem "jquery-rails"
 gem "jquery-slick-rails"

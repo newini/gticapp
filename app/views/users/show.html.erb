@@ -1,0 +1,29 @@
+<h1>User page</h1>
+<div class="row">
+  <aside class="col-lg-2">
+  </aside>
+  <div class="col-lg-10">
+    <h2>User Information</h2>
+    <table class="table table-bordered">
+      <tr>
+        <th>Email</th>
+        <td><%= @user.email %></td>
+      </tr>
+      <tr>
+        <th>イベント参加回数</th>
+        <td><%#= member.participated_events.count %></td>
+      </tr>
+
+      <!--
+      <tr>
+        <th>Facebook ID</th>
+        <td><%#= @user.fb_uid %></td>
+      </tr>
+      <tr>
+        <th>Member ID</th>
+        <td><%#= @user.member_id %></td>
+      </tr>
+      -->
+    </table>
+  </div>
+</div>
