@@ -83,14 +83,18 @@ gem "font-awesome-rails" # For Social icons
 gem "jquery-rails"
 gem "jquery-slick-rails"
 
+# page
+gem 'will_paginate'
+gem 'will_paginate-bootstrap'
+
+
+
 #gem 'uglifier'
 #
 #gem 'coffee-rails', '~> 4.2.0'
 #
 #gem 'therubyracer', platforms: :ruby
 #gem 'bootswatch-rails'
-#gem 'will_paginate'
-#gem 'will_paginate-bootstrap'
 #gem 'mandrill-api'
 #gem 'koala'
 #
