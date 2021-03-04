@@ -78,8 +78,8 @@ gem "google-api-client"
 gem "roo"
 
 # Style
-#gem 'bootstrap'
 gem "bootstrap-sass"
+gem "font-awesome-rails" # For Social icons
 gem "jquery-rails"
 gem "jquery-slick-rails"
 
