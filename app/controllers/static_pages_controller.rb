@@ -1,10 +1,6 @@
 class StaticPagesController < ApplicationController
 
   def home
-    if signed_in?
-      redirect_to events_path
-    end
-
     # Get events
     @start_date = Event.order("start_time ASC").first.start_time.beginning_of_year
     @last_date = Event.order("start_time ASC").last.start_time.end_of_year

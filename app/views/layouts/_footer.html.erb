@@ -5,11 +5,6 @@
         Copyright &copy; 2011-<%= Date.today.year %> GTIC All Rights Reserved.
       </small>
     </div>
-    <div class="col-md-2">
-      <% unless signed_in? %>
-        <small><p class="text-right"><%= link_to "管理者", "/auth/facebook", method: :post %></p></small>
-      <% end %>
-    </div>
   </div>
 </footer>
 
