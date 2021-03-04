@@ -6,6 +6,10 @@
     <h2>User Information</h2>
     <table class="table table-bordered">
       <tr>
+        <th>username</th>
+        <td><%= @user.username %></td>
+      </tr>
+      <tr>
         <th>Email</th>
         <td><%= @user.email %></td>
       </tr>
@@ -27,3 +31,5 @@
     </table>
   </div>
 </div>
+
+<%= link_to "プロフィール編集", edit_user_path(current_user) %>

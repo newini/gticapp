@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     sessions: 'users/sessions'
   }
   # User page
-  resources :users, :only => [:show]
+  resources :users
 
   resources :members do
     collection do
