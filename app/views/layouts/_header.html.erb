@@ -43,7 +43,7 @@
         <% else %>
 
           <!-- User -->
-          <li><%= link_to "ABOUT", :about %></li>
+          <li><%= link_to "ABOUT", :about, onclick:'FB.AppEvents.logEvent("buttonClicked")' %></li>
           <li><%= link_to "PRESENTER", :presenter %></li>
           <li><%= link_to "MESSAGE FROM CEO", :ceo_message %></li>
           <li><%= link_to "ORGANIZERS", :organizer %></li>
