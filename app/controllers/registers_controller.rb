@@ -1,4 +1,6 @@
 class RegistersController < ApplicationController
+  before_action :signed_in_staff
+
   def new
     @register = Register.new(event_id: params[:event_id])
     @bool = params[:positive] == "true" ? true : false

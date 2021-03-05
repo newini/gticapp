@@ -380,10 +380,6 @@ class MembersController < ApplicationController
       )
     end
 
-    def signed_in_staff
-      redirect_to root_path, notice: "Please sign in." unless signed_in?
-    end
-
     def sort_column
       Member.column_names.include?(params[:sort]) ? params[:sort] : 'last_name_alphabet'
     end

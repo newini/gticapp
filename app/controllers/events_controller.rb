@@ -630,12 +630,6 @@ class EventsController < ApplicationController
     def event_params
       params.require(:event).permit(:name, :cumulative_number, :start_time, :end_time, :fb_event_id, :place_id, :fee, :event_category_id, :note)
     end
-    def signed_in_staff
-      staff = Staff.find_by_email(current_user.email)
-      if not staff.present?
-        redirect_to root_path, notice: "Staff only"
-      end
-    end
     def find_selected_event
       if params[:id].present?
         @event = Event.find(params[:id])

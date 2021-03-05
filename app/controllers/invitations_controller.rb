@@ -307,10 +307,6 @@ class InvitationsController < ApplicationController
       params.require(:invitation).permit(:title, :content)
     end
 
-    def signed_in_staff
-      redirect_to root_path, notice: "Please sign in." unless signed_in?
-    end
-
     def checkDuplicatedMember(member_id, invitation_id)
       if MemberInvitationRelationship.where(invitation_id: invitation_id).find_by_member_id(member_id).present?
         return true

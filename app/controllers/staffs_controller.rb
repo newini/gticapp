@@ -1,6 +1,6 @@
 class StaffsController < ApplicationController
-  before_action :signed_in_staff, only:[:show, :edit, :update]
-  before_action :admin_staff, only:[:index, :new, :create]
+  before_action :signed_in_staff
+  before_action :admin_staff, only:[:new, :create]
 
   def index
     @staffs = Staff.all
@@ -80,10 +80,6 @@ class StaffsController < ApplicationController
   private
     def staff_params
       params.require(:staff).permit(:name, :email, :uid, :member_id, :description, :admin, :active_flg, :password, :password_confirmation)
-    end
-
-    def signed_in_staff
-      redirect_to root_path, notice: "Please sign in." unless signed_in?
     end
 
     def update_else(staff, member)

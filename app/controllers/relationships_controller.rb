@@ -1,4 +1,6 @@
 class RelationshipsController < ApplicationController
+  before_action :signed_in_staff
+
   def edit
     @relationship = Relationship.find(params[:id])
     respond_to :js
