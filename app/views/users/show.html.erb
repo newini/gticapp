@@ -6,13 +6,18 @@
     <h2>User Information</h2>
     <table class="table table-bordered">
       <tr>
-        <th>username</th>
-        <td><%= @user.username %></td>
-      </tr>
-      <tr>
         <th>Email</th>
         <td><%= @user.email %></td>
       </tr>
+      <tr>
+        <th>Provider</th>
+        <td><%= @user.provider %></td>
+      </tr>
+      <tr>
+        <th>Name</th>
+        <td><%= @user.name %></td>
+      </tr>
+
       <tr>
         <th>イベント参加回数</th>
         <td><%#= member.participated_events.count %></td>

@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!, only: [:show, :edit, :update]
+  before_action :authenticate_user!
 
   # My page
   def show
@@ -21,7 +21,7 @@ class UsersController < ApplicationController
   private
 
     def user_params
-      params.fetch(:user, {}).permit(:username)
+      params.fetch(:user, {}).permit(:name)
     end
 
 end
