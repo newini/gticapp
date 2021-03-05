@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, only: [:show, :edit, :update]
 
   # My page
   def show
@@ -16,6 +16,9 @@ class UsersController < ApplicationController
     else
       redirect_to edit_user_path(current_user)
     end
+  end
+
+  def privacy_policy
   end
 
   private

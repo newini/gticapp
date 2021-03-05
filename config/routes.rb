@@ -9,7 +9,11 @@ Rails.application.routes.draw do
     sessions: 'users/sessions'
   }
   # User page
-  resources :users
+  resources :users do
+    collection do
+      get :privacy_policy
+    end
+  end
 
   resources :members do
     collection do
