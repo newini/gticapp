@@ -30,20 +30,15 @@
 
 <body>
   <%= render 'layouts/header' %>
+  <br><br><br>
 
-  <div class="row">
-    <div class="container">
-      <p class="notice"><%= notice %></p>
-      <p class="alert"><%= alert %></p>
-      <% flash.each do |key,value| %>
-        <%= content_tag(:div, value, class: "alert alert-#{key}") %>
-      <% end %>
-
-      <br>
-
-      <%= yield %>
-    </div>
+  <div class="container">
+    <% flash.each do |key,value| %>
+      <%= content_tag(:div, value, class: "alert alert-#{key}") %>
+    <% end %>
   </div>
+
+  <%= yield %>
 
   <div class="container">
     <%= render 'layouts/footer' %>

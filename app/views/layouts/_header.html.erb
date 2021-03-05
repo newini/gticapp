@@ -36,7 +36,7 @@
               <li><%= link_to "MY PROFILE", @staff %></li>
               <li><%= link_to "EDIT MY PROFILE", edit_staff_path(@staff) %></li>
               <li class="divider"></li>
-              <li><%= link_to "SIGNOUT", '/signout', method: "delete" %> </li>
+              <li><%= link_to "SIGNOUT", destroy_user_session_path, method: "delete" %> </li>
             </ul>
           </li>
 
