@@ -18,50 +18,44 @@
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
         <li><%= link_to "HOME", root_path %></li>
+        <li><%= link_to "ABOUT", :about, onclick:'FB.AppEvents.logEvent("buttonClicked")' %></li>
+        <li><%= link_to "PRESENTER", :presenter %></li>
+        <li><%= link_to "MESSAGE FROM CEO", :ceo_message %></li>
+        <li><%= link_to "ORGANIZERS", :organizer %></li>
+        <li><%= link_to "MEDIA ARTICLE", :media %></li>
+        <li><%= link_to "CONTACT US", :contact %></li>
 
         <% if staff_signed_in? %>
-
-          <!-- Gtic Staff -->
-          <li><%= link_to "MANUAL", manuals_index_path %></li>
-          <li><%= link_to "GTIC", events_path %></li>
-          <li><%= link_to "MEMBER", members_path %></li>
-          <li><%= link_to "メール機能", invitations_path %></li>
-          <li><%= link_to "MEDIA ARTICLE管理", media_articles_path %></li>
-          <li id="fat-menu" class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <%= @staff.name %> <b class="caret"></b></a>
-            <ul class="dropdown-menu">
+          <!-- Only Gtic Staff -->
+          <li class="dropdown">
+            <a href class="dropdown-toggle" data-toggle="dropdown" id="dropdownStaffMenu" >管理メニュー<b class="caret"></b></a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownStaffMenu">
+              <li class="dropdown-item" ><%= link_to "EVENTS", events_path %></li>
+              <li class="dropdown-item" ><%= link_to "MEMBERS", members_path %></li>
+              <li class="dropdown-item" ><%= link_to "メール機能", invitations_path %></li>
+              <li class="dropdown-item" ><%= link_to "MEDIA ARTICLE管理", media_articles_path %></li>
+              <li class="dropdown-item" ><%= link_to "MANUAL", manuals_index_path %></li>
               <% if admin? %>
-                <li><%= link_to "幹事リスト", :staffs %></li>
+                <li class="dropdown-item"><%= link_to "幹事リスト", :staffs %></li>
               <% end %>
-              <li><%= link_to "MY PROFILE", @staff %></li>
-              <li><%= link_to "EDIT MY PROFILE", edit_staff_path(@staff) %></li>
-              <li class="divider"></li>
-              <li><%= link_to "SIGNOUT", destroy_user_session_path, method: "delete" %> </li>
             </ul>
           </li>
-
-        <% else %>
-
-          <!-- User -->
-          <li><%= link_to "ABOUT", :about, onclick:'FB.AppEvents.logEvent("buttonClicked")' %></li>
-          <li><%= link_to "PRESENTER", :presenter %></li>
-          <li><%= link_to "MESSAGE FROM CEO", :ceo_message %></li>
-          <li><%= link_to "ORGANIZERS", :organizer %></li>
-          <li><%= link_to "MEDIA ARTICLE", :media %></li>
-          <li><%= link_to "CONTACT US", :contact %></li>
-          <% if signed_in? %>
-            <li class="dropdown">
-              <a href class="dropdown-toggle" type="button" data-toggle="dropdown" id="dropdownUserMenu" aria-expanded="false"> <%= current_user.email %> <b class="caret"></b></a>
-              <ul class="dropdown-menu" aria-labelledby="dropdownUserMenu">
-                <li><%= link_to "My Page", current_user %></li>
-                <li><%= link_to "SIGN OUT", destroy_user_session_path, method: :delete %></li>
-              </ul>
-            </li>
-          <% else %>
-            <li><%= link_to "SIGN IN", new_user_session_path %></li>
-          <% end %>
-
         <% end %>
+
+        <!-- Normal User -->
+        <% if signed_in? %>
+          <li class="dropdown">
+            <a href class="dropdown-toggle" data-toggle="dropdown" id="dropdownUserMenu"> <%= current_user.name %> <b class="caret"></b></a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownUserMenu">
+              <li><%= link_to "My Page", current_user %></li>
+              <li class="divider"></li>
+              <li><%= link_to "SIGN OUT", destroy_user_session_path, method: :delete %></li>
+            </ul>
+          </li>
+        <% else %>
+          <li><%= link_to "SIGN IN", new_user_session_path %></li>
+        <% end %>
+
       </ul>
     </div>
   </div>

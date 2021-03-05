@@ -8,6 +8,10 @@
     <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
   </div>
 
+  <!-- reCAPTCHA -->
+  <%= flash[:recaptcha_error] %>
+  <%= recaptcha_tags %>
+
   <div class="actions">
     <%= f.submit "Send me reset password instructions" %>
   </div>
