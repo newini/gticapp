@@ -1,56 +1,62 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <title>GTIC User</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
 
-<head>
-  <title>GTIC User</title>
-  <%= csrf_meta_tags %>
-  <%= csp_meta_tag %>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
-  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
 
-<!--
-  <%#= javascript_include_tag "highcharts/highcharts.js", "data-turbolinks-track" => true %>
-  <%#= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
-  <meta name="robots" content="noindex,follow" >
-  <meta name="robots" content="noindex,nofollow,noarchive" >
-  <meta name="googlebot" content="noindex,nofollow,noarchive">
+    <script src="/assets/jquery.js?body=1" type="text/javascript"></script>
+    <script src="/assets/jquery_ujs.js?body=1" type="text/javascript"></script>
+    <script src="/assets/bootstrap.min.js?body=1" type="text/javascript"></script>
+    <script src="/assets/jquery.min.js?body=1" type="text/javascript"></script>
+    <script src="/assets/application.js?body=1" type="text/javascript"></script>
 
-  <script>
-    $(document).on('ajax:before ajaxStart page:fetch', function(){
-      var top = $(window).height()/2 + $(window).scrollTop();
-      $('body').spin({top: top});
-    });
-    $(document).on('ajax:complete ajaxComplete page:change', function(){
-      $('body').spin(false);
-    });
-  </script>
-  -->
-</head>
+  <!--
+    <%#= javascript_include_tag "highcharts/highcharts.js", "data-turbolinks-track" => true %>
+    <%#= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
+    <meta name="robots" content="noindex,follow" >
+    <meta name="robots" content="noindex,nofollow,noarchive" >
+    <meta name="googlebot" content="noindex,nofollow,noarchive">
 
-<body>
-  <%= render 'layouts/header' %>
-  <br><br><br>
+    <script>
+      $(document).on('ajax:before ajaxStart page:fetch', function(){
+        var top = $(window).height()/2 + $(window).scrollTop();
+        $('body').spin({top: top});
+      });
+      $(document).on('ajax:complete ajaxComplete page:change', function(){
+        $('body').spin(false);
+      });
+    </script>
+    -->
+  </head>
 
-  <div class="container">
-    <% flash.each do |key,value| %>
-      <%= content_tag(:div, value, class: "alert alert-#{key}") %>
-    <% end %>
-  </div>
+  <body>
+    <%= render 'layouts/header' %>
+    <br><br><br>
 
-  <div class="container">
-    <div class="row">
-      <div class="col">
-        <%= yield %>
+    <div class="container">
+      <% flash.each do |key,value| %>
+        <%= content_tag(:div, value, class: "alert alert-#{key}") %>
+      <% end %>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <%= yield %>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="container">
-    <%= render 'layouts/footer' %>
-    <%= debug(params) if Rails.env.development? %>
-  </div>
+    <div class="container">
+      <%= render 'layouts/footer' %>
+      <%= debug(params) if Rails.env.development? %>
+    </div>
 
-</body>
+  </body>
 
 </html>
