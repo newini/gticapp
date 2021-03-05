@@ -208,10 +208,10 @@ bundle update
 If you added new gems in `Gemfile`, use `bundle install` to install.
 
 
-## b. SQL
-1. change db: `bundle exec rails g migration AddUserIdToPosts`
+## b. Database migration
+1. change db: `bin/rails g migration AddUserIdToPosts`
 
-2. open migration file:
+2. open migration file in db/migrate/2021...:
 ```
 class AddUserIdToPosts < ActiveRecord::Migration
   def change
@@ -220,16 +220,26 @@ class AddUserIdToPosts < ActiveRecord::Migration
 end
 ```
 
-* add column: `add_column :posts, :user_id, :integer, :default => false`
-* change column: `change_column :users, :admin, :boolean, :default => false`
-* remove column: `remove_column :titles, :place, :string`
+Add like belows: `:table_name, :column_name, :type`
+* `add column: `add_column :posts, :user_id, :integer, :default => false`
+* `change column: `change_column :posts, :admin, :boolean, :default => false`
+* `remove column: `remove_column :posts, :place, :string`
 
 
-3. implement: `bundle exec rake RAILS_ENV=production db:migrate`
+3. implement: `bin/rake RAILS_ENV=production db:migrate`
 4. if want to go back: `rake db:rollback`
 
 
-## c. Compile assets (may not need)
+## c. SQLITE3
+* List tables: `.tables`
+* View all in a table: `select * from members;`
+* View column names in a table: `pragma table_info(members);`
+* Search in a table: `select * from members where last_name='...'and first_name='...';`
+* Update a column in a table: `update members set gtic_flg='t' where last_name='...'and first_name='...';`
+* Delete a row in a table: `DELETE FROM users WHERE id=;`
+
+
+## d. Compile assets (may not need)
 ```
 bundle exec rake assets:clean
 
