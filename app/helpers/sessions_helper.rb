@@ -32,9 +32,15 @@ module SessionsHelper
 #    cookies.delete(:remember_token, :domain=>'gtic.jp')
 #  end
 #
-#  def admin?
-#    current_staff
-#    @current_staff.admin if current_staff
-#  end
+  def admin?
+    if current_user.present?
+      staff = Staff.find_by_email(current_user.email)
+      return staff.admin if staff
+    end
+    return false
+
+    current_staff
+    @current_staff.admin if current_staff
+  end
 
 end

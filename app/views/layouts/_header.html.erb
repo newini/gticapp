@@ -28,13 +28,13 @@
           <li><%= link_to "メール機能", invitations_path %></li>
           <li><%= link_to "MEDIA ARTICLE管理", media_articles_path %></li>
           <li id="fat-menu" class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <%= Staff.find(current_staff).name %> <b class="caret"></b></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <%= @staff.name %> <b class="caret"></b></a>
             <ul class="dropdown-menu">
               <% if admin? %>
                 <li><%= link_to "幹事リスト", :staffs %></li>
               <% end %>
-              <li><%= link_to "MY PROFILE", current_staff %></li>
-              <li><%= link_to "EDIT MY PROFILE", edit_staff_path(@current_staff) %></li>
+              <li><%= link_to "MY PROFILE", @staff %></li>
+              <li><%= link_to "EDIT MY PROFILE", edit_staff_path(@staff) %></li>
               <li class="divider"></li>
               <li><%= link_to "SIGNOUT", '/signout', method: "delete" %> </li>
             </ul>

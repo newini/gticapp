@@ -4,10 +4,12 @@ class UsersController < ApplicationController
   # My page
   def show
     @user = User.find(params[:id])
+    @staff = Staff.find_by_email(current_user.email)
   end
 
   def edit
     @user = User.find(params[:id])
+    @staff = Staff.find_by_email(current_user.email)
   end
 
   def update
