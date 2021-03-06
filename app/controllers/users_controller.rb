@@ -1,15 +1,20 @@
 class UsersController < ApplicationController
+  before_action :signed_in_staff, only: [:index]
   before_action :authenticate_user!, only: [:show, :edit, :update]
 
+  # User list
+  def index
+    @users = User.all
+  end
+
+  # For users
   # My page
   def show
     @user = User.find(params[:id])
-    @staff = Staff.find_by_email(current_user.email)
   end
 
   def edit
     @user = User.find(params[:id])
-    @staff = Staff.find_by_email(current_user.email)
   end
 
   def update

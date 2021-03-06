@@ -36,7 +36,8 @@
               <li class="dropdown-item" ><%= link_to "Media Article管理", media_articles_path %></li>
               <li class="dropdown-item" ><%= link_to "Manual", manuals_index_path %></li>
               <% if admin? %>
-                <li class="dropdown-item"><%= link_to "幹事リスト", :staffs %></li>
+                <li class="dropdown-item"><%= link_to "Staffリスト", :staffs %></li>
+                <li class="dropdown-item"><%= link_to "Userリスト", :users %></li>
               <% end %>
             </ul>
           </li>
