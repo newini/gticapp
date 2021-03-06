@@ -1,13 +1,19 @@
-<h1>User page</h1>
-<h2>User Information</h2>
+<h1>My page</h1>
+<div class="center">
+  <%= image_tag "https://graph.facebook.com/#{@user.uid}/picture?type=large&access_token=#{@user.access_token}" %>
+  <p>Hello! <%= "#{@user.name}" %></p>
+</div>
+
+<h2>My Information</h2>
 <table class="table table-bordered">
-  <tr>
-    <th>Email</th>
-    <td><%= @user.email %></td>
-  </tr>
   <tr>
     <th>Name</th>
     <td><%= @user.name %></td>
+  </tr>
+
+  <tr>
+    <th>Email</th>
+    <td><%= @user.email %></td>
   </tr>
 
   <tr>

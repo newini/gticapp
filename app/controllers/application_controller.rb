@@ -25,6 +25,15 @@ class ApplicationController < ActionController::Base
       user_path(resource.id)
     end
 
+    def get_app_access_token
+      uri = URI.parse("https://graph.facebook.com/oauth/access_token?client_id=#{ENV['FACEBOOK_APP_ID']}&client_secret=#{ENV['FACEBOOK_APP_SECRET']}&grant_type=client_credentials")
+      request = Net::HTTP::Get.new(uri)
+      req_options = { use_ssl: uri.scheme == "https" }
+      response = Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
+        http.request(request)
+      end
+      return JSON.parse(response.body)['access_token']
+    end
 
 
 end

@@ -164,6 +164,7 @@ class StaticPagesController < ApplicationController
 
 
   def organizer
+    @access_token = get_app_access_token
     @organizers = Staff.all
   end
 

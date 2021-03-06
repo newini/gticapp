@@ -62,7 +62,8 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'devise', github: 'heartcombo/devise', branch: 'ca-omniauth-2' # Use this ver. due to omniauth ver. problem
 gem "omniauth", "~> 1.9.1" # Downgrade usd to attack problem. https://github.com/heartcombo/devise/issues/5236
 gem 'omniauth-facebook'
-gem 'recaptcha'
+gem 'recaptcha' # I am not a bot
+#gem 'koala' # Facebook graph api
 
 # deviseの日本語化
 gem 'devise-i18n'
@@ -96,7 +97,6 @@ gem 'will_paginate-bootstrap'
 #gem 'therubyracer', platforms: :ruby
 #gem 'bootswatch-rails'
 #gem 'mandrill-api'
-#gem 'koala'
 #
 #gem 'whenever', :require => false
 #
