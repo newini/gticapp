@@ -141,8 +141,6 @@ class EventsController < ApplicationController
     @presenters = @event.presenters
     @presenters_ary = @presenters.map{|presenter| [[presenter.last_name, presenter.first_name].join(" "), presenter.id]}
     @registed_members = @event.registed_members
-    @graph = facebook_objects(@event.fb_event_id)
-    #@fb_event_info = @graph[@event.fb_event_id] if @graph.present?
   end
 
   def edit

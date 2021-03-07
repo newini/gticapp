@@ -157,6 +157,10 @@ GEM
       railties (>= 3.1)
     json (2.5.1)
     jwt (2.2.2)
+    koala (3.0.0)
+      addressable
+      faraday
+      json (>= 1.8)
     listen (3.4.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -333,6 +337,7 @@ DEPENDENCIES
   jbuilder (~> 2.7)
   jquery-rails
   jquery-slick-rails
+  koala
   listen (~> 3.3)
   omniauth (~> 1.9.1)
   omniauth-facebook

@@ -2,7 +2,7 @@
   <aside class="col-md-2">
     <%= render'side' %>
   </aside>
-  <div class="col-md-5">
+  <div class="col-md-10">
     <h2>イベント情報</h2>
     <%= render'event_info' %>
     <%= link_to 'イベント情報編集', edit_event_path(@event), class: "center btn btn-block btn-large btn-primary" %>
@@ -13,12 +13,6 @@
     <% #else %>
      <!-- <strong>プレゼンターを登録して下さい</strong> -->
     <% #end %>
-  </div>
-  <div class="col-md-5">
-    <h2>Facebook イベント情報</h2>
-    <% if @fb_event_info %>
-      <%= render'facebook_event_info' %>
-    <% end %>
   </div>
 </div>
 

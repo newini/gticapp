@@ -63,7 +63,7 @@ gem 'devise', github: 'heartcombo/devise', branch: 'ca-omniauth-2' # Use this ve
 gem "omniauth", "~> 1.9.1" # Downgrade usd to attack problem. https://github.com/heartcombo/devise/issues/5236
 gem 'omniauth-facebook'
 gem 'recaptcha' # I am not a bot
-#gem 'koala' # Facebook graph api
+gem 'koala' # Facebook graph api
 
 # deviseの日本語化
 gem 'devise-i18n'

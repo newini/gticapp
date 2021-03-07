@@ -42,9 +42,9 @@ module EventsHelper
   end
 
   def facebook_objects(fb_event_id)
-    key = current_staff.access_token
+    key = current_user.access_token
     graph = Koala::Facebook::API.new(key)
-    #graph.get_objects(fb_event_id)
+    graph.get_objects(fb_event_id) # get event not work
   end
 
 
