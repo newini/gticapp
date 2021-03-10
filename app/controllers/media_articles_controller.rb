@@ -37,7 +37,7 @@ class MediaArticlesController < ApplicationController
 
     upload_file(@media_article, params[:file], media_article_params[:date])
 
-    if @media_article.update_attributes(media_article_params)
+    if @media_article.update(media_article_params)
       redirect_to media_articles_path , :flash => {:success => 'Saved'}
     else
       flash.now[:error] = 'Invalid email combination'
