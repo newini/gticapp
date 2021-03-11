@@ -13,7 +13,7 @@ class RelationshipsController < ApplicationController
       @relationship.save
       redirect_to :back
     else
-      if @relationship.update_attributes(relationship_params)
+      if @relationship.update(relationship_params)
         redirect_to :back
       end
     end

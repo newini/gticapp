@@ -1,4 +1,21 @@
 # frozen_string_literal: true
+#
+# https://kitsune.blog/rails-devise
+# # ログインユーザーのみアクセス許可（Controllerに記述）
+# before_action :authenticate_user!
+#
+# # indexアクションはログインユーザーのみアクセス許可（Controllerに記述）
+# before_action :authenticate_user!, only: [:index]
+#
+# # ユーザーがログイン済みかチェック
+# user_signed_in?
+#
+# # ログインユーザーの情報を取得
+# current_user
+#
+# # ユーザーのセッション情報を取得
+# user_session
+#
 
 class Users::SessionsController < Devise::SessionsController
   # reCAPTCHA

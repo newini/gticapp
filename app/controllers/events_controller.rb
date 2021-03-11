@@ -149,7 +149,7 @@ class EventsController < ApplicationController
   end
 
   def update
-    if @event.update_attributes(event_params)
+    if @event.update(event_params)
       redirect_to event_path, :flash => {:success => '変更しました'}
     else
       render 'edit'

@@ -96,14 +96,14 @@ class MembersController < ApplicationController
     mailRegex = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
     if member_params[:email].present?
       if member_params[:email].match? mailRegex
-        @member.update_attributes(member_params)
+        @member.update(member_params)
         redirect_to member_path , :flash => {:success => '変更しました'}
       else
         flash.now[:error] = 'Invalid email combination'
         render 'edit'
       end
     else
-      @member.update_attributes(member_params)
+      @member.update(member_params)
       redirect_to member_path , :flash => {:success => '変更しました'}
     end
   end
@@ -389,7 +389,7 @@ class MembersController < ApplicationController
     end
 
     def get_facebook_name(uid)
-      key = current_staff.access_token
+      key = current_user.access_token
       graph = Koala::Facebook::API.new(key)
       begin
         fb_profile = graph.get_object(uid)

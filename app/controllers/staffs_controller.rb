@@ -34,7 +34,7 @@ class StaffsController < ApplicationController
     @staff = Staff.find(params[:id])
     @member = Member.find(@staff.member_id)
     update_else(@staff, @member)
-    if @staff.update_attributes(staff_params)
+    if @staff.update(staff_params)
       flash[:success] = "ユーザー情報を更新しました"
       redirect_to "/staffs"
     else

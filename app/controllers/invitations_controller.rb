@@ -34,7 +34,7 @@ class InvitationsController < ApplicationController
 
   def update
     @invitation = Invitation.find(params[:id])
-    if @invitation.update_attributes(invitation_params)
+    if @invitation.update(invitation_params)
       redirect_to invitations_path(@invitation), :flash => {:success => '変更しました'}
     else
       render 'edit'

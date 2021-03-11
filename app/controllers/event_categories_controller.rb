@@ -16,7 +16,7 @@ class EventCategoriesController < ApplicationController
 
   def update
     @event_category = EventCategory.find(params[:id])
-    if @event_category.update_attributes(event_category_params)
+    if @event_category.update(event_category_params)
       redirect_to :event_categories
     else
       render 'edit'

@@ -47,7 +47,7 @@ class PresentationsController < ApplicationController
     @event = Event.find(params[:presentation][:event_id])
     @number = params[:presentation][:number]
     presenters = params[:presentation][:member_id]
-    if @presentation.update_attributes(presentation_params)
+    if @presentation.update(presentation_params)
       presentationships = Presentationship.where(presentation_id: @presentation.id)
       presentationships.each do |presentationship|
         presentationship.destroy

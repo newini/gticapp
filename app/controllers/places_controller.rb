@@ -16,7 +16,7 @@ class PlacesController < ApplicationController
 
   def update
     @place = Place.find(params[:id])
-    if @place.update_attributes(place_params)
+    if @place.update(place_params)
       redirect_to :places
     else
       render 'edit'
