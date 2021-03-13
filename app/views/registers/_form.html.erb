@@ -6,7 +6,7 @@
     <tr>
       <td><%= select_tag :account_id, options_from_collection_for_select(@accounts, :id, :title), name: "register[account_id]", class: "form-control" %></td>
       <td><%= text_field_tag :amount, @register.amount, name: "register[amount]", class:"form-control" %></td>
-      <td><%= submit_tag "送信", class:"btn btn-default" %></td>
+      <td><%= submit_tag "送信", class:"btn btn-light" %></td>
     </tr>
   </table>
 <% end %>

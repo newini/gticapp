@@ -9,10 +9,6 @@
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
 
-    <script src="/assets/jquery.js?body=1" type="text/javascript"></script>
-    <script src="/assets/jquery_ujs.js?body=1" type="text/javascript"></script>
-    <script src="/assets/bootstrap.min.js?body=1" type="text/javascript"></script>
-    <script src="/assets/jquery.min.js?body=1" type="text/javascript"></script>
     <script src="/assets/application.js?body=1" type="text/javascript"></script>
 
   <!--
@@ -36,7 +32,8 @@
 
   <body>
     <%= render 'layouts/header' %>
-    <br><br><br>
+
+    <br>
 
     <div class="container">
       <% flash.each do |key,value| %>
@@ -44,13 +41,7 @@
       <% end %>
     </div>
 
-    <div class="container">
-      <div class="row">
-        <div class="col">
-          <%= yield %>
-        </div>
-      </div>
-    </div>
+    <%= yield %>
 
     <div class="container">
       <%= render 'layouts/footer' %>

@@ -93,7 +93,7 @@
 
       <div class="row">
         <div class="col-md-4">
-          <%= link_to "送信成功者リスト（手入力した人は反映されない）", view_member_invitation_invitation_path(@invitation), class: "btn btn-default btn-lg" %>
+          <%= link_to "送信成功者リスト（手入力した人は反映されない）", view_member_invitation_invitation_path(@invitation), class: "btn btn-light btn-lg" %>
        </div>
       </div>
 
@@ -138,7 +138,7 @@
 
             <tr>
               <th>メンバーを個別に追加</th>
-              <td><%= link_to "ここをクリックしてメンバーを探す", find_members_invitation_path(@invitation), class: "btn btn-default" %></td>
+              <td><%= link_to "ここをクリックしてメンバーを探す", find_members_invitation_path(@invitation), class: "btn btn-light" %></td>
             </tr>
           </table>
 
@@ -154,7 +154,7 @@
           <br>
           <hr>
 
-          <%= link_to send_email_invitation_path(@invitation), class:"btn btn-default btn-lg btn-block", data: { confirm: '送信しますか？' } do %>
+          <%= link_to send_email_invitation_path(@invitation), class:"btn btn-light btn-lg btn-block", data: { confirm: '送信しますか？' } do %>
             <span class="glyphicon glyphicon-info-sign"></span>送信
           <% end %>
         </div>
@@ -164,7 +164,7 @@
 
       <div class="row">
         <div class="col-md-4">
-          <%= link_to "送信予定者リスト", view_member_invitation_invitation_path(@invitation), class: "btn btn-default btn-lg" %>
+          <%= link_to "送信予定者リスト", view_member_invitation_invitation_path(@invitation), class: "btn btn-light btn-lg" %>
        </div>
       </div>
     <% end %>
