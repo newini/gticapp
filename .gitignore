@@ -2,7 +2,9 @@
 # https://github.com/github/gitignore/blob/master/Rails.gitignore
 
 
+#==================================================
 # Ignore for GTICAPP
+#==================================================
 vendor
 
 
@@ -38,7 +40,7 @@ config/master.key
 .env.*
 
 ## Environment normalization:
-/.bundle
+#/.bundle # Not ignore for GTICAPP
 /vendor/bundle
 
 # these should all be checked in to normalize the environment:
