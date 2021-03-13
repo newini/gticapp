@@ -79,7 +79,7 @@ gem "google-api-client"
 gem "roo"
 
 # Style
-gem "bootstrap-sass"
+gem 'bootstrap' # Instead of "bootstrap-sass" due to old
 gem "font-awesome-rails" # For Social icons
 gem "jquery-rails"
 gem "jquery-slick-rails"

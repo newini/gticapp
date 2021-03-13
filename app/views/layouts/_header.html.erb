@@ -1,63 +1,58 @@
-<nav class="navbar navbar-fixed-top navbar-default" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <%= link_to root_path, class: "navbar-brand logo-nav" do %>
-        <% unless staff_signed_in? %>
-          <%= image_tag 'logo2.png' %>
-        <% else %>
-          <div><%= image_tag 'gtic_logo_c_30x30.png' %></div>
-        <% end %>
+<nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
+  <%= link_to root_path, class: "navbar-brand" do %>
+    <% unless staff_signed_in? %>
+      <%= image_tag 'logo2.png' %>
+    <% else %>
+      <div><%= image_tag 'gtic_logo_c_30x30.png' %></div>
+    <% end %>
+  <% end %>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item"><%= link_to "Home", root_path, class:"nav-link" %></li>
+      <li class="nav-item"><%= link_to "About", :about, class:"nav-link", onclick:'FB.AppEvents.logEvent("buttonClicked")' %></li>
+      <li class="nav-item"><%= link_to "Presenter", :presenter, class:"nav-link" %></li>
+      <li class="nav-item"><%= link_to "Message from CEO", :ceo_message, class:"nav-link" %></li>
+      <li class="nav-item"><%= link_to "Organizers", :organizer, class:"nav-link" %></li>
+      <li class="nav-item"><%= link_to "Media Article", :media, class:"nav-link" %></li>
+      <li class="nav-item"><%= link_to "Contact", :contact, class:"nav-link" %></li>
+
+      <!-- Only Gtic Staff -->
+      <% if staff_signed_in? %>
+        <li class="nav-item dropdown">
+          <a href class="nav-link dropdown-toggle" href="#" id="dropdownStaffMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">管理メニュー<b class="caret"></b></a>
+          <div class="dropdown-menu" aria-labelledby="dropdownStaffMenu">
+            <%= link_to "Event管理", events_path, class: "dropdown-item" %>
+            <%= link_to "Members管理", members_path, class: "dropdown-item" %>
+            <%= link_to "メール機能", invitations_path, class: "dropdown-item" %>
+            <%= link_to "Media Article管理", media_articles_path, class: "dropdown-item" %>
+            <%= link_to "Manual", manuals_index_path, class: "dropdown-item" %>
+            <% if admin? %>
+              <%= link_to "Staffリスト", :staffs, class: "dropdown-item" %>
+              <%= link_to "Userリスト", :users, class: "dropdown-item" %>
+            <% end %>
+          </div>
+        </li>
       <% end %>
-    </div>
 
-    <div class="navbar-collapse collapse">
-      <ul class="nav navbar-nav navbar-right">
-        <li><%= link_to "Home", root_path %></li>
-        <li><%= link_to "About", :about, onclick:'FB.AppEvents.logEvent("buttonClicked")' %></li>
-        <li><%= link_to "Presenter", :presenter %></li>
-        <li><%= link_to "Message from CEO", :ceo_message %></li>
-        <li><%= link_to "Organizers", :organizer %></li>
-        <li><%= link_to "Media Article", :media %></li>
-        <li><%= link_to "Contact", :contact %></li>
+      <!-- User -->
+      <% if signed_in? %>
+        <li class="nav-item dropdown">
+          <a href class="nav-link dropdown-toggle" href="#" id="dropdownUserMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <%= current_user.name %> <b class="caret"></b></a>
+          <div class="dropdown-menu" aria-labelledby="dropdownUserMenu">
+            <%= link_to "My Page", current_user, class: "dropdown-item" %>
+            <div class="dropdown-divider"></div>
+            <%= link_to "Sign out", destroy_user_session_path, class: "dropdown-item", method: :delete %>
+          </div>
+        </li>
+      <% else %>
+        <li><%= link_to "Sign in", new_user_session_path %></li>
+      <% end %>
 
-        <% if staff_signed_in? %>
-          <!-- Only Gtic Staff -->
-          <li class="dropdown">
-            <a href class="dropdown-toggle" data-toggle="dropdown" id="dropdownStaffMenu" >管理メニュー<b class="caret"></b></a>
-            <ul class="dropdown-menu" aria-labelledby="dropdownStaffMenu">
-              <li class="dropdown-item" ><%= link_to "Event管理", events_path %></li>
-              <li class="dropdown-item" ><%= link_to "Members管理", members_path %></li>
-              <li class="dropdown-item" ><%= link_to "メール機能", invitations_path %></li>
-              <li class="dropdown-item" ><%= link_to "Media Article管理", media_articles_path %></li>
-              <li class="dropdown-item" ><%= link_to "Manual", manuals_index_path %></li>
-              <% if admin? %>
-                <li class="dropdown-item"><%= link_to "Staffリスト", :staffs %></li>
-                <li class="dropdown-item"><%= link_to "Userリスト", :users %></li>
-              <% end %>
-            </ul>
-          </li>
-        <% end %>
-
-        <!-- User -->
-        <% if signed_in? %>
-          <li class="dropdown">
-            <a href class="dropdown-toggle" data-toggle="dropdown" id="dropdownUserMenu"> <%= current_user.name %> <b class="caret"></b></a>
-            <ul class="dropdown-menu" aria-labelledby="dropdownUserMenu">
-              <li class="dropdown-item"><%= link_to "My Page", current_user %></li>
-              <li class="divider"></li>
-              <li class="dropdown-item"><%= link_to "Sign out", destroy_user_session_path, method: :delete %></li>
-            </ul>
-          </li>
-        <% else %>
-          <li><%= link_to "Sign in", new_user_session_path %></li>
-        <% end %>
-
-      </ul>
-    </div>
+    </ul>
   </div>
 </nav>

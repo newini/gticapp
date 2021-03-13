@@ -9,8 +9,7 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  */
-@import "bootstrap-sprockets"; /*bootstrap glyphicons*/
-@import "bootstrap";
-@import 'slick';
 @import "components/custom.css.scss";
+@import 'slick';
 @import "font-awesome"; /* For social icons */
+@import "bootstrap";

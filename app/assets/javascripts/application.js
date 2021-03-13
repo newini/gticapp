@@ -14,10 +14,10 @@
 // jquery.js file must be added before bootstrap.js file.
 //= require jquery
 //= require jquery.slick
+//= require popper
 //= require turbolinks
-//= require bootstrap
 //= require jquery_ujs
-//= require bootstrap-sprockets
+//= require bootstrap
 
 // Plot a chart
 //= require chartkick
