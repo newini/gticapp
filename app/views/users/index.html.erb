@@ -1,29 +1,31 @@
-<div class="row">
-  <aside class="col-lg-2">
-  </aside>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <center>
 
-  <div class="col-lg-10">
-    <h2>User情報</h2>
+        <h2>User情報</h2>
 
-    <table class="table table-bordered">
-      <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Name</th>
-        <th scope="col">Facebook ID</th>
-        <th scope="col">Member ID</th>
-        <th></th>
-      </tr>
+        <table class="table table-bordered">
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Facebook ID</th>
+            <th scope="col">Member ID</th>
+            <th></th>
+          </tr>
 
-      <% @users.each do |user| %>
-        <tr>
-          <td><%= user.id %></td>
-          <td><%= user.name %></td>
-          <td><%= user.uid %></td>
-          <td><%#= link_to user.member_id, "/members/#{user.member_id}" %></td>
-          <td><%= link_to "編集", edit_user_path(user) %></td>
-        </tr>
-      <% end %>
-    </table>
+          <% @users.each do |user| %>
+            <tr>
+              <td><%= user.id %></td>
+              <td><%= user.name %></td>
+              <td><%= user.uid %></td>
+              <td><%#= link_to user.member_id, "/members/#{user.member_id}" %></td>
+              <td><%= link_to "編集", edit_user_path(user) %></td>
+            </tr>
+          <% end %>
+        </table>
 
+      </center>
+    </div>
   </div>
 </div>

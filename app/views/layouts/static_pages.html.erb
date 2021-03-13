@@ -63,18 +63,18 @@
   <body>
     <%= render 'layouts/header' %>
 
-    <div class="container">
-      <% flash.each do |key,value| %>
-        <%= content_tag(:div, value, class: "alert alert-#{key}") %>
-      <% end %>
-    </div>
+    <% if not flash.empty? %>
+      <div class="container">
+        <% flash.each do |key,value| %>
+          <%= content_tag(:div, value, class: "alert alert-#{key}") %>
+        <% end %>
+      </div>
+    <% end %>
 
     <%= yield %>
 
-    <div class="container">
-      <%= render 'layouts/footer' %>
-      <%= debug(params) if Rails.env.development? %>
-    </div>
+    <%= render 'layouts/footer' %>
+    <%= debug(params) if Rails.env.development? %>
   </body>
 
 </html>

@@ -1,34 +1,38 @@
-<div class="row">
-  <aside class="col-lg-2">
-  </aside>
-  <div class="col-lg-10">
-    <h2>Staff情報</h2>
-    <table class="table table-bordered">
-      <tr>
-        <th>Name</th>
-        <td><%= @staff.name %></td>
-      </tr>
-      <tr>
-        <th>Email</th>
-        <td><%= @staff.email %></td>
-      </tr>
-      <tr>
-        <th>Facebook ID</th>
-        <td><%= @staff.uid %></td>
-      </tr>
-      <tr>
-        <th>Member ID</th>
-        <td><%= @staff.member_id %></td>
-      </tr>
-      <tr>
-        <th>自己紹介</th>
-        <td><%= @staff.description %></td>
-      </tr>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <center>
 
-      <tr>
-        <th>Admin</th>
-        <td><%= @staff.admin %></td>
-      </tr>
-    </table>
+        <h2>Staff情報</h2>
+        <table class="table table-bordered">
+          <tr>
+            <th>Name</th>
+            <td><%= @staff.name %></td>
+          </tr>
+          <tr>
+            <th>Email</th>
+            <td><%= @staff.email %></td>
+          </tr>
+          <tr>
+            <th>Facebook ID</th>
+            <td><%= @staff.uid %></td>
+          </tr>
+          <tr>
+            <th>Member ID</th>
+            <td><%= @staff.member_id %></td>
+          </tr>
+          <tr>
+            <th>自己紹介</th>
+            <td><%= @staff.description %></td>
+          </tr>
+
+          <tr>
+            <th>Admin</th>
+            <td><%= @staff.admin %></td>
+          </tr>
+        </table>
+
+      </center>
+    </div>
   </div>
 </div>

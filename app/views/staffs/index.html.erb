@@ -1,47 +1,49 @@
-<div class="row">
-  <aside class="col-lg-2">
-  </aside>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <center>
 
-  <div class="col-lg-10">
-    <h2>Staff情報</h2>
+        <h2>Staff情報</h2>
 
-    <% if admin? %>
-      <div><%= link_to "新規追加", new_staff_path, class: "btn btn-primary" %></div>
-    <% end %>
-
-    <table class="table table-bordered">
-      <tr>
-        <th class="col-md-1">ID</th>
-        <th class="col-md-2">Name</th>
-        <th class="col-md-1">Facebook ID</th>
-        <th class="col-md-1">Member ID</th>
         <% if admin? %>
-          <th class="col-md-1">Active（管理者画面にアクセス可能な人）</th>
-          <th class="col-md-1">Admin（管理者画面を修正できる人）</th>
+          <div><%= link_to "新規追加", new_staff_path, class: "btn btn-primary" %></div>
         <% end %>
-        <th class="col-md-3">Description（右の編集ボタンで編集ページにジャンプ。そこを編集すると幹事紹介ページに反映）</th>
-        <th></th>
-      </tr>
 
-      <% @staffs.each do |staff| %>
-        <tr>
-          <td><%= staff.id %></td>
-          <td><%= staff.name %></td>
-          <td><%= staff.uid %></td>
-          <td><%= link_to staff.member_id, "/members/#{staff.member_id}" %></td>
-          <% if admin? %>
-            <td><%= select_active(staff) %></td>
-            <td><%= select_admin(staff) %></td>
+        <table class="table table-bordered">
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col" style="width: 15%;">Name</th>
+            <th scope="col">Facebook ID</th>
+            <th scope="col">Member ID</th>
+            <% if admin? %>
+              <th scope="col">Active（管理者画面にアクセス可能な人）</th>
+              <th scope="col">Admin（管理者画面を修正できる人）</th>
+            <% end %>
+            <th scope="col">Description（右の編集ボタンで編集ページにジャンプ。そこを編集すると幹事紹介ページに反映）</th>
+            <th scope="col"></th>
+          </tr>
+
+          <% @staffs.each do |staff| %>
+            <tr>
+              <td><%= staff.id %></td>
+              <td><%= staff.name %></td>
+              <td><%= staff.uid %></td>
+              <td><%= link_to staff.member_id, "/members/#{staff.member_id}" %></td>
+              <% if admin? %>
+                <td><%= select_active(staff) %></td>
+                <td><%= select_admin(staff) %></td>
+              <% end %>
+              <td><%= staff.description[0..10] + "..." if staff.description.present? %></td>
+              <td><%= link_to "編集", edit_staff_path(staff) %></td>
+            </tr>
           <% end %>
-          <td><%= staff.description[0..9] + "..." if staff.description.present? %></td>
-          <td><%= link_to "編集", edit_staff_path(staff) %></td>
-        </tr>
-      <% end %>
-    </table>
+        </table>
 
-    <% if admin? %>
-      <div><%= link_to "update staffs' information from MEMBERs' data", update_staffs_staffs_path, method: "post", class: "btn btn-light" %></div>
-    <% end %>
+        <% if admin? %>
+          <div><%= link_to "update staffs' information from MEMBERs' data", update_staffs_staffs_path, method: "post", class: "btn btn-light" %></div>
+        <% end %>
 
+      </center>
+    </div>
   </div>
 </div>

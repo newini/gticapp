@@ -1,36 +1,46 @@
-<h1>My page</h1>
-<div class="center">
-  <%= image_tag "https://graph.facebook.com/#{@user.uid}/picture?type=large&access_token=#{@user.access_token}" %>
-  <p>Hello! <%= "#{@user.name}" %></p>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <center>
+
+        <h1>My page</h1>
+        <div class="center">
+          <%= image_tag "https://graph.facebook.com/#{@user.uid}/picture?type=large&access_token=#{@user.access_token}" %>
+          <p>Hello! <%= "#{@user.name}" %></p>
+        </div>
+
+        <h2>My Information</h2>
+        <table class="table table-bordered">
+          <tr>
+            <th>Name</th>
+            <td><%= @user.name %></td>
+          </tr>
+
+          <tr>
+            <th>Email</th>
+            <td><%= @user.email %></td>
+          </tr>
+
+          <tr>
+            <th>イベント参加回数</th>
+            <td><%#= member.participated_events.count %></td>
+          </tr>
+
+          <!--
+          <tr>
+            <th>Facebook ID</th>
+            <td><%#= @user.fb_uid %></td>
+          </tr>
+          <tr>
+            <th>Member ID</th>
+            <td><%#= @user.member_id %></td>
+          </tr>
+          -->
+        </table>
+
+        <%= link_to "Edit user information", edit_user_path(current_user), class: "btn btn-light" %>
+
+      </center>
+    </div>
+  </div>
 </div>
-
-<h2>My Information</h2>
-<table class="table table-bordered">
-  <tr>
-    <th>Name</th>
-    <td><%= @user.name %></td>
-  </tr>
-
-  <tr>
-    <th>Email</th>
-    <td><%= @user.email %></td>
-  </tr>
-
-  <tr>
-    <th>イベント参加回数</th>
-    <td><%#= member.participated_events.count %></td>
-  </tr>
-
-  <!--
-  <tr>
-    <th>Facebook ID</th>
-    <td><%#= @user.fb_uid %></td>
-  </tr>
-  <tr>
-    <th>Member ID</th>
-    <td><%#= @user.member_id %></td>
-  </tr>
-  -->
-</table>
-
-<%= link_to "Edit user information", edit_user_path(current_user), class: "btn btn-light" %>
