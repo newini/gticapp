@@ -1,73 +1,83 @@
 <div class="section">
   <div class="container">
+
     <h1>MEDIA</h1>
 
     <table class="table">
-      <tr>
-        <th class="col-md-1">Date</th>
-        <th class="col-md-1">Media</th>
-        <th class="col-md-4">Media title</th>
-        <th class="col-md-2">GTIC Presenter<br>（会社）</th>
-        <th class="col-md-2">GTIC Presenter<br>（氏名）</th>
-        <th class="col-md-2">GTICへの登壇日<br>（回号, 年月日）</th>
-      </tr>
+      <thead>
+        <tr>
+          <th style="width: 10%" scope="col">Date</th>
+          <th style="width: 6%" scope="col">Media</th>
+          <th style="width: 40%" scope="col">Media title</th>
+          <th style="width: 15%" scope="col">GTIC Presenter<br>（会社）</th>
+          <th style="width: 15%" scope="col">GTIC Presenter<br>（氏名）</th>
+          <th style="width: 14%" scope="col">GTICへの登壇日<br>（回号, 年月日）</th>
+        </tr>
+      </thead>
 
-      <% if @media_articles.present? %>
-        <% @media_articles.each do |media_article| %>
-          <tr>
-            <td><%= media_article.date.strftime('%Y-%m-%d') %></td>
-            <td><%= media_article.media %></td>
-            <td>
-              <%= media_article.title %>
-              <%= link_to "（記事URL版）", "#{media_article.url}" if media_article.url.present? %>
-              <%= link_to "（記事PDF版）", "/assets/media_articles/#{media_article.file_path}" if media_article.file_path.present? %>
-            </td>
-
-            <% if media_article.member_id.present? %>
-              <% member = Member.find(media_article.member_id) %>
-              <td><%= member.affiliation %></td>
-              <td><%= "#{member.title} #{member.last_name} #{member.first_name} 氏" %></td>
+      <tbody>
+        <% if @media_articles.present? %>
+          <% @media_articles.each do |media_article| %>
+            <tr>
+              <th scope="row"><%= media_article.date.strftime('%Y-%m-%d') %></td>
+              <td><%= media_article.media %></td>
               <td>
-                <% presentationships = Presentationship.where(member_id: member.id) %>
-                <% previous_event_id = 0 %>
-                <% presentationships.each do |presentationship| %>
-                  <% if not previous_event_id == presentationship.event_id %>
-                    <% event = Event.find(presentationship.event_id) %>
-                    <%= "第#{event.cumulative_number}回GTIC, #{event.start_time.strftime('%Y-%m-%d')}" %><br>
-                  <% end %>
-                  <% previous_event_id = presentationship.event_id %>
-                <% end %>
+                <%= media_article.title %>
+                <%= link_to "（記事URL版）", "#{media_article.url}" if media_article.url.present? %>
+                <%= link_to "（記事PDF版）", "/assets/media_articles/#{media_article.file_path}" if media_article.file_path.present? %>
               </td>
-            <% else %>
-              <td></td>
-              <td></td>
-              <td></td>
-            <% end %>
-          </tr>
+
+              <% if media_article.member_id.present? %>
+                <% member = Member.find(media_article.member_id) %>
+                <td><%= member.affiliation %></td>
+                <td><%= "#{member.title} #{member.last_name} #{member.first_name} 氏" %></td>
+                <td>
+                  <% presentationships = Presentationship.where(member_id: member.id) %>
+                  <% previous_event_id = 0 %>
+                  <% presentationships.each do |presentationship| %>
+                    <% if not previous_event_id == presentationship.event_id %>
+                      <% event = Event.find(presentationship.event_id) %>
+                      <%= "第#{event.cumulative_number}回GTIC, #{event.start_time.strftime('%Y-%m-%d')}" %><br>
+                    <% end %>
+                    <% previous_event_id = presentationship.event_id %>
+                  <% end %>
+                </td>
+              <% else %>
+                <td></td>
+                <td></td>
+                <td></td>
+              <% end %>
+            </tr>
+          <% end %>
         <% end %>
-      <% end %>
+      </tbody>
     </table>
 
     <br><br><br>
 
     <h1>CHIEF ORGANIZER'S ACTIVETY</h1>
     <table class="table">
-      <tr>
-        <th>Date</th>
-        <th>Activetys</th>
-      </tr>
-      <tr>
-        <td>2015/02/21</td>
-        <td><%= link_to "大阪大学 博士課程 超域イノベーション・プログラム", "http://www.cbi.osaka-u.ac.jp/choikijijo/article/school20th/", target: :blank %></td>
-      </tr>
-      <tr>
-        <td>2014/12/13</td>
-        <td><%= link_to "沖縄科学技術大学院大学(OIST)　起業家人材育成プログラム(Entrepreneurial Training Program)", "https://groups.oist.jp/ja/bds/event/2014-entrepreneurial-training-program-day-3", target: :blank %></td>
-      </tr>
-      <tr>
-        <td>2014/07/09</td>
-        <td><%= link_to "BBT大学 資産形成力養成講座 @東京（市ヶ谷） セミナー『元外資系インベストメントバンカーが解説する資産運用の仕組みと本質』", "http://www.ohmae.ac.jp/ex/asset/guide/event/996/http://www.cbi.osaka-u.ac.jp/choikijijo/article/school20th/", target: :blank %></td>
-      </tr>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Activetys</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <th scope="row">2015/02/21</td>
+          <td><%= link_to "大阪大学 博士課程 超域イノベーション・プログラム", "http://www.cbi.osaka-u.ac.jp/choikijijo/article/school20th/", target: :blank %></td>
+        </tr>
+        <tr>
+          <th scope="row">2014/12/13</td>
+          <td><%= link_to "沖縄科学技術大学院大学(OIST)　起業家人材育成プログラム(Entrepreneurial Training Program)", "https://groups.oist.jp/ja/bds/event/2014-entrepreneurial-training-program-day-3", target: :blank %></td>
+        </tr>
+        <tr>
+          <th scope="row">2014/07/09</td>
+          <td><%= link_to "BBT大学 資産形成力養成講座 @東京（市ヶ谷） セミナー『元外資系インベストメントバンカーが解説する資産運用の仕組みと本質』", "http://www.ohmae.ac.jp/ex/asset/guide/event/996/http://www.cbi.osaka-u.ac.jp/choikijijo/article/school20th/", target: :blank %></td>
+        </tr>
+      </tbody>
     </table>
 
   </div>
@@ -76,15 +86,19 @@
 <div class = "section">
   <div class = "container"><br><br>
     <h1>メディアに取材してもらいたい方へ</h1>
+
     <br><br>
+
     <div align = center>
       <img src="/assets/media_introduce.png" height="75%" width="75%" />
     </div>
+
     <br><br>
+
     <div align = center>
-      <h3></h3><br>
-      <h3>ご興味ある企業の担当者様は<a href = "https://www.facebook.com/GTICafe">GTIC　Facebookページ</a>よりご連絡ください。</h3><br>
+      <h3>ご興味ある企業の担当者様は<a href = "https://www.facebook.com/GTICafe">GTIC Facebookページ</a>よりご連絡ください。</h3>
     </div>
   </div>
 </div>
+
 <br><br><br><br>
