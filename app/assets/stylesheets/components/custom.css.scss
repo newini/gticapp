@@ -1,49 +1,34 @@
-/* mixins, variables, etc. */ 
+/* mixins, variables, etc. */
 $grayMediumLight: #eaeaea;
-@mixin box_sizing { 
-  -moz-box-sizing: border-box; 
-  -webkit-box-sizing: border-box; 
+@mixin box_sizing {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
+
 /* global setting */
 html {
   overflow-y: scroll;
 }
+
 body {
   padding-top: 56px;
   background: url(https://s3-ap-northeast-1.amazonaws.com/gtic/images/fabric_of_squares_gray.png);
 }
-section { 
+
+section {
   overflow: auto;
 }
+
 textarea {
   resize: vertical;
 }
+
 .center {
   text-align: center;
-  h1 { 
+  h1 {
     margin-bottom: 10px;
   }
-}
-/* typography */
-h1, h2, h3, h4, h5, h6 { 
-  line-height: 1;
-}
-h1 {
-  font-size: 3em; 
-  letter-spacing: -2px; 
-  margin-bottom: 30px; 
-}
-h2 {
-  font-size: 1.2em; 
-  letter-spacing: -1px; 
-  margin-bottom: 30px; 
-  font-weight: normal; 
-  color: #999;
-}
-p{
-  font-size: 1.1em; 
-  line-height: 1.7em;
 }
 
 /* header */
@@ -54,11 +39,12 @@ p{
 /* full-width-image */
 .full-width-image{
   /*background: url(http://lorempixel.com/g/1920/500/technics) no-repeat center center; */
-  background: url(https://s3-ap-northeast-1.amazonaws.com/gtic/images/bg_image_01.png) no-repeat center center; 
+  background: url(https://s3-ap-northeast-1.amazonaws.com/gtic/images/bg_image_01.png) no-repeat center center;
   background-size: cover;
   text-align: center;
   padding: 40px 0;
 }
+
 /* logo-wrapper */
 .logo-wrapper{
   display: inline-block;
@@ -70,6 +56,7 @@ p{
 .table > thead > tr > th, .table > thead > tr > td, .table > tbody > tr > th, .table > tbody > tr > td, .table > tfoot > tr > th, .table > tfoot > tr > td{
     vertical-align: middle;
 }
+
 .currency{
   text-align: right;
 }
@@ -80,28 +67,29 @@ p{
 }
 
 /* sidebar */
-aside { 
+aside {
   section {
     padding: 10px 0;
-    border-top: 1px solid $grayMediumLight; 
+    border-top: 1px solid $grayMediumLight;
     &:first-child {
       border: 0;
-      padding-top: 0; 
+      padding-top: 0;
     }
     span {
-      display: block; 
-      margin-bottom: 3px; 
+      display: block;
+      margin-bottom: 3px;
       line-height: 1;
-    } 
+    }
     h1 {
-      font-size: 1.4em; 
-      text-align: left; 
-      letter-spacing: -1px; 
-      margin-bottom: 3px; 
+      font-size: 1.4em;
+      text-align: left;
+      letter-spacing: -1px;
+      margin-bottom: 3px;
       margin-top: 0px;
-    } 
+    }
   }
 }
+
 .gravatar {
   float: left; margin-right: 10px;
 }
@@ -111,22 +99,23 @@ aside {
   clear: both;
   float: left;
   width: 100%;
-  margin-top: 45px; 
+  margin-top: 45px;
   @include box_sizing;
 }
 
 #error_explanation {
-  color: #f00; 
+  color: #f00;
   ul {
     list-style: none;
-    margin: 0 0 18px 0; 
+    margin: 0 0 18px 0;
   }
 }
-.field_with_errors { 
-  @extend .form-group; 
+
+.field_with_errors {
+  @extend .form-group;
   @extend .has-error !optional;
 }
 
 .td-nowrap{
-  white-space: nowrap; 
+  white-space: nowrap;
 }
