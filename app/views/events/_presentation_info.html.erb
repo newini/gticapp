@@ -6,8 +6,8 @@
         <tr>
           <th>
             <%="プレゼンテーション ##{n}" %>
-            <%= link_to "編集", edit_presentation_path(id: @event.id, number: n, presentation_id: presentation.id), class: "btn btn-default btn-xs",remote: true %>
-            <%= link_to "削除", presentation, value: presentation.id, method: :delete, class: "btn btn-default btn-xs", data: {confirm: "削除してもよろしいですか？"} %>
+            <%= link_to "編集", edit_presentation_path(id: @event.id, number: n, presentation_id: presentation.id), class: "btn btn-light btn-xs",remote: true %>
+            <%= link_to "削除", presentation, value: presentation.id, method: :delete, class: "btn btn-light btn-xs", data: {confirm: "削除してもよろしいですか？"} %>
           </th>
         </tr>
         <tr>
@@ -38,6 +38,6 @@
   <% end %>
   <hr>
   <div id="presentation">
-    <%= link_to "追加", new_presentation_path(id: @event.id), class:"btn btn-default btn-block", remote: true %>
+    <%= link_to "追加", new_presentation_path(id: @event.id), class:"btn btn-light btn-block", remote: true %>
   </div>
 </div>
