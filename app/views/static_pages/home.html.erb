@@ -6,7 +6,9 @@
     <h2>More open, more global, more innovative! <br>Let’s think about the Venture, Startup, Innovation , regardless of field, Age, Nationality !</h2>
     <a href="https://gtic.jp/about" class="btn btn-primary btn-lg">GTICについて(ABOUT)</a>
   </div>
-</div><br>
+</div>
+
+<br>
 
 <!-- time -->
 <% require "active_support/time"%>
@@ -18,30 +20,35 @@
   </div>
 <% end %>
 
+<br>
+
 <div class="container">
-  <h1>最新イベント情報</h1>
+
+  <h1 class="text-center">-最新イベント情報-</h1>
+  <p class="text-center"><a href="https://gtic.jp/presenter">過去のイベント一覧はこちら</a></p>
+
   <table class="table">
-    <tr>
-      <th class="col-md-1">Total</th>
-      <th class="col-md-1">Event</th>
-      <th class="col-md-1">Date</th>
-      <th class="col-md-2">Presenter</th>
-      <th class="col-md-4">Title</th>
-    </tr>
+    <thead>
+      <tr>
+        <th scope="col">Total</th>
+        <th scope="col">Event</th>
+        <th scope="col">Date</th>
+        <th scope="col">Presenter</th>
+        <th scope="col">Title</th>
+      </tr>
+    </thead>
 
-    <!-- table content -->
-    <% @events.each do |event| %>
-
+    <tbody>
+      <% @events.each do |event| %>
       <!-- unheld event -->
-      <% if event[:event][:date] < time - 24*60*60 %>
-        <% break %>
-      <% end %>
+        <% if event[:event][:date] < time - 24*60*60 %>
+          <% break %>
+        <% end %>
 
-      <% if event[:detail].length >= 1 %>
-        <% i=0 %>
-        <% event[:detail].sort_by{|e| e[:id]}.each do |detail| %>
-          <tr>
-            <% if detail[:presenter].length >= 1 %>
+        <% if event[:detail].length >= 1 %>
+          <% i=0 %>
+          <% event[:detail].sort_by{|e| e[:id]}.each do |detail| %>
+            <tr>
               <% if i == 0 %>
                 <%= content_tag :td, "第#{event[:event][:cumulative_number]}回", rowspan: event[:detail].length %>
                 <%= content_tag :td, rowspan: event[:detail].length do %>
@@ -64,79 +71,103 @@
                 <br>
                 <%= "#{detail[:abstract]}" %>
               </td>
-          </tr>
-          <% i += 1 %>
-            <% end %>
+            </tr>
+            <% i += 1 %>
+          <% end %>
         <% end %>
       <% end %>
-    <% end %>
+    </tbody>
   </table>
-  <a href="https://gtic.jp/presenter" class="btn btn-primary btn-lg">過去のイベント一覧</a>
+
 </div>
 
+<br>
 
+<!-- Cards -->
 <div class="container">
-  <div class="col-md-8">
-    <table width="100%" border="0px">
-      <tr>
-        <th rowspan="2" width="70%">
-          <center>
-            <h1><span class="glyphicon glyphicon-globe"></span> <a href="https://gtic.jp/about#conference">CONFERENCE (本会)</a></h1>
-            <p><h3>毎月都内でベンチャー企業によるプレゼンテーションを開催しています。</h3></p><br>
 
-            <h1><span class="glyphicon glyphicon-link"></span> <a href="https://gtic.jp/about#reception">懇親会</a></h1>
-            <p><h3>会議の後はビールと食事を片手にプレゼンター、参加者が歓談します。</h3></p>
+  <h1 class="text-center">-活動-</h1>
 
-            <h1><span class="glyphicon glyphicon-book"></span> <a href="https://gtic.jp/about#workshop">知識の泉</a></h1>
-            <p><h3>海外時事を通して実践英語を学ぶパネルディスカッションを開催しています。</h3></p><br>
+  <center>
+    <a href="https://www.facebook.com/GTICafe/photos/?ref=page_internal" class="btn btn-secondary">GTIC開催様子アルバム(外部ページ)</a>
+  </center>
 
-            <h1><span class="glyphicon glyphicon-edit"></span> <a href="https://gtic.jp/about#workshop">WORKSHOP (分科会)</a></h1>
-            <p><h3>不定期でビジネスマンに役立つ勉強会を開催しています。</h3></p><br>
-          </center>
-        </th>
-      </tr>
-    </table>
-  </div>
-
-  <div class="col-md-4">
+  <div class="row">
     <div class="col">
-      <div aligh = "center">
-        <br>
-        <br>
-        <button type="button"onclick="window.open('https://www.facebook.com/GTICafe/photos/?ref=page_internal')" class="btn btn-primary btn-lg">
-          <strong><font size = "4">GTIC開催様子アルバム</font></strong>
-        </button>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <button type="button"onclick="window.open('https://www.facebook.com/GTICafe')" class="btn btn-primary btn-lg">
-          <strong><font size = "4">GTIC Facebookページ</font></strong>
-        </button>
+      <div class="card">
+        <!--<img class="card-img-top" src="..." alt="Card image cap">-->
+        <div class="card-body">
+          <h5 class="card-title text-center">
+            <span class="glyphicon glyphicon-globe"></span>
+            <a href="https://gtic.jp/about#conference">CONFERENCE (本会)</a>
+          </h5>
+          <p class="card-text">毎月都内でベンチャー企業によるプレゼンテーションを開催しています。</p>
+        </div>
       </div>
     </div>
 
-    <br>
-    <br>
-
     <div class="col">
-      <script>(function(d, s, id) {
-          var js, fjs = d.getElementsByTagName(s)[0];
-          if (d.getElementById(id)) return;
-          js = d.createElement(s); js.id = id;
-          js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.3";
-          fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
-      </script>
-      <div class="fb-page" data-href="https://www.facebook.com/GTICafe" data-hide-cover="false" data-show-facepile="true" data-show-posts="true" data-width="380">
-        <div class="fb-xfbml-parse-ignore">
-          <blockquote cite="https://www.facebook.com/GTICafe">
-            <a href="https://www.facebook.com/GTICafe">Global Techno Innovation Cafe (GTIC)</a>
-          </blockquote>
+      <div class="card">
+        <!--<img class="card-img-top" src="..." alt="Card image cap">-->
+        <div class="card-body">
+          <h5 class="card-title text-center">
+            <span class="glyphicon glyphicon-link"></span>
+            <a href="https://gtic.jp/about#reception">懇親会</a>
+          </h5>
+          <p class="card-text">会議の後はビールと食事を片手にプレゼンター、参加者が歓談します。</p>
         </div>
       </div>
     </div>
   </div>
+
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <!--<img class="card-img-top" src="..." alt="Card image cap">-->
+        <div class="card-body">
+          <h5 class="card-title text-center">
+            <span class="glyphicon glyphicon-book"></span>
+            <a href="https://gtic.jp/about#workshop">知識の泉</a></h1>
+          </h5>
+          <p class="card-text">海外時事を通して実践英語を学ぶパネルディスカッションを開催しています。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card">
+        <!--<img class="card-img-top" src="..." alt="Card image cap">-->
+        <div class="card-body">
+          <h5 class="card-title text-center">
+            <span class="glyphicon glyphicon-edit"></span>
+            <a href="https://gtic.jp/about#workshop">WORKSHOP (分科会)</a></h1>
+          </h5>
+          <p class="card-text">不定期でビジネスマンに役立つ勉強会を開催しています。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<br>
+
+<div class="container">
+  <center>
+    <h1 class="text-center">-お知らせ-</h1>
+
+    <div class="row">
+      <div class="col">
+
+        <div class="fb-page" data-href="https://www.facebook.com/GTICafe/" data-tabs="timeline" data-width="500" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
+          <blockquote cite="https://www.facebook.com/GTICafe/" class="fb-xfbml-parse-ignore">
+            <a href="https://www.facebook.com/GTICafe/">Global Techno Innovation Cafe (GTIC)</a>
+          </blockquote>
+        </div>
+
+      </div>
+    </div>
+
+    <p>すべてのお知らせは<a href="https://www.facebook.com/GTICafe" target="_blank">公式Facebookページ</a>へ</p>
+  </center>
 </div>
