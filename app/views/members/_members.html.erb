@@ -8,31 +8,36 @@
   <%= submit_tag 'Search', :name => nil, class: 'btn btn-primary' %>
 <% end %>
 
-<%= content_tag :table, class: 'table table-condensed table-bordered table-striped' do %>
-  <tr>
-    <th>Member ID</th>
-    <th class="col-md-1">氏名（登録画面にジャンプ）</th>
-    <th class="col-md-2">Facebook名前<br>（ページにジャンプ）</th>
-    <th class="col-md-1">属性</th>
-    <th class="col-md-2"><%= sortable('affiliation',"所属") %></th>
-    <th class="col-md-1">役職</th>
-    <th class="col-md-3">備考</th>
-    <th><%= link_to "出席回数", count: true %></th>
-    <th></th>
-  </tr>
-  <% @members.each do |member| %>
-    <%= content_tag :tr do %>
-      <td><%= member.id %></td>
-      <td><%= link_to "#{member.last_name} #{member.first_name}", member_path(member) %></td>
-      <td><%= link_to image_tag("https://graph.facebook.com/#{member.fb_user_id}/picture", class: "fb_user_icon") + "#{member.fb_name}", "https://facebook.com/#{member.fb_user_id}", target: :blank %></td>
-      <td><%= Category.find(member.category_id).try(:name) if member.category_id.present? %></td>
-      <td><%= member.affiliation %></td>
-      <td><%= member.title %></td>
-      <td><%= member.note %></td>
-      <td><%= member.participated_events.count %></td>
-      <td><%= link_to "詳細", member_path(member), class:"btn btn-primary btn-xs" %></td>
+<table class="table table-condensed table-bordered table-striped table-sm" style="font-size: 13px;">
+  <thead>
+    <tr>
+      <th scope="col">Member ID</th>
+      <th scope="col">氏名（登録画面にジャンプ）</th>
+      <th scope="col">Facebook名前<br>（ページにジャンプ）</th>
+      <th scope="col">属性</th>
+      <th scope="col"><%= sortable('affiliation',"所属") %></th>
+      <th scope="col">役職</th>
+      <th scope="col">備考</th>
+      <th scope="col"><%= link_to "出席回数", count: true %></th>
+      <th scope="col"></th>
+    </tr>
+  </body>
+
+  <tbody>
+    <% @members.each do |member| %>
+      <%= content_tag :tr do %>
+        <td><%= member.id %></td>
+        <td><%= link_to "#{member.last_name} #{member.first_name}", member_path(member) %></td>
+        <td><%= link_to "#{member.fb_name}", "https://facebook.com/#{member.fb_user_id}", target: :blank %></td>
+        <td><%= Category.find(member.category_id).try(:name) if member.category_id.present? %></td>
+        <td><%= member.affiliation %></td>
+        <td><%= member.title %></td>
+        <td><%= member.note %></td>
+        <td><%= member.participated_events.count %></td>
+        <td><%= link_to "詳細", member_path(member), class:"btn btn-secondary btn-xs" %></td>
+      <% end %>
     <% end %>
-  <% end %>
-<% end %>
+  </tbody>
+</table>
 
 <div class="pagination pagination-centered"><%= will_paginate @members, renderer: BootstrapPagination::Rails %></div>

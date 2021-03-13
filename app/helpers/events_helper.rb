@@ -64,11 +64,11 @@ module EventsHelper
     status = relation.present? ? relation.status : nil
     case status
     when 1, nil
-      link_to("追加", change_status_event_path(:member_id => member.id, :direction => 2), :method => :post, :class => "btn btn-xs btn-primary", remote: true)
+      link_to("追加", change_status_event_path(:member_id => member.id, :direction => 2), :method => :post, :class => "btn btn-xs btn-secondary", remote: true)
     when 2
       content_tag(:div, class: "btn-group") {
-        concat link_to("参加予定", change_status_event_path(:member_id => member.id, :direction => 2, referer: @referer), :method => :post, :class => "btn btn-xs btn-primary ", remote: true)
-        concat content_tag(:button, class: "btn dropdown-toggle btn-primary btn-xs", data: {:toggle => "dropdown"}) {
+        concat link_to("参加予定", change_status_event_path(:member_id => member.id, :direction => 2, referer: @referer), :method => :post, :class => "btn btn-xs btn-secondary ", remote: true)
+        concat content_tag(:button, class: "btn dropdown-toggle btn-secondary btn-xs", data: {:toggle => "dropdown"}) {
           content_tag( :span, "", class: "caret")
         }
         concat content_tag(:ul, class: "dropdown-menu", role: "menu") {
@@ -84,8 +84,8 @@ module EventsHelper
       }
     when 3
       content_tag(:div, class: "btn-group") {
-        concat link_to("出席", change_status_event_path(:member_id => member.id, :direction => 3, referer: @referer), :method => :post, :class => "btn btn-xs btn-primary ", remote: true)
-        concat content_tag(:button, class: "btn dropdown-toggle btn-primary btn-xs", :"data-toggle" => "dropdown") {
+        concat link_to("出席", change_status_event_path(:member_id => member.id, :direction => 3, referer: @referer), :method => :post, :class => "btn btn-xs btn-secondary ", remote: true)
+        concat content_tag(:button, class: "btn dropdown-toggle btn-secondary btn-xs", :"data-toggle" => "dropdown") {
           content_tag :span, "",  class: "caret"
         }
         concat content_tag( :ul, class: "dropdown-menu", role: "menu") {
@@ -101,8 +101,8 @@ module EventsHelper
       }
     when 0, 4
       content_tag(:div, class: "btn-group") {
-        concat link_to("欠席", change_status_event_path(:member_id => member.id, :direction => 4, referer: @referer), :method => :post, :class => "btn btn-xs btn-primary ", remote: true)
-        concat content_tag(:button, class: "btn dropdown-toggle btn-primary btn-xs", :"data-toggle" => "dropdown") {
+        concat link_to("欠席", change_status_event_path(:member_id => member.id, :direction => 4, referer: @referer), :method => :post, :class => "btn btn-xs btn-secondary ", remote: true)
+        concat content_tag(:button, class: "btn dropdown-toggle btn-secondary btn-xs", :"data-toggle" => "dropdown") {
           content_tag(:span,"", class: "caret")
         }
         concat content_tag(:ul, class: "dropdown-menu", role: "menu") {
@@ -118,10 +118,10 @@ module EventsHelper
       }
     when 5
       content_tag(:div, class: "btn-group") {
-        concat link_to(switch_black_list_flg_event_path(member_id: member.id, referer: @referer), method: :post, class: "btn btn-xs btn-primary ", remote: true){
+        concat link_to(switch_black_list_flg_event_path(member_id: member.id, referer: @referer), method: :post, class: "btn btn-xs btn-secondary ", remote: true){
           member.black_list_flg ? "B-L解除" : "B-L"
         }
-        concat content_tag(:button, class: "btn dropdown-toggle btn-primary btn-xs", :"data-toggle" => "dropdown") {
+        concat content_tag(:button, class: "btn dropdown-toggle btn-secondary btn-xs", :"data-toggle" => "dropdown") {
           content_tag(:span,"", class: "caret")
         }
         concat content_tag(:ul, class: "dropdown-menu", role: "menu") {
@@ -137,8 +137,8 @@ module EventsHelper
       }
     when 6
       content_tag(:div, class: "btn-group") {
-        concat link_to("ドタ参", change_status_event_path(:member_id => member.id, :direction => 6, referer: @referer), :method => :post, :class => "btn btn-xs btn-primary ", remote: true)
-        concat content_tag(:button, class: "btn dropdown-toggle btn-primary btn-xs", :"data-toggle" => "dropdown") {
+        concat link_to("ドタ参", change_status_event_path(:member_id => member.id, :direction => 6, referer: @referer), :method => :post, :class => "btn btn-xs btn-secondary ", remote: true)
+        concat content_tag(:button, class: "btn dropdown-toggle btn-secondary btn-xs", :"data-toggle" => "dropdown") {
           content_tag :span, "",  class: "caret"
         }
         concat content_tag( :ul, class: "dropdown-menu", role: "menu") {
@@ -154,8 +154,8 @@ module EventsHelper
       }
     when 7
       content_tag(:div, class: "btn-group") {
-        concat link_to("ドタキャン", change_status_event_path(:member_id => member.id, :direction => 7, referer: @referer), :method => :post, :class => "btn btn-xs btn-primary ", remote: true)
-        concat content_tag(:button, class: "btn dropdown-toggle btn-primary btn-xs", :"data-toggle" => "dropdown") {
+        concat link_to("ドタキャン", change_status_event_path(:member_id => member.id, :direction => 7, referer: @referer), :method => :post, :class => "btn btn-xs btn-secondary ", remote: true)
+        concat content_tag(:button, class: "btn dropdown-toggle btn-secondary btn-xs", :"data-toggle" => "dropdown") {
           content_tag(:span,"", class: "caret")
         }
         concat content_tag(:ul, class: "dropdown-menu", role: "menu") {
@@ -259,7 +259,7 @@ module EventsHelper
   def select_birthday(member, event)
     if member.birthday
       if member.birthday.strftime("%m") == event.start_time.strftime("%m")
-        link_to update_birthday_event_path(member_id: member.id, referer: @referer), method: "post", remote: true, class:"btn btn-primary btn-xs" do
+        link_to update_birthday_event_path(member_id: member.id, referer: @referer), method: "post", remote: true, class:"btn btn-secondary btn-xs" do
           content_tag(:span, "", class:"glyphicon glyphicon-check")
         end
       else
@@ -276,7 +276,7 @@ module EventsHelper
 
   def select_black_list(member, event)
     if member.black_list_flg
-      link_to update_black_list_event_path(member_id: member.id, referer: @referer), method: "post", remote: true, class:"btn btn-primary btn-xs" do
+      link_to update_black_list_event_path(member_id: member.id, referer: @referer), method: "post", remote: true, class:"btn btn-secondary btn-xs" do
         content_tag(:span, "", class:"glyphicon glyphicon-check")
       end
     else
@@ -301,7 +301,7 @@ module EventsHelper
   def show_note(member, event) # Not use since 2019-04-13
     relationship = member.relationships.find_by_event_id(event.id)
     if relationship.note
-      link_to edit_relationship_path(relationship.id), class: "btn btn-primary btn-xs", remote: true do
+      link_to edit_relationship_path(relationship.id), class: "btn btn-secondary btn-xs", remote: true do
         content_tag :span, "", class: "glyphicon glyphicon-check note", data: {content: relationship.note }
       end
     else
