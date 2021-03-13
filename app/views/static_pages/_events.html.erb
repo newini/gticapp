@@ -1,45 +1,44 @@
 <table class="table">
-  <tr>
-    <th class="col-md-1">Total</th>
-    <th class="col-md-1">Event</th>
-    <th class="col-md-1">Date</th>
-    <th class="col-md-2">Presenter</th>
-    <th class="col-md-4">Title</th>
-    <th class="col-md-1">会場</th>
-  </tr>
+  <thead>
+    <tr>
+      <th scope="col">Total</th>
+      <th scope="col">Event</th>
+      <th scope="col">Date</th>
+      <th scope="col">Presenter</th>
+      <th scope="col">Title</th>
+      <th scope="col">会場</th>
+    </tr>
+  </thead>
 
   <!-- table content -->
-  <% @events.each do |event| %>
-    <% if event[:detail].length == 0 %>
-
-    <% elsif event[:detail].length >= 1 %>
-      <% i = 0 %>
-      <% event[:detail].sort_by{|e| e[:id]}.each do |detail| %>
-        <tr>
-          <% if detail[:presenter].length >= 1 %>
-            <% if i == 0 %>
-              <%= content_tag :td, "第#{event[:event][:cumulative_number]}回", rowspan: event[:detail].length %>
-              <%= content_tag :td, rowspan: event[:detail].length do %>
-                <%= "#{event[:event][:name]}" %>
-                <% if event[:event][:event_category_id] == 1 %>
-                  <%= "本会" %>
-                <% end %>
+  <tbody>
+    <% @events.each do |event| %>
+      <tr>
+        <% i = 0 %>
+        <% event[:detail].sort_by{|e| e[:id]}.each do |detail| %>
+          <% if i == 0 %>
+            <%= content_tag :th, "第#{event[:event][:cumulative_number]}回", scope: "row", rowspan: event[:detail].length %>
+            <%= content_tag :td, rowspan: event[:detail].length do %>
+              <%= "#{event[:event][:name]}" %>
+              <% if event[:event][:event_category_id] == 1 %>
+                <%= "本会" %>
               <% end %>
-              <%= content_tag :td, event[:event][:date], rowspan: event[:detail].length %>
             <% end %>
-            <td>
-              <% #detail[:presenter].each do |presenter| %>
-              <% detail[:presenter].reverse_each do |presenter| %>
-                <strong><%= presenter[:affiliation] %></strong><br><%= "#{presenter[:title]} #{presenter[:name]} 氏" %><br>
-              <% end %>
-            </td>
-            <td>
-              <strong>
+            <%= content_tag :td, event[:event][:date], rowspan: event[:detail].length %>
+          <% end %>
+          <td>
+            <% #detail[:presenter].each do |presenter| %>
+            <% detail[:presenter].reverse_each do |presenter| %>
+              <strong><%= presenter[:affiliation] %></strong><br><%= "#{presenter[:title]} #{presenter[:name]} 氏" %><br>
+            <% end %>
+          </td>
+          <td>
+            <strong>
               <%= "#{detail[:title]}" %>
-              </strong>
-              <br>
-              <%= "#{detail[:abstract]}" %>
-            </td>
+            </strong>
+            <br>
+            <%= "#{detail[:abstract]}" %>
+          </td>
           <% if i == 0 %>
             <%= content_tag :td, rowspan: event[:detail].length do %>
               <%= Place.find(event[:event][:place]).name if event[:event][:place].present? and Place.where(id: event[:event][:place]).present? %></td>
@@ -47,8 +46,7 @@
           <% end %>
         </tr>
         <% i += 1 %>
-          <% end %>
       <% end %>
     <% end %>
-  <% end %>
+  </tbody>
 </table>
