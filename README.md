@@ -239,7 +239,19 @@ Add like belows: `:table_name, :column_name, :type`
 * Delete a row in a table: `DELETE FROM users WHERE id=;`
 
 
-## d. Compile assets (may not need)
+## d. Yarn (js module manager)
+The yarn module is on `package.json`. ex. `"aos": "^2.3.4"`. To install these modules, type as below command.
+```
+yarn install
+```
+
+If you want to add new js module, type
+```
+yarn add module_name
+```
+
+
+## e. Compile assets (may not need)
 ```
 bundle exec rake assets:clean
 
