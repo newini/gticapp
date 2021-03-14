@@ -18,7 +18,6 @@
 console.log('Hello World from Webpacker')
 
 // AOS from yarn
-//import 'aos/dist/aos.js'
 import AOS from 'aos';
 document.addEventListener('DOMContentLoaded', function() {
     AOS.init({

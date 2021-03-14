@@ -240,14 +240,23 @@ Add like belows: `:table_name, :column_name, :type`
 
 
 ## d. Yarn (js module manager)
+### d.1 Install yarn modules
 The yarn module is on `package.json`. ex. `"aos": "^2.3.4"`. To install these modules, type as below command.
 ```
 yarn install
 ```
 
+### d.2 Add new yarn modules
 If you want to add new js module, type
 ```
 yarn add module_name
+```
+
+and edit `app/javascript/packs/application.js` and `app/assets/stylesheets/application.scss`.
+
+Then, update assets by webpack as below command.
+```
+./bin/webpack
 ```
 
 
