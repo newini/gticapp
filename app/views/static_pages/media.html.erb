@@ -1,9 +1,13 @@
 <div class="section">
-  <div class="container">
+  <div class="container-fluid">
 
     <h1>MEDIA</h1>
 
-    <table class="table">
+    <nav aria-label="Page navigation">
+      <%= will_paginate @media_articles, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+    </nav>
+
+    <table class="table table-sm">
       <thead>
         <tr>
           <th style="width: 10%" scope="col">Date</th>

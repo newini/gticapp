@@ -22,7 +22,8 @@ class EventsController < ApplicationController
       year = Date.parse(params[:year])
       base = Event.where(:start_time => year.beginning_of_year..year.end_of_year).group(:start_time)
     else
-      base = Event.where(:start_time => @start_date..@last_date).group(:start_time)
+      #base = Event.where(:start_time => @start_date..@last_date).group(:start_time)
+      base = Event.where(:start_time => @last_date.beginning_of_year...@last_date.end_of_year).group(:start_time)
     end
     record = base.order("start_time DESC")
     @events = record.map{
@@ -58,26 +59,6 @@ class EventsController < ApplicationController
     @total_participants = Relationship.where(member_id: array).where(status: 3).count
     @participants = Relationship.where(member_id: array).where(status: 3).group(:member_id).pluck(:member_id).count
 
-    #max_id = @events.count
-    #event_id = []
-    #h = max_id
-    #@events.each do |event|
-    #  event_id[h] = event[:event][:id]
-    #  h -= 1
-    #end
-    #record.each do |event|
-    #  k = 0
-    #  for h in 0..max_id do
-    #    if event_id[h] == event.id
-    #      k = h
-    #      break
-    #    end
-    #  end
-    #  logger.info(k)
-    #  event.update(cumulative_number: k)
-    #  event.save
-    #end
-
     respond_to do |format|
       format.html
       format.js
@@ -86,7 +67,6 @@ class EventsController < ApplicationController
 
   def search_event
     record = Event.group(:start_time).order("start_time DESC")
-    events_count = record.count
     # Search algorithm
     if params[:keyword].present?
       record = []
@@ -102,6 +82,9 @@ class EventsController < ApplicationController
           end
         end
       end
+    else
+      @start_date = Event.order("start_time ASC").first.start_time.beginning_of_year
+      @last_date = Event.order("start_time ASC").last.start_time.end_of_year
     end
     @events = record.map{
       |event| [

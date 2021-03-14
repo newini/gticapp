@@ -4,25 +4,30 @@
       <center>
 
         <h2>User情報</h2>
+        <p>Facebookでログインしたユーザのリスト。このリストはStaff以外は見れない</p>
 
-        <table class="table table-bordered">
-          <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Name</th>
-            <th scope="col">Facebook ID</th>
-            <th scope="col">Member ID</th>
-            <th></th>
-          </tr>
-
-          <% @users.each do |user| %>
+        <table class="table table-bordered table-sm">
+          <thead>
             <tr>
-              <td><%= user.id %></td>
-              <td><%= user.name %></td>
-              <td><%= user.uid %></td>
-              <td><%#= link_to user.member_id, "/members/#{user.member_id}" %></td>
-              <td><%= link_to "編集", edit_user_path(user) %></td>
+              <th scope="col">ID</th>
+              <th scope="col">Name</th>
+              <th scope="col">Facebook ID</th>
+              <th scope="col">Member ID</th>
+              <th scope="col" style="width: 5%;"></th>
             </tr>
-          <% end %>
+          </thead>
+
+          <tbody>
+            <% @users.each do |user| %>
+              <tr>
+                <td><%= user.id %></td>
+                <td><%= user.name %></td>
+                <td><%= user.uid %></td>
+                <td><%#= link_to user.member_id, "/members/#{user.member_id}" %></td>
+                <td><%= link_to "編集", edit_user_path(user) %></td>
+              </tr>
+            <% end %>
+          </tbody>
         </table>
 
       </center>

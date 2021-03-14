@@ -1,5 +1,8 @@
-<div class="pagination pagination-centered"><%= will_paginate @members, renderer: BootstrapPagination::Rails %></div>
+<nav aria-label="Page navigation">
+  <%= will_paginate @members, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+</nav>
 
+<!-- Search -->
 <%= form_tag :search_members, method: 'get', remote: true, class: "form-inline", role: "form" do %>
   <div class="form-group">
     <span>メンバー検索</span>
@@ -19,7 +22,7 @@
       <th scope="col">役職</th>
       <th scope="col">備考</th>
       <th scope="col"><%= link_to "出席回数", count: true %></th>
-      <th scope="col"></th>
+      <th scope="col" style="width: 5%;"></th>
     </tr>
   </body>
 
@@ -40,4 +43,6 @@
   </tbody>
 </table>
 
-<div class="pagination pagination-centered"><%= will_paginate @members, renderer: BootstrapPagination::Rails %></div>
+<nav aria-label="Page navigation">
+  <%= will_paginate @members, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+</nav>

@@ -17,15 +17,17 @@
         <%= submit_tag 'Search', :name => nil, class: 'btn btn-primary' %>
       <% end %>
 
-<!--
-      <div class="btn-group">
-        <% date = @last_date%>
-        <% while date >= @start_date do %>
-          <%= link_to "#{date.strftime("%Y")}年", events_path(:year => date.strftime("%Y-%m-%d")), class: "btn btn-light", remote: true %>
-          <% date = date - 1.year %>
-        <% end %>
-      </div>
--->
+      <!-- per year Paginate -->
+      <% if @start_date.present? and @last_date.present? %>
+        <div class="btn-group">
+          <% date = @last_date%>
+          <% while date >= @start_date do %>
+            <%= link_to "#{date.strftime("%Y")}年", presenter_path(:year => date.strftime("%Y-%m-%d")), class: "btn btn-info", remote: true %>
+            <% date = date - 1.year %>
+          <% end %>
+        </div>
+      <% end %>
+
       <div id="ajax_container">
         <%= render 'events' %>
       </div>

@@ -84,10 +84,9 @@ gem "font-awesome-rails" # For Social icons
 gem "jquery-rails"
 gem "jquery-slick-rails"
 
-# page
+# paginate
 gem 'will_paginate'
-gem 'will_paginate-bootstrap'
-
+gem 'will_paginate-bootstrap4' # https://github.com/delef/will_paginate-bootstrap4
 
 
 #gem 'uglifier'
