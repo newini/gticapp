@@ -9,6 +9,8 @@
 //
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
+
+
 //
 
 // jquery.js file must be added before bootstrap.js file.

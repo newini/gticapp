@@ -1,18 +1,16 @@
-<section id='header' style="background:gainsboro; padding: 60px 0; text-align: center;">
-  <div class="container">
-    <div class="row">
-      <div class="col">
+<div class="container-fluid" data-aos="zoom-out" style="background:gainsboro; padding: 60px 0; text-align: center;">
+  <div class="row">
+    <div class="col">
 
-        <%= image_tag 'logo200x200.png' %>
-        <h2>よりオープンに、よりグローバルに、よりイノベイティブに、<br>
-          ベンチャー、起業、スタートアップ、イノベーションを考えよう！</h2>
-        <h3 style="opacity: 0.5;">More open, more global, more innovative! <br>Let’s think about the Venture, Startup, Innovation , regardless of field, Age, Nationality!</h3>
-        <a href="https://gtic.jp/about" class="btn btn-primary btn-lg">GTICについて(ABOUT)</a>
+      <%= image_tag 'logo200x200.png' %>
+      <h2>よりオープンに、よりグローバルに、よりイノベイティブに、<br>
+        ベンチャー、起業、スタートアップ、イノベーションを考えよう！</h2>
+      <h3 style="opacity: 0.5;">More open, more global, more innovative! <br>Let’s think about the Venture, Startup, Innovation , regardless of field, Age, Nationality!</h3>
+      <a href="https://gtic.jp/about" class="btn btn-primary btn-lg">GTICについて(ABOUT)</a>
 
-      </div>
     </div>
   </div>
-</section>
+</div>
 
 
 <!-- time -->
@@ -20,153 +18,149 @@
 <% time = Time.now %>
 
 <% if @media_article.date > time - 31*24*60*60 %>
-  <div class="container">
+  <div class="container" data-aos="fade-up">
     <h3>新しい記事が登録されました。詳細は<a href="'/media">MEDIA ARTICLEページ</a>で</h3>
   </div>
 <% end %>
 
 
-<section id='header' style="background:lightcyan; padding: 60px 0;">
-  <div class="container">
-    <div class="row">
-      <div class="col">
+<div class="container-fluid" data-aos="fade-up" style="background:lightcyan; padding: 60px 0;">
+  <div class="row">
+    <div class="col">
 
-        <h1 class="text-center">-最新イベント情報-</h1>
-        <p class="text-center"><a href="https://gtic.jp/presenter">過去のイベント一覧はこちら</a></p>
+      <h1 class="text-center">-最新イベント情報-</h1>
+      <p class="text-center"><a href="https://gtic.jp/presenter">過去のイベント一覧はこちら</a></p>
 
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">Total</th>
-              <th scope="col">Event</th>
-              <th scope="col">Date</th>
-              <th scope="col">Presenter</th>
-              <th scope="col">Title</th>
-            </tr>
-          </thead>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Total</th>
+            <th scope="col">Event</th>
+            <th scope="col">Date</th>
+            <th scope="col">Presenter</th>
+            <th scope="col">Title</th>
+          </tr>
+        </thead>
 
-          <tbody>
-            <% @events.each do |event| %>
-            <!-- unheld event -->
-              <% if event[:event][:date] < time - 24*60*60 %>
-                <% break %>
-              <% end %>
+        <tbody>
+          <% @events.each do |event| %>
+          <!-- unheld event -->
+            <% if event[:event][:date] < time - 24*60*60 %>
+              <% break %>
+            <% end %>
 
-              <% if event[:detail].length >= 1 %>
-                <% i=0 %>
-                <% event[:detail].sort_by{|e| e[:id]}.each do |detail| %>
-                  <tr>
-                    <% if i == 0 %>
-                      <%= content_tag :td, "第#{event[:event][:cumulative_number]}回", rowspan: event[:detail].length %>
-                      <%= content_tag :td, rowspan: event[:detail].length do %>
-                        <%= "#{event[:event][:name]}" %>
-                        <% if event[:event][:event_category_id] == 1 %>
-                          <%= "本会" %>
-                        <% end %>
+            <% if event[:detail].length >= 1 %>
+              <% i=0 %>
+              <% event[:detail].sort_by{|e| e[:id]}.each do |detail| %>
+                <tr>
+                  <% if i == 0 %>
+                    <%= content_tag :td, "第#{event[:event][:cumulative_number]}回", rowspan: event[:detail].length %>
+                    <%= content_tag :td, rowspan: event[:detail].length do %>
+                      <%= "#{event[:event][:name]}" %>
+                      <% if event[:event][:event_category_id] == 1 %>
+                        <%= "本会" %>
                       <% end %>
-                      <%= content_tag :td, event[:event][:date], rowspan: event[:detail].length %>
                     <% end %>
-                    <td>
-                      <% #detail[:presenter].each do |presenter| %>
-                      <% detail[:presenter].reverse_each do |presenter| %>
-                        <strong><%= presenter[:affiliation] %></strong><br>
-                        <%= "#{presenter[:title]} #{presenter[:name]} 氏" %><br>
-                      <% end %>
-                    </td>
-                    <td>
-                      <strong><%= "#{detail[:title]}" %></strong>
-                      <br>
-                      <%= "#{detail[:abstract]}" %>
-                    </td>
-                  </tr>
-                  <% i += 1 %>
-                <% end %>
+                    <%= content_tag :td, event[:event][:date], rowspan: event[:detail].length %>
+                  <% end %>
+                  <td>
+                    <% #detail[:presenter].each do |presenter| %>
+                    <% detail[:presenter].reverse_each do |presenter| %>
+                      <strong><%= presenter[:affiliation] %></strong><br>
+                      <%= "#{presenter[:title]} #{presenter[:name]} 氏" %><br>
+                    <% end %>
+                  </td>
+                  <td>
+                    <strong><%= "#{detail[:title]}" %></strong>
+                    <br>
+                    <%= "#{detail[:abstract]}" %>
+                  </td>
+                </tr>
+                <% i += 1 %>
               <% end %>
             <% end %>
-          </tbody>
-        </table>
+          <% end %>
+        </tbody>
+      </table>
 
-      </div>
     </div>
   </div>
-</section>
+</div>
 
 
 <!-- Cards -->
-<section id='header' style="background:ivory; padding: 60px 0;">
-  <div class="container">
-    <div class="row">
-      <div class="col">
+<div class="container-fluid" data-aos="fade-up" style="background:ivory; padding: 60px 0;">
+  <div class="row">
+    <div class="col">
 
-        <h1 class="text-center">-活動-</h1>
+      <h1 class="text-center">-活動-</h1>
 
-        <center>
-          <a href="https://www.facebook.com/GTICafe/photos/?ref=page_internal" class="btn btn-secondary">GTIC開催様子アルバム(外部ページ)</a>
-        </center>
+      <center>
+        <a href="https://www.facebook.com/GTICafe/photos/?ref=page_internal" class="btn btn-secondary">GTIC開催様子アルバム(外部ページ)</a>
+      </center>
 
-        <div class="row">
-          <div class="col">
-            <div class="card">
-              <!--<img class="card-img-top" src="..." alt="Card image cap">-->
-              <div class="card-body">
-                <h5 class="card-title text-center">
-                  <span class="glyphicon glyphicon-globe"></span>
-                  <a href="https://gtic.jp/about#conference">CONFERENCE (本会)</a>
-                </h5>
-                <p class="card-text">毎月都内でベンチャー企業によるプレゼンテーションを開催しています。</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col">
-            <div class="card">
-              <!--<img class="card-img-top" src="..." alt="Card image cap">-->
-              <div class="card-body">
-                <h5 class="card-title text-center">
-                  <span class="glyphicon glyphicon-link"></span>
-                  <a href="https://gtic.jp/about#reception">懇親会</a>
-                </h5>
-                <p class="card-text">会議の後はビールと食事を片手にプレゼンター、参加者が歓談します。</p>
-              </div>
+      <div class="row">
+        <div class="col">
+          <div class="card" data-aos="fade-up">
+            <!--<img class="card-img-top" src="..." alt="Card image cap">-->
+            <div class="card-body">
+              <h5 class="card-title text-center">
+                <span class="glyphicon glyphicon-globe"></span>
+                <a href="https://gtic.jp/about#conference">CONFERENCE (本会)</a>
+              </h5>
+              <p class="card-text">毎月都内でベンチャー企業によるプレゼンテーションを開催しています。</p>
             </div>
           </div>
         </div>
 
-        <div class="row">
-          <div class="col">
-            <div class="card">
-              <!--<img class="card-img-top" src="..." alt="Card image cap">-->
-              <div class="card-body">
-                <h5 class="card-title text-center">
-                  <span class="glyphicon glyphicon-book"></span>
-                  <a href="https://gtic.jp/about#workshop">知識の泉</a></h1>
-                </h5>
-                <p class="card-text">海外時事を通して実践英語を学ぶパネルディスカッションを開催しています。</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col">
-            <div class="card">
-              <!--<img class="card-img-top" src="..." alt="Card image cap">-->
-              <div class="card-body">
-                <h5 class="card-title text-center">
-                  <span class="glyphicon glyphicon-edit"></span>
-                  <a href="https://gtic.jp/about#workshop">WORKSHOP (分科会)</a></h1>
-                </h5>
-                <p class="card-text">不定期でビジネスマンに役立つ勉強会を開催しています。</p>
-              </div>
+        <div class="col">
+          <div class="card" data-aos="fade-up">
+            <!--<img class="card-img-top" src="..." alt="Card image cap">-->
+            <div class="card-body">
+              <h5 class="card-title text-center">
+                <span class="glyphicon glyphicon-link"></span>
+                <a href="https://gtic.jp/about#reception">懇親会</a>
+              </h5>
+              <p class="card-text">会議の後はビールと食事を片手にプレゼンター、参加者が歓談します。</p>
             </div>
           </div>
         </div>
-
       </div>
+
+      <div class="row">
+        <div class="col">
+          <div class="card" data-aos="fade-up">
+            <!--<img class="card-img-top" src="..." alt="Card image cap">-->
+            <div class="card-body">
+              <h5 class="card-title text-center">
+                <span class="glyphicon glyphicon-book"></span>
+                <a href="https://gtic.jp/about#workshop">知識の泉</a></h1>
+              </h5>
+              <p class="card-text">海外時事を通して実践英語を学ぶパネルディスカッションを開催しています。</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="card" data-aos="fade-up">
+            <!--<img class="card-img-top" src="..." alt="Card image cap">-->
+            <div class="card-body">
+              <h5 class="card-title text-center">
+                <span class="glyphicon glyphicon-edit"></span>
+                <a href="https://gtic.jp/about#workshop">WORKSHOP (分科会)</a></h1>
+              </h5>
+              <p class="card-text">不定期でビジネスマンに役立つ勉強会を開催しています。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
-</section>
+</div>
 
 
-<div class="container">
+<div class="container" data-aos="fade-up">
   <center>
     <h1 class="text-center">-お知らせ-</h1>
 

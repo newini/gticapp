@@ -7,9 +7,6 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-
-    <script src="/assets/application.js?body=1" type="text/javascript"></script>
 
     <STYLE TYPE="text/css">
       <!--
@@ -36,6 +33,40 @@
       </STYLE>
     </NOSCRIPT>
 
+  </head>
+
+  <body>
+    <%= render 'layouts/header' %>
+
+    <% if not flash.empty? %>
+      <div class="container">
+        <% flash.each do |key,value| %>
+          <%= content_tag(:div, value, class: "alert alert-#{key}") %>
+        <% end %>
+      </div>
+    <% end %>
+
+    <%= yield %>
+
+    <%= render 'layouts/footer' %>
+    <%= debug(params) if Rails.env.development? %>
+
+
+    <!-- Add js end of body -->
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <script src="/assets/application.js?body=1" type="text/javascript"></script>
+
+    <script>
+      $(document).ready(
+        function() {
+          AOS.init({
+            easing: 'ease-in-quad',
+          });
+        }
+      );
+    </script>
+
     <!-- Facebook Analytics -->
     <script>
       window.fbAsyncInit = function() {
@@ -58,23 +89,6 @@
        }(document, 'script', 'facebook-jssdk'));
     </script>
 
-  </head>
-
-  <body>
-    <%= render 'layouts/header' %>
-
-    <% if not flash.empty? %>
-      <div class="container">
-        <% flash.each do |key,value| %>
-          <%= content_tag(:div, value, class: "alert alert-#{key}") %>
-        <% end %>
-      </div>
-    <% end %>
-
-    <%= yield %>
-
-    <%= render 'layouts/footer' %>
-    <%= debug(params) if Rails.env.development? %>
   </body>
 
 </html>

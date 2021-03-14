@@ -16,3 +16,12 @@
 // const imagePath = (name) => images(name, true)
 
 console.log('Hello World from Webpacker')
+
+// AOS from yarn
+//import 'aos/dist/aos.js'
+import AOS from 'aos';
+document.addEventListener('DOMContentLoaded', function() {
+    AOS.init({
+            startEvent: 'turbolinks:load' // if you are using turbolinks
+    });
+});
