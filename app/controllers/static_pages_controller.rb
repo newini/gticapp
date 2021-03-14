@@ -32,7 +32,7 @@ class StaticPagesController < ApplicationController
     }.flatten
 
     # Get one media article
-    @media_article = MediaArticle.where('date < ?', DateTime.now-24*60*60).order(date: :DESC)[0]
+    @media_article = MediaArticle.where('date > ?', DateTime.now-31*24*60*60).order(date: :DESC)[0]
   end
 
   def about
