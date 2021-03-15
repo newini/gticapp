@@ -279,8 +279,15 @@ bundle exec rake assets:precompile
 ```
 
 
-# 3. CSS and JS
-- hover.css: [documents and examples](http://ianlunn.github.io/Hover/), [How to install](https://devopspoints.com/bootstrap-4-hover.html)
+# 3. about CSS and JS
+## Installed
+- hover.css: mouse hover effects. See [documents and examples](http://ianlunn.github.io/Hover/). [How to install hover.css](https://devopspoints.com/bootstrap-4-hover.html)
+
+
+## Useful links
+- [css color keywords](https://www.w3.org/wiki/CSS/Properties/color/keywords)
+
+
 
 # MEMO
 ```
