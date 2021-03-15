@@ -260,16 +260,16 @@ module EventsHelper
     if member.birthday
       if member.birthday.strftime("%m") == event.start_time.strftime("%m")
         link_to update_birthday_event_path(member_id: member.id, referer: @referer), method: "post", remote: true, class:"btn btn-secondary btn-xs" do
-          content_tag(:span, "", class:"glyphicon glyphicon-check")
+          content_tag(:span, "", class:"fa fa-check")
         end
       else
         content_tag :button, disabled: "disabled", class: "btn btn-default btn-xs" do
-          content_tag(:span, "", class:"glyphicon glyphicon-unchecked")
+          content_tag(:span, "", class:"fa fa-unchecked")
         end
       end
     else
       link_to update_birthday_event_path(member_id: member.id, referer: @referer, birthday: true), method: "post", remote: true, class:"btn btn-default btn-xs" do
-        content_tag(:span, "", class:"glyphicon glyphicon-unchecked")
+        content_tag(:span, "", class:"fa fa-unchecked")
       end
     end
   end
@@ -277,11 +277,11 @@ module EventsHelper
   def select_black_list(member, event)
     if member.black_list_flg
       link_to update_black_list_event_path(member_id: member.id, referer: @referer), method: "post", remote: true, class:"btn btn-secondary btn-xs" do
-        content_tag(:span, "", class:"glyphicon glyphicon-check")
+        content_tag(:span, "", class:"fa fa-check")
       end
     else
       link_to update_black_list_event_path(member_id: member.id, referer: @referer, black_list_flg: true), method: "post", remote: true, class:"btn btn-default btn-xs" do
-        content_tag(:span, "", class:"glyphicon glyphicon-unchecked")
+        content_tag(:span, "", class:"fa fa-unchecked")
       end
     end
   end
@@ -302,11 +302,11 @@ module EventsHelper
     relationship = member.relationships.find_by_event_id(event.id)
     if relationship.note
       link_to edit_relationship_path(relationship.id), class: "btn btn-secondary btn-xs", remote: true do
-        content_tag :span, "", class: "glyphicon glyphicon-check note", data: {content: relationship.note }
+        content_tag :span, "", class: "fa fa-check note", data: {content: relationship.note }
       end
     else
       link_to edit_relationship_path(relationship.id), class: "btn btn-default btn-xs", remote: true do
-        content_tag :span, "", class: "glyphicon glyphicon-unchecked"
+        content_tag :span, "", class: "fa fa-unchecked"
       end
     end
   end

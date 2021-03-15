@@ -6,22 +6,22 @@
   <div class="col-md-10">
     <div class="btn-group" role="group" aria-label="Basic example">
       <%= link_to participants_event_path, class: "btn btn-light" do %>
-        <span class="glyphicon glyphicon-th-list"></span> 出席者一覧
+        <span class="fa fa-th-list"></span> 出席者一覧
       <% end %>
       <%= link_to update_participants_event_path, class: "btn btn-light",remote: true do %>
-        <span class="glyphicon glyphicon-edit"></span> 出席者情報編集
+        <span class="fa fa-edit"></span> 出席者情報編集
       <% end %>
       <%= link_to participants_event_path(format: 'xls'), method: "get", class: "btn btn-light" do %>
-        <span class="glyphicon glyphicon-download"></span> Download
+        <span class="fa fa-download"></span> Download
       <% end %>
       <%= button_tag data: {target: "#myModal", toggle: "modal"}, class: "btn btn-light" do %>
-        <span class="glyphicon glyphicon-upload"></span> Upload Name Card CSV
+        <span class="fa fa-upload"></span> Upload Name Card CSV
       <% end %>
       <%= button_tag data: {target: "#xlsx_modal", toggle: "modal"}, class: "btn btn-light" do %>
-        <span class="glyphicon glyphicon-upload"></span> Upload Name Card XLSX
+        <span class="fa fa-upload"></span> Upload Name Card XLSX
       <% end %>
       <%= button_tag data: {target: "#questionnaire_modal", toggle: "modal"}, class: "btn btn-light" do %>
-        <span class="glyphicon glyphicon-upload"></span> Upload Qustionnaire CSV
+        <span class="fa fa-upload"></span> Upload Qustionnaire CSV
       <% end %>
     </div>
     <div id="ajax_container">

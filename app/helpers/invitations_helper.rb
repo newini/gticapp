@@ -3,11 +3,11 @@ module InvitationsHelper
   def select_include_all_members(invitation)
     if invitation.include_all_flg
       link_to update_include_all_flg_invitation_path(invitation), method: "post", remote: true, class: "btn btn-primary btn-xs" do
-        content_tag(:span, "", class:"glyphicon glyphicon-check")
+        content_tag(:span, "", class:"fa fa-check")
       end
     else
       link_to update_include_all_flg_invitation_path(invitation), method: "post", remote: true, class: "btn btn-default btn-xs" do
-        content_tag(:span, "", class:"glyphicon glyphicon-unchecked")
+        content_tag(:span, "", class:"fa fa-unchecked")
       end
     end
   end
@@ -16,7 +16,7 @@ module InvitationsHelper
     content_tag(:div, class: "btn-group") {
       concat content_tag(:button, class: "btn dropdown-toggle btn-default btn-xs", data: {:toggle => "dropdown"}) {
         content_tag(:span, "", class: "caret")
-        content_tag(:span, "", class: "glyphicon glyphicon-birthday-cake")
+        content_tag(:span, "", class: "fa fa-birthday-cake")
         content_tag(:p, "クリックして誕生月選択")
       }
       concat content_tag(:ul, "asd", class: "dropdown-menu", role: "menu") {
@@ -42,7 +42,7 @@ module InvitationsHelper
   def select_event(invitation, events)
     content_tag(:div, class: "btn-group") {
       concat content_tag(:button, class: "btn dropdown-toggle btn-default btn-xs", data: {:toggle => "dropdown"}) {
-        content_tag(:span, "", class: "glyphicon glyphicon-download")
+        content_tag(:span, "", class: "fa fa-download")
         content_tag(:span, "", class: "caret")
         content_tag(:p, "クリックしてイベント選択")
       }
@@ -60,11 +60,11 @@ module InvitationsHelper
   def select_include_gtic_members(invitation)
     if invitation.include_gtic_flg
       link_to update_include_gtic_flg_invitation_path(invitation), method: "post", remote: true, class: "btn btn-primary btn-xs" do
-        content_tag(:span, "", class:"glyphicon glyphicon-check")
+        content_tag(:span, "", class:"fa fa-check")
       end
     else
       link_to update_include_gtic_flg_invitation_path(invitation), method: "post", remote: true, class: "btn btn-default btn-xs" do
-        content_tag(:span, "", class:"glyphicon glyphicon-unchecked")
+        content_tag(:span, "", class:"fa fa-unchecked")
       end
     end
   end
