@@ -52,21 +52,10 @@
     <%= debug(params) if Rails.env.development? %>
 
 
-    <!-- Add js end of body -->
+
+    <!-- ========== Add js end of body ============= -->
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-
     <script src="/assets/application.js?body=1" type="text/javascript"></script>
-
-    <!-- AOS -->
-    <script>
-      $(document).ready(
-        function() {
-          AOS.init({
-            easing: 'ease-in-quad',
-          });
-        }
-      );
-    </script>
 
     <!-- Facebook Analytics -->
     <script>

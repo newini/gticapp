@@ -7,9 +7,6 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-
-    <script src="/assets/application.js?body=1" type="text/javascript"></script>
 
   <!--
     <%#= javascript_include_tag "highcharts/highcharts.js", "data-turbolinks-track" => true %>
@@ -41,8 +38,6 @@
   <body>
     <%= render 'layouts/header' %>
 
-    <br>
-
     <div class="container">
       <% flash.each do |key,value| %>
         <%= content_tag(:div, value, class: "alert alert-#{key}") %>
@@ -51,10 +46,38 @@
 
     <%= yield %>
 
-    <div class="container">
+    <div class="container-fluid">
       <%= render 'layouts/footer' %>
       <%= debug(params) if Rails.env.development? %>
     </div>
+
+
+
+    <!-- ========== Add js end of body ============= -->
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <script src="/assets/application.js?body=1" type="text/javascript"></script>
+
+    <!-- Facebook Analytics -->
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : <%= ENV['FACEBOOK_APP_ID'] %>,
+          cookie     : true,
+          xfbml      : true,
+          version    : 'v10.0'
+        });
+
+        FB.AppEvents.logPageView();
+      };
+
+      (function(d, s, id){
+         var js, fjs = d.getElementsByTagName(s)[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement(s); js.id = id;
+         js.src = "https://connect.facebook.net/en_US/sdk.js";
+         fjs.parentNode.insertBefore(js, fjs);
+       }(document, 'script', 'facebook-jssdk'));
+    </script>
 
   </body>
 

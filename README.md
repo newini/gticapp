@@ -259,8 +259,15 @@ Then, update assets by webpack as below command.
 ./bin/webpack
 ```
 
+## e. npm (module manager)
+### e.1 Install modules by npm
+The modules are defined in `package-lock.json`.
+```
+npm ci
+```
 
-## e. Compile assets (may not need)
+
+## f. Compile assets (may not need)
 ```
 bundle exec rake assets:clean
 
@@ -271,6 +278,9 @@ bundle exec rake assets:precompile
 #bundle exec rake assets:precompile RAILS_ENV=production
 ```
 
+
+# 3. CSS and JS
+- hover.css: [documents and examples](http://ianlunn.github.io/Hover/), [How to install](https://devopspoints.com/bootstrap-4-hover.html)
 
 # MEMO
 ```

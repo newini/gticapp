@@ -4,10 +4,23 @@
       <center>
 
         <h1>My page</h1>
+
         <div class="center">
           <%= image_tag "https://graph.facebook.com/#{@user.uid}/picture?type=large&access_token=#{@user.access_token}" %>
           <p>Hello! <%= "#{@user.name}" %></p>
         </div>
+
+        <div class="fb-page" data-href="https://www.facebook.com/GTICafe/"
+          data-tabs="events" data-width="500" data-height="" data-small-header="false"
+          data-adapt-container-width="true" data-hide-cover="false"
+          data-show-facepile="true">
+          <blockquote cite="https://www.facebook.com/GTICafe/" class="fb-xfbml-parse-ignore">
+            <a href="https://www.facebook.com/GTICafe/">
+              Global Techno Innovation Cafe (GTIC)
+            </a>
+          </blockquote>
+        </div>
+
 
         <h2>My Information</h2>
         <table class="table table-bordered">
@@ -26,16 +39,6 @@
             <td><%#= member.participated_events.count %></td>
           </tr>
 
-          <!--
-          <tr>
-            <th>Facebook ID</th>
-            <td><%#= @user.fb_uid %></td>
-          </tr>
-          <tr>
-            <th>Member ID</th>
-            <td><%#= @user.member_id %></td>
-          </tr>
-          -->
         </table>
 
         <%= link_to "Edit user information", edit_user_path(current_user), class: "btn btn-light" %>

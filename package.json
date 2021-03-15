@@ -1,7 +1,9 @@
 {
   "dependencies": {
     "@rails/webpacker": "5.2.1",
-    "aos": "^2.3.4"
+    "aos": "^2.3.4",
+    "hover.css": "^2.3.2",
+    "mdbootstrap": "^4.19.2"
   },
   "devDependencies": {
     "webpack-dev-server": "^3.11.2"
