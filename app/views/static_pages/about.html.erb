@@ -8,6 +8,7 @@
           <%= image_tag 'logo200x200.png' %>
         </div>
       </div>
+
       <div class="col-lg-8 col-md-8">
         <p>
         GTICとは、ベンチャー関係者が集まる会合であり、ベンチャーの「エコシステム」の実現の場です。「エコシステム」とは、ベンチャー企業、大企業、投資家、弁護士、会計士、証券会社、ベンチャーキャピタルなど、関係者が有機的に集まり、より能動的にベンチャーを育てられる仕組みです。
@@ -24,11 +25,12 @@
       </div>
     </div>
 
+    <br>
+
     <h1>MEMBERSHIP</h1>
     <div class="row">
       <div class="col-lg-4 col-md-4">
         <%= image_tag 'membership.png' %>
-
       </div>
 
       <div class="col-lg-8 col-md-8">
@@ -38,8 +40,9 @@
       </div>
     </div>
 
-    <h1 id="conference">&nbsp;</h1>
-    <h1>CONFERENCE（本会）</h1>
+    <br>
+
+    <h1 id="conference">CONFERENCE（本会）</h1>
     <div class="row">
       <div class="col-lg-4 col-md-4">
         <%= image_tag 'conference.png' %>
@@ -50,8 +53,9 @@
       </div>
     </div>
 
-    <h1 id="workshop">&nbsp;</h1>
-    <h1>WORKSHOP（分科会）</h1>
+    <br>
+
+    <h1 id="workshop">WORKSHOP（分科会）</h1>
     <div class="row">
       <div class="col-lg-4 col-md-4">
         <%= image_tag 'workshop.png' %>
@@ -62,7 +66,9 @@
         <p><strong>これまでの開催実績</strong></p>
 
         <!-- bunkakai event -->
+        <% n = 0 %>
         <% @events.each do |event| %>
+          <% break if n == 5 %>
           <% if event[:event][:event_category_id] == 2 %>
             <% i=0 %>
             <% event[:detail].each do |detail| %>
@@ -76,18 +82,22 @@
               <% end %>
               <% i += 1 %>
             <% end %>
+            <% n += 1 %>
             <br>
           <% end %>
         <% end %>
+        <p>...(詳しくは<a href="/presenter">Presenter</a>ページへ)</p>
 
-        <br><br>
+        <br>
 
         <p>また、上の会合に加えて、2014年からは 実践英語セミナー「知識の泉」も、開始しました。毎月、毎回英語に関するプロの方々(通訳者、同時通訳者、大学教官、130冊超の英語学習書を出版してきた人気作家、英語によるプレゼン講師、元NYの大手ファッション会社の広報だった方などなど)を講師にお迎えして開催しています。</p>
 
-        <br><br>
+        <br>
 
         <!-- Chisiki no izumi event -->
+        <% n = 0 %>
         <% @events.each do |event| %>
+          <% break if n == 5 %>
           <% if event[:event][:event_category_id] == 3 %>
             <% i=0 %>
             <% event[:detail].each do |detail| %>
@@ -101,90 +111,107 @@
               <% end %>
               <% i += 1 %>
             <% end %>
+            <% n += 1 %>
             <br>
           <% end %>
         <% end %>
+        <p>...(詳しくは<a href="/presenter">Presenter</a>ページへ)</p>
 
       </div>
     </div>
 
-    <h1 id="reception">&nbsp;</h1>
-    <h1>RECEPTION</h1>
+    <br>
+
+    <h1 id="reception">RECEPTION</h1>
     <div class="row">
       <div class="col-lg-4 col-md-4">
-        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
           <!-- Indicators -->
           <ol class="carousel-indicators">
-            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
           </ol>
-
           <!-- Wrapper for slides -->
           <div class="carousel-inner">
-            <div class="item active">
+            <div class="carousel-item active">
               <%= image_tag 'reception01.png' %>
             </div>
-            <div class="item">
+            <div class="carousel-item">
               <%= image_tag 'reception02.png' %>
             </div>
-            <div class="item">
+            <div class="carousel-item">
               <%= image_tag 'reception03.png' %>
             </div>
           </div>
-
           <!-- Controls -->
-          <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-            <span class="fa fa-chevron-left"></span>
+          <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
           </a>
-          <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-            <span class="fa fa-chevron-right"></span>
+          <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
           </a>
         </div>
-        <div class="logo-wrapper">
-        </div>
-      </div>
+      </div> <!-- End of col 4-->
 
       <div class="col-lg-8 col-md-8">
         <p>会議の後はビールと軽食を片手にプレゼンター、参加者が歓談します。</p>
-        <p>GTICでは、第１回イベントから一度もかかさず、ムスリムの方が来ても安心して、食事ができるように、Halal料理を懇親会に必ず、用意しています。 </p>
-        <p>そのような背景もあり、バングラデシュから政府高官や、経済界の代表団が来日した時も、GTICで講演をさせてもらいたい、と依頼が来ました。</p>
-        <p>※ハラル(HALAL)とは、イスラムの教え（シャリーア法とイスラム原理）で許された、「健全な商品や活動」全般を指し、イスラム教徒（ムスリム）は原則ハラル料理以外を食することを許されていません。
-        GTICでは、正式にハラル認証を受けた店舗からハラル料理を注文し、提供しています。</p>
+        <p>GTICでは、第１回イベントから一度もかかさず、ムスリムの方が来ても安心して、食事ができるように、Halal料理を懇親会に必ず、用意しています。そのような背景もあり、バングラデシュから政府高官や、経済界の代表団が来日した時も、GTICで講演をさせてもらいたい、と依頼が来ました。</p>
+        <p>※ハラル(HALAL)とは、イスラムの教え（シャリーア法とイスラム原理）で許された、「健全な商品や活動」全般を指し、イスラム教徒（ムスリム）は原則ハラル料理以外を食することを許されていません。GTICでは、正式にハラル認証を受けた店舗からハラル料理を注文し、提供しています。</p>
       </div>
     </div>
+
+    <br>
 
     <h1>User Type</h1>
     <center>
       <p>GTICの特徴は、参加者の多様性です。</p>
-      <p>「分野・国籍・年齢問わず」を基本理念とし、<br>様々な職業、幅広い年齢層、多様な人種が盛んに議論しあう「場」を提供しています。</p><br>
+      <p>「分野・国籍・年齢問わず」を基本理念とし、様々な職業、幅広い年齢層、多様な人種が盛んに議論しあう「場」を提供しています。</p><br>
+    </center>
 
-      <h1>参加者の職業</h1>
-      <%= image_tag "zokusei.png", size: "500x400" %>
-
-      <br><br><br>
-
-      <h1>参加者の年齢</h1>
-      <%= image_tag "nenrei.png", size: "600x460" %>
-
-      <br><br><br>
-
-      <h1>各国からの参加者</h1>
-      <div class="row"><h3>
-        <div class="col-sm">
-          <p>アメリカ、カナダ、中国、台湾、香港、韓国</p>
-        </div>
-        <div class="col-sm">
-          <p>フィリピン、ベトナム、タイ、インド、チュニジア、ロシア</p>
-        </div>
-        <div class="col-sm">
-          <p>イギリス、フランス、ベルギー、ウズベキスタン、ハンガリ―、メキシコ</p>
-        </div>
-        <div class="col-sm">
-          <p>バングラデシュ、シンガポール、マレーシア、新疆ウイグル、ポーランド</p>
+    <div class="row justify-content-center">
+      <div class="col hvr-bounce-in">
+        <div class="card" data-aos="fade-up">
+          <!--<img class="card-img-top" src="..." alt="Card image cap">-->
+          <div class="card-body">
+            <h5 class="card-title text-center">
+              <i class="fa fa-briefcase"></i>
+              参加者の職業
+            </h5>
+            <%= image_tag "zokusei.png", size: "500x400" %>
+          </div>
         </div>
       </div>
 
-    </center>
+      <div class="col hvr-bounce-in">
+        <div class="card" data-aos="fade-up">
+          <!--<img class="card-img-top" src="..." alt="Card image cap">-->
+          <div class="card-body">
+            <h5 class="card-title text-center">
+              <i class="fa fa-calendar"></i>
+              参加者の年齢
+            </h5>
+            <%= image_tag "nenrei.png", size: "600x460" %>
+          </div>
+        </div>
+      </div>
+
+      <div class="col hvr-bounce-in">
+        <div class="card" data-aos="fade-up">
+          <!--<img class="card-img-top" src="..." alt="Card image cap">-->
+          <div class="card-body">
+            <h5 class="card-title text-center">
+              <i class="fa fa-globe"></i>
+              各国からの参加者
+            </h5>
+            <p>アメリカ、カナダ、中国、台湾、香港、韓国、フィリピン、ベトナム、タイ、インド、チュニジア、ロシア、イギリス、フランス、ベルギー、ウズベキスタン、ハンガリ―、メキシコ、バングラデシュ、シンガポール、マレーシア、新疆ウイグル、ポーランド</p>
+          </div>
+        </div>
+      </div>
+
+    </div> <!-- End of card row -->
+
   </div>
 </div>
