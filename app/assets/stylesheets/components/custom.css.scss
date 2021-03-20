@@ -13,7 +13,7 @@ html {
 
 body {
   padding-top: 56px;
-  background: url(https://s3-ap-northeast-1.amazonaws.com/gtic/images/fabric_of_squares_gray.png);
+  background: url(asset_path("fabric_of_squares_gray.png"));
 }
 
 section {
@@ -33,16 +33,21 @@ textarea {
 
 /* header */
 .nav {
-  margin-top: 6px;
+    margin-top: 6px;
 }
 
-/* full-width-image */
-.full-width-image{
-  /*background: url(http://lorempixel.com/g/1920/500/technics) no-repeat center center; */
-  background: url(https://s3-ap-northeast-1.amazonaws.com/gtic/images/bg_image_01.png) no-repeat center center;
-  background-size: cover;
-  text-align: center;
-  padding: 40px 0;
+/* static page */
+/* home */
+.my-home-head::after {
+    content: "";
+    background-image: url(asset_path("bg_image_01.png"));
+    opacity: 0.5;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;
 }
 
 /* logo-wrapper */
