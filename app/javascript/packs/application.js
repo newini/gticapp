@@ -17,10 +17,34 @@
 
 console.log('Hello World from Webpacker')
 
+require("@rails/ujs").start()
+require("turbolinks").start()
+
+// jquery and popper is included in bootstrap,
+// If include these, it will be conflicted
+// https://rubyyagi.com/how-to-use-bootstrap-and-jquery-in-rails-6-with-webpacker/
+import 'bootstrap'
+
+// To solve Uncaught ReferenceError, $ is not defined
+var jQuery = require('jquery')
+// include jQuery in global and window scope (so you can access it globally)
+// in your web browser, when you type $('.div'), it is actually refering to global.$('.div')
+global.$ = global.jQuery = jQuery;
+window.$ = window.jQuery = jQuery;
+
+// Bootstrap popover
+document.addEventListener("turbolinks:load", function() {
+    $(function () {
+        $('[data-toggle="popover"]').popover({
+            trigger: 'focus'
+        })
+    })
+})
+
 // AOS from yarn
 import AOS from 'aos';
 document.addEventListener('DOMContentLoaded', function() {
     AOS.init({
-            startEvent: 'turbolinks:load' // if you are using turbolinks
+        startEvent: 'turbolinks:load' // if you are using turbolinks
     });
 });

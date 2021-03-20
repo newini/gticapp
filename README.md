@@ -281,6 +281,12 @@ bundle exec rake assets:precompile
 
 # 3. about CSS and JS
 ## Installed
+- @rails/ujs
+- turbolinks
+- jquery
+- popper.js
+- bootstrap
+- aos
 - hover.css: mouse hover effects. See [documents and examples](http://ianlunn.github.io/Hover/). [How to install hover.css](https://devopspoints.com/bootstrap-4-hover.html)
 
 

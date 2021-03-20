@@ -11,16 +11,10 @@
 // about supported directives.
 
 
-//
-
-// jquery.js file must be added before bootstrap.js file.
-//= require jquery
-//= require jquery.slick
-//= require popper
-//= require turbolinks
-//= require jquery_ujs
-//= require bootstrap
+// other js in on app/javascript/packs/application.js
 
 // Plot a chart
-//= require chartkick
-//= require Chart.bundle
+// require chartkick
+// require Chart.bundle
+
+//= require_tree .
