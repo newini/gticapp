@@ -286,7 +286,7 @@ bundle exec rake assets:precompile
 - jquery
 - popper.js
 - bootstrap
-- aos
+- aos: Animate On Scroll Library. [Documents](https://michalsnik.github.io/aos/)
 - hover.css: mouse hover effects. See [documents and examples](http://ianlunn.github.io/Hover/). [How to install hover.css](https://devopspoints.com/bootstrap-4-hover.html)
 
 
