@@ -174,39 +174,61 @@
     <div class="row justify-content-center">
       <div class="col hvr-bounce-in">
         <div class="card" data-aos="fade-up">
-          <!--<img class="card-img-top" src="..." alt="Card image cap">-->
           <div class="card-body">
             <h5 class="card-title text-center">
               <i class="fa fa-briefcase"></i>
               参加者の職業
             </h5>
-            <%= image_tag "zokusei.png", size: "500x400" %>
+            <div id="pie" style="width: 500px; height: 300px;"></div>
+            <script>
+              new Chartkick.PieChart("pie", [["投資家", 11], ["起業家", 23], ["金融企業勤務", 7], ["事業会社勤務", 20], ["政府、及びその関係者", 3], ["研究者", 3], ["技術者", 3], ["プロフェッショナル", 9], ["起業家希望", 9], ["その他", 12]], {suffix: "%"});
+            </script>
           </div>
         </div>
       </div>
 
       <div class="col hvr-bounce-in">
         <div class="card" data-aos="fade-up">
-          <!--<img class="card-img-top" src="..." alt="Card image cap">-->
           <div class="card-body">
             <h5 class="card-title text-center">
               <i class="fa fa-calendar"></i>
               参加者の年齢
             </h5>
-            <%= image_tag "nenrei.png", size: "600x460" %>
+            <div id="pie-age" style="height: 300px;"></div>
+            <script>
+              new Chartkick.PieChart("pie-age", [["20歳代未満", 14], ["30歳代", 36], ["40歳代", 31], ["50歳代", 15], ["60歳代以上", 4]], {suffix: "%"});
+            </script>
           </div>
         </div>
       </div>
 
       <div class="col hvr-bounce-in">
         <div class="card" data-aos="fade-up">
-          <!--<img class="card-img-top" src="..." alt="Card image cap">-->
           <div class="card-body">
             <h5 class="card-title text-center">
               <i class="fa fa-globe"></i>
               各国からの参加者
             </h5>
-            <p>アメリカ、カナダ、中国、台湾、香港、韓国、フィリピン、ベトナム、タイ、インド、チュニジア、ロシア、イギリス、フランス、ベルギー、ウズベキスタン、ハンガリ―、メキシコ、バングラデシュ、シンガポール、マレーシア、新疆ウイグル、ポーランド</p>
+            <div id="geo" style="height: 300px;"></div>
+            <script>
+              new Chartkick.GeoChart("geo", [
+                // East Asia
+                ["China", 1], ["Hong Kong", 1], ["Japan", 1], ["South Korea", 1],
+                // Asia
+                ["Malaysia", 1], ["Philippines", 1], ["Singapore", 1], ["Thailand", 1],  ["Vietnam", 1],
+                // Central Asia
+                ["Uzbekistan", 1],
+                // South Asia
+                ["Bangladesh", 1], ["India", 1],
+                // America
+                ["Canada", 1], ["Mexico", 1], ["United States", 1],
+                // Africa
+                ["Tunisia", 1],
+                // Europe
+                ["Belgium", 1], ["France", 1], ["Hungary", 1], ["Russia", 1], ["United Kingdom", 1],
+                ["Poland", 1]
+              ]);
+            </script>
           </div>
         </div>
       </div>
