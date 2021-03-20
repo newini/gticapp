@@ -6,34 +6,15 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <!-- ========== Stylesheet ============= -->
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
 
-    <STYLE TYPE="text/css">
-      <!--
-      DIV.tuzukiwaku{border:1px solid #badefe;padding:3px;margin:3px;display:none;}
-      -->
-    </STYLE>
-
-    <SCRIPT language="JavaScript">
-      <!--
-      function hiraku(geID){
-        document.getElementById(geID).style.display = "block";
-      }
-      function tatamu(geID){
-        document.getElementById(geID).style.display = "none";
-      }
-      //-->
-    </SCRIPT>
-
-    <NOSCRIPT>
-      <STYLE TYPE="text/css">
-        <!--
-        DIV.tuzukiwaku{display:block;color:#ffffff;}
-        -->
-      </STYLE>
-    </NOSCRIPT>
-
+    <!-- ========== Javascript ============= -->
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <script src="/assets/application.js?body=1" type="text/javascript"></script>
   </head>
+
 
   <body>
     <%= render 'layouts/header' %>
@@ -52,10 +33,6 @@
     <%= debug(params) if Rails.env.development? %>
 
 
-
-    <!-- ========== Add js end of body ============= -->
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <script src="/assets/application.js?body=1" type="text/javascript"></script>
 
     <!-- Facebook Analytics -->
     <script>
