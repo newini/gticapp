@@ -11,10 +11,7 @@
 // about supported directives.
 
 
-// other js in on app/javascript/packs/application.js
-
-// Plot a chart
-// require chartkick
-// require Chart.bundle
-
 //= require_tree .
+
+
+// other js in on app/javascript/packs/application.js

@@ -48,3 +48,8 @@ document.addEventListener('DOMContentLoaded', function() {
         startEvent: 'turbolinks:load' // if you are using turbolinks
     });
 });
+
+// Create chart
+// https://chartkick.com/
+require("chartkick")
+require("chart.js")

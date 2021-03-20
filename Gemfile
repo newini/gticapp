@@ -69,9 +69,6 @@ gem 'koala' # Facebook graph api
 gem 'devise-i18n'
 gem 'devise-i18n-views'
 
-# Graphs
-gem 'chartkick' # Create beautiful JavaScript charts with one line of Ruby
-
 # Gmail API
 gem "google-api-client"
 

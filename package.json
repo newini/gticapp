@@ -4,6 +4,8 @@
     "@rails/webpacker": "5.2.1",
     "aos": "^2.3.4",
     "bootstrap": "^4.6.0",
+    "chart.js": "^2.9.4",
+    "chartkick": "^3.2.1",
     "hover.css": "^2.3.2",
     "jquery": "^3.6.0",
     "mdbootstrap": "^4.19.2",
