@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_23_035319) do
+ActiveRecord::Schema.define(version: 2021_03_23_042305) do
 
   create_table "accounts", force: :cascade do |t|
     t.string "title", limit: 255
@@ -78,7 +78,6 @@ ActiveRecord::Schema.define(version: 2021_03_23_035319) do
     t.string "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "file_path"
     t.datetime "date"
     t.integer "member_id"
     t.binary "file_data"
