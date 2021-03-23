@@ -84,23 +84,3 @@ gem 'will_paginate'
 gem 'will_paginate-bootstrap4' # https://github.com/delef/will_paginate-bootstrap4
 
 
-#gem 'uglifier'
-#
-#gem 'coffee-rails', '~> 4.2.0'
-#
-#gem 'therubyracer', platforms: :ruby
-#gem 'bootswatch-rails'
-#gem 'mandrill-api'
-#
-#gem 'whenever', :require => false
-#
-#gem 'spinjs-rails'
-#gem 'config', github: 'railsconfig/config' # name changed from rails_config
-#
-## Depends on rails version
-#gem "actionview", ">= 4.2.11"
-#gem "activejob", ">= 4.2.11"
-#
-#gem "nokogiri", ">= 1.8.5"
-#gem "rack", ">= 1.6.11"
-#gem "loofah", ">= 2.2.3"
