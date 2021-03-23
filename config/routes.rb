@@ -109,6 +109,7 @@ Rails.application.routes.draw do
   resources :media_articles do
     member do
       post :delete_file_path
+      get 'serve_file'
     end
   end
 

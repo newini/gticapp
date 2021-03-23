@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_06_112944) do
+ActiveRecord::Schema.define(version: 2021_03_23_035319) do
 
   create_table "accounts", force: :cascade do |t|
     t.string "title", limit: 255
@@ -81,6 +81,9 @@ ActiveRecord::Schema.define(version: 2021_03_06_112944) do
     t.string "file_path"
     t.datetime "date"
     t.integer "member_id"
+    t.binary "file_data"
+    t.string "file_name"
+    t.string "file_mime_type"
   end
 
   create_table "member_invitation_relationships", force: :cascade do |t|
