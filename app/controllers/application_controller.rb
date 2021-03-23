@@ -13,10 +13,13 @@ class ApplicationController < ActionController::Base
     end
 
     def signed_in_staff
-      staff = Staff.find_by_email(current_user.email)
-      if not staff.present?
-        redirect_to root_path, notice: "Staff only"
+      if current_user.present?
+        staff = Staff.find_by_email(current_user.email)
+        if staff.present?
+          return true
+        end
       end
+      return false
     end
 
     # Behavior after sign in
