@@ -119,7 +119,6 @@ Rails.application.routes.draw do
   get '/gmails/getmail'
 
   resources :relationships, only: [:create, :edit, :update, :destroy]
-  #resources :sessions, only: [:new, :create, :destroy]
   resources :places, only: [:index, :new, :create, :edit, :update, :destroy]
   resources :categories, only: [:index, :new, :create, :edit, :update, :destroy]
   resources :presentations, only: [:index, :new, :create, :edit, :update, :destroy]
@@ -128,9 +127,6 @@ Rails.application.routes.draw do
   resources :registers
 
 
-  #match '/signin', to: 'sessions#new', via: 'get'
-  #match '/signup', to: 'staffs#new', via: 'get'
-  #match '/signout', to: 'sessions#destroy', via: 'delete'
   match '/home', to: 'static_pages#home', via: 'get'
   match '/about', to: 'static_pages#about', via: 'get'
   match '/presenter', to: 'static_pages#presenter', via: 'get'
@@ -140,9 +136,6 @@ Rails.application.routes.draw do
   match '/media', to: 'static_pages#media', via: 'get'
   match '/schedule', to: 'static_pages#schedule', via: 'get'
   match '/contact', to: 'static_pages#contact', via: 'get'
-
-  #omniauth
-  #match '/auth/:provider/callback', to: 'sessions#create', via: 'get'
 
   root 'static_pages#home'
 
