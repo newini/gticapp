@@ -221,9 +221,9 @@ end
 ```
 
 Add like belows: `:table_name, :column_name, :type`
-* `add column: `add_column :posts, :user_id, :integer, :default => false`
-* `change column: `change_column :posts, :admin, :boolean, :default => false`
-* `remove column: `remove_column :posts, :place, :string`
+* add column: `add_column :posts, :user_id, :integer, :default => false`
+* change column: `change_column :posts, :admin, :boolean, :default => false`
+* remove column: `remove_column :posts, :place, :string`
 
 
 3. implement: `bin/rake RAILS_ENV=production db:migrate`
@@ -267,7 +267,13 @@ npm ci
 ```
 
 
-## f. Compile assets (may not need)
+## f. Edit credentials
+```
+bin/rails credentials:edit
+
+```
+
+## g. Compile assets (may not need)
 ```
 bundle exec rake assets:clean
 
