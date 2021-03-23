@@ -6,7 +6,13 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <!-- ========== Stylesheet ============= -->
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+
+    <!-- ========== Javascript ============= -->
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <script src="/assets/application.js?body=1" type="text/javascript"></script>
+    <%= javascript_include_tag "//www.google.com/jsapi" %> <!-- To use geo chart in chartkick -->
 
   <!--
     <%#= javascript_include_tag "highcharts/highcharts.js", "data-turbolinks-track" => true %>
@@ -25,14 +31,6 @@
       });
     </script>
     -->
-    <style>
-    .btn-group-xs > .btn, .btn-xs {
-      padding: .25rem .4rem;
-      font-size: .875rem;
-      line-height: .9;
-      border-radius: .2rem;
-    }
-    </style>
   </head>
 
   <body>
@@ -52,10 +50,6 @@
     </div>
 
 
-
-    <!-- ========== Add js end of body ============= -->
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <script src="/assets/application.js?body=1" type="text/javascript"></script>
 
     <!-- Facebook Analytics -->
     <script>
