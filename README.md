@@ -209,6 +209,18 @@ If you added new gems in `Gemfile`, use `bundle install` to install.
 
 
 ## b. Database migration
+### b.1 Create table
+```
+bin/rails generate model Article
+```
+
+and add necessary columns
+```
+t.string :title
+t.text :body
+```
+
+### b.2 Add/Change/Remove column
 1. change db: `bin/rails g migration AddUserIdToPosts`
 
 2. open migration file in db/migrate/2021...:
