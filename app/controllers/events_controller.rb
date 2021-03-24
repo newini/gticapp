@@ -310,8 +310,6 @@ class EventsController < ApplicationController
     if relationship.save
       select_action(params[:referer])
     end
-    #redirect_to :back
-    render 'waiting'
   end
 
   def destroy_relationship

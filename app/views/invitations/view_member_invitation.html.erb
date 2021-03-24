@@ -1,20 +1,22 @@
-<div class="row">
-  <aside class="col-md-2">
-    <section>
-      <%= render'side' %>
-    </section>
-  </aside>
+<div class="container-fluid">
+  <div class="row">
+    <aside class="col-md-2">
+      <section>
+        <%= render'side' %>
+      </section>
+    </aside>
 
-  <div class="col-md-10">
-    <% if @invitation.sent_flg %>
-      <h3>送信済みリスト</h3>
-    <% else %>
-      <h3>送信予定者リスト</h3>
-    <% end %>
-    <%= link_to "戻る", invitation_path(@invitation), class: "btn btn-primary btn-lg"%>
-    <div id="ajax_container">
-      <%= render'members' %>
+    <div class="col-md-10">
+      <% if @invitation.sent_flg %>
+        <h3>送信済みリスト</h3>
+      <% else %>
+        <h3>送信予定者リスト</h3>
+      <% end %>
+      <%= link_to "戻る", invitation_path(@invitation), class: "btn btn-primary btn-lg"%>
+      <div id="ajax_container">
+        <%= render'members' %>
+      </div>
+      <%= link_to "戻る", invitation_path(@invitation), class: "btn btn-primary btn-lg"%>
     </div>
-    <%= link_to "戻る", invitation_path(@invitation), class: "btn btn-primary btn-lg"%>
   </div>
 </div>

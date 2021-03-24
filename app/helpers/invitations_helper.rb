@@ -70,11 +70,11 @@ module InvitationsHelper
   end
 
   def select_to_invite(invitation, member)
-    link_to("追加", update_member_invitation_invitation_path(invitation, :member_id => member.id), :method => :post, :class => "btn btn-xs", id: member.id, remote: true)
+    link_to("追加", update_member_invitation_invitation_path(invitation, :member_id => member.id), :method => :post, :class => "btn btn-primary btn-xs", id: member.id, remote: true)
   end
 
   def select_to_delete(invitation, member)
-    link_to("削除", delete_member_invitation_invitation_path(invitation, :member_id => member.id), :method => :post, :class => "btn btn-xs", id: member.id, remote: true)
+    link_to("削除", delete_member_invitation_invitation_path(invitation, :member_id => member.id), :method => :post, :class => "btn btn-primary btn-xs", id: member.id, remote: true)
   end
 
 end

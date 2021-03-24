@@ -1,41 +1,27 @@
 <h2>一斉送信メール案内作成</h2>
 <p>作成して保存して次に進む</p>
 
-<div class='row'>
-  <div class='col-md-2'>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <strong>注意：メール本文冒頭は常に「〇〇様」が自動的に入る  ➡</strong>
+<strong>注意：メール本文冒頭は常に「〇〇様」が自動的に入る  ➡</strong>
+
+<hr>
+
+<%= form_for [@event, @invitation], :html => { :class => 'form-horizontal center' } do |f| %>
+
+  <div class="control-group">
+    <%= f.label :title, 'メールタイトル' %>
+    <%= f.text_area :title, class: "form-control" %>
   </div>
 
-  <div class='col-md-10'>
-    <%= form_for [@event, @invitation], :html => { :class => 'form-horizontal center' } do |f| %>
-      <%= f.submit "保存", class: "btn btn-primary btn-block center-block", style: 'width:20%' %>
-
-      <hr>
-
-      <div class="control-group">
-        <%= f.label :title, 'メールタイトル', class: 'control-label' %>
-        <div class="controls">
-          <%= f.text_area :title, style: 'width:90%;' %>
-        </div>
-      </div>
-
-      <div class="control-group">
-        <%= f.label :content, 'メール本文', class: 'control-label' %>
-        <div class="controls">
-          <%= f.text_area :content,  style: 'width:90%;', rows: 1, readonly: true,
-            value: "【メール送信時は、メール本文の1行目に、〇〇様と個別名が自動的に挿入されます。】" %>
-          <%= f.text_area :content,  style: 'width:90%;', rows: 40 %>
-        </div>
-      </div>
-    <% end %>
+  <div class="control-group">
+    <%= f.label :content, 'メール本文' %>
+    <%= f.text_area :content, class: "form-control", rows: 1, readonly: true,
+      value: "【メール送信時は、メール本文の1行目に、〇〇様と個別名が自動的に挿入されます。】" %>
+    <%= f.text_area :content, class: "form-control", rows: 40 %>
   </div>
-</div>
+
+  <br>
+
+  <div>
+    <%= f.submit "保存", class: "btn btn-primary btn-block center-block", style: 'width:20%' %>
+  </div>
+<% end %>
