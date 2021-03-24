@@ -1,0 +1,13 @@
+<div class="btn-group-vertical btn-block" >
+  <%= link_to "All Manuals", manuals_path, class: "btn btn-light btn-block" %>
+  <%= link_to "Create new Manual", new_manual_path, class: "btn btn-light btn-block" %>
+  <hr>
+  <ul>
+    <% @manuals.each do |manual| %>
+      <li>
+        <%= link_to manual.title, manual_path(manual), class: "btn btn-light btn-block" %>
+      </li>
+    <% end %>
+  </ul>
+
+</div>

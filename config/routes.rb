@@ -139,9 +139,7 @@ Rails.application.routes.draw do
 
   root 'static_pages#home'
 
-  #manuals
-  get 'manuals/index'
-  get 'manuals/add_event'
-  get 'manuals/add_presentation'
+  # Manuals
+  resources :manuals
 
 end

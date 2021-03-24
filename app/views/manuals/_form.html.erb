@@ -1,0 +1,43 @@
+<div class="row">
+  <!-- form side -->
+  <div class="col-lg-5">
+    <%= form_with model: manual, remote: true do |form| %>
+      <div>
+        <%= form.label :title %><br>
+        <%= form.text_field :title, id: 'title', class: "form-control" %>
+        <% manual.errors.full_messages_for(:title).each do |message| %>
+          <div><%= message %></div>
+        <% end %>
+      </div>
+
+      <div>
+        <%= form.label 'HTML body' %><br>
+        <%= form.text_area :body, id: 'body', class: "form-control", rows: 30 %><br>
+        <% manual.errors.full_messages_for(:body).each do |message| %>
+          <div><%= message %></div>
+        <% end %>
+      </div>
+
+      <div>
+        <%= form.submit class: "btn btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- preview button -->
+  <button onclick="showPreviewFunc()" class="btn btn-info">Preview</button>
+
+  <!-- preview side -->
+  <div class="col-lg-5">
+    <p id="preview_title"></p>
+    <p id="preview_body"></p>
+  </div>
+</div>
+
+<!-- click to update preview -->
+<script>
+  function showPreviewFunc() {
+    document.getElementById("preview_title").innerHTML = document.getElementById("title").value;
+    document.getElementById("preview_body").innerHTML = document.getElementById("body").value;
+  }
+</script>
