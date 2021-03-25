@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :signed_in_staff, only: [:index, :new, :create]
+  before_action :active_staff_only, only: [:index, :new, :create]
   before_action :authenticate_user!, only: [:show, :edit, :update, :destroy]
 
   # User list
