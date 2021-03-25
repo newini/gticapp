@@ -74,6 +74,16 @@ Rails.application.configure do
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
 
+  # Use a different logger for distributed setups.
+  # require "syslog/logger"
+  # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
+
+  if ENV["RAILS_LOG_TO_STDOUT"].present?
+    logger           = ActiveSupport::Logger.new(STDOUT)
+    logger.formatter = config.log_formatter
+    config.logger    = ActiveSupport::TaggedLogging.new(logger)
+  end
+
   # Gmail
   config.action_mailer.delivery_method =:smtp
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }

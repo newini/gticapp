@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
           return true
         end
       end
-      return false
+      redirect_to root_path, notice: "Staff only."
     end
 
     # Behavior after sign in
