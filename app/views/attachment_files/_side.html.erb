@@ -1,51 +1,10 @@
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalUploadImage">
-  Upload image file
-</button>
-
-<div class="row">
-  <!-- form side -->
-  <div class="col-lg-5">
-    <%= form_with model: manual do |form| %>
-      <div>
-        <%= form.label :title %><br>
-        <%= form.text_field :title, id: 'title', class: "form-control" %>
-        <% manual.errors.full_messages_for(:title).each do |message| %>
-          <div><%= message %></div>
-        <% end %>
-      </div>
-
-      <div>
-        <%= form.label 'HTML body' %><br>
-        <%= form.text_area :body, id: 'body', class: "form-control", rows: 30 %><br>
-        <% manual.errors.full_messages_for(:body).each do |message| %>
-          <div><%= message %></div>
-        <% end %>
-      </div>
-
-      <div>
-        <%= form.submit class: "btn btn-primary" %>
-      </div>
-    <% end %>
-  </div>
-
-  <!-- preview button -->
-  <button onclick="showPreviewFunc()" class="btn btn-info">Preview</button>
-
-  <!-- preview side -->
-  <div class="col-lg-5">
-    <p id="preview_title"></p>
-    <p id="preview_body"></p>
-  </div>
+<div class="btn-group-vertical btn-block" >
+  <%= link_to "All Files", attachment_files_path, class: "btn btn-info" %>
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalUploadImage">
+    Upload image file
+  </button>
 </div>
-
-<script>
-  // Click to update preview
-  function showPreviewFunc() {
-    document.getElementById("preview_title").innerHTML = document.getElementById("title").value;
-    document.getElementById("preview_body").innerHTML = document.getElementById("body").value;
-  }
-</script>
 
 <!-- Modal -->
 <div class="modal fade" id="modalUploadImage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -104,6 +63,8 @@
 
   // after image submit
   function addImgTag() {
-    document.getElementById("body").value += `\n<img src="/attachment_files/serve_file?filename=${filename}" class="img-fluid">`;
+    setTimeout(function () {
+      location.reload();
+    }, 500); // Wait 0.5 sec
   }
 </script>

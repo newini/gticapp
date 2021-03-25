@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_24_045753) do
+ActiveRecord::Schema.define(version: 2021_03_24_114133) do
 
   create_table "accounts", force: :cascade do |t|
     t.string "title", limit: 255
@@ -23,6 +23,15 @@ ActiveRecord::Schema.define(version: 2021_03_24_045753) do
     t.index ["event_id"], name: "index_accounts_on_event_id"
     t.index ["positive"], name: "index_accounts_on_positive"
     t.index ["title"], name: "index_accounts_on_title"
+  end
+
+  create_table "attachment_files", force: :cascade do |t|
+    t.binary "data"
+    t.string "filename", null: false
+    t.string "mime_type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["filename"], name: "index_attachment_files_on_filename", unique: true
   end
 
   create_table "categories", force: :cascade do |t|

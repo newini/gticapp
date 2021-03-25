@@ -42,10 +42,8 @@
 
   <% if @is_edit %>
     <div class="form-group row">
-      <%= label_tag :file, "File", class: 'col-sm-2 control-label' %>
-      <div class="col-sm-6">
-        <%= file_field nil, :file %>
-      </div>
+      <%= label_tag :file, "File" %>
+      <%= file_field nil, :file, class: 'col-sm-2 control-label' %>
     </div>
 
     <div class="form-group row">
