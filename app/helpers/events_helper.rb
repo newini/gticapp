@@ -264,12 +264,12 @@ module EventsHelper
         end
       else
         content_tag :button, disabled: "disabled", class: "btn btn-default btn-xs" do
-          content_tag(:span, "", class:"fa fa-unchecked")
+          content_tag(:span, "", class:"fa fa-squqre")
         end
       end
     else
       link_to update_birthday_event_path(member_id: member.id, referer: @referer, birthday: true), method: "post", remote: true, class:"btn btn-default btn-xs" do
-        content_tag(:span, "", class:"fa fa-unchecked")
+        content_tag(:span, "", class:"fa fa-squqre")
       end
     end
   end
@@ -281,7 +281,7 @@ module EventsHelper
       end
     else
       link_to update_black_list_event_path(member_id: member.id, referer: @referer, black_list_flg: true), method: "post", remote: true, class:"btn btn-default btn-xs" do
-        content_tag(:span, "", class:"fa fa-unchecked")
+        content_tag(:span, "", class:"fa fa-squqre")
       end
     end
   end
@@ -306,7 +306,7 @@ module EventsHelper
       end
     else
       link_to edit_relationship_path(relationship.id), class: "btn btn-default btn-xs", remote: true do
-        content_tag :span, "", class: "fa fa-unchecked"
+        content_tag :span, "", class: "fa fa-squqre"
       end
     end
   end

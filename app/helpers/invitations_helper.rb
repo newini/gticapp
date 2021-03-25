@@ -7,7 +7,7 @@ module InvitationsHelper
       end
     else
       link_to update_include_all_flg_invitation_path(invitation), method: "post", remote: true, class: "btn btn-default btn-xs" do
-        content_tag(:span, "", class:"fa fa-unchecked")
+        content_tag(:span, "", class:"fa fa-squqre")
       end
     end
   end
@@ -64,7 +64,7 @@ module InvitationsHelper
       end
     else
       link_to update_include_gtic_flg_invitation_path(invitation), method: "post", remote: true, class: "btn btn-default btn-xs" do
-        content_tag(:span, "", class:"fa fa-unchecked")
+        content_tag(:span, "", class:"fa fa-squqre")
       end
     end
   end

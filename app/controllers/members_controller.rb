@@ -1,5 +1,5 @@
 class MembersController < ApplicationController
-  before_action :signed_in_staff
+  before_action :active_staff_only
   helper_method :sort_column, :sort_direction
 
   def index

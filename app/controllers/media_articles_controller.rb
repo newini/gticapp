@@ -1,5 +1,5 @@
 class MediaArticlesController < ApplicationController
-  before_action :signed_in_staff
+  before_action :active_staff_only
 
   def index
     @media_articles = MediaArticle.paginate(page: params[:page]).order(date: :desc)

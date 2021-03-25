@@ -1,5 +1,5 @@
 class AccountsController < ApplicationController
-  before_action :signed_in_staff
+  before_action :active_staff_only
 
   def index
     @subtitle = ["収入科目","支出科目"]

@@ -1,5 +1,5 @@
 class ManualsController < ApplicationController
-  before_action :signed_in_staff
+  before_action :active_staff_only
 
   def index
     @manuals = Manual.all

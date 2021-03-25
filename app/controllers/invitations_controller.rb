@@ -1,5 +1,5 @@
 class InvitationsController < ApplicationController
-  before_action :signed_in_staff
+  before_action :active_staff_only
 
   def index
     @invitations = Invitation.where(sent_flg: [nil, false]).order("created_at DESC")

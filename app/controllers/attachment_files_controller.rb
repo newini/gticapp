@@ -1,5 +1,5 @@
 class AttachmentFilesController < ApplicationController
-  before_action :signed_in_staff
+  before_action :active_staff_only
 
   def index
     @attachment_files = AttachmentFile.all

@@ -1,5 +1,5 @@
 class RegistersController < ApplicationController
-  before_action :signed_in_staff
+  before_action :active_staff_only
 
   def new
     @register = Register.new(event_id: params[:event_id])

@@ -36,7 +36,7 @@ module MembersHelper
       end
     else
       link_to update_azsa_members_path(id: member.id, azsa_flg: true), method: "post", remote: true, class:"btn btn-default btn-xs" do
-        content_tag(:span, "", class:"fa fa-unchecked")
+        content_tag(:span, "", class:"fa fa-squqre")
       end
     end
   end
@@ -48,7 +48,7 @@ module MembersHelper
       end
     else
       link_to update_past_presenter_members_path(id: member.id, past_presenter_flg: true), method: "post", remote: true, class:"btn btn-default btn-xs" do
-        content_tag(:span, "", class:"fa fa-unchecked")
+        content_tag(:span, "", class:"fa fa-squqre")
       end
     end
   end
@@ -60,7 +60,7 @@ module MembersHelper
       end
     else
       link_to update_black_list_members_path(id: member.id, black_list_flg: true), method: "post", remote: true, class:"btn btn-default btn-xs" do
-        content_tag(:span, "", class:"fa fa-unchecked")
+        content_tag(:span, "", class:"fa fa-squqre")
       end
     end
   end
@@ -72,7 +72,7 @@ module MembersHelper
       end
     else
       link_to update_contributor_members_path(id: member.id, contributor_flg: true), method: "post", remote: true, class:"btn btn-default btn-xs" do
-        content_tag(:span, "", class:"fa fa-unchecked")
+        content_tag(:span, "", class:"fa fa-squqre")
       end
     end
   end

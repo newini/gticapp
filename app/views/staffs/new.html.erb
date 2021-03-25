@@ -1,41 +1,42 @@
-<div class="row">
-  <aside class="col-lg-2">
-  </aside>
+<div class="container-fluid">
+  <div class="row">
+    <aside class="col-lg-2">
+    </aside>
 
-  <div class="col-lg-5">
-    <h2>Staff登録</h2>
+    <div class="col-lg-10">
+      <h2>Staff登録</h2>
 
-    <strong>Member IDは、MEMBERから名前を検索して詳細画面より取得</strong>
-    <br>
-    <%= form_for @staff, :html => { :class => 'form-horizontal' } do |f| %>
-      <div class="form-group">
-        <%= f.label :member_id, "Member ID", class: 'col-sm-4 control-label' %>
-        <div class="col-sm-6">
-          <%= f.text_field :member_id, placeholder: "Member ID", class: "form-control", :required => 'required' %>
-          <%= @staff.errors.messages[:member_id][0] if @staff.errors.any?%>
+      <strong>Member IDは、MEMBERから名前を検索して詳細画面より取得</strong>
+
+      <br>
+
+      <%= form_for @staff do |f| %>
+        <div class="form-group row">
+          <%= f.label :member_id, "Member ID", class: 'col-sm-4 col-form-label' %>
+          <div class="col-sm-6">
+            <%= f.text_field :member_id, placeholder: "Member ID", class: "form-control", :required => 'required' %>
+            <%= @staff.errors.messages[:member_id][0] if @staff.errors.any?%>
+          </div>
         </div>
-      </div>
 
-      <div class="form-group">
-        <%= f.label :active_flg, "Active?", class: 'col-sm-4 control-label' %>
-        <div class="col-sm-6">
-          <td><%= select_active(@staff) %></td>
+        <div class="form-group row">
+          <%= f.label :active_flg, "Active?", class: 'col-sm-4 col-form-label' %>
+          <div class="col-sm-6">
+            <%= select_active(@staff) %>
+          </div>
         </div>
-      </div>
 
-      <div class="form-group">
-        <%= f.label :admin, "Admin", class: 'col-sm-4 control-label' %>
-        <div class="col-sm-6">
-          <td><%= select_admin(@staff) %></td>
+        <div class="form-group row">
+          <%= f.label :admin, "Admin?", class: 'col-sm-4 col-form-label' %>
+          <div class="col-sm-6">
+            <%= select_admin(@staff) %>
+          </div>
         </div>
-      </div>
+        <i class="icon-check-empty"></i>
 
-      <div class="form-group">
-        <div class="col-sm-offset-4 col-sm-6">
-          <%= f.submit "送信", class: "btn btn-primary btn-block" %>
-        </div>
-      </div>
+        <%= f.submit "送信", class: "btn btn-primary" %>
 
-    <% end %>
+      <% end %>
+    </div>
   </div>
 </div>

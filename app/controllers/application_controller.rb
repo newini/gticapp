@@ -8,18 +8,24 @@ class ApplicationController < ActionController::Base
       redirect_to root_path, notice: "Please sign in." unless signed_in?
     end
 
-    def admin_staff
-      redirect_to root_path, notice: "Admin only." unless admin?
-    end
-
-    def signed_in_staff
+    def admin_staff_only
       if current_user.present?
         staff = Staff.find_by_email(current_user.email)
-        if staff.present?
+        if staff.admin
           return true
         end
       end
-      redirect_to root_path, notice: "Staff only."
+      redirect_to :back, notice: "Admin Staff Only."
+    end
+
+    def active_staff_only
+      if current_user.present?
+        staff = Staff.find_by_email(current_user.email)
+        if staff.active_flg
+          return true
+        end
+      end
+      redirect_to root_path, notice: "Active Staff Only."
     end
 
     # Behavior after sign in

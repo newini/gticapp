@@ -1,6 +1,6 @@
 class StaffsController < ApplicationController
-  before_action :signed_in_staff
-  before_action :admin_staff, only:[:new, :create]
+  before_action :active_staff_only
+  before_action :admin_staff_only, only:[:new, :create]
 
   def index
     @staffs = Staff.all

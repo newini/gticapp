@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_action :signed_in_staff, only: [:index]
-  before_action :authenticate_user!, only: [:show, :edit, :update]
+  before_action :signed_in_staff, only: [:index, :new, :create]
+  before_action :authenticate_user!, only: [:show, :edit, :update, :destroy]
 
   # User list
   def index
@@ -28,8 +28,8 @@ class UsersController < ApplicationController
   def privacy_policy
   end
 
-  private
 
+  private
     def user_params
       params.fetch(:user, {}).permit(:name)
     end
