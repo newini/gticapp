@@ -4,56 +4,62 @@
       <%= render'members/side' %>
     </section>
   </div>
+
   <div class="col-md-10">
     <%= link_to 'ダウンロード', members_path(format: 'xls'), class: "btn btn-primary" %>
     <div id="ajax_container">
       <h2>No show & Black List</h2>
       <table class="table table-bordered">
-        <tr>
-          <th class="col-md-1">No-show回数</th>
-          <th class="col-md-1">人数</th>
-          <th class="col-md-9">氏名</th>
-          <th class="col-md-1">Black List?</th>
-        </tr>
-        <% @no_show_members.each do |no_show_member| %>
+        <thead>
           <tr>
-            <td><%= no_show_member[0] %></td>
-            <td><%= no_show_member[1].count %></td>
-
-            <td>
-              <% i=1 %>
-              <% for id in no_show_member[1] do %>
-                <% member = Member.find(id) %>
-                <% if not member.black_list_flg %>
-                  <% if member.last_name.present? %>
-                    <%= link_to "#{member.last_name} #{member.first_name}", member_path(id) %>
-                  <% else %>
-                    <%= link_to "#{member.fb_name}", member_path(id) %>
-                  <% end %>
-                  <%= "|" unless i == no_show_member[1].length %>
-                  <% i += 1 %>
-                <% end %>
-              <% end %>
-            </td>
-
-            <td>
-              <% i=1 %>
-              <% for id in no_show_member[1] do %>
-                <% member = Member.find(id) %>
-                <% if member.black_list_flg %>
-                  <% if member.last_name.present? %>
-                    <%= link_to "#{member.last_name} #{member.first_name}", member_path(id) %>
-                  <% else %>
-                    <%= link_to "#{member.fb_name}", member_path(id) %>
-                  <% end %>
-                  <%= "|" unless i == no_show_member[1].length %>
-                  <% i += 1 %>
-                <% end %>
-              <% end %>
-            </td>
-
+            <th style="width: 10%;">No-show回数</th>
+            <th style="width: 10%;">人数</th>
+            <th style="width: 40%;">氏名</th>
+            <th style="width: 40%;">Black List?</th>
           </tr>
-        <% end %>
+        </thead>
+
+        <tbody>
+          <% @no_show_members.each do |no_show_member| %>
+            <tr>
+              <td><%= no_show_member[0] %></td>
+              <td><%= no_show_member[1].count %></td>
+
+              <td>
+                <% i=1 %>
+                <% for id in no_show_member[1] do %>
+                  <% member = Member.find(id) %>
+                  <% if not member.black_list_flg %>
+                    <% if member.last_name.present? %>
+                      <%= link_to "#{member.last_name} #{member.first_name}", member_path(id) %>
+                    <% else %>
+                      <%= link_to "#{member.fb_name}", member_path(id) %>
+                    <% end %>
+                    <%= "|" unless i == no_show_member[1].length %>
+                    <% i += 1 %>
+                  <% end %>
+                <% end %>
+              </td>
+
+              <td>
+                <% i=1 %>
+                <% for id in no_show_member[1] do %>
+                  <% member = Member.find(id) %>
+                  <% if member.black_list_flg %>
+                    <% if member.last_name.present? %>
+                      <%= link_to "#{member.last_name} #{member.first_name}", member_path(id) %>
+                    <% else %>
+                      <%= link_to "#{member.fb_name}", member_path(id) %>
+                    <% end %>
+                    <%= "|" unless i == no_show_member[1].length %>
+                    <% i += 1 %>
+                  <% end %>
+                <% end %>
+              </td>
+
+            </tr>
+          <% end %>
+        </tbody>
       </table>
     </div>
   </div>

@@ -1,18 +1,24 @@
 <h2>出席イベント</h2>
-<table class="table table-bordered table-hover">
-  <tr>
-    <th>イベント名</th>
-    <th>開催日</th>
-    <th>Role</th>
-  </tr>
-  <% @member.participated_events.order("start_time DESC").each do |event| %>
+<table class="table table-bordered table-hover table-sm">
+  <thead>
     <tr>
-      <td><%= link_to event.name, event_path(event) %></td>
-      <td><%= event.start_time.strftime("%Y/%m/%d") %></td>
-      <td><%= show_role(@member,event) %></td>
+      <th style="width: 10%;">イベント名</th>
+      <th style="width: 10%;">開催日</th>
+      <th style="width: 80%;">Role</th>
     </tr>
-  <% end %>
+  </thead>
+
+  <tbody>
+    <% @member.participated_events.order("start_time DESC").each do |event| %>
+      <tr>
+        <td><%= link_to event.name, event_path(event) %></td>
+        <td><%= event.start_time.strftime("%Y/%m/%d") %></td>
+        <td><%= show_role(@member,event) %></td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>
+
 <dl class="dl-horizontal">
   <dt>総出席回数</dt>
   <dd><%= @member.participated_events.count %>回</dd>

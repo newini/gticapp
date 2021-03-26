@@ -1,99 +1,97 @@
-<div class="section">
-  <div class="container">
+<div class="container">
 
-    <h1>Organizers</h1>
-    <div class="row justify-content-center">
-      <% @organizers.each do |organizer| %>
-        <% if organizer.active_flg %>
-          <% next if organizer.id == 44 %>
+  <h1>Organizers</h1>
 
-          <div class="col hvr-bounce-in" style="max-width: 400px;">
-            <div class="card" data-aos="fade-up">
-              <div class="card-body">
-                <div class="card-title" style="background-color: darkmagenta;">
-                  <br>
-                  <small style="font: 11pt; color: white;">Global Techno Innovation Cafe</small>
+  <div class="row justify-content-center">
+    <% @organizers.each do |organizer| %>
+      <% if organizer.active_flg %>
+
+        <div class="col hvr-bounce-in" style="max-width: 400px;">
+          <div class="card" data-aos="fade-up">
+            <div class="card-body">
+              <div class="card-title" style="background-color: darkmagenta;">
+                <br>
+                <small style="font: 11pt; color: white;">Global Techno Innovation Cafe</small>
+              </div>
+
+              <div class="row">
+                <div class="col-2">
+                  <%= image_tag "https://graph.facebook.com/#{organizer.uid}/picture?height=80&width=50", class: "rounded" %>
                 </div>
-
-                <div class="row">
-                  <div class="col-2">
-                    <%= image_tag "https://graph.facebook.com/#{organizer.uid}/picture?height=80&width=50", class: "rounded" %>
-                  </div>
-                  <div class="col-7 text-center">
-                    <%= get_member_name(organizer.member_id) %>
-                    <br>
-                    <small class="text-center"><%= organizer.name %></small>
-                  </div>
-                  <div class="col-2">
-                    <%= image_tag 'gtic_logo_c_50x50.png' %>
-                  </div>
-                </div>
-
-                <div style="background-color: gainsboro;">
-                  <i class="fa fa-facebook-square" style="color: blue;"></i>
-                  <small><a href="https://facebook.com/<%= organizer.uid%>">https://facebook.com/<%= organizer.uid%></a></small>
+                <div class="col-7 text-center">
+                  <%= get_member_name(organizer.member_id) %>
                   <br>
-                  <a tabindex="0" class="btn btn-sm btn-info float-right" role="button" data-toggle="popover" data-trigger="focus"
-                      title="<%= organizer.name %>" data-content="<%= organizer.description %>">
-                    about
-                  </a>
-                  <br>
+                  <small class="text-center"><%= organizer.name %></small>
                 </div>
+                <div class="col-2">
+                  <%= image_tag 'gtic_logo_c_50x50.png' %>
+                </div>
+              </div>
+
+              <div style="background-color: gainsboro;">
+                <i class="fa fa-facebook-square" style="color: blue;"></i>
+                <small><a href="https://facebook.com/<%= organizer.uid%>">https://facebook.com/<%= organizer.uid%></a></small>
+                <br>
+                <a tabindex="0" class="btn btn-sm btn-info float-right" role="button" data-toggle="popover" data-trigger="focus"
+                    title="<%= organizer.name %>" data-content="<%= organizer.description %>">
+                  about
+                </a>
+                <br>
               </div>
             </div>
           </div>
+        </div>
 
-        <% end %>
       <% end %>
-    </div>
-
-
-
-    <h1>過去の幹事たち</h1>
-    <div class="row justify-content-center">
-      <% @organizers.reverse_each do |organizer| %>
-        <% if not organizer.active_flg %>
-          <% next if organizer.id == 44 %>
-
-          <div class="col hvr-bounce-in" style="max-width: 400px;">
-            <div class="card" data-aos="fade-up">
-              <div class="card-body">
-                <div class="card-title" style="background-color: darkmagenta;">
-                  <br>
-                  <small style="font: 11pt; color: white;">Global Techno Innovation Cafe</small>
-                </div>
-
-                <div class="row">
-                  <div class="col-2">
-                    <%= image_tag "https://graph.facebook.com/#{organizer.uid}/picture?height=80&width=50", class: "rounded" %>
-                  </div>
-                  <div class="col-7 text-center">
-                    <%= get_member_name(organizer.member_id) %>
-                    <br>
-                    <small class="text-center"><%= organizer.name %></small>
-                  </div>
-                  <div class="col-2">
-                    <%= image_tag 'gtic_logo_c_50x50.png' %>
-                  </div>
-                </div>
-
-                <div style="background-color: gainsboro;">
-                  <i class="fa fa-facebook-square" style="color: blue;"></i>
-                  <small><a href="https://facebook.com/<%= organizer.uid%>">https://facebook.com/<%= organizer.uid%></a></small>
-                  <br>
-                  <a tabindex="0" class="btn btn-sm btn-info float-right" role="button" data-toggle="popover" data-trigger="focus"
-                      title="<%= organizer.name %>" data-content="<%= organizer.description %>">
-                    about
-                  </a>
-                  <br>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        <% end %>
-      <% end %>
-    </div>
-
+    <% end %>
   </div>
+
+  <br>
+
+  <h1>過去の幹事たち</h1>
+
+  <div class="row justify-content-center">
+    <% @organizers.reverse_each do |organizer| %>
+      <% if not organizer.active_flg %>
+
+        <div class="col hvr-bounce-in" style="max-width: 400px;">
+          <div class="card" data-aos="fade-up">
+            <div class="card-body">
+              <div class="card-title" style="background-color: darkmagenta;">
+                <br>
+                <small style="font: 11pt; color: white;">Global Techno Innovation Cafe</small>
+              </div>
+
+              <div class="row">
+                <div class="col-2">
+                  <%= image_tag "https://graph.facebook.com/#{organizer.uid}/picture?height=80&width=50", class: "rounded" %>
+                </div>
+                <div class="col-7 text-center">
+                  <%= get_member_name(organizer.member_id) %>
+                  <br>
+                  <small class="text-center"><%= organizer.name %></small>
+                </div>
+                <div class="col-2">
+                  <%= image_tag 'gtic_logo_c_50x50.png' %>
+                </div>
+              </div>
+
+              <div style="background-color: gainsboro;">
+                <i class="fa fa-facebook-square" style="color: blue;"></i>
+                <small><a href="https://facebook.com/<%= organizer.uid%>">https://facebook.com/<%= organizer.uid%></a></small>
+                <br>
+                <a tabindex="0" class="btn btn-sm btn-info float-right" role="button" data-toggle="popover" data-trigger="focus"
+                    title="<%= organizer.name %>" data-content="<%= organizer.description %>">
+                  about
+                </a>
+                <br>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <% end %>
+    <% end %>
+  </div>
+
 </div>

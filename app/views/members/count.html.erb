@@ -4,37 +4,43 @@
       <%= render'members/side' %>
     </section>
   </div>
-  <div class="col-md-10">
+
+  <div class="col">
     <%= link_to 'ダウンロード', members_path(format: 'xls'), class: "btn btn-primary" %>
     <div id="ajax_container">
       <h2>出席者</h2>
-      <table class="table table-bordered">
-        <tr>
-          <th class="col-md-1">出席回数</th>
-          <th class="col-md-1">人数</th>
-          <th>氏名</th>
-        </tr>
-        <% @repeater.each do |repeater| %>
-          <% if repeater[0] >= 2 %>
-            <tr>
-              <td><%= repeater[0] %></td>
-              <td><%= repeater[1].count %></td>
-              <td>
-                <% i=1 %>
-                <% for id in repeater[1] do %>
-                  <% member = Member.find(id) %>
-                  <% if member.last_name.present? %>
-                    <%= link_to "#{member.last_name} #{member.first_name}", member_path(id) %>
-                  <% else %>
-                    <%= link_to "#{member.fb_name}", member_path(id) %>
+      <table class="table table-bordered table-sm">
+        <thead>
+          <tr>
+            <th style="width: 10%;">出席回数</th>
+            <th style="width: 10%;">人数</th>
+            <th style="width: 80%;">氏名</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @repeater.each do |repeater| %>
+            <% if repeater[0] >= 2 %>
+              <tr>
+                <td><%= repeater[0] %></td>
+                <td><%= repeater[1].count %></td>
+                <td>
+                  <% i=1 %>
+                  <% for id in repeater[1] do %>
+                    <% member = Member.find(id) %>
+                    <% if member.last_name.present? %>
+                      <%= link_to "#{member.last_name} #{member.first_name}", member_path(id) %>
+                    <% else %>
+                      <%= link_to "#{member.fb_name}", member_path(id) %>
+                    <% end %>
+                    <%= "|" unless i == repeater[1].length %>
+                    <% i += 1 %>
                   <% end %>
-                  <%= "|" unless i == repeater[1].length %>
-                  <% i += 1 %>
-                <% end %>
-              </td>
-            </tr>
+                </td>
+              </tr>
+            <% end %>
           <% end %>
-        <% end %>
+        </tbody>
       </table>
     </div>
   </div>

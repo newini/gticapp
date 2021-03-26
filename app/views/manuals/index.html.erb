@@ -1,23 +1,21 @@
-<div class="container-fluid">
-  <div class="row">
-    <aside class="col-lg-2">
-      <%= render "side", manual: @manual %>
-    </aside>
+<div class="row">
+  <aside class="col-lg-2">
+    <%= render "side", manual: @manual %>
+  </aside>
 
-    <div class="col-lg-5">
-      <h1>Manuals/マニュアル</h1>
+  <div class="col-lg-5">
+    <h1>Manuals/マニュアル</h1>
 
-      <p>このページでマニュアル作成と閲覧ができます。マニュアルはブログを書くような感じで<a href="https://techacademy.jp/magazine/4843">HTML</a>/CSS形式で書きます。</p>
+    <p>このページでマニュアル作成と閲覧ができます。マニュアルはブログを書くような感じで<a href="https://techacademy.jp/magazine/4843">HTML</a>/CSS形式で書きます。</p>
 
-      <ul>
-        <% @manuals.each do |manual| %>
-          <li>
-            <%= link_to manual.title, manual %>
-          </li>
-        <% end %>
-      </ul>
+    <ul>
+      <% @manuals.each do |manual| %>
+        <li>
+          <%= link_to manual.title, manual %>
+        </li>
+      <% end %>
+    </ul>
 
-      <%= link_to "New Manual", new_manual_path %>
-    </div>
+    <%= link_to "New Manual", new_manual_path %>
   </div>
 </div>

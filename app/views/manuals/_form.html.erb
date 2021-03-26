@@ -1,11 +1,11 @@
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalUploadImage">
+<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modalUploadImage">
   Upload image file
 </button>
 
 <div class="row">
   <!-- form side -->
-  <div class="col-lg-5">
+  <div class="col-lg-6">
     <%= form_with model: manual do |form| %>
       <div>
         <%= form.label :title %><br>
@@ -25,12 +25,13 @@
 
       <div>
         <%= form.submit class: "btn btn-primary" %>
+        <%= link_to 'Cancel & Back', :back, class: 'btn btn-primary' %>
       </div>
     <% end %>
   </div>
 
   <!-- preview button -->
-  <button onclick="showPreviewFunc()" class="btn btn-info">Preview</button>
+  <button onclick="showPreviewFunc()" class="btn btn-info" style="width:1px; word-wrap: break-word; white-space:pre-wrap;">⇒Preview</button>
 
   <!-- preview side -->
   <div class="col-lg-5">

@@ -1,12 +1,8 @@
-<div id="side-nav">
-  <section>
-    <div class="btn-group-vertical btn-block">
-      <%= link_to "一斉送信メール新規作成", new_invitation_path(), class: "btn btn-light btn-block" %>
-      <%= link_to "メールドラフト（一時保存）", invitations_path(), class: "btn btn-light btn-block" %>
-      <%= link_to "送信済み", view_sent_emails_invitations_path(), class: "btn btn-light btn-block" %>
-      <%= link_to "https://mail.google.com/mail/u/?authuser=gtic.information@gmail.com", class: "btn btn-light btn-block", :target => '_blank' do %>
-        <p>Gmail受信箱へ<br>gtic.information@gmail.com<br>にログインしてからクリック
-      <% end %>
-    </div>
-  </section>
+<div class="btn-group-vertical btn-block">
+  <%= link_to "一斉送信メール新規作成", new_invitation_path(), class: "btn btn-secondary btn-block" %>
+  <%= link_to "メールドラフト（一時保存）", invitations_path(), class: "btn btn-secondary btn-block" %>
+  <%= link_to "送信済み", view_sent_emails_invitations_path(), class: "btn btn-secondary btn-block" %>
+  <%= link_to "https://mail.google.com/mail/u/?authuser=gtic.information@gmail.com", class: "btn btn-secondary btn-block", :target => '_blank' do %>
+    Gmail受信箱へ<br>gtic.information@gmail.com<br>にログインしてからクリック
+  <% end %>
 </div>
