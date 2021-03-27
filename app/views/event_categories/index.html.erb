@@ -2,25 +2,34 @@
   <aside class="col-sm-2">
     <%= render "events/side" %>
   </aside>
-  <div class="col-sm-5">
+
+  <div class="col">
     <div id="ajax_container">
       <h2><%= @title %></h2>
-      <table class="table table-bordered">
-        <tr>
-          <th>ID</th>
-          <th>分類名</th>
-          <th></th>
-          <th></th>
-        </tr>
-        <% @event_categories.each do |event_category| %>
+
+      <table class="table table-bordered table-hover table-sm">
+        <thead>
           <tr>
-            <td><%= event_category.id %></td>
-            <td><%= event_category.name %></td>
-            <td><%= link_to "編集", edit_event_category_path(event_category), remote: true %> </td>
-            <td><%= link_to "削除", event_category_path(event_category), method: :delete %> </td>
+            <th>ID</th>
+            <th>分類名</th>
+            <th></th>
+            <th></th>
           </tr>
-        <% end %>
+        </thead>
+
+        <tbody>
+          <% @event_categories.each do |event_category| %>
+            <tr>
+              <td><%= event_category.id %></td>
+              <td><%= event_category.name %></td>
+              <td><%= link_to "編集", edit_event_category_path(event_category), class: 'btn btn-info btn-xs', remote: true %> </td>
+              <td><%= link_to "削除", event_category_path(event_category), class: 'btn btn-danger btn-xs',
+                method: :delete, data: { confirm: "削除してもよろしいですか？"} %> </td>
+            </tr>
+          <% end %>
+        </tbody>
       </table>
+
       <%= link_to "イベントタイプ登録", new_event_category_path, method: :get, class: "btn btn-primary btn-block", remote: true %>
     </div>
   </div>

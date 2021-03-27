@@ -2,25 +2,34 @@
   <aside class="col-sm-2">
     <%= render "events/side" %>
   </aside>
-  <div class="col-sm-5">
+
+  <div class="col">
     <div id="ajax_container">
       <h2><%= @title %></h2>
-      <table class="table table-bordered">
-        <tr>
-          <th>ID</th>
-          <th>会場名</th>
-          <th></th>
-          <th></th>
-        </tr>
-        <% @places.each do |place| %>
+
+      <table class="table table-bordered table-hover table-sm">
+        <thead>
           <tr>
-            <td><%= place.id %></td>
-            <td><%= place.name %></td>
-            <td><%= link_to "編集", edit_place_path(place), remote: true %> </td>
-            <td><%= link_to "削除", place_path(place), method: :delete %> </td>
+            <th>ID</th>
+            <th>会場名</th>
+            <th></th>
+            <th></th>
           </tr>
-        <% end %>
+        </thead>
+
+        <tbody>
+          <% @places.each do |place| %>
+            <tr>
+              <td><%= place.id %></td>
+              <td><%= place.name %></td>
+              <td><%= link_to "編集", edit_place_path(place), class: 'btn btn-info btn-xs', remote: true %> </td>
+              <td><%= link_to "削除", place_path(place), class: 'btn btn-danger btn-xs',
+                method: :delete, data: { confirm: "削除してもよろしいですか？"} %></td>
+            </tr>
+          <% end %>
+        </tbody>
       </table>
+
       <%= link_to "会場登録", new_place_path, method: :get, class: "btn btn-primary btn-block", remote: true %>
     </div>
   </div>

@@ -83,4 +83,6 @@ gem "font-awesome-rails" # For Social icons
 gem 'will_paginate'
 gem 'will_paginate-bootstrap4' # https://github.com/delef/will_paginate-bootstrap4
 
-
+# Create beautiful JavaScript charts with one line of Ruby
+# https://chartkick.com/
+gem "chartkick"

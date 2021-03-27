@@ -5,11 +5,11 @@
   <%= form_tag '/search_event', method: 'get', remote: true, class: "form-inline", role: "form" do %>
      <div class="form-group">
       <strong>イベント検索　</strong>
-      <p>アルファベットによる検索もOK（ひらがな、カタカナは未対応）</p>
       <span>Keyword: </span>
       <%= text_field_tag :keyword, params[:keyword], class: "form-control", placeholder: "keyword" %>
     </div>
     <%= submit_tag 'Search', :name => nil, class: 'btn btn-primary' %>
+    アルファベットによる検索もOK（ひらがな、カタカナは未対応）
   <% end %>
 
   <!-- per year Paginate -->

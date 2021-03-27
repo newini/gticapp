@@ -6,14 +6,88 @@
   </aside>
 
   <div class="col-md-5">
-    <%= render 'member_info' %>
+    <h2>メンバー情報</h2>
+    <table class="table table-bordered">
+      <tr>
+        <th>氏（漢字） or First alphabet name</th>
+        <td><%= @member.last_name %></td>
+      </tr>
+      <tr>
+        <th>名（漢字） or Last alphabet name</th>
+        <td><%= @member.first_name %></td>
+      </tr>
+      <tr>
+        <th>氏(alphabet)</th>
+        <td><%= @member.last_name_alphabet %></td>
+      </tr>
+      <tr>
+        <th>名(alphabet)</th>
+        <td><%= @member.first_name_alphabet %></td>
+      </tr>
+      <tr>
+        <th>Facebook名</th>
+        <td><%= @member.fb_name %></td>
+      </tr>
+      <tr>
+        <th>Facebook ID</th>
+        <td><%= @member.fb_user_id %></td>
+      </tr>
+      <tr>
+        <th>Gender</th>
+        <td><%= show_gender(@member.gender) if @member.gender.present? %></td>
+      </tr>
+      <tr>
+        <th>Age</th>
+        <td><%= show_age(@member.age) if @member.age.present? %></td>
+      </tr>
+      <tr>
+        <th>属性</th>
+        <td><%= Category.find(@member.category_id).name if @member.category_id.present? %></td>
+      </tr>
+      <tr>
+        <th>所属</th>
+        <td><%= @member.affiliation %></td>
+      </tr>
+      <tr>
+        <th>肩書</th>
+        <td><%= @member.title %></td>
+      </tr>
+      <tr>
+        <th>email</th>
+        <td><%= @member.email %></td>
+      </tr>
+      <tr>
+        <th>備考</th>
+        <td><%= @member.note %></td>
+      </tr>
+      <tr>
+      <th>誕生日</th>
+        <td><%= @member.birthday.strftime('%Y-%m-%d') if @member.birthday.present? %></td>
+      </tr>
+      <tr>
+        <th>過去登壇者</th>
+        <td><%= select_past_presenter(@member) %></td>
+      </tr>
+      <tr>
+        <th>Azsa?</th>
+        <td><%= select_azsa(@member) %></td>
+      </tr>
+      <tr>
+        <th>Contributor</th>
+        <td><%= select_contributor(@member) %></td>
+      </tr>
+      <tr>
+        <th>ブラックリスト?</th>
+        <td><%= select_black_list_member(@member) %></td>
+      </tr>
+    </table>
+
     <%= link_to 'メンバー情報編集', edit_member_path(@member), class: "btn btn-block btn-large btn-primary" %>
-    <%= link_to 'メンバー削除', @member, value:@member.id, method: :delete, class: 'btn btn-large btn-warning btn-block', data: {confirm: "削除してもよろしいですか？"} %>
+    <%= link_to 'メンバー削除', @member, value:@member.id, class: 'btn btn-large btn-warning btn-block',
+      method: :delete, data: { confirm: "削除してもよろしいですか？" } %>
   </div>
 
   <div class="col-md-5">
     <%= render 'participated_events' %>
   </div>
 </div>
-</div>
-
