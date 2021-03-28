@@ -10,7 +10,8 @@
     "jquery": "^3.6.0",
     "mdbootstrap": "^4.19.2",
     "popper.js": "^1.16.1",
-    "turbolinks": "^5.2.0"
+    "turbolinks": "^5.2.0",
+    "is-svg": ">=4.2.2"
   },
   "devDependencies": {
     "webpack-dev-server": "^3.11.2"
