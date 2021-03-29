@@ -1,6 +1,6 @@
 <div class="btn-group-vertical btn-block" >
   <%= link_to "Staff list", staffs_path, class: "btn btn-secondary" %>
-  <hr>
+  <div style="height: 4px;"></div>
   <% if admin? %>
     <p>この下はAdmin staffのみ可能</p>
     <%= link_to "Create new staff", new_staff_path, class: "btn btn-secondary" %>
