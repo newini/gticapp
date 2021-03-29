@@ -169,7 +169,7 @@ class StaticPagesController < ApplicationController
   end
 
   def media
-    @media_articles = MediaArticle.paginate(page: params[:page]).order(date: :desc)
+    @media_articles = MediaArticle.paginate(page: params[:page], per_page: 10).order(date: :desc)
   end
 
   def contact
