@@ -79,13 +79,7 @@ Rails.application.routes.draw do
     }
   end
 
-  resources :staffs do
-    collection do
-      post :update_active
-      post :update_admin
-      post :update_staffs
-    end
-  end
+  resources :staffs
 
   resources :invitations do
     collection do

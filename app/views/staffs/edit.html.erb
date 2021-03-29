@@ -1,65 +1,11 @@
-<div class="container">
-  <div class="row">
-    <div class="col">
-      <center>
+<div class="row">
+  <div class="col-md-2">
+    <%= render'side' %>
+  </div>
 
-        <h2>Staff情報</h2>
+  <div class="col">
+    <h2>Staff情報修正</h2>
 
-        <strong>㊟Name, Email, Facebook IDはMEMBERのデータを編集すること</strong>
-        <%= form_for @staff, :html => { :class => 'form-horizontal' } do |f| %>
-          <table class="table table-bordered">
-            <tr>
-              <th scope="col">Name</th>
-              <td><%= @member.last_name + " " + @member.first_name %>
-            </tr>
-            <tr>
-              <th scope="col">Email</th>
-              <td><%= @member.email %>
-            </tr>
-            <tr>
-              <th scope="col">Facebook ID</th>
-              <td><%= @member.fb_user_id %>
-            </tr>
-            <tr>
-              <th scope="col">Member ID</th>
-              <td class="form-group">
-                <div class="col-sm-6">
-                  <%= f.text_field :member_id, placeholder: "Member ID", class: "form-control", :required => 'required' %>
-                  <%= @staff.errors.messages[:member_id][0] if @staff.errors.any?%>
-                </div>
-              </td>
-            </tr>
-            <% if admin? %>
-              <tr>
-                <th>Active?</th>
-                <td><%= select_active(@staff) %></td>
-              </td>
-              </tr>
-              <tr>
-                <th>Admin?</th>
-                <td><%= select_admin(@staff) %></td>
-              </tr>
-            <% end %>
-            <tr>
-              <th>自己紹介<br>（ここを変更すると、幹事紹介ページに反映）</th>
-              <td class="form-group">
-                <div class="col-sm-6">
-                  <%#= f.text_field :description, placeholder: "...", class: "form-control" %>
-                  <%= f.text_area :description, size: "100x10", class: "form-control", placeholder: "......" %>
-                  <%= @staff.errors.messages[:description][0] if @staff.errors.any?%>
-                </div>
-              </td>
-            </tr>
-          </table>
-
-            <div class="form-group">
-              <div class="col-sm-offset-4 col-sm-6">
-                <%= f.submit "送信", class: "btn btn-primary btn-block" %>
-              </div>
-            </div>
-        <% end %>
-
-      </center>
-    </div>
+    <%= render'form' %>
   </div>
 </div>

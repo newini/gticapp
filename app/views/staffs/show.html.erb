@@ -1,38 +1,47 @@
-<div class="container">
-  <div class="row">
-    <div class="col">
-      <center>
+<div class="row">
+  <div class="col-md-2">
+    <%= render'side' %>
+  </div>
 
-        <h2>Staff情報</h2>
-        <table class="table table-bordered">
-          <tr>
-            <th>Name</th>
-            <td><%= @staff.name %></td>
-          </tr>
-          <tr>
-            <th>Email</th>
-            <td><%= @staff.email %></td>
-          </tr>
-          <tr>
-            <th>Facebook ID</th>
-            <td><%= @staff.uid %></td>
-          </tr>
-          <tr>
-            <th>Member ID</th>
-            <td><%= @staff.member_id %></td>
-          </tr>
-          <tr>
-            <th>自己紹介</th>
-            <td><%= @staff.description %></td>
-          </tr>
+  <div class="col">
+    <h2>Staff情報</h2>
 
-          <tr>
-            <th>Admin</th>
-            <td><%= @staff.admin %></td>
-          </tr>
-        </table>
+    <strong>㊟Name, Email, Facebook IDはMEMBERのデータを編集すること</strong>
+    <table class="table table-bordered tale-sm">
+      <tr>
+        <th style="width: 20%;">Name</th>
+        <td><%= @member.last_name + " " + @member.first_name %>
+      </tr>
+      <tr>
+        <th>Email</th>
+        <td><%= @member.email %>
+      </tr>
+      <tr>
+        <th>Facebook ID</th>
+        <td><%= @member.fb_user_id %>
+      </tr>
+      <tr>
+        <th>Member ID</th>
+        <td><%= @staff.member_id %></td>
+      </tr>
+      <tr>
+        <th>Active?（管理者画面にアクセス可能な人）</th>
+        <td><%= get_check_icon(@staff.active_flg) %></td>
+      </tr>
+      <tr>
+        <th>Admin?（管理者画面を修正できる人）</th>
+        <td><%= get_check_icon(@staff.admin) %></td>
+      </tr>
+      <tr>
+        <th>自己紹介</th>
+        <td><%= @staff.description %></td>
+      </tr>
+    </table>
 
-      </center>
-    </div>
+    <%= link_to "編集", edit_staff_path(@staff), class: 'btn btn-info' %>
+    <% if admin? %>
+      <%= link_to "Destroy", staff_path(@staff), class: 'btn btn-danger',
+                  method: :delete, data: { confirm: "Delete, Are you sure?" } %>
+    <% end %>
   </div>
 </div>

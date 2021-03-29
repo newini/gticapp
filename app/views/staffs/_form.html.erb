@@ -1,0 +1,49 @@
+<strong>㊟Name, Email, Facebook IDはMEMBERのデータを編集すること</strong>
+<strong>Active Staff, Admin Staffの設定はAdmin Staffのみ可能</strong>
+
+<%= form_for @staff, :html => { :class => 'form-horizontal' } do |f| %>
+  <table class="table table-bordered table-sm">
+    <tr>
+      <th style="width: 20%;">Member ID</th>
+      <td>
+        <div class="form-check">
+          <%= f.text_field :member_id, placeholder: "Member ID", class: "form-control", :required => 'required' %>
+          <%= @staff.errors.messages[:member_id][0] if @staff.errors.any?%>
+        </div>
+      </td>
+    </tr>
+
+    <% if admin? %>
+      <tr>
+        <th>Active?（管理者画面にアクセス可能な人）</th>
+        <td>
+          <div class="form-check">
+            <%= f.check_box :active_flg, class:"form-check-input" %>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <th>Admin?（管理者画面を修正できる人）</th>
+        <td>
+          <div class="form-check">
+            <%= f.check_box :admin, class:"form-check-input" %>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+    <tr>
+      <th>自己紹介文<br>（ここを変更すると、自動的に幹事紹介ページに反映）</th>
+      <td>
+        <div class="form-group">
+          <%= f.text_area :description, rows: 10, class: "form-control", placeholder: "......" %>
+          <%= @staff.errors.messages[:description][0] if @staff.errors.any?%>
+        </div>
+      </td>
+    </tr>
+  </table>
+
+    <div class="form-group">
+      <%= f.submit class: "btn btn-primary" %>
+      <%= link_to 'Cancel & Back', :back, class: 'btn btn-primary' %>
+    </div>
+<% end %>

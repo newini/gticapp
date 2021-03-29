@@ -20,7 +20,7 @@ class AttachmentFilesController < ApplicationController
     @attachment_file = AttachmentFile.find(params[:id])
     @attachment_file.destroy
 
-    redirect_to attachment_files_path
+    redirect_to attachment_files_path, :flash => {:success => 'Deleted'}
   end
 
   def serve_file
