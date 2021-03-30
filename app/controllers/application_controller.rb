@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   private
     def admin_staff_only
       if current_user.present?
-        staff = Staff.find_by_email(current_user.email)
+        staff = Staff.find_by_user_id(current_user.uid)
         if staff.admin
           return true
         end
@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
 
     def active_staff_only
       if current_user.present?
-        staff = Staff.find_by_uid(current_user.uid)
+        staff = Staff.find_by_user_id(current_user.uid)
         if staff.active_flg
           return true
         end

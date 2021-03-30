@@ -46,7 +46,7 @@ class UsersController < ApplicationController
     end
 
     def get_correct_user
-      staff = Staff.find_by_uid(current_user.uid)
+      staff = Staff.find_by_user_id(current_user.uid)
       if staff.present?   # If Staff
         @user = User.find(params[:id])
       else                # Normal user

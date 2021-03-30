@@ -16,12 +16,12 @@
 
               <div class="row">
                 <div class="col-2">
-                  <%= image_tag "https://graph.facebook.com/#{organizer.uid}/picture?height=80&width=50", class: "rounded" %>
+                  <%= image_tag "https://graph.facebook.com/#{organizer.user_id}/picture?height=80&width=50", class: "rounded" %>
                 </div>
                 <div class="col-7 text-center">
                   <%= get_member_name(organizer.member_id) %>
                   <br>
-                  <small class="text-center"><%= organizer.name %></small>
+                  <small class="text-center"><%= get_member_english_name(organizer.member_id) %></small>
                 </div>
                 <div class="col-2">
                   <%= image_tag 'gtic_logo_c_50x50.png' %>
@@ -30,10 +30,10 @@
 
               <div style="background-color: gainsboro;">
                 <i class="fa fa-facebook-square" style="color: blue;"></i>
-                <small><a href="https://facebook.com/<%= organizer.uid%>">https://facebook.com/<%= organizer.uid%></a></small>
+                <small><a href="https://facebook.com/<%= organizer.user_id%>">https://facebook.com/<%= organizer.user_id%></a></small>
                 <br>
                 <a tabindex="0" class="btn btn-sm btn-info float-right" role="button" data-toggle="popover" data-trigger="focus"
-                    title="<%= organizer.name %>" data-content="<%= organizer.description %>">
+                    title="<%= get_member_english_name(organizer.member_id) %>" data-content="<%= organizer.description %>">
                   about
                 </a>
                 <br>
@@ -64,12 +64,12 @@
 
               <div class="row">
                 <div class="col-2">
-                  <%= image_tag "https://graph.facebook.com/#{organizer.uid}/picture?height=80&width=50", class: "rounded" %>
+                  <%= image_tag "https://graph.facebook.com/#{organizer.user_id}/picture?height=80&width=50", class: "rounded" %>
                 </div>
                 <div class="col-7 text-center">
                   <%= get_member_name(organizer.member_id) %>
                   <br>
-                  <small class="text-center"><%= organizer.name %></small>
+                  <small class="text-center"><%= get_member_english_name(organizer.member_id) %></small>
                 </div>
                 <div class="col-2">
                   <%= image_tag 'gtic_logo_c_50x50.png' %>
@@ -78,10 +78,10 @@
 
               <div style="background-color: gainsboro;">
                 <i class="fa fa-facebook-square" style="color: blue;"></i>
-                <small><a href="https://facebook.com/<%= organizer.uid%>">https://facebook.com/<%= organizer.uid%></a></small>
+                <small><a href="https://facebook.com/<%= organizer.user_id%>">https://facebook.com/<%= organizer.user_id%></a></small>
                 <br>
                 <a tabindex="0" class="btn btn-sm btn-info float-right" role="button" data-toggle="popover" data-trigger="focus"
-                    title="<%= organizer.name %>" data-content="<%= organizer.description %>">
+                    title="<%= get_member_english_name(organizer.member_id) %>" data-content="<%= organizer.description %>">
                   about
                 </a>
                 <br>

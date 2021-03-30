@@ -49,7 +49,7 @@ module ApplicationHelper
 
   def staff_signed_in?
     if current_user.present?
-      staff = Staff.find_by_email(current_user.email)
+      staff = Staff.find_by_user_id(current_user.uid)
       if staff.present?
         return true
       end
@@ -59,7 +59,7 @@ module ApplicationHelper
 
   def admin?
     if current_user.present?
-      staff = Staff.find_by_email(current_user.email)
+      staff = Staff.find_by_user_id(current_user.uid)
       return staff.admin if staff
     end
     return false
