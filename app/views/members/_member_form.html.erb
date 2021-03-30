@@ -4,100 +4,102 @@
   英名の場合はalphabetを「first」, 「last」順に、<br>
   書き込んでください。</p>
 
-<%= form_for @member do %>
+<p>*: required</p>
+
+<%= form_for @member do |form| %>
   <%= hidden_field_tag :event, @event.id, name: "event[id]" if @event.present? %>
   <div class="form-group row">
-    <%= label_tag :last_name, "氏（漢字） or First name (alphabet)", class: 'col-sm-6 control-label' %>
+    <%= form.label :last_name, "* 氏（漢字） or First name (alphabet)", class: 'col-sm-6' %>
     <div class="col-sm-6">
-      <%= text_field_tag nil, @member.last_name, name: "member[last_name]", placeholder: @member.errors.any? ? "#{@member.errors.messages[:last_name][0]}" : "山田/John", class: "form-control", :required => 'required' %>
+      <%= form.text_field :last_name, placeholder: "山田/John", class: "form-control", :required => 'required' %>
     </div>
   </div>
   <div class="form-group row">
-    <%= label_tag :first_name, "名（漢字） or Last name (alphabet)", class: 'col-sm-6 control-label' %>
+    <%= form.label :first_name, "* 名（漢字） or Last name (alphabet)", class: 'col-sm-6' %>
     <div class="col-sm-6">
-      <%= text_field_tag nil, @member.first_name, name: "member[first_name]", placeholder: @member.errors.any? ? "#{@member.errors.messages[:first_name][0]}" : "太郎/SMITH", class: "form-control", :required => 'required' %>
+      <%= form.text_field :first_name, placeholder: "太郎/SMITH", class: "form-control", :required => 'required' %>
     </div>
   </div>
 
       <p>↓今まで「かな」を入力していましたが、今後はalphabetを入力してください。もし、かなになっている場合はalphabetに直してください。英名の場合もalphabetを書いてください</p>
   <div class="form-group row">
-    <%= label_tag :last_name_alphabet, "氏(alphabet)", class: 'col-sm-6 control-label' %>
+    <%= form.label :last_name_alphabet, "氏(alphabet)", class: 'col-sm-6' %>
     <div class="col-sm-6">
-      <%= text_field_tag nil, @member.last_name_alphabet, name: "member[last_name_alphabet]", placeholder: @member.errors.any? ? "#{@member.errors.messages[:last_name_kana][0]}" : "Yamada", class: "form-control" %>
+      <%= form.text_field :last_name_alphabet, placeholder: "Yamada", class: "form-control" %>
     </div>
   </div>
   <div class="form-group row">
-    <%= label_tag :first_name_alphabet, "名(alphabet)", class: 'col-sm-6 control-label' %>
+    <%= form.label :first_name_alphabet, "名(alphabet)", class: 'col-sm-6' %>
     <div class="col-sm-6">
-      <%= text_field_tag nil, @member.first_name_alphabet, name: "member[first_name_alphabet]", placeholder: @member.errors.any? ? "#{@member.errors.messages[:first_name_kana][0]}" : "Taro", class: "form-control" %>
-    </div>
-  </div>
-
-  <div class="form-group row">
-    <%= label_tag :fb_user_id, "Facebook ID", class: 'col-sm-6 control-label' %>
-    <div class="col-sm-6">
-      <%= text_field_tag nil, @member.fb_user_id, name: "member[fb_user_id]", placeholder: @member.errors.any? ? "#{@member.errors.messages[:fb_user_id][0]}" : "00000000000", class: "form-control" %>
+      <%= form.text_field :first_name_alphabet, placeholder: "Taro", class: "form-control" %>
     </div>
   </div>
 
   <div class="form-group row">
-    <%= label_tag :affiliation, "所属 / affiliation", class: 'col-sm-6 control-label' %>
+    <%= form.label :fb_user_id, "Facebook ID", class: 'col-sm-6' %>
     <div class="col-sm-6">
-      <%= text_field_tag nil, @member.affiliation, name: "member[affiliation]", placeholder:  "海山商事", class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group row">
-    <%= label_tag :title, "肩書 / title", class: 'col-sm-6 control-label' %>
-    <div class="col-sm-6">
-      <%= text_field_tag nil, @member.title, name: "member[title]", placeholder:  "代表取締役社長", class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group row">
-    <%= label_tag :note, "備考 / note", class: 'col-sm-6 control-label' %>
-    <div class="col-sm-6">
-      <%= text_area_tag nil, @member.note, name: "member[note]", placeholder: "備考", class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group row">
-    <%= label_tag :email, "メールアドレス / email", class: 'col-sm-6 control-label' %>
-    <div class="col-sm-6">
-      <%= email_field_tag nil, @member.email, name: "member[email]", placeholder: "test@example.com", class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group row">
-    <%= label_tag :category_id, "属性 / category", class: 'col-sm-6 control-label' %>
-    <div class="col-sm-6">
-      <%= select_tag nil, options_from_collection_for_select(Category.all, :id, :name, @member.category_id), name:"member[category_id]", class: "form-control", include_blank: true %>
-    </div>
-  </div>
-  <div class="form-group row">
-    <%= label_tag :birthday, "Birthday", class: 'col-sm-6 control-label' %>
-    <div class="col-sm-6">
-      <%= date_field_tag nil, nil, value: (@member.birthday.strftime('%Y-%m-%d') if @member.birthday.present?), name:"member[birthday]", class: "form-control", include_blank: true %>
+      <%= form.text_field :fb_user_id, placeholder: "00000000000", class: "form-control" %>
     </div>
   </div>
 
   <div class="form-group row">
-    <%= label_tag :past_presenter_flg, "過去登壇者", class: 'col-sm-6 control-label' %>
+    <%= form.label :affiliation, "所属 / affiliation", class: 'col-sm-6' %>
+    <div class="col-sm-6">
+      <%= form.text_field :affiliation, placeholder:  "海山商事", class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <%= form.label :title, "肩書 / title", class: 'col-sm-6' %>
+    <div class="col-sm-6">
+      <%= form.text_field :title, placeholder:  "代表取締役社長", class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <%= form.label :note, "備考 / note", class: 'col-sm-6' %>
+    <div class="col-sm-6">
+      <%= form.text_area :note, placeholder: "備考", class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <%= form.label :email, "メールアドレス / email", class: 'col-sm-6' %>
+    <div class="col-sm-6">
+      <%= form.email_field :email, placeholder: "test@example.com", class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <%= form.label :category_id, "属性 / category", class: 'col-sm-6' %>
+    <div class="col-sm-6">
+      <%= form.select :category_id, options_from_collection_for_select(Category.all, :id, :name, @member.category_id), {}, { :class => "form-control", :include_blank => true } %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <%= form.label :birthday, "Birthday", class: 'col-sm-6' %>
+    <div class="col-sm-6">
+      <%= form.date_field :birthday, class: "form-control", include_blank: true %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= form.label :past_presenter_flg, "過去登壇者", class: 'col-sm-6' %>
     <div class="col-sm-6">
       <%= @member.past_presenter_flg %>
     </div>
   </div>
   <div class="form-group row">
-    <%= label_tag :azsa_flg, "Azsa?", class: 'col-sm-6 control-label' %>
+    <%= form.label :azsa_flg, "Azsa?", class: 'col-sm-6' %>
     <div class="col-sm-6">
       <%= @member.azsa_flg %>
     </div>
   </div>
   <div class="form-group row">
-    <%= label_tag :contributor_flg, "Contributor", class: 'col-sm-6 control-label' %>
+    <%= form.label :contributor_flg, "Contributor", class: 'col-sm-6' %>
     <div class="col-sm-6">
       <%= @member.contributor_flg %>
     </div>
   </div>
 
   <div class="form-group row">
-    <%= label_tag :black_list_flg, "Black list", class: 'col-sm-6 control-label' %>
+    <%= form.label :black_list_flg, "Black list", class: 'col-sm-6' %>
     <div class="col-sm-6">
       <%= @member.black_list_flg %>
     </div>
@@ -105,7 +107,7 @@
 
   <div class="form-group row">
     <div class="col-sm-offset-6 col-sm-6">
-      <%= submit_tag "送信", class: "btn btn-primary btn-block" %>
+      <%= form.submit "送信", class: "btn btn-primary btn-block" %>
     </div>
   </div>
 

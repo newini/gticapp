@@ -10,11 +10,11 @@ class UsersController < ApplicationController
   # For users
   # My page
   def show
-    @user = User.find(params[:id])
+    @user = get_correct_user
   end
 
   def edit
-    @user = User.find(params[:id])
+    @user = get_correct_user
   end
 
   def update
@@ -25,13 +25,32 @@ class UsersController < ApplicationController
     end
   end
 
+  def destroy
+    @user = get_correct_user
+    @user.destroy
+    redirect_to root_path , :flash => {:success => 'Deleted'}
+  end
+
+
   def privacy_policy
   end
 
 
   private
     def user_params
-      params.fetch(:user, {}).permit(:name)
+      params.fetch(:user, {}).permit(
+        :first_name, :last_name, :first_name_alphabet, :last_name_alphabet,
+        :age, :gender, :birthday,
+        :affiliation, :title, :category_id, :email
+      )
     end
 
+    def get_correct_user
+      staff = Staff.find_by_uid(current_user.uid)
+      if staff.present?   # If Staff
+        @user = User.find(params[:id])
+      else                # Normal user
+        @user = User.find(current_user.id)
+      end
+    end
 end

@@ -1,49 +1,53 @@
-<div class="container">
-  <div class="row">
-    <div class="col">
-      <center>
+<div class="row">
+  <div class="col-md-2">
+    <%= render'side_for_user' %>
+  </div>
 
-        <h1>My page</h1>
+  <div class="col">
+    <center>
 
-        <div class="center">
-          <%= image_tag "https://graph.facebook.com/#{@user.uid}/picture?type=large&access_token=#{@user.access_token}" %>
-          <p>Hello! <%= "#{@user.name}" %></p>
-        </div>
+      <h1>My page</h1>
 
-        <div class="fb-page" data-href="https://www.facebook.com/GTICafe/"
-          data-tabs="events" data-width="500" data-height="" data-small-header="false"
-          data-adapt-container-width="true" data-hide-cover="false"
-          data-show-facepile="true">
-          <blockquote cite="https://www.facebook.com/GTICafe/" class="fb-xfbml-parse-ignore">
-            <a href="https://www.facebook.com/GTICafe/">
-              Global Techno Innovation Cafe (GTIC)
-            </a>
-          </blockquote>
-        </div>
+      <div class="center">
+        <%= image_tag "https://graph.facebook.com/#{@user.uid}/picture?type=large&access_token=#{@user.access_token}" %>
+        <p>Hello! <%= "#{@user.name}" %></p>
+      </div>
+
+      <div class="fb-page" data-href="https://www.facebook.com/GTICafe/"
+        data-tabs="events" data-width="500" data-height="" data-small-header="false"
+        data-adapt-container-width="true" data-hide-cover="false"
+        data-show-facepile="true">
+        <blockquote cite="https://www.facebook.com/GTICafe/" class="fb-xfbml-parse-ignore">
+          <a href="https://www.facebook.com/GTICafe/">
+            Global Techno Innovation Cafe (GTIC)
+          </a>
+        </blockquote>
+      </div>
 
 
-        <h2>My Information</h2>
-        <table class="table table-bordered">
-          <tr>
-            <th>Name</th>
-            <td><%= @user.name %></td>
-          </tr>
+      <h2>My Information</h2>
+      <table class="table table-bordered">
+        <tr>
+          <th>Name</th>
+          <td><%= @user.name %></td>
+        </tr>
 
-          <tr>
-            <th>Email</th>
-            <td><%= @user.email %></td>
-          </tr>
+        <tr>
+          <th>Email</th>
+          <td><%= @user.email %></td>
+        </tr>
 
-          <tr>
-            <th>イベント参加回数</th>
-            <td><%#= member.participated_events.count %></td>
-          </tr>
+        <tr>
+          <th>イベント参加回数</th>
+          <td><%#= member.participated_events.count %></td>
+        </tr>
 
-        </table>
+      </table>
 
-        <%= link_to "Edit user information", edit_user_path(current_user), class: "btn btn-light" %>
+      <%= link_to "Edit user information", edit_user_path(current_user), class: "btn btn-info" %>
 
-      </center>
-    </div>
+      <%= link_to "Delete", user_path(@user), class: "btn btn-danger",
+        method: :delete, data: { confirm: "本当に削除してもよろしいですか？" } %>
+    </center>
   </div>
 </div>

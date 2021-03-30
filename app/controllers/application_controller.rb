@@ -4,10 +4,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   private
-    def signed_in_user
-      redirect_to root_path, notice: "Please sign in." unless signed_in?
-    end
-
     def admin_staff_only
       if current_user.present?
         staff = Staff.find_by_email(current_user.email)
@@ -20,7 +16,7 @@ class ApplicationController < ActionController::Base
 
     def active_staff_only
       if current_user.present?
-        staff = Staff.find_by_email(current_user.email)
+        staff = Staff.find_by_uid(current_user.uid)
         if staff.active_flg
           return true
         end
@@ -30,7 +26,11 @@ class ApplicationController < ActionController::Base
 
     # Behavior after sign in
     def after_sign_in_path_for(resource)
-      user_path(resource.id)
+      if resource.last_name?
+        user_path(resource.id)
+      else
+        edit_user_path(resource.id)
+      end
     end
 
     def get_app_access_token
