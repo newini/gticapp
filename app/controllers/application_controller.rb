@@ -3,6 +3,23 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+
+  # ======================================================
+  # Locale
+  # https://guides.rubyonrails.org/i18n.html
+  around_action :switch_locale
+
+  def switch_locale(&action)
+    locale = params[:locale] || I18n.default_locale
+    I18n.with_locale(locale, &action)
+  end
+
+  def default_url_options
+    { locale: I18n.locale  }
+  end
+
+
+  # ======================================================
   private
     def admin_staff_only
       if current_user.present?

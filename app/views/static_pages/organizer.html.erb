@@ -34,7 +34,7 @@
                 <br>
                 <a tabindex="0" class="btn btn-sm btn-info float-right" role="button" data-toggle="popover" data-trigger="focus"
                     title="<%= get_member_english_name(organizer.member_id) %>" data-content="<%= organizer.description %>">
-                  about
+                  <%= t('organizer.about') %>
                 </a>
                 <br>
               </div>
@@ -48,7 +48,7 @@
 
   <br>
 
-  <h1>過去の幹事たち</h1>
+  <h1><%= t('organizer.past_organizers') %></h1>
 
   <div class="row justify-content-center">
     <% @organizers.reverse_each do |organizer| %>
@@ -82,7 +82,7 @@
                 <br>
                 <a tabindex="0" class="btn btn-sm btn-info float-right" role="button" data-toggle="popover" data-trigger="focus"
                     title="<%= get_member_english_name(organizer.member_id) %>" data-content="<%= organizer.description %>">
-                  about
+                  <%= t('organizer.about') %>
                 </a>
                 <br>
               </div>

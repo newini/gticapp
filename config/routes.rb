@@ -3,6 +3,13 @@ Rails.application.routes.draw do
 
 
   #===================================================
+  # Root path
+  root 'static_pages#home'
+  # Redirect root path
+  #root to: redirect('/ja/home')
+
+
+  #===================================================
   # Static pages
   match '/home', to: 'static_pages#home', via: 'get'
   match '/about', to: 'static_pages#about', via: 'get'
@@ -13,8 +20,6 @@ Rails.application.routes.draw do
   match '/media', to: 'static_pages#media', via: 'get'
   match '/schedule', to: 'static_pages#schedule', via: 'get'
   match '/contact', to: 'static_pages#contact', via: 'get'
-
-  root 'static_pages#home'
 
 
   #===================================================
