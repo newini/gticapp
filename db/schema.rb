@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_30_015525) do
+ActiveRecord::Schema.define(version: 2021_03_30_040028) do
 
   create_table "accounts", force: :cascade do |t|
     t.string "title", limit: 255
@@ -111,16 +111,6 @@ ActiveRecord::Schema.define(version: 2021_03_30_015525) do
     t.boolean "include_gtic_flg", default: false
     t.integer "birth_month", default: 0
     t.integer "event_id", default: 0
-  end
-
-  create_table "member_relationships", force: :cascade do |t|
-    t.integer "introduced_id"
-    t.integer "introducer_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.index ["introduced_id", "introducer_id"], name: "index_member_relationships_on_introduced_id_and_introducer_id", unique: true
-    t.index ["introduced_id"], name: "index_member_relationships_on_introduced_id"
-    t.index ["introducer_id"], name: "index_member_relationships_on_introducer_id"
   end
 
   create_table "members", force: :cascade do |t|

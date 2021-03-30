@@ -236,6 +236,7 @@ Add like belows: `:table_names, :column_name, :type`
 * add column: `add_column :posts, :user_id, :integer, :default => false`
 * change column: `change_column :posts, :admin, :boolean, :default => false`
 * remove column: `remove_column :posts, :place, :string`
+
 To rename column name, do this
 * rename column: `rename_column :table_names, :old_column, :new_column`
 

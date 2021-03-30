@@ -5,10 +5,6 @@ class Member < ActiveRecord::Base
   has_many :registed_events, -> { where "status = 2"}, through: :relationships, source: :event
   has_many :participated_events, -> { where "status = 3 or status = 6"}, through: :relationships, source: :event # with dotasan
 #紹介者同士のrelation
-  has_many :member_relationships, foreign_key: "introduced_id", dependent: :destroy
-  has_many :introducer, through: :member_relationships, source: :introducer
-  has_many :reverse_member_relationships, foreign_key: "introducer_id", dependent: :destroy, class_name: "MemberRelationship"
-  has_many :introduced_members, through: :reverse_member_relationships, source: :introduced
   has_many :presentationships, foreign_key: "member_id", dependent: :destroy
   has_many :presentations, through: :presentationships, source: :presentation
 #  has_many :presentations, foreign_key: "member_id", dependent: :destroy
