@@ -59,7 +59,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <%= form_with url: '/attachment_files#create', id: 'formUploadImage', multipart: true, :remote => true do |form| %>
+        <%= form_with url: attachment_files_path, id: 'formUploadImage', multipart: true, :remote => true do |form| %>
           <div class="form-group">
             <%= label_tag :file, "File" %>
             <%= file_field nil, :file, id: 'fileInputImage', class: 'form-control-file' %>

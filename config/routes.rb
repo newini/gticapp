@@ -1,6 +1,23 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
+
+  #===================================================
+  # Static pages
+  match '/home', to: 'static_pages#home', via: 'get'
+  match '/about', to: 'static_pages#about', via: 'get'
+  match '/presenter', to: 'static_pages#presenter', via: 'get'
+  match '/search_event', to: 'static_pages#search_event', via: 'get'
+  match '/ceo_message', to: 'static_pages#ceo_message', via: 'get'
+  match '/organizer', to: 'static_pages#organizer', via: 'get'
+  match '/media', to: 'static_pages#media', via: 'get'
+  match '/schedule', to: 'static_pages#schedule', via: 'get'
+  match '/contact', to: 'static_pages#contact', via: 'get'
+
+  root 'static_pages#home'
+
+
+  #===================================================
   # For authentication
   devise_for :users, controllers: {
     omniauth_callbacks: 'users/omniauth_callbacks',
@@ -14,6 +31,16 @@ Rails.application.routes.draw do
       get :privacy_policy
     end
   end
+
+
+  #===================================================
+  # Staff only
+
+  # Prefix 'admin'
+  # Uncommend and use if need for future
+  # https://makandracards.com/makandra/38773-rails-route-namespacing-in-different-flavors
+  #scope path: 'admin' do
+  #end
 
   resources :members do
     collection do
@@ -119,19 +146,6 @@ Rails.application.routes.draw do
   resources :event_categories, only: [:index, :new, :create, :edit, :update, :destroy]
   resources :accounts
   resources :registers
-
-
-  match '/home', to: 'static_pages#home', via: 'get'
-  match '/about', to: 'static_pages#about', via: 'get'
-  match '/presenter', to: 'static_pages#presenter', via: 'get'
-  match '/search_event', to: 'static_pages#search_event', via: 'get'
-  match '/ceo_message', to: 'static_pages#ceo_message', via: 'get'
-  match '/organizer', to: 'static_pages#organizer', via: 'get'
-  match '/media', to: 'static_pages#media', via: 'get'
-  match '/schedule', to: 'static_pages#schedule', via: 'get'
-  match '/contact', to: 'static_pages#contact', via: 'get'
-
-  root 'static_pages#home'
 
   # Manuals
   resources :manuals
