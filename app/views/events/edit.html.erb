@@ -1,11 +1,10 @@
 <div class="row">
-  <aside class="col-md-2">
+  <div class="col-md-2">
       <%= render'side' %>
-  </aside>
+  </div>
+
   <div class="col-md-5">
     <%= render 'event_form' %>
-    <%= link_to '削除', @event, value:@event.id, method: :delete, class: 'btn btn-large btn-block btn-warning', data: {confirm: "削除してもよろしいですか？"} %>
-
   </div>
 </div>
 

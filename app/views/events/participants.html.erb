@@ -1,9 +1,11 @@
 <div class="row">
-  <aside class="col-md-2">
+  <div class="col-sm-2" id="side-nav">
     <%= render'side' %>
-  </aside>
+  </div>
 
   <div class="col-md-10">
+    <h2>参加者リスト</h2>
+
     <div class="btn-group" role="group" aria-label="Basic example">
       <%= link_to participants_event_path, class: "btn btn-light" do %>
         <span class="fa fa-th-list"></span> 出席者一覧
@@ -24,6 +26,7 @@
         <span class="fa fa-upload"></span> Upload Qustionnaire CSV
       <% end %>
     </div>
+
     <div id="ajax_container">
       <%= render'members' %>
     </div>

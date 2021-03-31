@@ -1,8 +1,11 @@
 <div class="row">
-  <aside class="col-md-2">
+  <div class="col-sm-2" id="side-nav">
     <%= render'side' %>
-  </aside>
+  </div>
+
   <div class="col-md-10">
+    <h2>欠席者一覧</h2>
+
     <div class="btn-group">
       <%= link_to declined_event_path, class: "btn btn-light" do %>
         <span class="fa fa-th-list"></span> 欠席者一覧
@@ -11,6 +14,7 @@
         <span class="fa fa-refresh"></span> facebook情報更新
       <% end %>
     </div>
+
     <div id="ajax_container">
       <%= render 'members' %>
     </div>

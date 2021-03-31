@@ -1,11 +1,13 @@
 <div class="row">
-  <aside class="col-sm-2">
+  <div class="col-sm-2">
     <%= render'side' %>
-  </aside>
+  </div>
+
   <div class="col-sm-5">
     <h2>イベント登録</h2>
     <%= render'event_form' %>
   </div>
+
   <div class="col-sm-5">
     <h2>イベント情報CSVデータ取り込み</h2>
     <%= form_tag import_events_path, multipart: true do %>

@@ -284,6 +284,7 @@ class EventsController < ApplicationController
     end
   end
 
+  # Button actions
   def change_status
     relationship = @event.relationships.find_by_member_id(params[:member_id])
     direction = params[:direction].to_i
@@ -307,9 +308,7 @@ class EventsController < ApplicationController
         relationship.update(status: 7)
       end
     end
-    if relationship.save
-      select_action(params[:referer])
-    end
+    select_action(params[:referer])
   end
 
   def destroy_relationship
@@ -345,11 +344,7 @@ class EventsController < ApplicationController
       relationship.update(presentation_role: 5)
       member.update(past_presenter_flg: true)
     end
-#    if relationship.save
-#      select_action(params[:referer])
-#    else
-      redirect_to :back
-#    end
+    select_action(params[:referer])
   end
 
   def switch_black_list_flg
@@ -458,19 +453,7 @@ class EventsController < ApplicationController
     else
       member.update(birthday: nil)
     end
-    if member.save
-      select_action(params[:referer])
-    end
-  end
-
-  def update_black_list
-    member = Member.find(params[:member_id])
-    if params[:black_list_flg]
-      member.update(black_list_flg: true)
-    else
-      member.update(black_list_flg: false)
-    end
-    redirect_to :back
+    select_action(params[:referer])
   end
 
   def statistics
