@@ -26,37 +26,37 @@
         <div id="events_stat"></div>
         <script>
           var maybe = {
-            x: <%= @event_ids %>,
+            x: <%= raw @event_names %>,
             y: <%= @maybe %>,
             name: '未定',
             type: 'bar'
           };
           var participants = {
-            x: <%= @event_ids %>,
+            x: <%= raw @event_names %>,
             y: <%= @participants %>,
             name: '出席',
             type: 'bar'
           };
           var declined = {
-            x: <%= @event_ids %>,
+            x: <%= raw @event_names %>,
             y: <%= @declined %>,
             name: '欠席',
             type: 'bar'
           };
           var dotasan = {
-            x: <%= @event_ids %>,
+            x: <%= raw @event_names %>,
             y: <%= @dotasan %>,
             name: 'ドタ参',
             type: 'bar'
           };
           var dotacan = {
-            x: <%= @event_ids %>,
+            x: <%= raw @event_names %>,
             y: <%= @dotacan %>,
             name: 'ドタキャン',
             type: 'bar'
           };
           var no_show = {
-            x: <%= @event_ids %>,
+            x: <%= raw @event_names %>,
             y: <%= @no_show %>,
             name: 'No-show',
             type: 'bar'

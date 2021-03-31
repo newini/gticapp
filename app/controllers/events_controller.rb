@@ -484,7 +484,7 @@ class EventsController < ApplicationController
     else
       @events = Event.all
       # Events stat
-      @event_ids = @events.map{|event| event.id}
+      @event_names = @events.map{|event| '<a href="'+event_path(event)+'">'+event.name+'</a>' }
       @participants = @events.map{|event| event.participants.count}
       @maybe = @events.map{|event| event.maybe_members.count}
       @declined = @events.map{|event| event.declined_members.count}
