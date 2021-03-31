@@ -483,11 +483,14 @@ class EventsController < ApplicationController
       @date_count = membership.group("date(created_at)").count.map{|key,val| [key,val]}
     else
       @events = Event.all
-      category = @events.map{|event| event.id}
-      @participants = @events.map{|event| [event.id, event.participants.count] }
-      @no_show = @events.map{|event| [event.id, event.no_show.count] }
-      @maybe = @events.map{|event| [event.id, event.maybe_members.count] }
-      @declined = @events.map{|event| [event.id, event.declined_members.count] }
+      # Events stat
+      @event_ids = @events.map{|event| event.id}
+      @participants = @events.map{|event| event.participants.count}
+      @maybe = @events.map{|event| event.maybe_members.count}
+      @declined = @events.map{|event| event.declined_members.count}
+      @dotasan = @events.map{|event| event.dotasan.count}
+      @dotacan = @events.map{|event| event.dotacan.count}
+      @no_show = @events.map{|event| event.no_show.count}
     end
   end
 

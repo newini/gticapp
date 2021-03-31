@@ -316,7 +316,11 @@ bundle exec rake assets:precompile
 
 
 
-# MEMO
+
+# TODO
+- translate static pages and put to config/locale/.
+- connect with LINE bot
+- chage google-api-client gem
 ```
 The google-api-client gem is deprecated and will likely not be updated further.
 

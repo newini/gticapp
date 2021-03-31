@@ -1,7 +1,8 @@
 <div class="row">
-  <aside class="col-sm-2">
+  <div class="col-sm-2">
     <%= render'side' %>
-  </aside>
+  </div>
+
   <div class="col-sm-10">
     <h2><%= @title %></h2>
     <div id="ajax_container">
@@ -22,19 +23,60 @@
           ytitle: "人数"
         %>
       <% else %>
-        <%= column_chart [
-            {name: "出席", data: @participants},
-            {name: "No-show", data: @no_show},
-            {name: "欠席", data: @declined},
-            {name: "未定", data: @maybe}
-          ],
-          title: "出席者／No-show数の推移",
-          xtitle: "イベント#",
-          ytitle: "人数",
-          library: {
-            backbroundColor: "#eee"
-          }
-        %>
+        <div id="events_stat"></div>
+        <script>
+          var maybe = {
+            x: <%= @event_ids %>,
+            y: <%= @maybe %>,
+            name: '未定',
+            type: 'bar'
+          };
+          var participants = {
+            x: <%= @event_ids %>,
+            y: <%= @participants %>,
+            name: '出席',
+            type: 'bar'
+          };
+          var declined = {
+            x: <%= @event_ids %>,
+            y: <%= @declined %>,
+            name: '欠席',
+            type: 'bar'
+          };
+          var dotasan = {
+            x: <%= @event_ids %>,
+            y: <%= @dotasan %>,
+            name: 'ドタ参',
+            type: 'bar'
+          };
+          var dotacan = {
+            x: <%= @event_ids %>,
+            y: <%= @dotacan %>,
+            name: 'ドタキャン',
+            type: 'bar'
+          };
+          var no_show = {
+            x: <%= @event_ids %>,
+            y: <%= @no_show %>,
+            name: 'No-show',
+            type: 'bar'
+          };
+          var layout = {
+            title: '出席者とNo-show数の推移',
+            xaxis: {
+              title: 'Event#',
+              tickangle: -45
+            },
+            yaxis: {
+              title: 'people'
+            }
+          };
+          var data = [maybe, participants, declined, dotasan, dotacan, no_show];
+
+          events_stat = document.getElementById('events_stat');
+
+          Plotly.newPlot( events_stat, data, layout );
+        </script>
       <% end %>
     </div>
   </div>

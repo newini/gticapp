@@ -7,11 +7,12 @@
     "chart.js": "^2.9.4",
     "chartkick": "^3.2.1",
     "hover.css": "^2.3.2",
+    "is-svg": ">=4.2.2",
     "jquery": "^3.6.0",
     "mdbootstrap": "^4.19.2",
+    "plotly.js-dist": "^1.58.4",
     "popper.js": "^1.16.1",
-    "turbolinks": "^5.2.0",
-    "is-svg": ">=4.2.2"
+    "turbolinks": "^5.2.0"
   },
   "devDependencies": {
     "webpack-dev-server": "^3.11.2"

@@ -1,3 +1,5 @@
+// app/javascript/packs/application.js
+
 /* eslint no-console:0 */
 // This file is automatically compiled by Webpack, along with any other files
 // present in this directory. You're encouraged to place your actual application logic in
@@ -15,7 +17,12 @@
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 
+// ======================================================================
+//
 console.log('Hello World from Webpacker')
+//
+// ======================================================================
+
 
 require("@rails/ujs").start()
 require("turbolinks").start()
@@ -53,3 +60,17 @@ document.addEventListener('DOMContentLoaded', function() {
 // https://chartkick.com/
 require("chartkick")
 require("chart.js")
+
+// Plotly.js
+// https://classic.yarnpkg.com/en/package/plotly.js-basic-dist
+var Plotly = require('plotly.js-dist')
+global.Plotly = Plotly
+//console.log('Plotly.js. version: ' + Plotly.version)
+
+
+
+// ======================================================================
+//
+console.log('End from Webpacker')
+//
+// ======================================================================
