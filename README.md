@@ -288,7 +288,14 @@ bin/rails credentials:edit
 
 ```
 
-## g. Compile assets (may not need)
+## g. Compile assets
+
+### webpack
+```
+bin/webpack
+```
+
+### Old compile commands
 ```
 bundle exec rake assets:clean
 
@@ -300,6 +307,8 @@ bundle exec rake assets:precompile
 ```
 
 
+
+
 # 3. about CSS and JS
 ## Installed
 - @rails/ujs
@@ -309,6 +318,9 @@ bundle exec rake assets:precompile
 - bootstrap
 - aos: Animate On Scroll Library. [Documents](https://michalsnik.github.io/aos/)
 - hover.css: mouse hover effects. See [documents and examples](http://ianlunn.github.io/Hover/). [How to install hover.css](https://devopspoints.com/bootstrap-4-hover.html)
+- chartkick: Create beautiful JavaScript charts with one line of Ruby
+- chart.js: js for chartkick
+- plotly.js: graphing libraries
 
 
 ## Useful links
