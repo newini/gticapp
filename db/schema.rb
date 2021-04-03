@@ -254,10 +254,10 @@ ActiveRecord::Schema.define(version: 2021_04_03_094833) do
     t.string "first_name_alphabet"
     t.integer "age"
     t.integer "gender"
-    t.datetime "birthday"
     t.integer "category_id"
     t.string "affiliation"
     t.string "title"
+    t.datetime "birthday"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

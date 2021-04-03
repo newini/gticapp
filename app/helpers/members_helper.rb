@@ -90,8 +90,6 @@ module MembersHelper
       return "~20s"
     elsif age == 2
       return "30s"
-    elsif age == 2
-      return "30s"
     elsif age == 3
       return "40s"
     elsif age == 4

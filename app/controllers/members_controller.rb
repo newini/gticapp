@@ -373,8 +373,9 @@ class MembersController < ApplicationController
     def member_params
       params.require(:member).permit(
         :first_name, :last_name, :first_name_alphabet, :last_name_alphabet,
+        :age, :gender, :birthday,
         :facebook_name,  :fb_user_id,
-        :affiliation, :title, :note, :category_id, :email, :birthday,
+        :affiliation, :title, :note, :category_id, :email,
         :black_list_flg, :past_presenter_flg
       )
     end

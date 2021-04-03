@@ -40,6 +40,15 @@
         <th>Age</th>
         <td><%= show_age(@member.age) if @member.age.present? %></td>
       </tr>
+      <th>誕生月</th>
+        <td><%= t('date.abbr_month_names')[@member.birthday.strftime('%m').to_i] %></td>
+      </tr>
+      <tr>
+      <tr>
+        <th>email</th>
+        <td><%= @member.email %></td>
+      </tr>
+
       <tr>
         <th>属性</th>
         <td><%= Category.find(@member.category_id).name if @member.category_id.present? %></td>
@@ -53,17 +62,10 @@
         <td><%= @member.title %></td>
       </tr>
       <tr>
-        <th>email</th>
-        <td><%= @member.email %></td>
-      </tr>
-      <tr>
         <th>備考</th>
         <td><%= @member.note %></td>
       </tr>
-      <tr>
-      <th>誕生日</th>
-        <td><%= @member.birthday.strftime('%Y-%m-%d') if @member.birthday.present? %></td>
-      </tr>
+
       <tr>
         <th>過去登壇者</th>
         <td><%= select_past_presenter(@member) %></td>

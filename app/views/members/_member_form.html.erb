@@ -72,10 +72,25 @@
       <%= form.select :category_id, options_from_collection_for_select(Category.all, :id, :name, @member.category_id), {}, { :class => "form-control", :include_blank => true } %>
     </div>
   </div>
+
+  <div class="form-group row">
+    <%= form.label :gender, "性別", class: 'col-sm-6' %>
+    <div class="col-sm-6">
+      <%= form.select :gender, [['Man', 1], ['Woman', 2]], { include_blank: true }, { class: "form-control" } %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= form.label :age, "年代", class: 'col-sm-6' %>
+    <div class="col-sm-6">
+      <%= form.select :age, [['~20s', 1], ['30s', 2], ['40s', 3], ['50s', 4], ['60s~', 5]], { include_blank: true }, { class: "form-control" } %>
+    </div>
+  </div>
+
   <div class="form-group row">
     <%= form.label :birthday, "Birthday", class: 'col-sm-6' %>
     <div class="col-sm-6">
-      <%= form.date_field :birthday, class: "form-control", include_blank: true %>
+      <%= form.date_select :birthday, { discard_year: true, discard_day: true, include_blank: true }, { class: "form-control" } %>
     </div>
   </div>
 
