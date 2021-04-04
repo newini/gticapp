@@ -23,7 +23,7 @@
       <tbody>
         <% @staffs.each do |staff| %>
           <tr>
-            <td><%= staff.created_at.strftime("%Y-%m-%d") if staff.created_at.present? %></td>
+            <td><%= staff.created_at.strftime("%Y-%m-%d") %></td>
             <td><%= get_name_from_member_id(staff.member_id) %></td>
             <td><%= get_facebook_user_id_link_from_member_id(staff.member_id) %></td>
             <td><%= link_to staff.member_id, "/members/#{staff.member_id}" %></td>

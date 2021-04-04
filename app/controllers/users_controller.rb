@@ -18,10 +18,11 @@ class UsersController < ApplicationController
   end
 
   def update
-    if current_user.update(user_params)
-      redirect_to user_path(current_user)
+    @user = get_correct_user
+    if @user.update(user_params)
+      redirect_to user_path(@user)
     else
-      redirect_to edit_user_path(current_user)
+      redirect_to edit_user_path(@user)
     end
   end
 
