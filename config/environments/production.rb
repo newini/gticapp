@@ -128,16 +128,12 @@ Rails.application.configure do
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
 
-  # Mail, The env is set in /etc/apache2/sites-available/gticapp-le-ssl.conf
-  ActionMailer::Base.delivery_method = :smtp
-  ActionMailer::Base.smtp_settings = {
-    address:              ENV['MAIL_ADDRESS'],
-    domain:               ENV['MAIL_DOMAIN'],
-    port:                 ENV['MAIL_PORT'],
-    user_name:            ENV['MAIL_USER_NAME'],
-    password:             ENV['MAIL_PASSWORD'],
-    authentication:       'plain',
-    enable_starttls_auto: true
-  }
+  # =====================================================
+  # Action mailer config
+  config.action_mailer.delivery_method = :sendmail
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.default_options = {from: 'no-reply@example.com'}
+
 
 end

@@ -84,16 +84,10 @@ Rails.application.configure do
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
   end
 
-  # Gmail
-  config.action_mailer.delivery_method =:smtp
-  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
-  config.action_mailer.smtp_settings = {
-    :port =>            '587',
-    :address =>         'smtp.mandrillapp.com',
-    :user_name =>       'app21294268@heroku.com',
-    :password =>        '89u07G6G9K0IrkgEHQxq3g',
-    :domain =>          'heroku.com',
-    :authentication =>  :plain
-  }
+  # Email
+  config.action_mailer.delivery_method = :sendmail
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.default_options = {from: 'no-reply@example.com'}
 
 end
