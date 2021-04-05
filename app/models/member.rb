@@ -1,13 +1,18 @@
 class Member < ActiveRecord::Base
+  # Email check
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+
   has_many :relationships, foreign_key: "member_id", dependent: :destroy
   has_many :events, through: :relationships, source: :event
   has_many :registed_events, -> { where "status = 2"}, through: :relationships, source: :event
   has_many :participated_events, -> { where "status = 3 or status = 6"}, through: :relationships, source: :event # with dotasan
-#紹介者同士のrelation
   has_many :presentationships, foreign_key: "member_id", dependent: :destroy
   has_many :presentations, through: :presentationships, source: :presentation
 #  has_many :presentations, foreign_key: "member_id", dependent: :destroy
+
+  # Broadcast
+  has_many :broadcast_members
+  has_many :broadcast, through: :broadcast_members
 
 # scope
   scope :find_member, ->(name) { where("fb_name like ? OR last_name like ? OR last_name_alphabet like ? OR first_name like ? OR first_name_alphabet like ? OR last_name||first_name like ?

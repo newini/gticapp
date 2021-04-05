@@ -1,0 +1,108 @@
+<div class="row">
+  <div class="col-md-2">
+    <%= render 'side' %>
+  </div>
+
+  <div class="col-md-10">
+    <h2>送信済み</h2>
+
+    <%= link_to "戻る", :back, class: "btn btn-primary"%>
+    <%= link_to '削除', broadcast_path(@broadcast), method: :delete, class:"btn btn-primary",
+                              data: {confirm: '削除します。よろしいでしょうか？'} %>
+
+    <hr>
+    <h3>送信オプション</h3>
+
+    <table class="table table-bordered">
+      <tr>
+        <th style="width: 50%;">送信時間</th>
+        <td><%= @broadcast.sent_at.strftime('%Y-%m-%d %H:%M') if @broadcast.sent_at %></td>
+      </tr>
+
+      <tr>
+        <th>参加者全員（gticメンバーは含まない）：</th>
+        <td>
+          <%= @broadcast.include_all_flg ? "送信済み" : "送信せず" %>
+        </td>
+      </tr>
+
+      <tr>
+        <th>誕生月：</th>
+        <td>
+          <% if @birth_months.present? %>
+            <% @birth_months.each do |birth_month| %>
+              <%= "#{birth_month}月" %>
+            <% end %>
+          <% else %>
+            <%= "送信せず" %>
+          <% end %>
+        </td>
+      </tr>
+
+      <tr>
+        <th>イベント会合別：</th>
+        <td>
+          <% if @event_ids.present? %>
+            <% @event_ids.each do |event_id| %>
+              <%= "第#{Event.find(event_id).cumulative_number}回" %>
+            <% end %>
+          <% else %>
+            <%= "送信せず" %>
+          <% end %>
+        </td>
+
+      </tr>
+
+      <tr>
+        <th>GTIC幹事メンバーの中でActiveになっている人<br>
+          （右上の名前をプルダウンメニューの幹事リストの中でActiveになってる人）：
+        </th>
+        <td>
+          <%= @broadcast.include_gtic_flg ? "送信済み" : "送信せず" %>
+        </td>
+      </tr>
+
+      <tr>
+        <th>手動入力したメールアドレス</th>
+        <td><%= @broadcast.emails %></td>
+      </tr>
+
+    </table>
+
+    <hr>
+
+    <%= link_to broadcast_member_list_broadcast_path(@broadcast), class: "btn btn-info btn-lg" do %>
+      <span class="fa fa-list"></span>宛先リスト
+    <% end %>
+
+    <hr>
+
+    <h2>以下はメール文面</h2>
+
+    <hr>
+
+    <!-- ここで修正したのもは、必ずno_reply_mailer/broadcast.html.erbに同じく修正すること！ -->
+    <table class="table table-bordered table-sm">
+      <tr>
+        <th style="width: 20%;">件名</th>
+        <td><%= @broadcast.subject %></td>
+      </tr>
+
+      <tr>
+        <th>本文</th>
+        <td>
+          <p>（自動的に苗字が入る）様</p>
+          <br>
+          <%= @broadcast.body %>
+        </td>
+      </tr>
+    </table>
+
+    <hr>
+
+    <%= link_to "戻る", :back, class: "btn btn-primary"%>
+    <%= link_to '削除', broadcast_path(@broadcast), method: :delete, class:"btn btn-primary",
+                              data: {confirm: '削除します。よろしいでしょうか？'} %>
+
+  </div>
+</div>

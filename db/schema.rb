@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_04_132918) do
+ActiveRecord::Schema.define(version: 2021_04_05_134955) do
 
   create_table "accounts", force: :cascade do |t|
     t.string "title", limit: 255
@@ -32,6 +32,34 @@ ActiveRecord::Schema.define(version: 2021_04_04_132918) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["filename"], name: "index_attachment_files_on_filename", unique: true
+  end
+
+  create_table "broadcast_members", force: :cascade do |t|
+    t.integer "member_id"
+    t.integer "broadcast_id"
+    t.boolean "sent_flg", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "include_all_flg", default: false
+    t.boolean "include_gtic_flg", default: false
+    t.integer "birth_month", default: 0
+    t.integer "event_id", default: 0
+  end
+
+  create_table "broadcasts", force: :cascade do |t|
+    t.integer "event_id", default: 0
+    t.string "subject", limit: 255
+    t.text "body"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean "sent_flg", default: false
+    t.boolean "include_gtic_flg", default: false
+    t.datetime "sent_at"
+    t.boolean "include_all_flg", default: false
+    t.integer "birth_month", default: 0
+    t.integer "sent_cnt"
+    t.string "emails"
+    t.index ["event_id"], name: "index_broadcasts_on_event_id"
   end
 
   create_table "categories", force: :cascade do |t|
@@ -79,22 +107,6 @@ ActiveRecord::Schema.define(version: 2021_04_04_132918) do
     t.index ["start_time"], name: "index_events_on_start_time"
   end
 
-  create_table "invitations", force: :cascade do |t|
-    t.integer "event_id", default: 0
-    t.string "title", limit: 255
-    t.text "content"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.boolean "sent_flg"
-    t.boolean "include_gtic_flg", default: false
-    t.datetime "sent_at"
-    t.boolean "include_all_flg", default: false
-    t.integer "birth_month", default: 0
-    t.integer "sent_cnt"
-    t.string "emails"
-    t.index ["event_id"], name: "index_invitations_on_event_id"
-  end
-
   create_table "manuals", force: :cascade do |t|
     t.string "title"
     t.text "body"
@@ -113,18 +125,6 @@ ActiveRecord::Schema.define(version: 2021_04_04_132918) do
     t.binary "file_data"
     t.string "file_name"
     t.string "file_mime_type"
-  end
-
-  create_table "member_invitation_relationships", force: :cascade do |t|
-    t.integer "member_id"
-    t.integer "invitation_id"
-    t.boolean "sent_flg", default: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.boolean "include_all_flg", default: false
-    t.boolean "include_gtic_flg", default: false
-    t.integer "birth_month", default: 0
-    t.integer "event_id", default: 0
   end
 
   create_table "members", force: :cascade do |t|

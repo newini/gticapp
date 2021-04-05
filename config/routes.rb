@@ -113,19 +113,20 @@ Rails.application.routes.draw do
 
   resources :staffs
 
-  resources :invitations do
+  resources :broadcasts do
     collection do
-      get 'view_sent_emails' => 'invitations#view_sent_emails', as: :view_sent_emails
+      get 'sent_list'
     end
     member do
+      get 'show_sent'
       get :find_members
       get :search
       get :send_email
-      get :view_member_invitation
+      get :broadcast_member_list
       post :add_emails
-      post :delete_member_invitation
+      post :delete_broadcast_member
       post :update_include_all_flg
-      post :update_member_invitation
+      post :update_broadcast_member
       post :update_birth_month
       post :update_event_id
       post :update_include_gtic_flg

@@ -41,7 +41,7 @@
         <td><%= show_age(@member.age) if @member.age.present? %></td>
       </tr>
       <th>誕生月</th>
-        <td><%= t('date.abbr_month_names')[@member.birthday.strftime('%m').to_i] %></td>
+        <td><%= t('date.abbr_month_names')[@member.birthday.strftime('%m').to_i] if @member.birthday %></td>
       </tr>
       <tr>
       <tr>

@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="col-md-2">
+    <%= render 'side' %>
+  </div>
+
+  <div class="col-md-10">
+    <h3>メンバーを手動で追加</h3>
+
+    <%= link_to "戻る", broadcast_path(@broadcast), class: "btn btn-primary btn-lg"%>
+
+    <div id="ajax_container">
+      <%= render'find_members' %>
+    </div>
+
+    <%= link_to "戻る", broadcast_path(@broadcast), class: "btn btn-primary btn-lg"%>
+  </div>
+</div>
