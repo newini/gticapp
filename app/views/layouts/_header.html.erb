@@ -19,7 +19,7 @@
       <li class="nav-item hvr-underline-from-center"><%= link_to "Message from CEO", :ceo_message, class:"nav-link" %></li>
       <li class="nav-item hvr-underline-from-center"><%= link_to "Organizers", :organizer, class:"nav-link" %></li>
       <li class="nav-item hvr-underline-from-center"><%= link_to "Media Article", :media, class:"nav-link" %></li>
-      <li class="nav-item hvr-underline-from-center"><%= link_to "Contact", :contact, class:"nav-link" %></li>
+      <li class="nav-item hvr-underline-from-center"><%= link_to "Contact Us", contact_us_path, class:"nav-link" %></li>
 
       <!-- Only Gtic Staff -->
       <% if staff_signed_in? %>
@@ -30,6 +30,7 @@
             <%= link_to "Members管理", members_path, class: "dropdown-item" %>
             <%= link_to "メール機能", invitations_path, class: "dropdown-item" %>
             <%= link_to "Media Article管理", media_articles_path, class: "dropdown-item" %>
+            <%= link_to "Contact管理", contacts_path, class: "dropdown-item" %>
             <%= link_to "Manual", manuals_path, class: "dropdown-item" %>
             <% if admin? %>
               <%= link_to "Staffリスト", :staffs, class: "dropdown-item" %>

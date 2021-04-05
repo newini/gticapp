@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   match '/organizer', to: 'static_pages#organizer', via: 'get'
   match '/media', to: 'static_pages#media', via: 'get'
   match '/schedule', to: 'static_pages#schedule', via: 'get'
-  match '/contact', to: 'static_pages#contact', via: 'get'
+  match '/contact_us', to: 'static_pages#contact_us', via: 'get'
 
 
   #===================================================
@@ -161,5 +161,13 @@ Rails.application.routes.draw do
       get :serve_file
     end
   end
+
+  resources :contacts do
+    member do
+      post 'update_response_completed'
+    end
+  end
+
+
 
 end

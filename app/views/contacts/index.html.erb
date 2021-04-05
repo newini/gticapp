@@ -1,0 +1,46 @@
+<div class="row">
+  <div class="col-md-2">
+    <%= render'side' %>
+  </div>
+
+  <div class="col">
+    <h2>Contact List</h2>
+
+    <table class="table table-bordered table-striped table-sm">
+      <thead>
+        <tr>
+          <th style="width: 8%;">登録した日にち</th>
+          <th style="width: 15%;">Name</th>
+          <th>属性</th>
+          <th>所属</th>
+          <th>肩書</th>
+          <th>Email</th>
+          <th>Subject</th>
+          <th>Body</th>
+          <th>is read?</th>
+          <th>is response completed?</th>
+          <th style="width: 5%;"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @contacts.each do |contact| %>
+          <tr>
+            <td><%= contact.created_at.strftime("%Y-%m-%d") %></td>
+            <td><%= contact.name %></td>
+            <td><%= Category.find(contact.category_id).name if contact.category_id %></td>
+            <td><%= contact.affiliation %></td>
+            <td><%= contact.title %></td>
+            <td><%= contact.email %></td>
+            <td><%= contact.subject %></td>
+            <td><%= contact.body[0..10] + "..." if contact.body.present? %></td>
+            <td><%= get_check_icon(contact.is_read) %></td>
+            <td><%= get_check_icon(contact.is_response_completed) %></td>
+            <td><%= link_to "詳細", contact_path(contact), class: 'btn btn-info btn-sm' %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+  </div>
+</div>

@@ -1,0 +1,58 @@
+<div class="row">
+  <div class="col-md-2">
+    <%= render'side' %>
+  </div>
+
+  <div class="col">
+    <h2>Contact</h2>
+
+    <table class="table table-bordered tale-sm">
+      <tr>
+        <th style="width: 20%;">Created at</th>
+        <td><%= @contact.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+      </tr>
+      <tr>
+        <th>Name</th>
+        <td><%= @contact.name %></td>
+      </tr>
+      <tr>
+        <th>属性</th>
+        <td><%= Category.find(@contact.category_id).name if @contact.category_id.present? %></td>
+      </tr>
+      <tr>
+        <th>所属</th>
+        <td><%= @contact.affiliation %></td>
+      </tr>
+      <tr>
+        <th>肩書</th>
+        <td><%= @contact.title %></td>
+      </tr>
+      <tr>
+        <th>Email</th>
+        <td><%= @contact.email %></td>
+      </tr>
+      <tr>
+        <th>Subject</th>
+        <td><%= @contact.subject %></td>
+      </tr>
+      <tr>
+        <th>Body</th>
+        <td><%= @contact.body %></td>
+      </tr>
+      <tr>
+        <th>is read?</th>
+        <td><%= get_check_icon(@contact.is_read) %></td>
+      </tr>
+      <tr>
+        <th>is response completed?</th>
+        <td><%= get_check_icon(@contact.is_response_completed) %></td>
+      </tr>
+    </table>
+
+    <% if not @contact.is_response_completed %>
+      <%= link_to 'Response Complated', update_response_completed_contact_path(@contact), class: 'btn btn-info', method: 'post' %>
+    <% end %>
+    <%= link_to "Delete", contact_path(@contact), class: 'btn btn-danger',
+                  method: :delete, data: { confirm: "Delete, Are you sure?" } %>
+  </div>
+</div>

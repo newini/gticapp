@@ -172,7 +172,11 @@ class StaticPagesController < ApplicationController
     @media_articles = MediaArticle.paginate(page: params[:page], per_page: 10).order(date: :desc)
   end
 
-  def contact
+  def contact_us
+    @contact = Contact.new
+    if params[:after_submit]
+      @after_submit = true
+    end
   end
 
 end

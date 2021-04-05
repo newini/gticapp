@@ -1,0 +1,11 @@
+<div class="container">
+  <h1>お問い合わせ/Contact</h1>
+
+  <div class="border">
+    <% if @after_submit %>
+      <%= render'after_contact_submit' %>
+    <% else %>
+      <%= render'contacts/form' %>
+    <% end %>
+  </div>
+</div>
