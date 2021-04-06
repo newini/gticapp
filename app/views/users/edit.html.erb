@@ -5,9 +5,9 @@
 
   <div class="col">
     <% if @user.last_name? %>
-      <h1>プロフィール編集</h1>
+      <h1><%= t('user.edit_profile') %></h1>
     <% else%>
-      <h1>プロフィール完成</h1>
+      <h1><%= t('user.input_profile') %></h1>
     <% end %>
 
     <%= render'form' %>

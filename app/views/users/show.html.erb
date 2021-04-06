@@ -6,11 +6,10 @@
   <div class="col">
     <center>
 
-      <h1>My page</h1>
+      <h1>My Page</h1>
 
       <div class="center">
-        <%= image_tag "https://graph.facebook.com/#{@user.uid}/picture?type=large&access_token=#{@user.access_token}" %>
-        <p>Hello! <%= "#{@user.name}" %></p>
+        <p><%= t('user.welcome') %> <%= "#{@user.name}" %> <%= t('user.name_suffix')%></p>
       </div>
 
       <div class="fb-page" data-href="https://www.facebook.com/GTICafe/"
@@ -25,7 +24,7 @@
       </div>
 
 
-      <h2>My Information</h2>
+      <h2>My Profile</h2>
       <% if @user.last_name %>
         <table class="table table-bordered">
           <tr>
@@ -72,10 +71,14 @@
         </table>
 
       <% else %>
-        <p>Please complete profile</p>
+        <p><%= t('user.please_complete_profile') %></p>
       <% end %>
 
-      <%= link_to "Edit user information", edit_user_path(current_user), class: "btn btn-info" %>
+      <% if @user.last_name %>
+        <%= link_to t('user.edit_profile'), edit_user_path(current_user), class: "btn btn-info" %>
+      <% else %>
+        <%= link_to t('user.input_profile'), edit_user_path(current_user), class: "btn btn-info" %>
+      <% end %>
 
       <% if staff_signed_in? %>
         <%= link_to "Delete user", user_path(@user), class: "btn btn-danger",

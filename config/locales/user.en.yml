@@ -1,0 +1,29 @@
+en:
+  user:
+    name: Name
+    last_name: Last Name in Kanji
+    first_name: First Name in Kanji
+    last_name_alphabet: Last Name in English
+    first_name_alphabet: First Name in English
+    category: Occupational attributes
+    affiliation: Company
+    title: Job title
+    email: E-mail address
+
+    edit_cancel_warning: If not complete profile, Can not register event. Are you sure?
+
+    welcome: Welcome!
+    name_suffix: .
+
+    please_complete_profile: Please complete profile
+    edit_profile: Edit Profile
+    input_profile: Input Profile
+
+  cancel: Cancel
+
+  required: Required item
+
+  contact:
+    subject: Subject
+    body: Body
+    submit: Submit

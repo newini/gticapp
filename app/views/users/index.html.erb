@@ -22,7 +22,10 @@
         <% @users.each do |user| %>
           <tr>
             <td><%= user.id %></td>
-            <td><%= user.name %></td>
+            <td>
+              <%= image_tag "https://graph.facebook.com/#{user.uid}/picture?type=large&access_token=#{user.access_token}", class: "img-thumbnail", style: 'height: 50px;' %>
+              <%= user.name %>
+            </td>
             <td><%= user.uid %></td>
             <td><%#= link_to user.member_id, "/members/#{user.member_id}" %></td>
             <td><%= link_to "編集", edit_user_path(user) %></td>

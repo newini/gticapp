@@ -1,0 +1,29 @@
+ja:
+  user:
+    name: お名前
+    last_name: 姓
+    first_name: 名
+    last_name_alphabet: 姓（英字）
+    first_name_alphabet: 名（英字）
+    category: 職業属性
+    affiliation: 会社名
+    title: 肩書
+    email: メールアドレス
+
+    edit_cancel_warning: プロフィール未入力時、GTICイベントを正常に参加登録することができません。キャンセルしますか？
+
+    welcome: ようこそ!
+    name_suffix: さん
+
+    please_complete_profile: プロフィールを入力してください
+    edit_profile: プロフィール修正
+    input_profile: プロフィール入力
+
+  cancel: キャンセル
+
+  required: 必須項目
+
+  contact:
+    subject: 件名
+    body: 本文
+    submit: 送信
