@@ -17,7 +17,7 @@ class NoReplyMailer < ActionMailer::Base
     @contact = contact
     staffs = Staff.where(is_active: true)
     staffs.each do |staff|
-      mail(to: @staff.member.email, subject: '【自動/auto】GTIC HP Contact us Notify')
+      mail(to: staff.member.email, subject: '【自動/auto】GTIC HP Contact us Notify')
     end
   end
 
