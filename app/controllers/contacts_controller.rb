@@ -8,6 +8,8 @@ class ContactsController < ApplicationController
     @contact = Contact.new(contact_params)
 
     if @contact.save
+      NoReplyMailer.contact_autoreply(@contact).deliver
+      NoReplyMailer.contact_notify(@contact).deliver
       redirect_to contact_us_path(after_submit: true)
     else
       render 'new'

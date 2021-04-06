@@ -14,6 +14,9 @@ class Member < ActiveRecord::Base
   has_many :broadcast_members
   has_many :broadcast, through: :broadcast_members
 
+  # Staff
+  has_one :staff
+
 # scope
   scope :find_member, ->(name) { where("fb_name like ? OR last_name like ? OR last_name_alphabet like ? OR first_name like ? OR first_name_alphabet like ? OR last_name||first_name like ?
                                      OR affiliation like ? OR title like ? OR note like ? OR email like ?",
