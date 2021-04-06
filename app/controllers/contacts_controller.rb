@@ -9,7 +9,9 @@ class ContactsController < ApplicationController
 
     if @contact.save
       NoReplyMailer.contact_autoreply(@contact).deliver
-      NoReplyMailer.contact_notify(@contact).deliver
+      Staff.where(is_active: true).each do |staff|
+        NoReplyMailer.contact_notify(staff, @contact).deliver
+      end
       redirect_to contact_us_path(after_submit: true)
     else
       render 'new'
