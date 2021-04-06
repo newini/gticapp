@@ -9,9 +9,6 @@ require "csv"
 require "rails/all"
 # require "rails/test_unit/railtie"
 
-# Gmail API
-require 'google/apis/gmail_v1'
-
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
