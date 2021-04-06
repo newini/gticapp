@@ -8,10 +8,10 @@ class ContactsController < ApplicationController
     @contact = Contact.new(contact_params)
 
     if @contact.save
+      # Send auto reply mail to user
       NoReplyMailer.contact_autoreply(@contact).deliver
-      Staff.where(is_active: true).each do |staff|
-        NoReplyMailer.contact_notify(staff, @contact).deliver
-      end
+      # Send notify mails to active staffs
+      NoReplyMailer.contact_notify(@contact).deliver
       redirect_to contact_us_path(after_submit: true)
     else
       render 'new'

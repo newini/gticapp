@@ -13,9 +13,10 @@ class NoReplyMailer < ActionMailer::Base
     mail(to: @contact.email, subject: '【自動/auto】<GTIC>お問い合わせ受付完了/Acceptance for CONTACT US')
   end
 
-  def contact_notify(staff, contact)
+  def contact_notify(contact)
     @contact = contact
-    mail(to: staff.member.email, subject: '【自動/auto】GTIC HP Contact us Notify') if staff.member.email
+    emails = Staff.where(is_active: true).collect{ |staff| staff.member.email }.join(",")
+    mail(to: emails, subject: '【自動/auto】GTIC HP Contact us Notify')
   end
 
   def welcome_email

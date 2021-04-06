@@ -18,7 +18,6 @@ class StaffsController < ApplicationController
   def create
     @staff = Staff.new(staff_params)
     @member = Member.find(@staff.member_id)
-    update_else(@staff, @member)
     if @staff.save
       redirect_to staffs_path
     else
@@ -34,7 +33,6 @@ class StaffsController < ApplicationController
   def update
     @staff = Staff.find(params[:id])
     @member = Member.find(@staff.member_id)
-    update_else(@staff, @member)
     if @staff.update(staff_params)
       redirect_to "/staffs", :flash => {:success => "ユーザー情報を更新しました"}
     else
@@ -51,18 +49,8 @@ class StaffsController < ApplicationController
 
   private
     def staff_params
-      params.require(:staff).permit(:name, :email, :uid, :member_id, :description, :is_admin, :is_active)
+      params.require(:staff).permit(:uid, :member_id, :description, :is_admin, :is_active)
     end
 
-    def update_else(staff, member)
-      if member.last_name_alphabet.present? and member.first_name_alphabet.present?
-        staff.update(name: member.first_name_alphabet + " " + member.last_name_alphabet)
-      end
-      staff.update(uid: member.fb_user_id)
-      if member.email.present?
-        staff.update(email: member.email)
-      end
-      staff.save
-    end
 
 end
