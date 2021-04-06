@@ -25,12 +25,6 @@
       <% else %>
         <div id="events_stat"></div>
         <script>
-          var maybe = {
-            x: <%= raw @event_names %>,
-            y: <%= @maybe %>,
-            name: '未定',
-            type: 'bar'
-          };
           var participants = {
             x: <%= raw @event_names %>,
             y: <%= @participants %>,
@@ -71,7 +65,7 @@
               title: 'people'
             }
           };
-          var data = [maybe, participants, declined, dotasan, dotacan, no_show];
+          var data = [participants, declined, dotasan, dotacan, no_show];
 
           events_stat = document.getElementById('events_stat');
 

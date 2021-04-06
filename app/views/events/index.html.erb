@@ -7,12 +7,12 @@
     <h2>GTICイベント一覧</h2>
 
     <h3><%= "イベント検索" %></h3>
-    <%= form_tag :search_event_events, method: 'get', remote: true, class: "form-inline", role: "form" do %>
+    <%= form_with url: search_events_path, method: 'get', data: { remote: true }, class: "form-inline" do |form| %>
       <div class="form-group">
-        <span>Keyword: </span>
-        <%= text_field_tag :keyword, params[:keyword], class: "form-control", placeholder: "keyword" %>
+        <%= form.label :keyword, "Keyword" %>
+        <%= form.text_field :keyword, class: "form-control", placeholder: "Keyword" %>
       </div>
-      <%= submit_tag 'Search', :name => nil, class: 'btn btn-primary' %>
+      <%= form.submit 'Search', class: 'btn btn-primary' %>
       <p>アルファベットによる検索もOK（ひらがな、カタカナは未対応）</p>
     <% end %>
 

@@ -17,17 +17,15 @@ module EventsHelper
     relationship = @event.relationships.find_by_member_id(member.id)
     case relationship.status
     when 0
-      "欠席"
-      #facebook参照
+      "欠席" #facebook参照
     when 1
-      "未定"
+      "未定" #facebook参照, dont use it sice 2021/4/6
     when 2
       "参加予定"
     when 3
       "出席"
     when 4
-      "欠席"
-      #手入力参照
+      "欠席" #手入力参照, 本当に欠席した人
     when 5
       "No-show"
     else
@@ -35,29 +33,12 @@ module EventsHelper
     end
   end
 
-  def facebook(fb_event_id, status)
-    key = current_staff.access_token
-    graph = Koala::Facebook::API.new(key)
-    graph.get_connections(fb_event_id, status, locale: "jp_JP")
-  end
-
   def facebook_objects(fb_event_id)
     key = current_user.access_token
     graph = Koala::Facebook::API.new(key)
-    graph.get_objects(fb_event_id) # get event not work
+    return graph.get_connection(fb_event_id, '/')
   end
 
-
-  def convert_status(rsvp_status)
-    case rsvp_status
-    when "declined"
-      0
-    when "maybe"
-      1
-    when "attending"
-      2
-    end
-  end
 
   def select_status(member)
     relation = member.relationships.find_by_event_id(@event)

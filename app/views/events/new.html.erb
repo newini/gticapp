@@ -1,18 +1,11 @@
 <div class="row">
   <div class="col-sm-2">
-    <%= render'side' %>
+    <%= render 'side' %>
   </div>
 
   <div class="col-sm-5">
     <h2>イベント登録</h2>
-    <%= render'event_form' %>
-  </div>
 
-  <div class="col-sm-5">
-    <h2>イベント情報CSVデータ取り込み</h2>
-    <%= form_tag import_events_path, multipart: true do %>
-      <%= file_field_tag :file, class: "file-holder" %>
-      <%= submit_tag "CSV読込",class: "btn" %>
-    <% end %>
+    <%= render 'event_form' %>
   </div>
 </div>

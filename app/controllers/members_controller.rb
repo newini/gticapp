@@ -161,38 +161,17 @@ class MembersController < ApplicationController
   end
 
   def search
-    if params[:search].present?
-      words = params[:search].to_s.split(" ")
-      words.each_with_index do |w, index|
-        if index == 0
-          @members = Member.find_member(w).order("last_name_alphabet ASC").paginate(page: params[:page])
-        else
-          @members = @members.find_member(w).order("last_name_alphabet").paginate(page: params[:page])
-        end
-      end
-    else
-      @members = Member.order("last_name_alphabet").paginate(page: params[:page])
-    end
+    @members = get_search_member(params[:keyword])
     respond_to :js
   end
 
   def search_participated
-    if params[:search].present?
-      words = params[:search].to_s.split(" ")
-      words.each_with_index do |w, index|
-        if index == 0
-          @members = Member.find_member(w).order("last_name_alphabet ASC").paginate(page: params[:page])
-        else
-          @members = @members.find_member(w).order("last_name_alphabet").paginate(page: params[:page])
-        end
-      end
-    else
-      @members = Member.where.not(last_name: [nil, ""]).order("last_name_alphabet").paginate(page: params[:page])
-    end
+    @members = get_search_member(params[:keyword])
     respond_to :js
   end
 
   def participated_events_list
+    @members = Member.all.limit(1)
   end
 
   # Change member's kanji or hiragana to alphabet

@@ -5,10 +5,19 @@
   </div>
 
   <div class="col">
-    <%= link_to 'ダウンロード', members_path(format: 'xls'), class: "btn btn-light btn-sm" %>
+    <%= link_to 'ダウンロード', members_path(format: 'xls'), class: "btn btn-info btn-sm" %>
     <% if admin? %>
       <%= link_to "Change name to alphabet", :name_to_alphabet_members, class: "btn btn-info btn-sm", method: "POST" %>
       <%= link_to "Convert FB ID from string", :convert_fb_str_to_id_members, class: "btn btn-info btn-sm", method: "POST" %>
+    <% end %>
+
+    <!-- Search -->
+    <%= form_with url: search_members_path, method: 'get', data: { remote: true }, class: "form-inline" do |form| %>
+      <div class="form-group">
+        <%= form.label :keyword, "メンバー検索" %>
+        <%= form.text_field :keyword, class: "form-control", placeholder: "Keyword" %>
+      </div>
+      <%= form.submit 'Search', class: 'btn btn-primary' %>
     <% end %>
 
     <div id="ajax_container">

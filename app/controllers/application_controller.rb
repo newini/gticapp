@@ -21,6 +21,81 @@ class ApplicationController < ActionController::Base
 
   # ======================================================
   private
+    # For events
+    def get_formated_events(record)
+      @events = record.map{
+        |event| [
+          event: {
+            id: event.id,
+            name: event.name,
+            cumulative_number: event.cumulative_number,
+            date: event.start_time.strftime("%Y-%m-%d"),
+            place: event.place_id,
+            participants: event.participants.count,
+            event_category_id: event.event_category_id
+          },
+          detail: event.presentations.map{
+            |presentation| [
+              title: presentation.try(:title),
+              abstract: presentation.try(:abstract),
+              note: presentation.try(:note),
+              presenter: presentation.presenters.order('id asc').map{
+                |presenter| [
+                  name: [presenter.last_name, presenter.first_name].join(" "),
+                  affiliation: presenter.affiliation,
+                  title: presenter.title,
+                ]
+              }.flatten
+            ]
+          }.flatten
+        ]
+      }.flatten
+      return @events
+    end
+
+    def get_search_event(keyword)
+      record = Event.group(:start_time).order("start_time DESC")
+      # Search algorithm
+      if keyword.present?
+        record = []
+        Event.all.order("start_time DESC").each do |event|
+          if event.presentations.search_presentation(keyword).present? # Search in presentation
+            record.push(event)
+          end
+          event.presentations.each do |presentation|
+            if presentation.presenters.search_presenter(keyword).present? # search in presenter's member
+              if !record.include? event # check duplicate
+                record.push(event)
+              end
+            end
+          end
+        end
+      else
+        @start_date = Event.order("start_time ASC").first.start_time.beginning_of_year
+        @last_date = Event.order("start_time ASC").last.start_time.end_of_year
+      end
+      @events = get_formated_events(record)
+      return @events
+    end
+
+    # For member
+    def get_search_member(keyword)
+      if keyword.present?
+        words = keyword.to_s.split(" ")
+        words.each_with_index do |w, index|
+          if index == 0
+            @members = Member.find_member(w).order("last_name_alphabet ASC").paginate(page: params[:page])
+          else
+            @members = @members.find_member(w).order("last_name_alphabet").paginate(page: params[:page])
+          end
+        end
+        return @members
+      else
+        return Member.order("last_name_alphabet").paginate(page: params[:page])
+      end
+    end
+
+
     def admin_staff_only
       if current_user.present?
         staff = Staff.find_by_uid(current_user.uid)

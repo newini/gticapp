@@ -72,42 +72,29 @@ Rails.application.routes.draw do
   resources :events do
     collection do
       get :download
-      get :search_event
+      get :search
+      get :statistics
     end
     member do
-      get :invite
-      get :waiting
-      get :maybe
       get :registed
+      get :update_registed_member
       get :participants
+      get :update_participants
       get :dotasan
       get :declined
       get :dotacan
       get :no_show
-      get :search
-      get :update_maybe_member
-      get :update_registed_member
-      get :update_participants
+      get :waiting
+      get :search_member
       get :statistics
       get :account
-      get :registed_list
       post :change_status
+      post :change_role
       post :destroy_relationship
       post :switch_black_list_flg
-      post :change_all_waiting_status
-      post :create_member
-      post :import_participants
-      post :import_participants_from_xlsx
-      post :import_registed_members
-      post :import_from_questionnaire
-      post :change_role
       post :update_birthday
-      post :update_black_list
+      post :create_member
     end
-    collection {
-      get :statistics
-      post :import
-    }
   end
 
   resources :staffs

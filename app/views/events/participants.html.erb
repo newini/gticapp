@@ -7,92 +7,16 @@
     <h2>参加者リスト</h2>
 
     <div class="btn-group" role="group" aria-label="Basic example">
-      <%= link_to participants_event_path, class: "btn btn-light" do %>
-        <span class="fa fa-th-list"></span> 出席者一覧
-      <% end %>
       <%= link_to update_participants_event_path, class: "btn btn-light",remote: true do %>
         <span class="fa fa-edit"></span> 出席者情報編集
       <% end %>
       <%= link_to participants_event_path(format: 'xls'), method: "get", class: "btn btn-light" do %>
         <span class="fa fa-download"></span> Download
       <% end %>
-      <%= button_tag data: {target: "#myModal", toggle: "modal"}, class: "btn btn-light" do %>
-        <span class="fa fa-upload"></span> Upload Name Card CSV
-      <% end %>
-      <%= button_tag data: {target: "#xlsx_modal", toggle: "modal"}, class: "btn btn-light" do %>
-        <span class="fa fa-upload"></span> Upload Name Card XLSX
-      <% end %>
-      <%= button_tag data: {target: "#questionnaire_modal", toggle: "modal"}, class: "btn btn-light" do %>
-        <span class="fa fa-upload"></span> Upload Qustionnaire CSV
-      <% end %>
     </div>
 
     <div id="ajax_container">
       <%= render'members' %>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">CSVデータUpload</h4>
-      </div>
-      <div class="modal-body">
-        <%= form_tag :import_participants_event, multipart: true do %>
-          <div class="form-group">
-            <%= file_field_tag :file %>
-            <p><strong>csvファイルの形式:</strong>(Wantely People csv format)name, affiliation, title, e-mail 1, ...</p>
-            <p>参加者の名前は先に登録しておく必要がある。</p>
-            <%= submit_tag "CSVファイルを読み込む", class: "btn btn-light" %>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" id="xlsx_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">CSVデータUpload</h4>
-      </div>
-      <div class="modal-body">
-        <%= form_tag :import_participants_from_xlsx_event, multipart: true do %>
-          <div class="form-group">
-            <%= file_field_tag :file %>
-            <p><strong>xlsxファイルの形式:</strong>(CamCard xlsx format)Name, Company1, Title1, Email1, ...</p>
-            <p>参加者の名前は先に登録しておく必要がある。</p>
-            <%= submit_tag "xlsxファイルを読み込む", class: "btn btn-light" %>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<div class="modal fade" id="questionnaire_modal" tabindex="-1" role="dialog" aria-labelledby="questionnaire_modal_label" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">CSVデータUpload</h4>
-      </div>
-      <div class="modal-body">
-        <%= form_tag :import_from_questionnaire_event, multipart: true do %>
-          <div class="form-group">
-            <%= file_field_tag :file %>
-            <p><strong>csvファイルの形式:</strong>（アンケートの順）date time, name, sex, age, birth month, afflication, title, ... </p>
-            <p>※参加者の名前の表記、誤字などに注意!</p>
-            <%= submit_tag "CSVファイルを読み込む", class: "btn btn-light" %>
-          </div>
-        <% end %>
-      </div>
     </div>
   </div>
 </div>

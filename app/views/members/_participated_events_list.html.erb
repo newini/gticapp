@@ -1,58 +1,44 @@
-<%= form_tag :search_participated_members, method: 'get', remote: true, class: "form-inline", role: "form" do %>
-  <div class="form-group">
-    <span>メンバー検索</span>
-    <%= text_field_tag :search, params[:search], class: "form-control", placeholder: "name" %>
-  </div>
-  <%= submit_tag 'Search', :name => nil, class: 'btn btn-primary' %>
-<% end %>
+<table class='table table-bordered table-striped table-sm'>
+  <thead>
+    <tr>
+      <th style="width: 10%;">氏名<%= sortable('last_name_alphabet',"頭") %></th>
+      <th style="width: 10%;">属性</th>
+      <th style="width: 10%;"><%= sortable('affiliation',"所属") %></th>
+      <th style="width: 10%;">役職</th>
+      <th style="width: 10%;">備考</th>
+      <th style="width: 10%;"><%= link_to "出席回数", count: true %></th>
+      <th style="width: 40%;"></th>
+    </tr>
+  </thead>
 
-<% if @members.present? %>
-
-  <table class='table table-bordered table-striped table-sm'>
-    <thead>
-      <tr>
-        <th style="width: 10%;">氏名<%= sortable('last_name_alphabet',"頭") %></th>
-        <th style="width: 10%;">属性</th>
-        <th style="width: 10%;"><%= sortable('affiliation',"所属") %></th>
-        <th style="width: 10%;">役職</th>
-        <th style="width: 10%;">備考</th>
-        <th style="width: 10%;"><%= link_to "出席回数", count: true %></th>
-        <th style="width: 40%;"></th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% @members.each do |member| %>
-        <% if member.last_name.present? %>
-          <tr>
-            <td><%= link_to "#{member.last_name} #{member.first_name}", member_path(member) %></td>
-            <td><%= Category.find(member.category_id).try(:name) if member.category_id.present? %></td>
-            <td><%= member.affiliation %></td>
-            <td><%= member.title %></td>
-            <td><%= member.note %></td>
-            <td><%= member.participated_events.count %></td>
-            <td>
-              <table class="table table-bordered table-hover">
+  <tbody>
+    <% @members.each do |member| %>
+      <% if member.last_name.present? %>
+        <tr>
+          <td><%= link_to "#{member.last_name} #{member.first_name}", member_path(member) %></td>
+          <td><%= Category.find(member.category_id).try(:name) if member.category_id.present? %></td>
+          <td><%= member.affiliation %></td>
+          <td><%= member.title %></td>
+          <td><%= member.note %></td>
+          <td><%= member.participated_events.count %></td>
+          <td>
+            <table class="table table-bordered table-hover">
+            <tr>
+              <th>イベント名</th>
+              <th>開催日</th>
+              <th>Role</th>
+            </tr>
+            <% member.participated_events.order("start_time DESC").each do |event| %>
               <tr>
-                <th>イベント名</th>
-                <th>開催日</th>
-                <th>Role</th>
+                <td><%= link_to event.name, event_path(event) %></td>
+                <td><%= event.start_time.strftime("%Y/%m/%d") %></td>
+                <td><%= show_role(member,event) %></td>
               </tr>
-              <% member.participated_events.order("start_time DESC").each do |event| %>
-                <tr>
-                  <td><%= link_to event.name, event_path(event) %></td>
-                  <td><%= event.start_time.strftime("%Y/%m/%d") %></td>
-                  <td><%= show_role(member,event) %></td>
-                </tr>
-              <% end %>
-              </table>
-            </td>
-          <% end %>
+            <% end %>
+            </table>
+          </td>
         <% end %>
-      </tr>
-    </tbody>
-  </table>
-<% end %>
-
-
-
+      <% end %>
+    </tr>
+  </tbody>
+</table>

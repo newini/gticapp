@@ -1,48 +1,50 @@
-<h2><%= @title %></h2>
+<h2>参加予定者追加</h2>
 
-<%= form_tag :search_event, method: 'get', remote: true, class: "form-inline", role: "form" do %>
+<%= form_with url: search_member_event_path(@event), method: 'get', data: { remote: true }, class: "form-inline" do |form| %>
   <div class="form-group">
-    <span>まずはメンバー検索<br>(Seperate names with ',(comma)')</span>
-    <%#= text_field_tag :search, params[:search], size: 50, class: "form-control", placeholder: "name" %>
-    <%= text_area_tag :search, params[:search], size: "100x10", class: "form-control", placeholder: "name1, name2, name3, name4, ..." %>
+    <%= form.label :keyword, "メンバー検索" %>
+    <%= form.text_field :keyword, class: "form-control", placeholder: "Keyword" %>
   </div>
-  <%= submit_tag 'Search', :name => nil, class: 'btn btn-primary' %>
+  <%= form.submit 'Search', class: 'btn btn-primary' %>
 <% end %>
 
-<%= content_tag :table, class: 'table table-sm table-bordered table-striped' do %>
-  <tr>
-    <th width="3em">#</th>
-    <th width="1em">頭</th>
-    <th class="col-md-1">氏名</th>
-    <th class="col-md-2">Fb</th>
-    <th class="col-md-1">属性</th>
-    <th class="col-md-3">所属</th>
-    <th class="col-md-1">役職</th>
-    <th class="col-md-1">備考</th>
-    <th class="col-md-1"></th>
-  </tr>
-  <% i = 1 %>
-  <% @members.each do |member| %>
-    <%= content_tag :tr do %>
-      <td><%= i %></td>
-      <td><%= member.last_name_alphabet[0] if member.last_name_alphabet.present? %></td>
-      <td><%= link_to "#{member.last_name} #{member.first_name}", member_path(member) %></td>
-      <td><%= link_to image_tag("https://graph.facebook.com/#{member.fb_user_id}/picture", class: "fb_user_icon") + "#{member.fb_name}", "https://facebook.com/#{member.fb_user_id}", target: :blank %></td>
-      <td><%= Category.find(member.category_id).try(:name) if member.category_id.present? %></td>
-      <td><%= member.affiliation %></td>
-      <td><%= member.title %></td>
-      <td><%= member.note %></td>
-      <td>
-        <% if @recorded.select {|record| record.id == member.id }.empty? %>
-          <%= select_status(member) %>
-        <% else %>
-          <%= "Already registed" %>
-        <% end %>
-      </td>
-    <% end %>
-    <% i += 1 %>
-  <% end %>
-<% end %>
+<table class='table table-sm table-bordered table-striped'>
+  <thead>
+    <tr>
+      <th width="3em">id</th>
+      <th width="1em">頭</th>
+      <th width="10%">氏名</th>
+      <th width="10%">Fb</th>
+      <th width="10%">属性</th>
+      <th width="20%">所属</th>
+      <th>役職</th>
+      <th width="10%">備考</th>
+      <th width="5%"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @members.each do |member| %>
+      <tr>
+        <td><%= member.id %></td>
+        <td><%= member.last_name_alphabet[0] if member.last_name_alphabet.present? %></td>
+        <td><%= link_to "#{member.last_name} #{member.first_name}", member_path(member) %></td>
+        <td><%= link_to image_tag("https://graph.facebook.com/#{member.fb_user_id}/picture", class: "fb_user_icon") + "#{member.fb_name}", "https://facebook.com/#{member.fb_user_id}", target: :blank %></td>
+        <td><%= Category.find(member.category_id).try(:name) if member.category_id.present? %></td>
+        <td><%= member.affiliation %></td>
+        <td><%= member.title %></td>
+        <td><%= member.note %></td>
+        <td>
+          <% if @recorded.select {|record| record.id == member.id }.empty? %>
+            <%= select_status(member) %>
+          <% else %>
+            <%= "Already registed" %>
+          <% end %>
+        </td>
+      <% end %>
+    </tr>
+  </tbody>
+</table>
 
 <% if @not_found_members.present? %>
   <hr>

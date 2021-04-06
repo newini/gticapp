@@ -2,15 +2,6 @@
   <%= will_paginate @members, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
 </nav>
 
-<!-- Search -->
-<%= form_tag :search_members, method: 'get', remote: true, class: "form-inline", role: "form" do %>
-  <div class="form-group">
-    <span>メンバー検索</span>
-    <%= text_field_tag :search, params[:search], class: "form-control", placeholder: "keyword" %>
-  </div>
-  <%= submit_tag 'Search', :name => nil, class: 'btn btn-primary' %>
-<% end %>
-
 <table class="table table-bordered table-striped table-sm" style="font-size: 13px;">
   <thead>
     <tr>
