@@ -69,9 +69,6 @@ gem 'koala' # Facebook graph api
 gem 'devise-i18n'
 gem 'devise-i18n-views'
 
-# Gmail API
-gem "google-api-client"
-
 # Import xlsx file
 gem "roo"
 
