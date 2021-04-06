@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_05_134955) do
+ActiveRecord::Schema.define(version: 2021_04_06_072132) do
 
   create_table "accounts", force: :cascade do |t|
     t.string "title", limit: 255
@@ -139,8 +139,8 @@ ActiveRecord::Schema.define(version: 2021_04_05_134955) do
     t.string "note", limit: 255
     t.string "fb_name", limit: 255
     t.string "fb_user_id", limit: 255
-    t.boolean "black_list_flg"
-    t.boolean "gtic_flg"
+    t.boolean "black_list_flg", default: false
+    t.boolean "gtic_flg", default: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "birthday"
@@ -242,9 +242,9 @@ ActiveRecord::Schema.define(version: 2021_04_05_134955) do
     t.string "uid", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean "admin"
+    t.boolean "is_admin", default: false
     t.integer "member_id"
-    t.boolean "active_flg"
+    t.boolean "is_active", default: false
     t.string "description"
     t.index ["provider"], name: "index_staffs_on_provider"
     t.index ["uid"], name: "index_staffs_on_uid", unique: true

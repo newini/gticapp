@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
     def admin_staff_only
       if current_user.present?
         staff = Staff.find_by_uid(current_user.uid)
-        if staff.admin
+        if staff.is_admin
           return true
         end
       end
@@ -34,7 +34,7 @@ class ApplicationController < ActionController::Base
     def active_staff_only
       if current_user.present?
         staff = Staff.find_by_uid(current_user.uid)
-        if staff.active_flg
+        if staff.is_active
           return true
         end
       end

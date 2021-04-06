@@ -60,12 +60,9 @@ module ApplicationHelper
   def admin?
     if current_user.present?
       staff = Staff.find_by_uid(current_user.uid)
-      return staff.admin if staff
+      return staff.is_admin if staff
     end
     return false
-
-    current_staff
-    @current_staff.admin if current_staff
   end
 
 end

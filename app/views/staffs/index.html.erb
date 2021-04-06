@@ -27,8 +27,8 @@
             <td><%= get_name_from_member_id(staff.member_id) %></td>
             <td><%= get_facebook_user_id_link_from_member_id(staff.member_id) %></td>
             <td><%= link_to staff.member_id, "/members/#{staff.member_id}" %></td>
-            <td><%= get_check_icon(staff.active_flg) %></td>
-            <td><%= get_check_icon(staff.admin) %></td>
+            <td><%= get_check_icon(staff.is_active) %></td>
+            <td><%= get_check_icon(staff.is_admin) %></td>
             <td><%= staff.description[0..10] + "..." if staff.description.present? %></td>
             <td><%= link_to "詳細", staff_path(staff), class: 'btn btn-info btn-sm' %></td>
           </tr>

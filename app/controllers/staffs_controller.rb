@@ -51,7 +51,7 @@ class StaffsController < ApplicationController
 
   private
     def staff_params
-      params.require(:staff).permit(:name, :email, :uid, :member_id, :description, :admin, :active_flg)
+      params.require(:staff).permit(:name, :email, :uid, :member_id, :description, :is_admin, :is_active)
     end
 
     def update_else(staff, member)

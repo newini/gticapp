@@ -221,7 +221,7 @@ class BroadcastsController < ApplicationController
       redirect_to broadcast_path(@broadcast), :flash => {:success => "GTICメンバーを外しました。"}
     else
       # Add
-      Staff.where(active_flg: true).each do |staff|
+      Staff.where(is_active: true).each do |staff|
         if !checkDuplicatedMember(staff.member_id, @broadcast.id)
           BroadcastMember.new(member_id: staff.member_id, broadcast_id: @broadcast.id, include_gtic_flg: true).save
         end

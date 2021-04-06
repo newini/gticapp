@@ -4,7 +4,7 @@
 
   <div class="row justify-content-center">
     <% @organizers.each do |organizer| %>
-      <% if organizer.active_flg %>
+      <% if organizer.is_active %>
 
         <div class="col hvr-bounce-in" style="max-width: 400px;">
           <div class="card" data-aos="fade-up">
@@ -52,7 +52,7 @@
 
   <div class="row justify-content-center">
     <% @organizers.reverse_each do |organizer| %>
-      <% if not organizer.active_flg %>
+      <% if not organizer.is_active %>
 
         <div class="col hvr-bounce-in" style="max-width: 400px;">
           <div class="card" data-aos="fade-up">
