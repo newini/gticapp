@@ -20,12 +20,9 @@ class UsersController < ApplicationController
   def update
     @user = get_correct_user
     if @user.update(user_params)
-      # Find member by name
-      member = Member.where(last_name: @user.last_name, first_name: @user.first_name)
-      if member.count == 1 # This should have only one
-        @user.update(member_id: member[0].id)
- #     else # Create new one rather than
-      end
+      # Find member by name and find one or create
+      member = Member.from_user(@user)
+      @user.update(member_id: member.id)
       redirect_to user_path(@user)
     else
       redirect_to edit_user_path(@user)
@@ -60,4 +57,5 @@ class UsersController < ApplicationController
         @user = User.find(current_user.id)
       end
     end
+
 end

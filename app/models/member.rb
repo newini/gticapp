@@ -78,4 +78,22 @@ class Member < ActiveRecord::Base
     self.member_ids = ids.split(",")
   end
 
+  # For user
+  def self.from_user(user)
+    member = Member.where(last_name: user.last_name, first_name: user.first_name).first_or_create
+    member.update(
+      last_name_alphabet:   user.last_name_alphabet,
+      first_name_alphabet:  user.first_name_alphabet,
+      category_id:          user.category_id,
+      affiliation:          user.affiliation,
+      title:                user.title,
+      fb_user_id:           user.uid,
+      fb_name:              user.name,
+      email:                user.email
+    )
+    return member
+  end
+
+
+
 end
