@@ -327,7 +327,60 @@ bundle exec rake assets:precompile
 - [css color keywords](https://www.w3.org/wiki/CSS/Properties/color/keywords)
 
 
+# 4. Some codes
+## a. Merge the same-name members
+This keep older-member and delete newer-members. Of course, update all newer-members' id in BroadcastMember, MediaArticle, Presentation, Staff, Presentationship, Relationship.
+```
+members = Member.where.not(last_name: [nil, ""], first_name: [nil, ""])
+members.each do |member|
+  duplicated_members = Member.where(last_name: member.last_name, first_name: member.first_name)
+  if duplicated_members.count >= 2
+    old_member = duplicated_members[0]
+    duplicated_members.each_with_index do |duplicated_member, index|
+      if index >= 1
+        BroadcastMember.where(member_id: duplicated_member.id).update_all(member_id: old_member.id)
+        MediaArticle.where(member_id: duplicated_member.id).update_all(member_id: old_member.id)
+        Presentation.where(member_id: duplicated_member.id).update_all(member_id: old_member.id)
+        Staff.where(member_id: duplicated_member.id).update_all(member_id: old_member.id)
 
+        # Treats unique member_id and event_id
+        pres = Presentationship.where(member_id: duplicated_member.id)
+        pres.each do |pre|
+          if not Presentation.where(member_id: old_member.id, event_id: pre.event_id)[0]
+            pre.update(member_id: old_member.id)
+          end
+        end
+
+        res = Relationship.where(member_id: duplicated_member.id)
+        res.each do |re|
+          if not Relationship.where(member_id: old_member.id, event_id: re.event_id)[0]
+            re.update(member_id: old_member.id)
+          end
+        end
+
+        duplicated_member.destroy
+      end
+    end
+  end
+end
+```
+
+## b. Delete FB info only members.
+This delele members, which don't have first_name and last_name, and didn't attended any events.
+```
+members = Member.where(last_name: [nil, ""], first_name: [nil, ""])
+members.each do |member|
+  if member.participated_events.count == 0
+    BroadcastMember.where(member_id: member.id).destroy_all
+    MediaArticle.where(member_id: member.id).destroy_all
+    Presentation.where(member_id: member.id).destroy_all
+    Presentationship.where(member_id: member.id).destroy_all
+    Relationship.where(member_id: member.id).destroy_all
+
+    member.destroy
+  end
+end
+```
 
 # TODO
 - translate static pages and put to config/locale/.

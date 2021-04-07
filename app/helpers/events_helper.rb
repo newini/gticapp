@@ -36,7 +36,11 @@ module EventsHelper
   def facebook_objects(fb_event_id)
     key = current_user.access_token
     graph = Koala::Facebook::API.new(key)
-    return graph.get_connection(fb_event_id, '/')
+    begin
+      return graph.get_connection(fb_event_id, '/')
+    rescue => e
+      return nil
+    end
   end
 
 

@@ -9,7 +9,7 @@
       <th scope="col">所属</th>
       <th scope="col">肩書</th>
       <th scope="col">備考</th>
-      <th scope="col">回数(2014.1~)</th>
+      <th scope="col">総参加回数</th>
       <th scope="col">Role</th>
       <th scope="col">誕</th>
       <th scope="col">黒</th>
@@ -30,7 +30,7 @@
         <td><%= truncate(member.affiliation, length: 30) %></td>
         <td><%= member.title %></td>
         <td><%= truncate(member.note, length: 12) %></td>
-        <td><%= member.participated_events.where("start_time > ?", Date.parse("2014-01-01").beginning_of_month).count %></td>
+        <td><%= member.participated_events.count %></td>
         <td><%= select_role(member, @event) %></td>
         <td><%= select_birthday(member, @event) %></td>
         <td><%= select_black_list(member, @event) %></td>

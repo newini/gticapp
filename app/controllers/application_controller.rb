@@ -82,12 +82,9 @@ class ApplicationController < ActionController::Base
     def get_search_member(keyword)
       if keyword.present?
         words = keyword.to_s.split(" ")
-        words.each_with_index do |w, index|
-          if index == 0
-            @members = Member.find_member(w).order("last_name_alphabet ASC").paginate(page: params[:page])
-          else
-            @members = @members.find_member(w).order("last_name_alphabet").paginate(page: params[:page])
-          end
+        @members = Member.all
+        words.each do |word|
+          @members = @members.find_member(word).order("last_name_alphabet").paginate(page: params[:page])
         end
         return @members
       else

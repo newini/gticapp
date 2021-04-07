@@ -79,26 +79,7 @@ class BroadcastsController < ApplicationController
   def search # get for member respond to js
     @broadcast = Broadcast.find(params[:id])
     @broadcast_members = BroadcastMember.where(broadcast_id: @broadcast.id)
-    if params[:search].present?
-      @members = []
-      names = params[:search].to_s.split(",")
-      names.each do |name|
-        words = name.to_s.split(" ")
-        words.each_with_index do |w, index|
-          if index == 0
-            @member = Member.find_member_name(w).order("last_name_alphabet")
-          else
-            @member = @member.find_member_name(w).order("last_name_alphabet")
-          end
-        end
-        if @member.empty?
-          @not_found_members.push(name)
-        end
-        @members += @member
-      end
-    else
-      @members = Member.order("last_name_alphabet").limit(50)
-    end
+    @members = get_search_member(params[:search])
     respond_to :js
   end
 
