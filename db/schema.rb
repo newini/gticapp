@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_06_072132) do
+ActiveRecord::Schema.define(version: 2021_04_07_063150) do
 
   create_table "accounts", force: :cascade do |t|
     t.string "title", limit: 255
@@ -272,6 +272,7 @@ ActiveRecord::Schema.define(version: 2021_04_06_072132) do
     t.integer "category_id"
     t.string "affiliation"
     t.string "title"
+    t.integer "member_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
