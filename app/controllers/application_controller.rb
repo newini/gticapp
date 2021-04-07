@@ -63,7 +63,7 @@ class ApplicationController < ActionController::Base
             record.push(event)
           end
           event.presentations.each do |presentation|
-            if presentation.presenters.search_presenter(keyword).present? # search in presenter's member
+            if presentation.presenters.find_member(keyword).present? # search in presenter's member
               if !record.include? event # check duplicate
                 record.push(event)
               end

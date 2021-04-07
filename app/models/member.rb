@@ -18,11 +18,33 @@ class Member < ActiveRecord::Base
   has_one :staff
 
 # scope
-  scope :find_member, ->(name) { where("fb_name like ? OR last_name like ? OR last_name_alphabet like ? OR first_name like ? OR first_name_alphabet like ? OR last_name||first_name like ?
-                                     OR affiliation like ? OR title like ? OR note like ? OR email like ?",
-                                     "%#{name}%", "%#{name}%", "%#{name}%", "%#{name}%", "%#{name}%", "%#{name}%", "%#{name}%", "%#{name}%", "%#{name}%", "%#{name}%") }
-  scope :find_member_name, ->(name) {where("fb_name like ? OR last_name like ? OR last_name_alphabet like ? OR first_name like ? OR first_name_alphabet like ? OR last_name||first_name like ?",
-                                     "%#{name}%", "%#{name}%", "%#{name}%", "%#{name}%", "%#{name}%", "%#{name}%") }
+  scope :find_member, ->(keyword) { where(
+      "last_name like ?
+      OR first_name like ?
+      OR last_name_alphabet like ?
+      OR first_name_alphabet like ?
+      OR fb_name like ?
+      OR last_name||first_name like ?
+      OR first_name_alphabet||last_name_alphabet like ?
+      OR affiliation like ?
+      OR title like ?
+      OR note like ?
+      OR email like ?",
+      "%#{keyword}%", "%#{keyword}%", "%#{keyword}%", "%#{keyword}%",
+      "%#{keyword}%", "%#{keyword}%", "%#{keyword}%", "%#{keyword}%",
+      "%#{keyword}%", "%#{keyword}%", "%#{keyword}%"
+  ) }
+  scope :find_member_name, ->(name) { where(
+      "last_name like ?
+      OR first_name like ?
+      OR last_name_alphabet like ?
+      OR first_name_alphabet like ?
+      OR fb_name like ?
+      OR last_name||first_name like ?
+      OR first_name_alphabet||last_name_alphabet like ?",
+      "%#{name}%", "%#{name}%", "%#{name}%", "%#{name}%",
+      "%#{name}%", "%#{name}%", "%#{name}%"
+  ) }
   scope :sort_by_role_alphabet, -> {
     order("gtic_flg desc")
     .order(Arel.sql("relationships.presentation_role = 1 desc"))
@@ -34,10 +56,6 @@ class Member < ActiveRecord::Base
   }
   scope :recorded_member, ->(event) { joins(:relationships).where(relationships: {event_id: event.id}).where(relationships: {status: 2..6}).uniq }
   scope :waiting_member, ->(member) { where.not(id: member).order("last_name_alphabet") }
-  scope :search_presenter, ->(keyword) { where("fb_name like ? OR last_name like ? OR last_name_alphabet like ? OR first_name like ? OR first_name_alphabet like ?
-                                               OR last_name||first_name like ? OR affiliation like ? OR title like ? OR note like ?",
-                                               "%#{keyword}%", "%#{keyword}%", "%#{keyword}%", "%#{keyword}%", "%#{keyword}%", "%#{keyword}%", "%#{keyword}%", "%#{keyword}%", "%#{keyword}%") }
-
 
   def participate!(participated_event)
     relationships.create!(participated_id: participated_event.id)
