@@ -44,8 +44,8 @@ class MembersController < ApplicationController
 
   def update
     @member = Member.find(params[:id])
-    if member_params[:fb_user_id].to_i.to_s == member_params[:fb_user_id].to_s # If integer
-      @member.update(fb_name: get_facebook_name(member_params[:fb_user_id]))
+    if member_params[:uid].to_i.to_s == member_params[:uid].to_s # If integer
+      @member.update(name: get_facebook_name(member_params[:uid]))
     end
     # Validate email address
     mailRegex = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
@@ -223,7 +223,7 @@ class MembersController < ApplicationController
     def member_params
       params.require(:member).permit(
         :first_name, :last_name, :first_name_alphabet, :last_name_alphabet,
-        :fb_user_id, :note,
+        :uid, :note,
         :age, :gender, :birthday,
         :affiliation, :title,
         :category_id, :email,

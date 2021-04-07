@@ -15,7 +15,7 @@ module StaffsHelper
 
   def get_facebook_user_id_link_from_member_id(member_id)
     member = Member.find_by_id(member_id)
-    link_to "#{member.fb_user_id}", "https://facebook.com/#{member.fb_user_id}", target: :blank
+    link_to "#{member.uid}", "https://facebook.com/#{member.uid}", target: :blank
   end
 
 end

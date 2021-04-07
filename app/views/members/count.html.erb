@@ -31,7 +31,7 @@
                     <% if member.last_name.present? %>
                       <%= link_to "#{member.last_name} #{member.first_name}", member_path(id) %>
                     <% else %>
-                      <%= link_to "#{member.fb_name}", member_path(id) %>
+                      <%= link_to "#{member.name}", member_path(id) %>
                     <% end %>
                     <%= "|" unless i == repeater[1].length %>
                     <% i += 1 %>

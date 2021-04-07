@@ -23,23 +23,22 @@ class Member < ActiveRecord::Base
       OR first_name like ?
       OR last_name_alphabet like ?
       OR first_name_alphabet like ?
-      OR fb_name like ?
+      OR name like ?
       OR last_name||first_name like ?
       OR first_name_alphabet||last_name_alphabet like ?
       OR affiliation like ?
       OR title like ?
-      OR note like ?
-      OR email like ?",
+      OR note like ?",
       "%#{keyword}%", "%#{keyword}%", "%#{keyword}%", "%#{keyword}%",
       "%#{keyword}%", "%#{keyword}%", "%#{keyword}%", "%#{keyword}%",
-      "%#{keyword}%", "%#{keyword}%", "%#{keyword}%"
+      "%#{keyword}%", "%#{keyword}%"
   ) }
   scope :find_member_name, ->(name) { where(
       "last_name like ?
       OR first_name like ?
       OR last_name_alphabet like ?
       OR first_name_alphabet like ?
-      OR fb_name like ?
+      OR name like ?
       OR last_name||first_name like ?
       OR first_name_alphabet||last_name_alphabet like ?",
       "%#{name}%", "%#{name}%", "%#{name}%", "%#{name}%",
@@ -87,8 +86,8 @@ class Member < ActiveRecord::Base
       category_id:          user.category_id,
       affiliation:          user.affiliation,
       title:                user.title,
-      fb_user_id:           user.uid,
-      fb_name:              user.name,
+      uid:           user.uid,
+      name:              user.name,
       email:                user.email
     )
     return member

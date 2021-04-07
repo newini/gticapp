@@ -156,7 +156,7 @@ class EventsController < ApplicationController
     @referer = "waiting"
     respond_to do |format|
       format.js
-      format.json { render :json => @members.select(:id, :last_name, :fb_name) }
+      format.json { render :json => @members.select(:id, :last_name, :name) }
     end
   end
 

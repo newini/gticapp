@@ -6,8 +6,8 @@ ja:
     last_name_alphabet: 姓（英字）
     first_name_alphabet: 名（英字）
     category: 職業属性
-    affiliation: 会社名
-    title: 肩書
+    affiliation: 所属
+    title: 役職
     email: メールアドレス
 
     edit_cancel_warning: プロフィール未入力時、GTICイベントを正常に参加登録することができません。キャンセルしますか？

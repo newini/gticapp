@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_07_063150) do
+ActiveRecord::Schema.define(version: 2021_04_07_133145) do
 
   create_table "accounts", force: :cascade do |t|
     t.string "title", limit: 255
@@ -137,8 +137,8 @@ ActiveRecord::Schema.define(version: 2021_04_07_063150) do
     t.string "affiliation", limit: 255
     t.string "title", limit: 255
     t.string "note", limit: 255
-    t.string "fb_name", limit: 255
-    t.string "fb_user_id", limit: 255
+    t.string "name", limit: 255
+    t.string "uid", limit: 255
     t.boolean "black_list_flg", default: false
     t.boolean "gtic_flg", default: false
     t.datetime "created_at"
@@ -149,16 +149,17 @@ ActiveRecord::Schema.define(version: 2021_04_07_063150) do
     t.boolean "contributor_flg", default: false
     t.integer "age"
     t.integer "gender"
+    t.string "provider"
     t.index ["affiliation"], name: "index_members_on_affiliation"
     t.index ["birthday"], name: "index_members_on_birthday"
     t.index ["black_list_flg"], name: "index_members_on_black_list_flg"
     t.index ["category_id"], name: "index_members_on_category_id"
-    t.index ["email"], name: "index_members_on_email"
-    t.index ["fb_name"], name: "index_members_on_fb_name"
-    t.index ["fb_user_id"], name: "index_members_on_fb_user_id"
+    t.index ["first_name"], name: "index_members_on_first_name"
+    t.index ["first_name_alphabet"], name: "index_members_on_first_name_alphabet"
     t.index ["gtic_flg"], name: "index_members_on_gtic_flg"
     t.index ["last_name"], name: "index_members_on_last_name"
     t.index ["last_name_alphabet"], name: "index_members_on_last_name_alphabet"
+    t.index ["name"], name: "index_members_on_name"
     t.index ["title"], name: "index_members_on_title"
   end
 

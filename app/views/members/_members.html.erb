@@ -22,7 +22,7 @@
       <%= content_tag :tr do %>
         <td><%= member.id %></td>
         <td><%= link_to "#{member.last_name} #{member.first_name}", member_path(member) %></td>
-        <td><%= link_to "#{member.fb_name}", "https://facebook.com/#{member.fb_user_id}", target: :blank %></td>
+        <td><%= link_to "#{member.name}", "https://facebook.com/#{member.uid}", target: :blank %></td>
         <td><%= Category.find(member.category_id).try(:name) if member.category_id.present? %></td>
         <td><%= member.affiliation %></td>
         <td><%= member.title %></td>

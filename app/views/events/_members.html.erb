@@ -25,7 +25,7 @@
         <td><%= i %></td>
         <td><%= member.last_name_alphabet[0] if member.last_name_alphabet.present? %></td>
         <td><%= link_to "#{member.last_name} #{member.first_name}", member_path(member) %></td>
-        <td><%= link_to image_tag("https://graph.facebook.com/#{member.fb_user_id}/picture", class: "fb_user_icon") + "#{member.fb_name}", "https://facebook.com/#{member.fb_user_id}", target: :blank %></td>
+        <td><%= link_to image_tag("https://graph.facebook.com/#{member.uid}/picture", class: "fb_user_icon") + "#{member.name}", "https://facebook.com/#{member.uid}", target: :blank %></td>
         <td><%= Category.find(member.category_id).try(:name) if member.category_id.present? %></td>
         <td><%= truncate(member.affiliation, length: 30) %></td>
         <td><%= member.title %></td>

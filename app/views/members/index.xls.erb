@@ -2,8 +2,8 @@
   <thead>
     <tr>
       <th>ID</th>
-      <th>fb_user_id</th>
-      <th>fb_name</th>
+      <th>uid</th>
+      <th>name</th>
       <th>last_name</th>
       <th>first_name</th>
       <th>last_name_kana</th>
@@ -21,8 +21,8 @@
   <% @all_members.each do |member| %>
     <tr>
       <td><%= member.id %></td>
-      <td><%= member.fb_user_id %></td>
-      <td><%= member.fb_name %></td>
+      <td><%= member.uid %></td>
+      <td><%= member.name %></td>
       <td><%= member.last_name %></td>
       <td><%= member.first_name %></td>
       <td><%= member.last_name_kana %></td>
