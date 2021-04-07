@@ -61,7 +61,6 @@
             <th>No-show</th>
           </tr>
           <tr>
-            <td><%= link_to @event.maybe_members.count, maybe_event_path %></td>
             <td><%= link_to @event.registed_members.count, registed_event_path %></td>
             <td><%= link_to @event.participants.count, participants_event_path %></td>
             <td><%= link_to @event.declined_members.count, declined_event_path %></td>

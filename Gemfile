@@ -83,3 +83,6 @@ gem 'will_paginate-bootstrap4' # https://github.com/delef/will_paginate-bootstra
 # Create beautiful JavaScript charts with one line of Ruby
 # https://chartkick.com/
 gem "chartkick"
+
+# Convert xml to hash
+gem 'rexml'

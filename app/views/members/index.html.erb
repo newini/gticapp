@@ -7,8 +7,7 @@
   <div class="col">
     <%= link_to 'ダウンロード', members_path(format: 'xls'), class: "btn btn-info btn-sm" %>
     <% if admin? %>
-      <%= link_to "Change name to alphabet", :name_to_alphabet_members, class: "btn btn-info btn-sm", method: "POST" %>
-      <%= link_to "Convert FB ID from string", :convert_fb_str_to_id_members, class: "btn btn-info btn-sm", method: "POST" %>
+      <%= link_to "Fill alphabet by Kanji name", fill_alphabet_from_kanji_name_members_path, class: "btn btn-info btn-sm", method: "POST" %>
     <% end %>
 
     <!-- Search -->

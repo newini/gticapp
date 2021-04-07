@@ -49,23 +49,13 @@ Rails.application.routes.draw do
 
   resources :members do
     collection do
-      get :management
-      get :search
-      get :count
+      get :azsa_list
       get :no_show_list
       get :black_list
       get :category
-      get :participated_events_list
-      get :search_participated
-      get :azsa_list
-      post :import
-      post :update_information
-      post :name_to_alphabet
-      post :convert_fb_str_to_id
-      post :update_azsa
-      post :update_contributor
-      post :update_past_presenter
-      post :update_black_list
+      get :count
+      get :search
+      post :fill_alphabet_from_kanji_name
     end
   end
 
