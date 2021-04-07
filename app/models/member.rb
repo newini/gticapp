@@ -86,8 +86,9 @@ class Member < ActiveRecord::Base
       category_id:          user.category_id,
       affiliation:          user.affiliation,
       title:                user.title,
-      uid:           user.uid,
-      name:              user.name,
+      provider:             user.provider,
+      uid:                  user.uid,
+      name:                 user.name,
       email:                user.email
     )
     return member

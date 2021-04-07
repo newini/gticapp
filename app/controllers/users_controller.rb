@@ -39,6 +39,14 @@ class UsersController < ApplicationController
   def privacy_policy
   end
 
+  def show_events
+    #record = Event.where('start_time < ?', DateTime.now-24*60*60).group(:start_time).order("start_time DESC")
+    record = Event.all.limit(2)
+    @events = get_formated_events(record)
+  end
+
+  def show_event
+  end
 
   private
     def user_params

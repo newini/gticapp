@@ -32,13 +32,7 @@ class EventsController < ApplicationController
   end
 
   def show
-    relationship = @event.relationships.find_by_member_id(params[:member_id])
-    @participants = @event.participants
     @presentations = @event.presentations.order("created_at desc")
-    @presentation = Presentation.new
-    @presenters = @event.presenters
-    @presenters_ary = @presenters.map{|presenter| [[presenter.last_name, presenter.first_name].join(" "), presenter.id]}
-    @registed_members = @event.registed_members
     @fb_event = facebook_objects(@event.fb_event_id)
   end
 
