@@ -4,10 +4,43 @@
   </div>
 
   <div class="col-md-10">
-    <div class="row">
 
-      <div class="col-md-6">
-        <h2>イベント情報</h2>
+    <style>
+    .event-bkg::after {
+      content: "";
+      background-image: url('<%= serve_file_event_path(header: 'bkg')%>');
+      background-repeat: no-repeat; /* Do not repeat the image */
+      filter: blur(8px);
+      opacity: 0.5;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      position: absolute;
+      z-index: -1;
+    }
+    </style>
+
+    <div class="row event-bkg">
+      <h2>イベント情報</h2>
+
+      <div class="offset-10 col-2">
+        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#bkgImage">
+          Change Background Image
+        </button>
+      </div>
+
+      <div class="offset-3 col-6">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn" data-toggle="modal" data-target="#headerImage">
+          <%= image_tag serve_file_event_path(header: 'header'), class: 'img-thumbnail mx-auto d-block' %>
+        </button>
+      </div>
+
+    </div>
+
+    <div class="row">
+      <div class="col-6">
         <table class="table table-bordered">
           <tr>
             <th>イベント名</th>
@@ -96,3 +129,55 @@
 
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="headerImage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Header Image</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= image_tag serve_file_event_path(header: 'header'), class: 'img-fluid' %>
+      </div>
+      <div class="modal-footer">
+        <%= form_with url: upload_file_event_path(header: 'header') do |form| %>
+          <div class="form-group row">
+            <%= form.label :file, "Header Image", class: 'col-sm-6' %>
+            <%= form.file_field :file, class: 'form-control-file col-sm-6' %>
+          </div>
+          <%= form.submit "Upload" %>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="bkgImage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Header Image</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= image_tag serve_file_event_path(header: 'bkg'), class: 'img-fluid' %>
+      </div>
+      <div class="modal-footer">
+        <%= form_with url: upload_file_event_path(header: 'bkg') do |form| %>
+          <div class="form-group row">
+            <%= form.label :file, "Background Image", class: 'col-sm-6' %>
+            <%= form.file_field :file, class: 'form-control-file col-sm-6' %>
+          </div>
+          <%= form.submit "Upload" %>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,10 +1,10 @@
 <div class="container-fluid">
-  <h1>GTIC PRESENTER</h1>
+  <h1>GTIC Events</h1>
 
   <!-- Search -->
   <%= form_tag '/search_event', method: 'get', remote: true, class: "form-inline", role: "form" do %>
      <div class="form-group">
-      <strong>イベント検索　</strong>
+      <strong>イベント検索</strong>
       <span>Keyword: </span>
       <%= text_field_tag :keyword, params[:keyword], class: "form-control", placeholder: "keyword" %>
     </div>
@@ -17,7 +17,7 @@
     <div class="btn-group">
       <% date = @last_date%>
       <% while date >= @start_date do %>
-        <%= link_to "#{date.strftime("%Y")}年", presenter_path(:year => date.strftime("%Y-%m-%d")), class: "btn btn-info", remote: true %>
+        <%= link_to "#{date.strftime("%Y")}年", event_list_path(:year => date.strftime("%Y-%m-%d")), class: "btn btn-info", remote: true %>
         <% date = date - 1.year %>
       <% end %>
     </div>

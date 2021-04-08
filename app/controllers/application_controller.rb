@@ -32,7 +32,8 @@ class ApplicationController < ActionController::Base
             date: event.start_time.strftime("%Y-%m-%d"),
             place: event.place_id,
             participants: event.participants.count,
-            event_category_id: event.event_category_id
+            event_category_id: event.event_category_id,
+            fb_event_id: event.fb_event_id
           },
           detail: event.presentations.map{
             |presentation| [

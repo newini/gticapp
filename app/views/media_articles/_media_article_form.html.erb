@@ -5,80 +5,53 @@
   <div class="form-group row">
     <%= label_tag :date, "Date(*)", class: 'col-sm-2 control-label' %>
     <div class="col-sm-6">
-      <%= date_field_tag nil, nil, value: (@media_article.date.strftime('%Y-%m-%d') if @media_article.date.present?), name:"media_article[date]", class: "form-control", include_blank: true, :required => 'required', disabled: (true if not @is_edit) %>
+      <%= date_field_tag nil, nil, value: (@media_article.date.strftime('%Y-%m-%d') if @media_article.date.present?), name:"media_article[date]", class: "form-control", include_blank: true, :required => 'required' %>
     </div>
   </div>
 
  <div class="form-group row">
     <%= label_tag :media, "Media(*)", class: 'col-sm-2 control-label' %>
     <div class="col-sm-6">
-      <%= text_field_tag nil, @media_article.media, name: "media_article[media]", class: "form-control", :required => 'required', disabled: (true if not @is_edit) %>
+      <%= text_field_tag nil, @media_article.media, name: "media_article[media]", class: "form-control", :required => 'required' %>
     </div>
   </div>
 
   <div class="form-group row">
     <%= label_tag :url, "URL", class: 'col-sm-2 control-label' %>
     <div class="col-sm-6">
-      <%= text_field_tag nil, @media_article.url, name: "media_article[url]", class: "form-control", disabled: (true if not @is_edit) %>
+      <%= text_field_tag nil, @media_article.url, name: "media_article[url]", class: "form-control" %>
     </div>
   </div>
 
   <div class="form-group row">
     <%= label_tag :title, "Title(*)", class: 'col-sm-2 control-label' %>
     <div class="col-sm-6">
-      <%= text_field_tag nil, @media_article.title, name: "media_article[title]", class: "form-control", :required => 'required', disabled: (true if not @is_edit) %>
+      <%= text_field_tag nil, @media_article.title, name: "media_article[title]", class: "form-control", :required => 'required' %>
     </div>
   </div>
 
   <div class="form-group row">
     <%= label_tag :member_id, "Member ID", class: 'col-sm-2 control-label' %>
     <div class="col-sm-4">
-      <%= text_field_tag nil, @media_article.member_id, name: "media_article[member_id]", class: "form-control", disabled: (true if not @is_edit) %>
+      <%= text_field_tag nil, @media_article.member_id, name: "media_article[member_id]", class: "form-control" %>
     </div>
     <div class="col-sm-2">
       <%= link_to "Find member ID", members_path, class: "btn btn-info btn-block", :target => '_blank' %>
     </div>
   </div>
 
-  <% if @is_edit %>
-    <div class="form-group row">
-      <%= label_tag :file, "File" %>
-      <%= file_field nil, :file, class: 'col-sm-2 control-label' %>
-    </div>
+  <div class="form-group row">
+    <%= label_tag :file, "File" %>
+    <%= file_field nil, :file, class: 'col-sm-2 control-label' %>
+  </div>
 
-    <div class="form-group row">
-      <div class="col-sm-offset-1 col-sm-2">
-        <%= link_to "Back", media_articles_path, class: "btn btn-primary btn-block" %>
-      </div>
-      <div class="col-sm-offset-1 col-sm-2">
-        <%= submit_tag "Save", class: "btn btn-primary btn-block" %>
-      </div>
+  <div class="form-group row">
+    <div class="col-sm-offset-1 col-sm-2">
+      <%= link_to "Back", :back, class: "btn btn-primary btn-block" %>
     </div>
-  <% else %>
-    <% if @media_article.file_name.present? %>
-      <div class="form-group row">
-        <%= label_tag :file, "File", class: 'col-sm-2 control-label' %>
-        <div class="col-sm-6">
-          <%= link_to serve_file_media_article_path(@media_article) %>
-        </div>
-        <div class="col-sm-2">
-          <%= link_to "Delete file", delete_file_media_article_path(@media_article), method: :post, class: "btn btn-danger btn-sm" %>
-        </div>
-      </div>
-    <% end %>
-
-    <div class="row">
-      <div class="offset-sm-1 col-sm-2">
-        <%= link_to "Back", media_articles_path, class: "btn btn-primary btn-block" %>
-      </div>
-      <div class="offset-sm-1 col-sm-2">
-        <%= link_to "Edit", edit_media_article_path(@media_article), class: "btn btn-primary btn-block" %>
-      </div>
-      <div class="offset-sm-1 col-sm-2">
-        <%= link_to "Delete", media_article_path(@media_article), class: "btn btn-primary btn-block",
-          method: :delete, data: { confirm: "削除してもよろしいですか？" } %>
-      </div>
+    <div class="col-sm-offset-1 col-sm-2">
+      <%= submit_tag "Save", class: "btn btn-primary btn-block" %>
     </div>
-  <% end %>
+  </div>
 
 <% end %>

@@ -1,0 +1,106 @@
+<style>
+.event-bkg::after {
+  content: "";
+  background-image: url('<%= serve_file_event_path(id: @event.id, header: 'bkg')%>');
+  filter: blur(8px);
+  opacity: 0.5;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;
+}
+</style>
+
+<div class="container-fluid event-bkg" style="padding: 60px;">
+
+  <div class="row">
+    <div class="offset-11">
+      <%= link_to "https://facebook.com/"+@event.fb_event_id, class: 'btn btn-primary' do %>
+        <i class="fab fa-facebook-f"></i>
+      <% end %>
+    </div>
+  </div>
+
+  <br><br><br><br>
+
+  <div class="row">
+    <div class="offset-1">
+      <h1 style="font-size: 70px;"><%= @event.name %> <%= EventCategory.find(@event.event_category_id).name if @event.event_category_id.present? %></h1>
+      <h5>
+        <% @presentations.sort_by{|e| e[:id]}.each do |presentation| %>
+          <li><%= presentation.title %></li>
+        <% end %>
+      </h5>
+    </div>
+  </div>
+
+  <br><br><br><br>
+
+  <div class="row">
+    <div class="offset-1">
+      <h1><i class="fas fa-calendar"></i></h1>
+    </div>
+    <div class="col">
+      <strong>WHEN</strong><br>
+      <%#= @event.start_time.strftime('%Y-%m-%d %H:%M') %>
+      <%= l @event.start_time, format: :default%>
+    </div>
+  </div>
+
+  <br><br>
+
+  <div class="row">
+    <div class="offset-1">
+      <h1><i class="fas fa-map-marker-alt"></i></h1>
+    </div>
+    <div class="col-9">
+      <strong>WHERE</strong><br>
+      <%= Place.find(@event.place_id).name if @event.place_id.present? %>
+    </div>
+    <div class="col">
+      <small>参加費: <%= show_currency(@event.fee) %></small>
+      <%= link_to "参加登録", register_event_users_path(event_id: @event.id), class: 'btn btn-success btn-lg btn-block' %>
+    </div>
+  </div>
+
+  <br><br>
+
+</div>
+
+<div class="container-fluid" style="background:white; padding: 60px;">
+  <div class="row">
+    <div class="offset-1">
+      <h1>The Speakers</h1>
+    </div>
+  </div>
+
+  <% n = 1 %>
+  <% @presentations.sort_by{|e| e[:id]}.each do |presentation| %>
+
+    <div class="card" id="presentation<%= n %>" data-aos="fade-up">
+      <div class="row">
+        <div class="col-4">
+          <img src="https://picsum.photos/533/300" class="img-fluid">
+        </div>
+
+        <div class="col-8">
+          <% presentation.presenters.each do |presenter| %>
+            <h3 style="display: inline;"><%= "#{presenter.try(:last_name)} #{presenter.try(:first_name)} 氏" %></h3>
+            <sub><strong><%= presenter.affiliation %></strong> <%= presenter.title %></sub><br>
+          <% end %>
+
+          <p><small><%= "プレゼンテーション ##{n}" %></small></p>
+
+          <h5><ins><%= presentation.try(:title) %></ins></h5>
+
+          <%= presentation.try(:abstract) %>
+        </div>
+      </div>
+    </div>
+    <% n += 1 %>
+  <% end %>
+
+</div>
+

@@ -10,9 +10,9 @@
  *
  */
 @import "bootstrap/scss/bootstrap.scss";
-@import "font-awesome"; /* For social icons */
 @import "aos/src/sass/aos.scss"; /* AOS from yarn */
 @import "hover.css/scss/hover.scss"; /* hover from npm */
+@import "@fortawesome/fontawesome-free/css/all.min.css"; /* awesome font from npm, do not import .scss because not work */
 
 /* Put custom css at the end */
 @import "components/custom.css.scss";

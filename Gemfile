@@ -74,7 +74,6 @@ gem "roo"
 
 # Style
 gem 'bootstrap' # Instead of "bootstrap-sass" due to old
-gem "font-awesome-rails" # For Social icons
 
 # paginate
 gem 'will_paginate'

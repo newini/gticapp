@@ -14,7 +14,7 @@ class StaticPagesController < ApplicationController
     @events = get_formated_events(record)
   end
 
-  def presenter
+  def event_list
     @start_date = Event.order("start_time ASC").first.start_time.beginning_of_year
     @last_date = Event.order("start_time ASC").last.start_time.end_of_year
     if params[:year].present?
@@ -25,7 +25,12 @@ class StaticPagesController < ApplicationController
     end
     record = base.order("start_time DESC")
     @events = get_formated_events(record)
-  end # End of presenter
+  end
+
+  def event_detail
+    @event = Event.find(params[:event_id])
+    @presentations = @event.presentations.order("created_at desc")
+  end
 
   def search_event
     @events = get_search_event(params[:keyword])

@@ -13,13 +13,15 @@ Rails.application.routes.draw do
   # Static pages
   match '/home', to: 'static_pages#home', via: 'get'
   match '/about', to: 'static_pages#about', via: 'get'
-  match '/presenter', to: 'static_pages#presenter', via: 'get'
   match '/search_event', to: 'static_pages#search_event', via: 'get'
   match '/ceo_message', to: 'static_pages#ceo_message', via: 'get'
   match '/organizer', to: 'static_pages#organizer', via: 'get'
   match '/media', to: 'static_pages#media', via: 'get'
   match '/schedule', to: 'static_pages#schedule', via: 'get'
   match '/contact_us', to: 'static_pages#contact_us', via: 'get'
+  # Events
+  match '/event_list', to: 'static_pages#event_list', via: 'get'
+  match '/event_detail', to: 'static_pages#event_detail', via: 'get'
 
 
   #===================================================
@@ -36,6 +38,7 @@ Rails.application.routes.draw do
       get :privacy_policy
       get 'show_events'
       get 'show_event'
+      post 'register_event'
     end
   end
 
@@ -80,12 +83,14 @@ Rails.application.routes.draw do
       get :search_member
       get :statistics
       get :account
+      get 'serve_file'
       post :change_status
       post :change_role
       post :destroy_relationship
       post :switch_black_list_flg
       post :update_birthday
       post :create_member
+      post 'upload_file'
     end
   end
 

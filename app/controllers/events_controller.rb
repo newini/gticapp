@@ -9,7 +9,8 @@ class EventsController < ApplicationController
     :update_registed_member, :update_participants,
     :registed, :participants, :dotasan, :declined, :dotacan, :no_show,
     :waiting, :search_member,
-    :account
+    :account,
+    :serve_file
   ]
 
   def index
@@ -31,6 +32,21 @@ class EventsController < ApplicationController
     @participants = Relationship.where(member_id: array).where(status: 3).group(:member_id).pluck(:member_id).count
   end
 
+  def new
+    @event = Event.new
+  end
+
+  def create
+    @event = Event.new(event_params)
+    upload_file(@event, params[:header_file], 'header')
+    upload_file(@event, params[:bkg_file], 'bkg')
+    if @event.save
+      redirect_to events_path
+    else
+      render 'new'
+    end
+  end
+
   def show
     @presentations = @event.presentations.order("created_at desc")
     @fb_event = facebook_objects(@event.fb_event_id)
@@ -49,19 +65,6 @@ class EventsController < ApplicationController
     end
   end
 
-  def new
-    @event = Event.new
-  end
-
-  def create
-    @event = Event.new(event_params)
-    if @event.save
-      redirect_to events_path
-    else
-      render 'new'
-    end
-  end
-
   def destroy
     @event.destroy
     redirect_to events_path
@@ -71,6 +74,29 @@ class EventsController < ApplicationController
     @events = get_search_event(params[:keyword])
     respond_to :js
   end
+
+  def upload_file
+    event = Event.find(params[:id])
+    file = params[:file]
+    if file
+      if params[:header] == 'header'
+        event.update(header_data: file.read, header_filename: file.original_filename, header_mime_type: file.content_type)
+      else
+        event.update(bkg_data: file.read, bkg_filename: file.original_filename, bkg_mime_type: file.content_type)
+      end
+    end
+    redirect_to event_path(event)
+  end
+
+  def serve_file
+    @event = Event.find(params[:id])
+    if params[:header] == 'header'
+      send_data(@event.header_data, :type => @event.header_mime_type, :filename => "@{@event.header_filename}", :disposition => "inline")
+    else
+      send_data(@event.bkg_data, :type => @event.bkg_mime_type, :filename => "@{@event.bkg_filename}", :disposition => "inline")
+    end
+  end
+
 
   # =================================================
   # Member status list pages
@@ -313,7 +339,9 @@ class EventsController < ApplicationController
 
   private
     def event_params
-      params.require(:event).permit(:name, :cumulative_number, :start_time, :end_time, :fb_event_id, :place_id, :fee, :event_category_id, :note)
+      params.require(:event).permit(
+          :name, :cumulative_number, :start_time, :end_time, :fb_event_id, :place_id, :fee, :event_category_id, :note
+      )
     end
 
     def find_selected_event

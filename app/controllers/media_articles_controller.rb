@@ -7,7 +7,6 @@ class MediaArticlesController < ApplicationController
 
   def new
     @media_article = MediaArticle.new
-    @is_edit = true
   end
 
   def create
@@ -24,12 +23,10 @@ class MediaArticlesController < ApplicationController
 
   def show
     @media_article = MediaArticle.find(params[:id])
-    @is_edit = false
   end
 
   def edit
     @media_article = MediaArticle.find(params[:id])
-    @is_edit = true
   end
 
   def update
