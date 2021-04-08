@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_07_133145) do
+ActiveRecord::Schema.define(version: 2021_04_08_010501) do
 
   create_table "accounts", force: :cascade do |t|
     t.string "title", limit: 255
@@ -225,17 +225,6 @@ ActiveRecord::Schema.define(version: 2021_04_07_133145) do
     t.index ["note"], name: "index_relationships_on_note"
     t.index ["presentation_role"], name: "index_relationships_on_presentation_role"
     t.index ["status"], name: "index_relationships_on_status"
-  end
-
-  create_table "schedule_logs", force: :cascade do |t|
-    t.integer "event_id"
-    t.integer "member_id"
-    t.integer "status"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.index ["event_id"], name: "index_schedule_logs_on_event_id"
-    t.index ["member_id"], name: "index_schedule_logs_on_member_id"
-    t.index ["status"], name: "index_schedule_logs_on_status"
   end
 
   create_table "staffs", force: :cascade do |t|
