@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_08_020341) do
+ActiveRecord::Schema.define(version: 2021_04_09_081110) do
 
   create_table "accounts", force: :cascade do |t|
     t.string "title", limit: 255
@@ -176,7 +176,9 @@ ActiveRecord::Schema.define(version: 2021_04_08_020341) do
     t.float "longitude"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["name"], name: "index_places_on_name"
+    t.string "city"
+    t.string "nearest_station"
+    t.string "how_to_go"
   end
 
   create_table "presentations", force: :cascade do |t|
