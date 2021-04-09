@@ -11,6 +11,10 @@
   position: absolute;
   z-index: -1;
 }
+
+.vl {
+  border-left: 4px solid green;
+}
 </style>
 
 <div class="container-fluid event-bkg" style="padding: 60px;">
@@ -36,16 +40,15 @@
     </div>
   </div>
 
-  <br><br><br><br>
+  <br><br><br>
 
   <div class="row" data-aos="fade-right">
     <div class="offset-1">
-      <h1><i class="fas fa-calendar"></i></h1>
+      <h1 style="font-size: 50px;"><i class="fas fa-calendar"></i></h1>
     </div>
     <div class="col">
       <strong>WHEN</strong><br>
-      <%#= @event.start_time.strftime('%Y-%m-%d %H:%M') %>
-      <%= l @event.start_time, format: :default%>
+      <h5><%= l @event.start_time, format: :default%></h5>
     </div>
   </div>
 
@@ -53,12 +56,13 @@
 
   <div class="row">
     <div class="offset-1">
-      <h1><i class="fas fa-map-marker-alt"></i></h1>
+      <h1 style="font-size: 50px;"><i class="fas fa-map-marker-alt"></i></h1>
     </div>
     <div class="col-9" data-aos="fade-right">
       <strong>WHERE</strong><br>
-      <%= Place.find(@event.place_id).name %>
+      <h5><%= Place.find(@event.place_id).name %></h5>
     </div>
+
     <div class="col" data-aos="fade-left">
       <small>参加費: <%= show_currency(@event.fee) %></small>
       <%= link_to "参加登録", event_detail_path(event_id: @event.id, anchor: 'registration'), class: 'btn btn-success btn-lg btn-block' %>
@@ -70,6 +74,7 @@
 </div>
 
 
+<!----------- Speakers --------------->
 <div class="container-fluid" style="background:white; padding: 60px;">
 
   <div class="row">
@@ -79,56 +84,128 @@
   </div>
 
   <div class="row">
+    <% @presentations.sort_by{|e| e[:id]}.each do |presentation| %>
+      <% presentation.presenters.each do |presenter| %>
+
+        <div class="card col-4" data-aos="fade-up">
+          <h3 style="display: inline;"><%= "#{presenter.try(:last_name)} #{presenter.try(:first_name)} 氏" %></h3>
+          <h5><strong><%= presenter.affiliation %></strong></h5> <%= presenter.title %><br>
+        </div>
+
+      <% end %>
+    <% end %>
+  </div>
+
+</div>
+
+<!----------- Schedule --------------->
+<div class="container-fluid" style="background: rgb(250, 255, 255); padding: 60px;">
+  <div class="row">
+    <div class="offset-1">
+      <h1>Schedule</h1>
+    </div>
+  </div>
+
+  <div class="row" data-aos="fade-up">
+    <div class="col-3">
+      <h5 class="text-right" style="color: red;"><%= (@event.start_time-60*30).strftime('%H:%M') %></h5>
+    </div>
+    <div class="vl" ></div>
+    <div class="col">
+      <h4>Registration</h4>
+      <hr>
+    </div>
+  </div>
+
+  <div class="row" data-aos="fade-up">
+    <div class="col-3">
+      <h5 class="text-right" style="color: red;"><%= @event.start_time.strftime('%H:%M') %></h5>
+    </div>
+    <div class="vl" ></div>
+    <div class="col">
+      <h4>Opening Speech</h4>
+      <hr>
+    </div>
+  </div>
+
   <% n = 1 %>
+  <% last_presen_end_time = DateTime.now %>
   <% @presentations.sort_by{|e| e[:id]}.each do |presentation| %>
+    <% last_presen_end_time = presentation.end_time %>
+    <div class="row" data-aos="fade-up">
+      <div class="col-3">
+        <h5 class="text-right" style="color: red;"><%= presentation.start_time.strftime('%H:%M') + ' ~ ' + presentation.end_time.strftime('%H:%M') if presentation.start_time %></h5>
+      </div>
 
-    <div class="card" id="presentation<%= n %>" data-aos="fade-up">
-        <div class="col-4">
-          <img src="https://picsum.photos/533/300?grayscale" class="img-fluid">
-        </div>
+      <div class="vl" ></div>
 
-        <div class="col-8">
-          <% presentation.presenters.each do |presenter| %>
-            <h3 style="display: inline;"><%= "#{presenter.try(:last_name)} #{presenter.try(:first_name)} 氏" %></h3>
-            <sub><strong><%= presenter.affiliation %></strong> <%= presenter.title %></sub><br>
-          <% end %>
+      <div class="col">
+        <sub><small><%= "Presentation ##{n}" %></small></sub>
+        <h5><%= presentation.try(:title) %></h5>
 
-          <p><small><%= "プレゼンテーション ##{n}" %></small></p>
+        <div style="height: 3px;"></div>
 
-          <h5><ins><%= presentation.try(:title) %></ins></h5>
+        <% presentation.presenters.each do |presenter| %>
+          <h5 style="display: inline;"><strong><%= "#{presenter.try(:last_name)} #{presenter.try(:first_name)} 氏" %></strong></h5>
+          <small><%= presenter.affiliation %></small>
+          <br>
+        <% end %>
 
-          <%= presentation.try(:abstract) %>
-        </div>
+        <div style="height: 3px;"></div>
+
+        <%= presentation.try(:abstract) %>
+        <hr>
       </div>
     </div>
     <% n += 1 %>
   <% end %>
 
-</div>
-
-
-<div class="container-fluid" style="background: rgb(250, 255, 255); padding: 60px;">
-  <div class="row">
-    <div class="offset-1">
-      <h2>Schedule</h2>
-
-      <% n = 1 %>
-      <% @presentations.sort_by{|e| e[:id]}.each do |presentation| %>
-      <% end %>
+  <div class="row" data-aos="fade-up">
+    <div class="col-3">
+      <h5 class="text-right" style="color: red;"><%= last_presen_end_time.strftime('%H:%M') if last_presen_end_time %></h5>
+    </div>
+    <div class="vl" ></div>
+    <div class="col">
+      <h4>アンケート記入</h4>
+      <hr>
     </div>
   </div>
+
+  <div class="row" data-aos="fade-up">
+    <div class="col-3">
+      <h5 class="text-right" style="color: red;"><%= (last_presen_end_time+60*10).strftime('%H:%M') if last_presen_end_time %></h5>
+    </div>
+    <div class="vl" ></div>
+    <div class="col">
+      <h4>懇親会</h4>
+      <hr>
+    </div>
+  </div>
+
+  <div class="row" data-aos="fade-up">
+    <div class="col-3">
+      <h5 class="text-right" style="color: red;"><%= '22:00' %></h5>
+    </div>
+    <div class="vl" ></div>
+    <div class="col">
+      <h4>集合写真&終了</h4>
+      <hr>
+    </div>
+  </div>
+
 </div>
 
 
+<!----------- Registration --------------->
 <div class="container-fluid" style="background: white; padding: 60px;" id="registration">
   <div class="row">
     <div class="offset-1">
-      <h2>Registration</h2>
+      <h1>Registration&Price</h1>
     </div>
   </div>
 
   <div class="row">
-    <div class="col-6">
+    <div class="col-6" data-aos="fade-right">
       <% if user_signed_in? %>
 
         <% if @relationship %>
@@ -138,43 +215,36 @@
         <% end %>
 
       <% else %>
-
+        <h5>記入して送信してください。</h5>
         <%= form_with url: register_event_path(event_id: @event.id) do |f| %>
           <div class="form-group row">
             <%= f.label :last_name, t('user.last_name')+"(*)", class: 'col-sm-4' %>
             <%= f.text_field :last_name, placeholder: "山田", class: "form-control col", required: 'required' %>
           </div>
-
           <div class="form-group row">
             <%= f.label :first_name, t('user.first_name')+"(*)", class: 'col-sm-4' %>
             <%= f.text_field :first_name, placeholder: "太郎", class: "form-control col", required: 'required' %>
           </div>
-
           <div class="form-group row">
             <%= f.label :last_name_alphabet, t('user.last_name_alphabet')+"(*)", class: 'col-sm-4' %>
             <%= f.text_field :last_name_alphabet, placeholder: "Yamada", class: "form-control col", required: 'required' %>
           </div>
-
           <div class="form-group row">
             <%= f.label :first_name_alphabet, t('user.last_name_alphabet')+"(*)", class: 'col-sm-4' %>
             <%= f.text_field :first_name_alphabet, placeholder: "Taro", class: "form-control col", required: 'required' %>
           </div>
-
           <div class="form-group row">
             <%= f.label :category_id, t('user.category')+"(*)", class: 'col-sm-4' %>
             <%= f.select :category_id, options_from_collection_for_select(Category.all, :id, :name), { include_blank: true }, { class: "form-control col", required: 'required' } %>
           </div>
-
           <div class="form-group row">
             <%= f.label :affiliation, t('user.affiliation')+"(*)", class: 'col-sm-4' %>
             <%= f.text_field :affiliation, placeholder:  "海山商事", class: "form-control col", required: 'required' %>
           </div>
-
           <div class="form-group row">
             <%= f.label :title, t('user.title')+"(*)", class: 'col-sm-4' %>
             <%= f.text_field :title, placeholder:  "代表取締役社長", class: "form-control col", required: 'required' %>
           </div>
-
           <div class="form-group row">
             <%= f.label :email, t('user.email')+"(*)", class: 'col-sm-4' %>
             <%= f.email_field :email, placeholder: "test@example.com", class: "form-control col", required: 'required' %>
@@ -189,7 +259,20 @@
 
     </div>
 
-    <div class="col-6">
+    <div class="col-6" data-aos="fade-left">
+      <h5>＜会費 fee＞</h5>
+      <li>一般 business person 及び、仕事を持っていらっしゃる社会人学生: 5,000円</li>
+      <li>フルタイムの学生 full time student: 3,000円（学生証をお持ち下さい。Bring your student ID.）</li>
+      <li>GTIC開催日と同じ月の誕生日の方は1000円割引です。（上記学生割引との併用OKです。）　誕生日がわかる運転免許証や、学生証などを受付で提示してください。
+        (If your birthday is in this same month, discount by JPY1,000. )</li>
+      <p>レセプション時に誕生日の方には、一言ショート・スピーチをお願いしています。<br>
+      ※懇親会では、お食事・お飲物をご用意しております。<br>
+      ※「分野・国籍・年齢を超えてつながり、新しい発想で具体的に一歩踏み出してみよう！！」<br>
+      "We prepare refreshment in Networking-party."<br>
+      "Amalgamate different business area, nationalities, and ages... and one step forward!!"<br>
+      "That's one small step for man, one giant leap for mankind," (astronaut Neil Armstrong, July 20, 1969)<br>
+      "We prepare Halal foods for Muslim participants."<br>
+      </p>
     </div>
   </div>
 </div>
