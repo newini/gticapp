@@ -31,9 +31,9 @@
 
         <div class="col-1">
           <%= link_to "詳細", event_detail_path(event_id: event[:event][:id]), class: 'btn btn-outline-info btn-block' %>
-          <%= link_to "参加登録", register_event_users_path(event_id: event[:event][:id]), class: 'btn btn-outline-success btn-block' %>
+          <%= link_to "参加登録", event_detail_path(event_id: event[:event][:id], anchor: 'registration'), class: 'btn btn-outline-success btn-block' %>
           <%= link_to "https://facebook.com/"+event[:event][:fb_event_id], class: 'btn btn-outline-primary btn-block', target: 'blank' do %>
-            <i class="fa fa-facebook"></i>
+            <i class="fab fa-facebook-f"></i>
           <% end %>
         </div>
       </div>

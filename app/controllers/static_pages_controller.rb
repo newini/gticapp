@@ -27,22 +27,45 @@ class StaticPagesController < ApplicationController
     @events = get_formated_events(record)
   end
 
-  def event_detail
-    @event = Event.find(params[:event_id])
-    @presentations = @event.presentations.order("created_at desc")
-  end
-
   def search_event
     @events = get_search_event(params[:keyword])
     respond_to :js
   end
 
+  def event_detail
+    @event = Event.find(params[:event_id])
+    @presentations = @event.presentations.order("created_at desc")
+    if current_user
+      @relationship = @event.relationships.find_by_member_id(current_user.member_id)
+    end
+  end
+
+  def register_event
+    event = Event.find(params[:event_id])
+    # Get member id
+    if current_user
+      @user = current_user
+      member_id = @user.member_id
+    else
+      member = Member.from_registration(params)
+      member_id = member.id
+    end
+    # Find if member already registered
+    relationship = event.relationships.find_by_member_id(member_id)
+    # If member not regitered
+    if relationship.blank?
+      Relationship.new(member_id: member_id, event_id: event.id, status: 2).save
+      # Send mail
+      NoReplyMailer.registration_confirmation(event, member).deliver
+      redirect_to event_detail_path(event_id: event.id), flash: { success: "Successfully registered!" }
+    else
+      redirect_to event_detail_path(event_id: event.id), flash: { notice: "Already registered!" }
+    end
+  end
+
   def organizer
     @access_token = get_app_access_token
     @organizers = Staff.all
-  end
-
-  def schedule
   end
 
   def media

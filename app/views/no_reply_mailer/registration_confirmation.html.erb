@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+
+  <body>
+    <p><%= @member.last_name %> 様</p>
+    <br>
+    <p>Global Techno Innovation Cafe, <%= @event.name %> <%= EventCategory.find(@event.event_category_id).name %>に参加登録を承りました。</p>
+    <br>
+    <p>追って詳細について連絡致します。</p>
+    <br>
+    <p>イベントページ: https://gtic.jp/event_detail?event_id=<%= @event.id %>&locale=ja</p>
+    <br>
+    <p>キャンセルはこちらのページでお願いします。</p>
+
+    <small>
+      This is send-only email. If you have any question, please send to gtic.information@gmail.com
+    </small>
+  </body>
+</html>

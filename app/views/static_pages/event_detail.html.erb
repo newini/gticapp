@@ -61,7 +61,7 @@
     </div>
     <div class="col">
       <small>参加費: <%= show_currency(@event.fee) %></small>
-      <%= link_to "参加登録", register_event_users_path(event_id: @event.id), class: 'btn btn-success btn-lg btn-block' %>
+      <%= link_to "参加登録", event_detail_path(event_id: @event.id, anchor: 'registration'), class: 'btn btn-success btn-lg btn-block' %>
     </div>
   </div>
 
@@ -70,6 +70,7 @@
 </div>
 
 <div class="container-fluid" style="background:white; padding: 60px;">
+
   <div class="row">
     <div class="offset-1">
       <h1>The Speakers</h1>
@@ -82,7 +83,7 @@
     <div class="card" id="presentation<%= n %>" data-aos="fade-up">
       <div class="row">
         <div class="col-4">
-          <img src="https://picsum.photos/533/300" class="img-fluid">
+          <img src="https://picsum.photos/533/300?grayscale" class="img-fluid">
         </div>
 
         <div class="col-8">
@@ -104,3 +105,86 @@
 
 </div>
 
+
+<div class="container-fluid" style="background: rgb(250, 255, 255); padding: 60px;">
+  <div class="row">
+    <div class="offset-1">
+      <h2>Schedule</h2>
+    </div>
+  </div>
+</div>
+
+
+<div class="container-fluid" style="background: white; padding: 60px;" id="registration">
+  <div class="row">
+    <div class="offset-1">
+      <h2>Registration</h2>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-6">
+      <% if user_signed_in? %>
+
+        <% if @relationship %>
+          <h4>Thank you for the registration!</h4>
+        <% else %>
+          <%= link_to "参加登録", register_event_path(event_id: @event.id), method: 'post', class: 'btn btn-primary btn-lg btn-block' %>
+        <% end %>
+
+      <% else %>
+
+        <%= form_with url: register_event_path(event_id: @event.id) do |f| %>
+          <div class="form-group row">
+            <%= f.label :last_name, t('user.last_name')+"(*)", class: 'col-sm-4' %>
+            <%= f.text_field :last_name, placeholder: "山田", class: "form-control col", required: 'required' %>
+          </div>
+
+          <div class="form-group row">
+            <%= f.label :first_name, t('user.first_name')+"(*)", class: 'col-sm-4' %>
+            <%= f.text_field :first_name, placeholder: "太郎", class: "form-control col", required: 'required' %>
+          </div>
+
+          <div class="form-group row">
+            <%= f.label :last_name_alphabet, t('user.last_name_alphabet')+"(*)", class: 'col-sm-4' %>
+            <%= f.text_field :last_name_alphabet, placeholder: "Yamada", class: "form-control col", required: 'required' %>
+          </div>
+
+          <div class="form-group row">
+            <%= f.label :first_name_alphabet, t('user.last_name_alphabet')+"(*)", class: 'col-sm-4' %>
+            <%= f.text_field :first_name_alphabet, placeholder: "Taro", class: "form-control col", required: 'required' %>
+          </div>
+
+          <div class="form-group row">
+            <%= f.label :category_id, t('user.category')+"(*)", class: 'col-sm-4' %>
+            <%= f.select :category_id, options_from_collection_for_select(Category.all, :id, :name), { include_blank: true }, { class: "form-control col", required: 'required' } %>
+          </div>
+
+          <div class="form-group row">
+            <%= f.label :affiliation, t('user.affiliation')+"(*)", class: 'col-sm-4' %>
+            <%= f.text_field :affiliation, placeholder:  "海山商事", class: "form-control col", required: 'required' %>
+          </div>
+
+          <div class="form-group row">
+            <%= f.label :title, t('user.title')+"(*)", class: 'col-sm-4' %>
+            <%= f.text_field :title, placeholder:  "代表取締役社長", class: "form-control col", required: 'required' %>
+          </div>
+
+          <div class="form-group row">
+            <%= f.label :email, t('user.email')+"(*)", class: 'col-sm-4' %>
+            <%= f.email_field :email, placeholder: "test@example.com", class: "form-control col", required: 'required' %>
+          </div>
+
+          <div class="form-group">
+            <%= f.submit t('submit'), class: "btn btn-primary" %>
+          </div>
+        <% end %>
+
+      <% end %>
+
+    </div>
+
+    <div class="col-6">
+    </div>
+  </div>
+</div>

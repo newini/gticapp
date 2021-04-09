@@ -94,6 +94,22 @@ class Member < ActiveRecord::Base
     return member
   end
 
+  # For event registration
+  def self.from_registration(params)
+    member = Member.where(email: params[:email]).first_or_create
+    member.update(
+      last_name:            params[:last_name],
+      first_name:           params[:first_name],
+      last_name_alphabet:   params[:last_name_alphabet],
+      first_name_alphabet:  params[:first_name_alphabet],
+      category_id:          params[:category_id],
+      affiliation:          params[:affiliation],
+      title:                params[:title],
+      email:                params[:email]
+    )
+    return member
+  end
+
 
 
 end

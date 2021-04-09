@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   # Events
   match '/event_list', to: 'static_pages#event_list', via: 'get'
   match '/event_detail', to: 'static_pages#event_detail', via: 'get'
+  match '/register_event', to: 'static_pages#register_event', via: 'post'
 
 
   #===================================================
@@ -36,9 +37,6 @@ Rails.application.routes.draw do
   resources :users do
     collection do
       get :privacy_policy
-      get 'show_events'
-      get 'show_event'
-      post 'register_event'
     end
   end
 

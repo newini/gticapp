@@ -1,6 +1,11 @@
 class UsersController < ApplicationController
-  before_action :active_staff_only, only: [:index, :new, :create]
-  before_action :authenticate_user!, only: [:show, :edit, :update, :destroy]
+  before_action :active_staff_only, only: [
+    :index, :new, :create
+  ]
+  before_action :authenticate_user!, only: [
+    :show, :edit, :update, :destroy,
+    :register_event
+  ]
 
   # User list
   def index
@@ -37,9 +42,6 @@ class UsersController < ApplicationController
 
 
   def privacy_policy
-  end
-
-  def register_event
   end
 
 

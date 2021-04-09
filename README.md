@@ -310,14 +310,17 @@ bundle exec rake assets:precompile
 
 
 # 3. about CSS and JS
-## Installed
+## Installed CSS
+- bootstrap
+- hover.css: mouse hover effects. See [documents and examples](http://ianlunn.github.io/Hover/). [How to install hover.css](https://devopspoints.com/bootstrap-4-hover.html)
+- font-awesome: font icons [doc](https://fontawesome.com/)
+
+## Installed JS
 - @rails/ujs
 - turbolinks
 - jquery
 - popper.js
-- bootstrap
 - aos: Animate On Scroll Library. [Documents](https://michalsnik.github.io/aos/)
-- hover.css: mouse hover effects. See [documents and examples](http://ianlunn.github.io/Hover/). [How to install hover.css](https://devopspoints.com/bootstrap-4-hover.html)
 - chartkick: Create beautiful JavaScript charts with one line of Ruby
 - chart.js: js for chartkick
 - plotly.js: graphing libraries

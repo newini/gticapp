@@ -23,7 +23,8 @@ ja:
 
   required: 必須項目
 
+  submit: 送信
+
   contact:
     subject: 件名
     body: 本文
-    submit: 送信

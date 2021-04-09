@@ -30,6 +30,7 @@ class EventsController < ApplicationController
     @total_events = Event.count
     @total_participants = Relationship.where(member_id: array).where(status: 3).count
     @participants = Relationship.where(member_id: array).where(status: 3).group(:member_id).pluck(:member_id).count
+
   end
 
   def new
@@ -248,7 +249,7 @@ class EventsController < ApplicationController
     if relationship.present?
       relationship.destroy
     end
-    redirect_to :back
+    redirect_to registed_event_path(@event)
   end
 
   def switch_black_list_flg

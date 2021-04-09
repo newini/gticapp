@@ -23,7 +23,8 @@ en:
 
   required: Required item
 
+  submit: Submit
+
   contact:
     subject: Subject
     body: Body
-    submit: Submit
