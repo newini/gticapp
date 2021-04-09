@@ -19,7 +19,7 @@
       <% if event[:detail].length == 0 %>
         <tr>
           <td><%= "第#{event[:event][:cumulative_number]}回" %></td>
-          <td><%= link_to event[:event][:name], registed_event_path(event[:event][:id]) %></td>
+          <td><%= link_to event[:event][:name], event_path(event[:event][:id]) %></td>
           <td><%= event[:event][:date] %></td>
           <td><%= EventCategory.find(event[:event][:event_category_id]).name if event[:event][:event_category_id].present? and EventCategory.where(id: event[:event][:event_category_id]).present? %></td>
           <td></td>

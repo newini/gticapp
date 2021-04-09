@@ -15,7 +15,7 @@
 
 <div class="container-fluid event-bkg" style="padding: 60px;">
 
-  <div class="row">
+  <div class="row" data-aos="fade-left">
     <div class="offset-11">
       <%= link_to "https://facebook.com/"+@event.fb_event_id, class: 'btn btn-primary' do %>
         <i class="fab fa-facebook-f"></i>
@@ -25,7 +25,7 @@
 
   <br><br><br><br>
 
-  <div class="row">
+  <div class="row" data-aos="fade-down">
     <div class="offset-1">
       <h1 style="font-size: 70px;"><%= @event.name %> <%= EventCategory.find(@event.event_category_id).name if @event.event_category_id.present? %></h1>
       <h5>
@@ -38,7 +38,7 @@
 
   <br><br><br><br>
 
-  <div class="row">
+  <div class="row" data-aos="fade-right">
     <div class="offset-1">
       <h1><i class="fas fa-calendar"></i></h1>
     </div>
@@ -55,11 +55,11 @@
     <div class="offset-1">
       <h1><i class="fas fa-map-marker-alt"></i></h1>
     </div>
-    <div class="col-9">
+    <div class="col-9" data-aos="fade-right">
       <strong>WHERE</strong><br>
-      <%= Place.find(@event.place_id).name if @event.place_id.present? %>
+      <%= Place.find(@event.place_id).name %>
     </div>
-    <div class="col">
+    <div class="col" data-aos="fade-left">
       <small>参加費: <%= show_currency(@event.fee) %></small>
       <%= link_to "参加登録", event_detail_path(event_id: @event.id, anchor: 'registration'), class: 'btn btn-success btn-lg btn-block' %>
     </div>
@@ -69,6 +69,7 @@
 
 </div>
 
+
 <div class="container-fluid" style="background:white; padding: 60px;">
 
   <div class="row">
@@ -77,11 +78,11 @@
     </div>
   </div>
 
+  <div class="row">
   <% n = 1 %>
   <% @presentations.sort_by{|e| e[:id]}.each do |presentation| %>
 
     <div class="card" id="presentation<%= n %>" data-aos="fade-up">
-      <div class="row">
         <div class="col-4">
           <img src="https://picsum.photos/533/300?grayscale" class="img-fluid">
         </div>
@@ -110,6 +111,10 @@
   <div class="row">
     <div class="offset-1">
       <h2>Schedule</h2>
+
+      <% n = 1 %>
+      <% @presentations.sort_by{|e| e[:id]}.each do |presentation| %>
+      <% end %>
     </div>
   </div>
 </div>

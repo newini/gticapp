@@ -10,6 +10,16 @@
             <%= link_to "削除", presentation, value: presentation.id, method: :delete, class: "btn btn-danger btn-xs", data: {confirm: "削除してもよろしいですか？"} %>
           </th>
         </tr>
+
+        <tr>
+          <th>開始時間～終了時間</th>
+        </tr>
+        <tr>
+          <td>
+            <%= presentation.start_time.strftime('%H:%M') + ' ~ ' + presentation.end_time.strftime('%H:%M') if presentation.start_time %>
+          </td>
+        </tr>
+
         <tr>
           <th>プレゼンター</th>
         </tr>
@@ -20,12 +30,14 @@
             <% end %>
           </td>
         </tr>
+
         <tr>
           <th>題目</th>
         </tr>
         <tr>
           <td><%= presentation.try(:title) %></td>
         </tr>
+
         <tr>
           <th>概要</th>
         </tr>
