@@ -13,19 +13,36 @@
 }
 </style>
 
+<% content_for :title, @event.name+' '+@event.event_category.name %>
+
 <div class="container-fluid event-bkg" style="padding: 60px;">
 
   <div class="text-right" data-aos="fade-left">
-    <%= link_to "https://facebook.com/"+@event.fb_event_id, class: 'btn btn-primary' do %>
-      <i class="fab fa-facebook-f"></i>
-    <% end %>
-  </div>
+    <div class="btn-group">
+      <!-- Share with Facebook -->
+      <div class="fb-share-button"
+        data-href="https://gtic.jp<%= event_detail_path(event_id: @event.id) %>"
+        data-layout="button_count" data-size="large">
+      </div>
+      <!-- Share with Twitter -->
+      <a class="twitter-share-button btn btn-primary btn-sm rounded"
+         href="https://twitter.com/intent/tweet?text=GTIC%20event%20<%= @event.name %><%= @event.event_category.name %>%20https://gtic.jp<%= event_detail_path(event_id: @event.id) %>"
+        data-size="large" target="blank">
+        <i class="fab fa-twitter"></i>Tweet
+      </a>
+      <!-- Share with Line -->
+      <div class="line-it-button" data-lang="en" data-type="share-a" data-ver="3"
+        data-url="https://gtic.jp<%= event_detail_path(event_id: @event.id) %>"
+        data-color="default" data-size="large" data-count="true" style="display: none;"></div>
+      <script src="https://www.line-website.com/social-plugins/js/thirdparty/loader.min.js" async="async" defer="defer"></script>
+    </div>
+   </div>
 
   <br><br><br><br>
 
   <div class="row" data-aos="fade-down">
     <div class="offset-1">
-      <h1 style="font-size: 70px;"><%= @event.name %> <%= EventCategory.find(@event.event_category_id).name if @event.event_category_id.present? %></h1>
+      <h1 style="font-size: 70px;"><%= @event.name %> <%= @event.event_category.name %></h1>
       <h5>
         <% @presentations.sort_by{|e| e[:id]}.each do |presentation| %>
           <li><%= presentation.title %></li>
@@ -77,17 +94,15 @@
   </div>
 
   <div class="row">
-    <% @presentations.sort_by{|e| e[:id]}.each do |presentation| %>
-      <% presentation.presenters.each do |presenter| %>
+    <% @event.presenters.each do |presenter| %>
 
-        <div class="card col-sm-4" data-aos="fade-up">
-          <h3 style="display: inline;"><%= "#{presenter.try(:last_name)} #{presenter.try(:first_name)} 氏" %></h3>
-          <h5><strong><%= presenter.affiliation %></strong></h5> <%= presenter.title %><br>
-          <%= link_to presenter.website, presenter.website if presenter.website %>
-          <p><%= presenter.biography %></p>
-        </div>
+      <div class="card col-sm-4" data-aos="fade-up">
+        <h3 style="display: inline;"><%= "#{presenter.try(:last_name)} #{presenter.try(:first_name)} 氏" %></h3>
+        <h5><strong><%= presenter.affiliation %></strong></h5> <%= presenter.title %><br>
+        <%= link_to presenter.website, presenter.website if presenter.website %>
+        <p><%= presenter.biography %></p>
+      </div>
 
-      <% end %>
     <% end %>
   </div>
 
@@ -194,7 +209,7 @@
 <div class="container-fluid" style="background: white; padding: 60px;" id="registration">
   <div class="row">
     <div class="offset-1">
-      <h1>Registration&Price</h1>
+      <h1>Registration & Price</h1>
     </div>
   </div>
 

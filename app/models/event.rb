@@ -22,6 +22,7 @@ class Event < ActiveRecord::Base
   has_many :registers, foreign_key: "event_id", dependent: :destroy
   has_many :accounts, through: :registers, source: :account
 
+  belongs_to :event_category
   belongs_to :place
 #  has_many :presentations, foreign_key: "event_id", dependent: :destroy
 

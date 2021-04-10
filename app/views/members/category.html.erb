@@ -4,6 +4,11 @@
   </div>
 
   <div class="col">
+
+    <%= pie_chart Category.all.map{ |c|
+      [c.name, (Member.where(gtic_flg: false).where(category_id: c.id).count*100/Member.where(gtic_flg: false).where.not(category_id: nil).count.to_f).ceil]
+    }, suffix: "%" %>
+
     <li><%= "登録者数：#{Member.count}名" %></li>
     <li><%= "GTIC：#{Member.where(:gtic_flg => true).count}名" %></li>
     <% Category.all.each do |category| %>

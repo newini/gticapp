@@ -1,3 +1,5 @@
+<% content_for :title, 'About' %>
+
 <div class="section">
   <div class="container">
 
@@ -180,10 +182,9 @@
               <i class="fa fa-briefcase"></i>
               参加者の職業
             </h5>
-            <div id="pie" style="width: 500px; height: 300px;"></div>
-            <script>
-              new Chartkick.PieChart("pie", [["投資家", 11], ["起業家", 23], ["金融企業勤務", 7], ["事業会社勤務", 20], ["政府、及びその関係者", 3], ["研究者", 3], ["技術者", 3], ["プロフェッショナル", 9], ["起業家希望", 9], ["その他", 12]], {suffix: "%"});
-            </script>
+            <%= pie_chart Category.all.map{ |c|
+              [c.name, (Member.where(gtic_flg: false).where(category_id: c.id).count*100/Member.where(gtic_flg: false).where.not(category_id: nil).count.to_f).ceil]
+            }, suffix: "%" %>
           </div>
         </div>
       </div>
