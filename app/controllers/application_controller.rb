@@ -93,6 +93,14 @@ class ApplicationController < ActionController::Base
       end
     end
 
+    # Make a hash and decode
+    def generate_hash_from_string(str)
+      return Rails.application.message_verifier(ENV['SECRET_KEY_BASE']).generate({ token: str })
+    end
+
+    def verify_string_from_hash(hash)
+      return Rails.application.message_verifier(ENV['SECRET_KEY_BASE']).verify(hash)[:token]
+    end
 
     def admin_staff_only
       if current_user.present?

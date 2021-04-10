@@ -5,6 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: [:facebook] # For facebook login
 
+  belongs_to :member
 
   after_create :send_welcome_email
   def send_welcome_email

@@ -33,7 +33,14 @@ class StaticPagesController < ApplicationController
   end
 
   def event_detail
+    if not params[:event_id]
+      redirect_to root_path, notice: "Not validate url."
+      return
+    end
     @event = Event.find(params[:event_id])
+
+    @is_expired_event =  is_expired_event(@event.start_time)
+
     @presentations = @event.presentations.order("created_at desc")
     if current_user
       @relationship = @event.relationships.find_by_member_id(current_user.member_id)
@@ -41,11 +48,23 @@ class StaticPagesController < ApplicationController
   end
 
   def register_event
+    if not params[:event_id]
+      redirect_to root_path, notice: "Not validate url."
+      return
+    end
     event = Event.find(params[:event_id])
+
+    # Check time
+    if is_expired_event(event.start_time)
+      redirect_to event_detail_path(event_id: event.id), notice: "今は参加登録できません。GTICスタッフに直接連絡お願いします。Cannot register now. Please contact to GTIC staff directry."
+      return
+    end
+
     # Get member id
     if current_user
-      @user = current_user
-      member_id = @user.member_id
+      user = User.find(current_user.id)
+      member = user.member
+      member_id = member.id
     else
       member = Member.from_registration(params)
       member_id = member.id
@@ -53,13 +72,62 @@ class StaticPagesController < ApplicationController
     # Find if member already registered
     relationship = event.relationships.find_by_member_id(member_id)
     # If member not regitered
-    if relationship.blank?
+    if relationship
+      if relationship == 2
+        redirect_to event_detail_path(event_id: event.id), flash: { notice: "Already registered!" }
+      else
+        relationship.update(status: 2)
+        redirect_to event_detail_path(event_id: event.id), flash: { success: "Successfully registered!" }
+      end
+    else
       Relationship.new(member_id: member_id, event_id: event.id, status: 2).save
       # Send mail
       NoReplyMailer.registration_confirmation(event, member).deliver
       redirect_to event_detail_path(event_id: event.id), flash: { success: "Successfully registered!" }
+    end
+  end
+
+  def deregister_event
+    if not params[:event_id]
+      redirect_to root_path, notice: "Not validate url."
+      return
+    end
+    event = Event.find(params[:event_id])
+
+    # Check time
+    if is_expired_event(event.start_time)
+      redirect_to root_path, notice: "今はキャンセルできません。GTICスタッフに直接連絡お願いします。Cannot deregister now. Please contact to GTIC staff directry."
+      return
+    end
+
+    if current_user
+      user = User.find(current_user.id)
+      member = user.member
+      member_id = member.id
     else
-      redirect_to event_detail_path(event_id: event.id), flash: { notice: "Already registered!" }
+      if not params[:member_id]
+        redirect_to root_path, notice: "Not validate url."
+        return
+      end
+
+      member_id = verify_string_from_hash(params[:member_id])
+      member = Member.find(id: member_id)
+      if not member
+        redirect_to root_path, notice: "Not validate url."
+        return
+      end
+      member_id = member.id
+    end
+
+    # Find member already registered
+    relationship = event.relationships.find_by_member_id(member_id)
+    if relationship.blank?
+      redirect_to root_path, notice: "Not registerd yet."
+    else
+      relationship.update(status: 4)
+      # Send mail
+      NoReplyMailer.deregistration_confirmation(event, member).deliver
+      redirect_to event_detail_path(event_id: event.id), notice: "参加登録をキャンセルしました。Successfully deregistered the event."
     end
   end
 
@@ -78,5 +146,11 @@ class StaticPagesController < ApplicationController
       @after_submit = true
     end
   end
+
+  private
+    def is_expired_event(start_time)
+      return DateTime.now > start_time-60*60*7 # Before 7h before start
+    end
+
 
 end

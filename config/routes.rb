@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   match '/event_list', to: 'static_pages#event_list', via: 'get'
   match '/event_detail', to: 'static_pages#event_detail', via: 'get'
   match '/register_event', to: 'static_pages#register_event', via: 'post'
+  match '/deregister_event', to: 'static_pages#deregister_event', via: 'get'
 
 
   #===================================================

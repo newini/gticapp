@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+
+  <body>
+    <p><%= @member.last_name %> 様</p>
+    <br>
+    <p>Global Techno Innovation Cafe, <%= @event.name %> <%= @event.event_category.name %>の参加登録をキャンセルしました。</p>
+    <br>
+    <p>これからもよろしくお願いします。</p>
+
+    <small>
+      This is send-only email. If you have any question, please send to gtic.information@gmail.com
+    </small>
+  </body>
+</html>

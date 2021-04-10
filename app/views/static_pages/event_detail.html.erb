@@ -215,55 +215,65 @@
 
   <div class="row">
     <div class="col-sm-6" data-aos="fade-right">
-      <% if user_signed_in? %>
-
-        <% if @relationship %>
-          <h4>Thank you for the registration!</h4>
-        <% else %>
-          <%= link_to "参加登録", register_event_path(event_id: @event.id), method: 'post', class: 'btn btn-primary btn-lg btn-block' %>
-        <% end %>
+      <% if @is_expired_event %>
+        <h4>イベントは終了しました。The event end.</h4>
 
       <% else %>
-        <h5>記入して送信してください。</h5>
-        <%= form_with url: register_event_path(event_id: @event.id) do |f| %>
-          <div class="form-group row">
-            <%= f.label :last_name, t('user.last_name')+"(*)", class: 'col-sm-4' %>
-            <%= f.text_field :last_name, placeholder: "山田", class: "form-control col", required: 'required' %>
-          </div>
-          <div class="form-group row">
-            <%= f.label :first_name, t('user.first_name')+"(*)", class: 'col-sm-4' %>
-            <%= f.text_field :first_name, placeholder: "太郎", class: "form-control col", required: 'required' %>
-          </div>
-          <div class="form-group row">
-            <%= f.label :last_name_alphabet, t('user.last_name_alphabet')+"(*)", class: 'col-sm-4' %>
-            <%= f.text_field :last_name_alphabet, placeholder: "Yamada", class: "form-control col", required: 'required' %>
-          </div>
-          <div class="form-group row">
-            <%= f.label :first_name_alphabet, t('user.last_name_alphabet')+"(*)", class: 'col-sm-4' %>
-            <%= f.text_field :first_name_alphabet, placeholder: "Taro", class: "form-control col", required: 'required' %>
-          </div>
-          <div class="form-group row">
-            <%= f.label :category_id, t('user.category')+"(*)", class: 'col-sm-4' %>
-            <%= f.select :category_id, options_from_collection_for_select(Category.all, :id, :name), { include_blank: true }, { class: "form-control col", required: 'required' } %>
-          </div>
-          <div class="form-group row">
-            <%= f.label :affiliation, t('user.affiliation')+"(*)", class: 'col-sm-4' %>
-            <%= f.text_field :affiliation, placeholder:  "海山商事", class: "form-control col", required: 'required' %>
-          </div>
-          <div class="form-group row">
-            <%= f.label :title, t('user.title')+"(*)", class: 'col-sm-4' %>
-            <%= f.text_field :title, placeholder:  "代表取締役社長", class: "form-control col", required: 'required' %>
-          </div>
-          <div class="form-group row">
-            <%= f.label :email, t('user.email')+"(*)", class: 'col-sm-4' %>
-            <%= f.email_field :email, placeholder: "test@example.com", class: "form-control col", required: 'required' %>
-          </div>
+        <% if user_signed_in? %>
 
-          <div class="form-group">
-            <%= f.submit t('submit'), class: "btn btn-primary" %>
-          </div>
+          <% if @relationship %>
+            <% if @relationship.status == 2 %>
+              <h4>参加登録ありがとうございます！Thank you for the registration!</h4>
+            <% elsif @relationship.status == 3 %>
+              <h4>ご参加ありがとうございました！Thank you for participation!</h4>
+            <% elsif @relationship.status == 4 %>
+              <%= link_to "参加登録", register_event_path(event_id: @event.id), method: 'post', class: 'btn btn-primary btn-lg btn-block' %>
+            <% end %>
+          <% else %>
+            <%= link_to "参加登録", register_event_path(event_id: @event.id), method: 'post', class: 'btn btn-primary btn-lg btn-block' %>
+          <% end %>
+
+        <% else %>
+          <h5>記入して送信してください。</h5>
+          <%= form_with url: register_event_path(event_id: @event.id) do |f| %>
+            <div class="form-group row">
+              <%= f.label :last_name, t('user.last_name')+"(*)", class: 'col-sm-4' %>
+              <%= f.text_field :last_name, placeholder: "山田", class: "form-control col", required: 'required' %>
+            </div>
+            <div class="form-group row">
+              <%= f.label :first_name, t('user.first_name')+"(*)", class: 'col-sm-4' %>
+              <%= f.text_field :first_name, placeholder: "太郎", class: "form-control col", required: 'required' %>
+            </div>
+            <div class="form-group row">
+              <%= f.label :last_name_alphabet, t('user.last_name_alphabet')+"(*)", class: 'col-sm-4' %>
+              <%= f.text_field :last_name_alphabet, placeholder: "Yamada", class: "form-control col", required: 'required' %>
+            </div>
+            <div class="form-group row">
+              <%= f.label :first_name_alphabet, t('user.last_name_alphabet')+"(*)", class: 'col-sm-4' %>
+              <%= f.text_field :first_name_alphabet, placeholder: "Taro", class: "form-control col", required: 'required' %>
+            </div>
+            <div class="form-group row">
+              <%= f.label :category_id, t('user.category')+"(*)", class: 'col-sm-4' %>
+              <%= f.select :category_id, options_from_collection_for_select(Category.all, :id, :name), { include_blank: true }, { class: "form-control col", required: 'required' } %>
+            </div>
+            <div class="form-group row">
+              <%= f.label :affiliation, t('user.affiliation')+"(*)", class: 'col-sm-4' %>
+              <%= f.text_field :affiliation, placeholder:  "海山商事", class: "form-control col", required: 'required' %>
+            </div>
+            <div class="form-group row">
+              <%= f.label :title, t('user.title')+"(*)", class: 'col-sm-4' %>
+              <%= f.text_field :title, placeholder:  "代表取締役社長", class: "form-control col", required: 'required' %>
+            </div>
+            <div class="form-group row">
+              <%= f.label :email, t('user.email')+"(*)", class: 'col-sm-4' %>
+              <%= f.email_field :email, placeholder: "test@example.com", class: "form-control col", required: 'required' %>
+            </div>
+
+            <div class="form-group">
+              <%= f.submit t('submit'), class: "btn btn-primary" %>
+            </div>
+          <% end %>
         <% end %>
-
       <% end %>
 
     </div>
@@ -291,12 +301,13 @@
 <div class="container-fluid" style="background: white; padding: 60px;" id="how_to_go">
   <div class="row">
     <div class="offset-1">
-      <h1>How to go?</h1>
+      <h1>Location</h1>
     </div>
   </div>
 
   <div class="row">
     <div class="col-sm-6">
+      <li>Place name: <%= @event.place.name %></li>
       <li>Nearest Station: <%= @event.place.nearest_station %></li>
       <p><%= simple_format(@event.place.how_to_go) %></p>
     </div>
