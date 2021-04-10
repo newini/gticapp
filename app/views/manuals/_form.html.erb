@@ -48,7 +48,7 @@
   }
 </script>
 
-<!-- Modal -->
+<!-- Image upload Modal -->
 <div class="modal fade" id="modalUploadImage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -65,8 +65,7 @@
             <%= file_field nil, :file, id: 'fileInputImage', class: 'form-control-file' %>
           </div>
           <div>
-            <button class="btn btn-primary" type="submit" onclick="addImgTag()">Submit</button>
-            <%#= form.submit class: "btn btn-primary", onclick: "addImgTag()" %><!-- this will disable btn after one click -->
+            <%= form.submit class: "btn btn-primary", onclick: "addImgTag()", data: { disable_with: false } %>
           </div>
         <% end %>
       </div>

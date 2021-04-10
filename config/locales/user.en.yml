@@ -27,4 +27,5 @@ en:
 
   contact:
     subject: Subject
-    body: Body
+    body: Body (at least 100 characters)
+    minimum_characters_message: Please input at least 100 characters.

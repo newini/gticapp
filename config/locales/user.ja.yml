@@ -27,4 +27,5 @@ ja:
 
   contact:
     subject: 件名
-    body: 本文
+    body: 本文 (100文字以上)
+    minimum_characters_message: 100文字以上入力してください。
