@@ -178,7 +178,7 @@
 
   <div class="row" data-aos="fade-up">
     <div class="col-3">
-      <h5 class="text-right" style="color: red;"><%= (@event.start_time+60*120).strftime('%H:%M') %></h5>
+      <h5 class="text-right" style="color: red;"><%= @event.end_time.strftime('%H:%M') %></h5>
     </div>
     <div class="vl" ></div>
     <div class="col">
@@ -283,7 +283,7 @@
   <div class="row">
     <div class="col-sm-6">
       <li>Nearest Station: <%= @event.place.nearest_station %></li>
-      <p><%= @event.place.how_to_go %></p>
+      <p><%= simple_format(@event.place.how_to_go) %></p>
     </div>
 
       <iframe height="300" frameborder="0" class= "col-sm-6" style="border:0"
@@ -293,7 +293,21 @@
 </div>
 
 
-<!----------- Map --------------->
+<!----------- Note --------------->
+<div class="container-fluid" style="background: white; padding: 60px;" id="note">
+  <div class="row">
+    <div class="offset-1">
+      <h1>Note</h1>
+    </div>
+  </div>
+
+  <div class="row">
+    <%= simple_format(@event.note) %>
+  </div>
+</div>
+
+
+<!----------- Go to Top button --------------->
 <div class="fixed-bottom text-right">
   <a href="#top" class="btn btn-info"><i class="fas fa-arrow-up" style="font-size: 40px;"></i></a>
 </div>

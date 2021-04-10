@@ -40,7 +40,6 @@
           <% end %>
         </button>
       </div>
-
     </div>
 
     <div class="row" style="background: white;">
@@ -59,6 +58,10 @@
             <td><%= @event.start_time.strftime('%Y-%m-%d %H:%M') %></td>
           </tr>
           <tr>
+            <th>終了日時</th>
+            <td><%= @event.end_time.strftime('%H:%M') %></td>
+          </tr>
+          <tr>
             <th>会場</th>
             <td><%= Place.find(@event.place_id).name if @event.place_id.present? and Place.where(id: @event.place_id).present?%></td>
           </tr>
@@ -71,7 +74,7 @@
           </tr>
           <tr>
             <th>備考</th>
-            <td><%= @event.note %></td>
+            <td><%= simple_format(@event.note) %></td>
           </tr>
           <tr>
             <th>Facebook event URL</th>
@@ -91,7 +94,6 @@
 
         <table class="table table-bordered table-hover">
           <tr>
-            <th>未定</th>
             <th>参加予定</th>
             <th>参加者数</th>
             <th>欠席</th>
@@ -106,7 +108,7 @@
         </table>
 
         <div class="row">
-          <%= link_to 'イベント情報編集', edit_event_path(@event), class: "col btn btn-lg btn-primary" %>
+          <%= link_to 'イベント情報編集', edit_event_path(@event), class: "col btn btn-primary" %>
           <%= link_to 'Delete event', event_path(@event), class: "col btn btn-danger",
                           method: :delete, data: { confirm: "Delete, Are you sure?" } %>
         </div>

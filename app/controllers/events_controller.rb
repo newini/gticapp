@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
   include EventsHelper
   include MembersHelper
-  before_action :active_staff_only
+  before_action :active_staff_only, except: [:serve_file]
   before_action :find_selected_event, only: [
     :show, :edit, :update, :destroy,
     :change_role, :switch_black_list_flg, :update_birthday, :change_status,
@@ -341,7 +341,10 @@ class EventsController < ApplicationController
   private
     def event_params
       params.require(:event).permit(
-          :name, :cumulative_number, :start_time, :end_time, :fb_event_id, :place_id, :fee, :event_category_id, :note
+          :name, :cumulative_number,
+          :start_time, :end_time,
+          :fb_event_id, :place_id,
+          :fee, :event_category_id, :note
       )
     end
 
