@@ -72,6 +72,11 @@ gem 'devise-i18n-views'
 # Import xlsx file
 gem "roo"
 
+# Convert xml to hash
+gem 'rexml'
+
+# ====================================
+# HTML, CSS
 # Style
 gem 'bootstrap' # Instead of "bootstrap-sass" due to old
 
@@ -83,5 +88,6 @@ gem 'will_paginate-bootstrap4' # https://github.com/delef/will_paginate-bootstra
 # https://chartkick.com/
 gem "chartkick"
 
-# Convert xml to hash
-gem 'rexml'
+# country_select in form
+# https://github.com/stefanpenner/country_select
+gem 'country_select'

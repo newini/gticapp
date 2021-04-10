@@ -223,10 +223,11 @@ class MembersController < ApplicationController
     def member_params
       params.require(:member).permit(
         :first_name, :last_name, :first_name_alphabet, :last_name_alphabet,
-        :uid, :note,
-        :age, :gender, :birthday,
-        :affiliation, :title,
         :category_id, :email,
+        :biography, :note,
+        :affiliation, :title,
+        :uid, :website,
+        :country_code, :age, :gender, :birthday,
         :azsa_flg, :black_list_flg, :past_presenter_flg, :contributor_flg
       )
     end

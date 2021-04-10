@@ -36,7 +36,7 @@
             <% if i == 0 %>
               <%= content_tag :td, "第#{event[:event][:cumulative_number]}回", rowspan: event[:detail].length %>
               <%= content_tag :td, rowspan: event[:detail].length do %>
-                <%= link_to event[:event][:name], registed_event_path(event[:event][:id]) %>
+                <%= link_to event[:event][:name], event_path(event[:event][:id]) %>
               <% end %>
               <%= content_tag :td, event[:event][:date], rowspan: event[:detail].length %>
               <% if event[:event][:event_category_id].present? and EventCategory.where(id: event[:event][:event_category_id]).present? %>

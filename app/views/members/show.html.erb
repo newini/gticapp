@@ -1,94 +1,63 @@
 <div class="row">
   <aside class="col-md-2">
     <section>
-      <%= render'members/side' %>
+      <%= render 'members/side' %>
     </section>
   </aside>
 
-  <div class="col-md-5">
-    <h2>メンバー情報</h2>
-    <table class="table table-bordered">
-      <tr>
-        <th><%= t('user.last_name') %></th>
-        <td><%= @member.last_name %></td>
-      </tr>
-      <tr>
-        <th><%= t('user.first_name') %></th>
-        <td><%= @member.first_name %></td>
-      </tr>
-      <tr>
-        <th><%= t('user.last_name_alphabet') %></th>
-        <td><%= @member.last_name_alphabet %></td>
-      </tr>
-      <tr>
-        <th><%= t('user.first_name_alphabet') %></th>
-        <td><%= @member.first_name_alphabet %></td>
-      </tr>
-      <tr>
-        <th>Facebook名</th>
-        <td><%= @member.name %></td>
-      </tr>
-      <tr>
-        <th>Facebook ID</th>
-        <td><%= @member.uid %></td>
-      </tr>
-      <tr>
-        <th>Gender</th>
-        <td><%= show_gender(@member.gender) %></td>
-      </tr>
-      <tr>
-        <th>Age</th>
-        <td><%= show_age(@member.age) %></td>
-      </tr>
-      <th>誕生月</th>
-        <td><%= t('date.abbr_month_names')[@member.birthday.strftime('%m').to_i] if @member.birthday %></td>
-      </tr>
-      <tr>
-        <th><%= t('user.email') %></th>
-        <td><%= @member.email %></td>
-      </tr>
+  <div class="col">
+    <div class="row">
+      <h2>メンバー情報</h2>
+    </div>
 
-      <tr>
-        <th><%= t('user.category') %></th>
-        <td><%= Category.find(@member.category_id).name if @member.category_id.present? %></td>
-      </tr>
-      <tr>
-        <th><%= t('user.affiliation') %></th>
-        <td><%= @member.affiliation %></td>
-      </tr>
-      <tr>
-        <th><%= t('user.title') %></th>
-        <td><%= @member.title %></td>
-      </tr>
-      <tr>
-        <th>備考</th>
-        <td><%= @member.note %></td>
-      </tr>
+    <div class="row">
+      <fieldset disabled="disabled">
+        <%= render 'form'%>
+      </fieldset>
+    </div>
 
-      <tr>
-        <th>過去登壇者</th>
-        <td><%= get_check_icon(@member.past_presenter_flg) %></td>
-      </tr>
-      <tr>
-        <th>Azsa?</th>
-        <td><%= get_check_icon(@member.azsa_flg) %></td>
-      </tr>
-      <tr>
-        <th>Contributor</th>
-        <td><%= get_check_icon(@member.contributor_flg) %></td>
-      </tr>
-      <tr>
-        <th>ブラックリスト?</th>
-        <td><%= get_check_icon(@member.black_list_flg) %></td>
-      </tr>
-    </table>
+    <div class="row">
+      <%= link_to 'メンバー情報編集', edit_member_path(@member), class: "btn btn-lg btn-primary col-sm-5" %>
+      <%= link_to 'メンバー削除', @member, value:@member.id, class: 'btn btn-lg btn-warning offset-1 col-sm-5',
+        method: :delete, data: { confirm: "削除してもよろしいですか？" } %>
+    </div>
 
-    <%= link_to 'メンバー情報編集', edit_member_path(@member), class: "btn btn-block btn-large btn-primary" %>
-    <%= link_to 'メンバー削除', @member, value:@member.id, class: 'btn btn-large btn-warning btn-block',
-      method: :delete, data: { confirm: "削除してもよろしいですか？" } %>
-  </div>
+    <br>
+    <hr>
 
-  <div class="col-md-5">
-    <%= render 'participated_events' %>
+    <div class="row">
+      <h2>出席イベント</h2>
+    </div>
+
+    <div class="row">
+      <div class=col-sm-6>
+        <table class="table table-bordered table-hover table-sm">
+          <thead>
+            <tr>
+              <th style="width: 30%;">イベント名</th>
+              <th style="width: 30%;">開催日</th>
+              <th style="width: 40%;">Role</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @member.participated_events.order("start_time DESC").each do |event| %>
+              <tr>
+                <td><%= link_to event.name, event_path(event) %></td>
+                <td><%= event.start_time.strftime("%Y/%m/%d") %></td>
+                <td><%= show_role(@member,event) %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+
+      <div class=col>
+        <dl class="dl-horizontal">
+          <dt>総出席回数</dt>
+          <dd><%= @member.participated_events.count %>回</dd>
+        </dl>
+      </div>
+    </div>
   </div>
 </div>
