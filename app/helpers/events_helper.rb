@@ -43,95 +43,43 @@ module EventsHelper
     end
   end
 
-
   def select_status(member)
     relation = member.relationships.find_by_event_id(@event)
-    status = relation.present? ? relation.status : nil
-    case status
-    when 1, nil
-      link_to("追加", change_status_event_path(:member_id => member.id, :direction => 2), :method => :post, :class => "btn btn-xs btn-secondary", remote: true)
+    status_code = relation.present? ? relation.status : nil
+    case status_code
     when 2
+      status_now = ["参加予定", 2]
+      status_array = [["出席", 3], ["ドタ参", 6], ["欠席", 4], ["ドタキャン", 7], ["No-show", 5]]
+    when 3
+      status_now = ["出席", 3]
+      status_array = [["参加予定", 2], ["ドタ参", 6], ["欠席", 4], ["ドタキャン", 7], ["No-show", 5]]
+    when 0, 4
+      status_now = ["欠席", 4]
+      status_array = [["参加予定", 2], ["出席", 3], ["ドタ参", 6], ["ドタキャン", 7], ["No-show", 5]]
+    when 5
+      status_now = ["No-show", 5]
+      status_array = [["参加予定", 2], ["出席", 3], ["ドタ参", 6], ["欠席", 4], ["ドタキャン", 7]]
+    when 6
+      status_now = ["ドタ参", 6]
+      status_array = [["参加予定", 2], ["出席", 3], ["欠席", 4], ["ドタキャン", 7], ["No-show", 5]]
+    when 7
+      status_now = ["ドタキャン", 7]
+      status_array = [["参加予定", 2], ["出席", 3], ["ドタ参", 6], ["欠席", 4], ["No-show", 5]]
+    end
+
+    case status_code
+    when 1, nil
+      link_to("追加", change_status_event_path(member_id: member.id, direction: 2), method: :post, class: "btn btn-xs btn-secondary", remote: true)
+    else
       content_tag(:div, class: "btn-group") {
-        concat content_tag(:button, class: "btn dropdown-toggle btn-info btn-xs", data: {:toggle => "dropdown"}) {
-          content_tag( :span, "参加予定", class: "caret")
+        concat content_tag(:button, class: "btn dropdown-toggle btn-info btn-xs", data: {toggle: "dropdown"}) {
+          content_tag( :span, status_now[0], class: "caret")
         }
         concat content_tag(:div, class: "dropdown-menu", role: "menu") {
-          concat link_to("出席", change_status_event_path(:member_id => member.id, :direction => 3, referer: @referer), class: 'dropdown-item', :method => :post, remote: true)
-          concat link_to("ドタ参", change_status_event_path(:member_id => member.id, :direction => 6, referer: @referer), class: 'dropdown-item', :method => :post, remote: true)
-          concat link_to("欠席", change_status_event_path(:member_id => member.id, :direction => 4, referer: @referer), class: 'dropdown-item', :method => :post, remote: true)
-          concat link_to "ドタキャン", change_status_event_path(:member_id => member.id, :direction => 7, referer: @referer), class: 'dropdown-item', :method => :post, remote: true
-          concat link_to("No-show", change_status_event_path(:member_id => member.id, :direction => 5, referer: @referer), class: 'dropdown-item', :method => :post, remote: true)
-          concat link_to("Delete", destroy_relationship_event_path(:member_id => member.id), class: 'dropdown-item', :method => :post, remote: true)
-        }
-      }
-    when 3
-      content_tag(:div, class: "btn-group") {
-        concat content_tag(:button, class: "btn dropdown-toggle btn-secondary btn-xs", :"data-toggle" => "dropdown") {
-          content_tag :span, "出席",  class: "caret"
-        }
-        concat content_tag( :ul, class: "dropdown-menu", role: "menu") {
-          concat link_to("参加予定", change_status_event_path(:member_id => member.id, :direction => 2, referer: @referer), class: 'dropdown-item', :method => :post, remote: true)
-          concat link_to("ドタ参", change_status_event_path(:member_id => member.id, :direction => 6, referer: @referer), class: 'dropdown-item', :method => :post, remote: true)
-          concat link_to "欠席", change_status_event_path(:member_id => member.id, :direction => 4, referer: @referer), class: 'dropdown-item', :method => :post, remote: true
-          concat link_to "ドタキャン", change_status_event_path(:member_id => member.id, :direction => 7, referer: @referer), class: 'dropdown-item', :method => :post, remote: true
-          concat link_to("No-show", change_status_event_path(:member_id => member.id, :direction => 5, referer: @referer), class: 'dropdown-item', :method => :post, remote: true)
-          concat link_to("Delete", destroy_relationship_event_path(:member_id => member.id), class: 'dropdown-item', :method => :post, remote: true)
-        }
-      }
-    when 0, 4
-      content_tag(:div, class: "btn-group") {
-        concat content_tag(:button, class: "btn dropdown-toggle btn-secondary btn-xs", :"data-toggle" => "dropdown") {
-          content_tag(:span, "欠席", class: "caret")
-        }
-        concat content_tag(:ul, class: "dropdown-menu", role: "menu") {
-          concat link_to("参加予定", change_status_event_path(:member_id => member.id, :direction => 2, referer: @referer), class: 'dropdown-item', :method => :post, remote: true)
-          concat link_to("出席", change_status_event_path(:member_id => member.id, :direction => 3, referer: @referer), class: 'dropdown-item', :method => :post, remote: true)
-          concat link_to("ドタ参", change_status_event_path(:member_id => member.id, :direction => 6, referer: @referer), class: 'dropdown-item', :method => :post, remote: true)
-          concat link_to "ドタキャン", change_status_event_path(:member_id => member.id, :direction => 7, referer: @referer), class: 'dropdown-item', :method => :post, remote: true
-          concat link_to("No-show", change_status_event_path(:member_id => member.id, :direction => 5, referer: @referer), class: 'dropdown-item', :method => :post, remote: true)
-          concat link_to("Delete", destroy_relationship_event_path(:member_id => member.id), class: 'dropdown-item', :method => :post, remote: true)
-        }
-      }
-    when 5
-      content_tag(:div, class: "btn-group") {
-        concat content_tag(:button, class: "btn dropdown-toggle btn-secondary btn-xs", :"data-toggle" => "dropdown") {
-          content_tag(:span, "No-show", class: "caret")
-        }
-        concat content_tag(:ul, class: "dropdown-menu", role: "menu") {
-          concat link_to("参加予定", change_status_event_path(:member_id => member.id, :direction => 2, referer: @referer), class: 'dropdown-item', :method => :post, remote: true)
-          concat link_to("出席", change_status_event_path(:member_id => member.id, :direction => 3, referer: @referer), class: 'dropdown-item', :method => :post, remote: true)
-          concat link_to("ドタ参", change_status_event_path(:member_id => member.id, :direction => 6, referer: @referer), class: 'dropdown-item', :method => :post, remote: true)
-          concat link_to("欠席", change_status_event_path(:member_id => member.id, :direction => 4, referer: @referer), class: 'dropdown-item', :method => :post, remote: true)
-          concat link_to "ドタキャン", change_status_event_path(:member_id => member.id, :direction => 7, referer: @referer), class: 'dropdown-item', :method => :post, remote: true
-          concat link_to("Delete", destroy_relationship_event_path(:member_id => member.id), class: 'dropdown-item', :method => :post, remote: true)
-        }
-      }
-    when 6
-      content_tag(:div, class: "btn-group") {
-        concat content_tag(:button, class: "btn dropdown-toggle btn-secondary btn-xs", :"data-toggle" => "dropdown") {
-          content_tag :span, "ドタ参",  class: "caret"
-        }
-        concat content_tag( :ul, class: "dropdown-menu", role: "menu") {
-          concat link_to("参加予定", change_status_event_path(:member_id => member.id, :direction => 2, referer: @referer), class: 'dropdown-item', :method => :post, remote: true)
-          concat link_to("出席", change_status_event_path(:member_id => member.id, :direction => 3, referer: @referer), class: 'dropdown-item', :method => :post, remote: true)
-          concat link_to "欠席", change_status_event_path(:member_id => member.id, :direction => 4, referer: @referer), class: 'dropdown-item', :method => :post, remote: true
-          concat link_to "ドタキャン", change_status_event_path(:member_id => member.id, :direction => 7, referer: @referer), class: 'dropdown-item', :method => :post, remote: true
-          concat link_to("No-show", change_status_event_path(:member_id => member.id, :direction => 5, referer: @referer), class: 'dropdown-item', :method => :post, remote: true)
-          concat link_to("Delete", destroy_relationship_event_path(:member_id => member.id), class: 'dropdown-item', :method => :post, remote: true)
-        }
-      }
-    when 7
-      content_tag(:div, class: "btn-group") {
-        concat content_tag(:button, class: "btn dropdown-toggle btn-secondary btn-xs", :"data-toggle" => "dropdown") {
-          content_tag(:span, "ドタキャン", class: "caret")
-        }
-        concat content_tag(:ul, class: "dropdown-menu", role: "menu") {
-          concat link_to("参加予定", change_status_event_path(:member_id => member.id, :direction => 2, referer: @referer), class: 'dropdown-item', :method => :post, remote: true)
-          concat link_to("出席", change_status_event_path(:member_id => member.id, :direction => 3, referer: @referer), class: 'dropdown-item', :method => :post, remote: true)
-          concat link_to("ドタ参", change_status_event_path(:member_id => member.id, :direction => 6, referer: @referer), class: 'dropdown-item', :method => :post, remote: true)
-          concat link_to("欠席", change_status_event_path(:member_id => member.id, :direction => 4, referer: @referer), class: 'dropdown-item', :method => :post, remote: true)
-          concat link_to("No-show", change_status_event_path(:member_id => member.id, :direction => 5, referer: @referer), class: 'dropdown-item', :method => :post, remote: true)
-          concat link_to("Delete", destroy_relationship_event_path(:member_id => member.id), class: 'dropdown-item', :method => :post, remote: true)
+          status_array.each do |status|
+            concat link_to(status[0], change_status_event_path(member_id: member.id, direction: status[1], referer: @referer), class: 'dropdown-item', method: 'post', remote: true)
+          end
+          concat link_to("Delete", destroy_relationship_event_path(member_id: member.id), class: 'dropdown-item', method: :post, remote: true)
         }
       }
     end
@@ -165,19 +113,17 @@ module EventsHelper
       title = ["参加者", "GTIC", "Presenter", "Panelist", "Moderator", "Guest", "過去登壇者"]
       role = [nil, "gtic", "presenter", "panelist", "moderator", "guest", "past_presenter"]
     end
-      content_tag(:div, class: "btn-group") {
-        concat content_tag(:button,"#{title[0]} #{content_tag(:span, '', class: 'caret')}".html_safe, :class => "dropdown-toggle btn btn-xs btn-default", data: {:toggle => "dropdown"})
-        concat content_tag(:ul, class: "dropdown-menu", role: "menu", :"aria-labelledby" => "dLabel"){
-          content_tag(:li){
-            concat link_to(title[1], change_role_event_path(:member_id => member.id, :role => role[1], referer: @referer), :method => :post, remote: true)
-            concat link_to(title[2], change_role_event_path(:member_id => member.id, :role => role[2], referer: @referer), :method => :post, remote: true)
-            concat link_to(title[3], change_role_event_path(:member_id => member.id, :role => role[3], referer: @referer), :method => :post, remote: true)
-            concat link_to(title[4], change_role_event_path(:member_id => member.id, :role => role[4], referer: @referer), :method => :post, remote: true)
-            concat link_to(title[5], change_role_event_path(:member_id => member.id, :role => role[5], referer: @referer), :method => :post, remote: true)
-            concat link_to(title[6], change_role_event_path(:member_id => member.id, :role => role[6], referer: @referer), :method => :post, remote: true)
-          }
-        }
+    content_tag(:div, class: "btn-group") {
+      concat content_tag(:button, "#{title[0]} #{content_tag(:span, '', class: 'caret')}".html_safe, class: "dropdown-toggle btn btn-xs btn-info", data: {toggle: "dropdown"})
+      concat content_tag(:div, class: "dropdown-menu", role: "menu", 'aria-labelledby': "dLabel") {
+        concat link_to(title[1], change_role_event_path(member_id: member.id, role: role[1], referer: @referer), class: 'dropdown-item', method: 'post', remote: true)
+        concat link_to(title[2], change_role_event_path(member_id: member.id, role: role[2], referer: @referer), class: 'dropdown-item', method: 'post', remote: true)
+        concat link_to(title[3], change_role_event_path(member_id: member.id, role: role[3], referer: @referer), class: 'dropdown-item', method: 'post', remote: true)
+        concat link_to(title[4], change_role_event_path(member_id: member.id, role: role[4], referer: @referer), class: 'dropdown-item', method: 'post', remote: true)
+        concat link_to(title[5], change_role_event_path(member_id: member.id, role: role[5], referer: @referer), class: 'dropdown-item', method: 'post', remote: true)
+        concat link_to(title[6], change_role_event_path(member_id: member.id, role: role[6], referer: @referer), class: 'dropdown-item', method: 'post', remote: true)
       }
+    }
   end
 
   def show_fee(member, event)
@@ -248,18 +194,6 @@ module EventsHelper
       link_to switch_black_list_flg_event_path(member_id: member.id, referer: @referer, black_list_flg: true), method: "post", remote: true, class:"btn btn-xs" do
         content_tag(:span, "", class:"fa fa-square")
       end
-    end
-  end
-
-  def show_birthday(member, event)
-    if member.birthday
-      if member.birthday.strftime("%m") == event.start_time.strftime("%m")
-        return "B"
-      else
-        return ""
-      end
-    else
-      return ""
     end
   end
 
