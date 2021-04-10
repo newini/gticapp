@@ -55,15 +55,19 @@ class StaticPagesController < ApplicationController
     event = Event.find(params[:event_id])
 
     # Check time
-    if is_expired_event(event.start_time)
-      redirect_to event_detail_path(event_id: event.id), notice: "今は参加登録できません。GTICスタッフに直接連絡お願いします。Cannot register now. Please contact to GTIC staff directry."
-      return
-    end
+    #if is_expired_event(event.start_time)
+    #  redirect_to event_detail_path(event_id: event.id), notice: "今は参加登録できません。GTICスタッフに直接連絡お願いします。Cannot register now. Please contact to GTIC staff directry."
+    #  return
+    #end
 
     # Get member id
     if current_user
       user = User.find(current_user.id)
       member = user.member
+      if not member
+        redirect_to edit_user_path(user), flash: { notice: "ユーザー情報をご記入ください。Please fill your information." }
+        return
+      end
       member_id = member.id
     else
       member = Member.from_registration(params)

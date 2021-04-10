@@ -215,7 +215,7 @@
 
   <div class="row">
     <div class="col-sm-6" data-aos="fade-right">
-      <% if @is_expired_event %>
+      <% if not @is_expired_event %>
         <h4>イベントは終了しました。The event end.</h4>
 
       <% else %>
@@ -234,7 +234,8 @@
           <% end %>
 
         <% else %>
-          <h5>記入して送信してください。</h5>
+          <%= link_to "Is a GTIC User? Please Sign in", new_user_session_path, class: "btn btn-primary btn-lg col-sm-6" %>
+          <h5>または、記入して送信してください。</h5>
           <%= form_with url: register_event_path(event_id: @event.id) do |f| %>
             <div class="form-group row">
               <%= f.label :last_name, t('user.last_name')+"(*)", class: 'col-sm-4' %>
