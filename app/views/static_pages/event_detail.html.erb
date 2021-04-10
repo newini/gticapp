@@ -11,20 +11,14 @@
   position: absolute;
   z-index: -1;
 }
-
-.vl {
-  border-left: 4px solid green;
-}
 </style>
 
 <div class="container-fluid event-bkg" style="padding: 60px;">
 
-  <div class="row" data-aos="fade-left">
-    <div class="offset-11">
-      <%= link_to "https://facebook.com/"+@event.fb_event_id, class: 'btn btn-primary' do %>
-        <i class="fab fa-facebook-f"></i>
-      <% end %>
-    </div>
+  <div class="text-right" data-aos="fade-left">
+    <%= link_to "https://facebook.com/"+@event.fb_event_id, class: 'btn btn-primary' do %>
+      <i class="fab fa-facebook-f"></i>
+    <% end %>
   </div>
 
   <br><br><br><br>
@@ -58,14 +52,13 @@
     <div class="offset-1">
       <h1 style="font-size: 50px;"><i class="fas fa-map-marker-alt"></i></h1>
     </div>
-    <div class="col-9" data-aos="fade-right">
+    <div class="col" data-aos="fade-right">
       <strong>WHERE</strong><br>
-      <h5><%= Place.find(@event.place_id).name %></h5>
+      <h5><%= link_to @event.place.name, '#how_to_go' %></h5>
     </div>
 
-    <div class="col" data-aos="fade-left">
-      <small>参加費: <%= show_currency(@event.fee) %></small>
-      <%= link_to "参加登録", event_detail_path(event_id: @event.id, anchor: 'registration'), class: 'btn btn-success btn-lg btn-block' %>
+    <div class="text-right" data-aos="fade-left">
+      <%= link_to "参加登録", '#registration', class: 'btn btn-success btn-lg btn-block' %>
     </div>
   </div>
 
@@ -75,7 +68,7 @@
 
 
 <!----------- Speakers --------------->
-<div class="container-fluid" style="background:white; padding: 60px;">
+<div class="container-fluid" style="background: white; padding: 60px;">
 
   <div class="row">
     <div class="offset-1">
@@ -87,9 +80,11 @@
     <% @presentations.sort_by{|e| e[:id]}.each do |presentation| %>
       <% presentation.presenters.each do |presenter| %>
 
-        <div class="card col-4" data-aos="fade-up">
+        <div class="card col-sm-4" data-aos="fade-up">
           <h3 style="display: inline;"><%= "#{presenter.try(:last_name)} #{presenter.try(:first_name)} 氏" %></h3>
           <h5><strong><%= presenter.affiliation %></strong></h5> <%= presenter.title %><br>
+          <%= link_to presenter.website, presenter.website if presenter.website %>
+          <p><%= presenter.biography %></p>
         </div>
 
       <% end %>
@@ -97,6 +92,7 @@
   </div>
 
 </div>
+
 
 <!----------- Schedule --------------->
 <div class="container-fluid" style="background: rgb(250, 255, 255); padding: 60px;">
@@ -129,9 +125,7 @@
   </div>
 
   <% n = 1 %>
-  <% last_presen_end_time = DateTime.now %>
   <% @presentations.sort_by{|e| e[:id]}.each do |presentation| %>
-    <% last_presen_end_time = presentation.end_time %>
     <div class="row" data-aos="fade-up">
       <div class="col-3">
         <h5 class="text-right" style="color: red;"><%= presentation.start_time.strftime('%H:%M') + ' ~ ' + presentation.end_time.strftime('%H:%M') if presentation.start_time %></h5>
@@ -162,7 +156,7 @@
 
   <div class="row" data-aos="fade-up">
     <div class="col-3">
-      <h5 class="text-right" style="color: red;"><%= last_presen_end_time.strftime('%H:%M') if last_presen_end_time %></h5>
+      <h5 class="text-right" style="color: red;"><%= (@event.start_time+60*80).strftime('%H:%M') %></h5>
     </div>
     <div class="vl" ></div>
     <div class="col">
@@ -173,7 +167,7 @@
 
   <div class="row" data-aos="fade-up">
     <div class="col-3">
-      <h5 class="text-right" style="color: red;"><%= (last_presen_end_time+60*10).strftime('%H:%M') if last_presen_end_time %></h5>
+      <h5 class="text-right" style="color: red;"><%= (@event.start_time+60*90).strftime('%H:%M') %></h5>
     </div>
     <div class="vl" ></div>
     <div class="col">
@@ -184,7 +178,7 @@
 
   <div class="row" data-aos="fade-up">
     <div class="col-3">
-      <h5 class="text-right" style="color: red;"><%= '22:00' %></h5>
+      <h5 class="text-right" style="color: red;"><%= (@event.start_time+60*120).strftime('%H:%M') %></h5>
     </div>
     <div class="vl" ></div>
     <div class="col">
@@ -205,7 +199,7 @@
   </div>
 
   <div class="row">
-    <div class="col-6" data-aos="fade-right">
+    <div class="col-sm-6" data-aos="fade-right">
       <% if user_signed_in? %>
 
         <% if @relationship %>
@@ -259,7 +253,7 @@
 
     </div>
 
-    <div class="col-6" data-aos="fade-left">
+    <div class="col-sm-6" data-aos="fade-left">
       <h5>＜会費 fee＞</h5>
       <li>一般 business person 及び、仕事を持っていらっしゃる社会人学生: 5,000円</li>
       <li>フルタイムの学生 full time student: 3,000円（学生証をお持ち下さい。Bring your student ID.）</li>
@@ -275,4 +269,31 @@
       </p>
     </div>
   </div>
+</div>
+
+
+<!----------- Map --------------->
+<div class="container-fluid" style="background: white; padding: 60px;" id="how_to_go">
+  <div class="row">
+    <div class="offset-1">
+      <h1>How to go?</h1>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6">
+      <li>Nearest Station: <%= @event.place.nearest_station %></li>
+      <p><%= @event.place.how_to_go %></p>
+    </div>
+
+      <iframe height="300" frameborder="0" class= "col-sm-6" style="border:0"
+        src="https://maps.google.com/maps?q=<%= @event.place.latitude %>,<%= @event.place.longitude %>&hl=ja&z=14&output=embed" allowfullscreen>
+      </iframe>
+  </div>
+</div>
+
+
+<!----------- Map --------------->
+<div class="fixed-bottom text-right">
+  <a href="#top" class="btn btn-info"><i class="fas fa-arrow-up" style="font-size: 40px;"></i></a>
 </div>
