@@ -33,49 +33,7 @@
       <h1 class="text-center">-最新イベント情報-</h1>
       <p class="text-center"><%= link_to "全てイベント一覧はこちら", event_list_path %></p>
 
-      <% @events.each do |event| %>
-
-        <div class="card" data-aos="fade-up">
-          <div class="card-body">
-            <div class="row">
-              <div class="col-sm-4">
-                <%= image_tag serve_file_event_path(id: event[:event][:id], header: 'header'), class: 'img-fluid' %>
-              </div>
-
-              <div class="col-sm-7">
-                <h5 class="card-title">
-                  <%= link_to event_detail_path(event_id: event[:event][:id]) do %>
-                    <%= "#{event[:event][:name]}" %><%= "本会" if event[:event][:event_category_id] == 1 %>
-                  <% end %>
-                </h5>
-
-                <%= event[:event][:date] %>
-                <%= Place.find(event[:event][:place]).name if event[:event][:place].present? %>
-
-                <% if event[:detail] %>
-                  <% event[:detail].sort_by{|e| e[:id]}.each do |detail| %>
-                    <li>
-                      <mark><%= detail[:title] %></mark><br>
-                      <% detail[:presenter].reverse_each do |presenter| %>
-                        <strong><%= presenter[:affiliation] %></strong> <%= " " + presenter[:title] + " " + presenter[:name] + " " + "氏" %>
-                      <% end %>
-                    </li>
-                  <% end %>
-                <% end %>
-              </div>
-
-              <div class="col-sm-1">
-                <%= link_to "詳細", event_detail_path(event_id: event[:event][:id]), class: 'btn btn-outline-info btn-block' %>
-                <%= link_to "参加登録", event_detail_path(event_id: event[:event][:id], anchor: 'registration'), class: 'btn btn-outline-success btn-block' %>
-                <%= link_to "https://facebook.com/"+event[:event][:fb_event_id], class: 'btn btn-outline-primary btn-block', target: 'blank' do %>
-                  <i class="fab fa-facebook-f"></i>
-                <% end %>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      <% end %>
+      <%= render 'static_pages/events' %>
 
     </div>
   </div>

@@ -6,6 +6,7 @@ class User < ApplicationRecord
          :omniauthable, omniauth_providers: [:facebook] # For facebook login
 
   belongs_to :member
+  belongs_to :category
 
   after_create :send_welcome_email
   def send_welcome_email

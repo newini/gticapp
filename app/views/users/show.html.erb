@@ -4,13 +4,11 @@
   </div>
 
   <div class="col">
-    <center>
 
-      <h1>My Page</h1>
+    <h1 class="text-center">My Page</h1>
 
-      <div class="center">
-        <p><%= t('user.welcome') %> <%= "#{@user.name}" %> <%= t('user.name_suffix')%></p>
-      </div>
+    <div class="center">
+      <p><%= t('user.welcome') %> <%= "#{@user.name}" %> <%= t('user.name_suffix')%></p>
 
       <div class="fb-page" data-href="https://www.facebook.com/GTICafe/"
         data-tabs="events" data-width="500" data-height="" data-small-header="false"
@@ -22,54 +20,78 @@
           </a>
         </blockquote>
       </div>
+    </div>
 
+    <%= render 'static_pages/events' %>
 
-      <div class="row">
-        <%= render 'static_pages/events' %>
-      </div>
-
-
-      <h2>My Profile</h2>
+    <div class="row">
       <% if @user.last_name %>
-        <table class="table table-bordered">
-          <tr>
-            <th style="width: 20%;">Name</th>
-            <td><%= @user.last_name + ' ' + @user.first_name %> <small><%= @user.last_name_alphabet + ' ' + @user.first_name_alphabet %></small></td>
-          </tr>
 
-          <tr>
-            <th>Work</th>
-            <td><%= Category.find(@user.category_id).name if @user.category_id.present? %> <%= @user.affiliation %> <%= @user.title %></td>
-          </tr>
+        <div class="col-sm-6">
+          <h2>My Profile</h2>
+          <table class="table table-bordered">
+            <tr>
+              <th style="width: 20%;">Name</th>
+              <td><%= @user.last_name + ' ' + @user.first_name %> <small><%= @user.last_name_alphabet + ' ' + @user.first_name_alphabet %></small></td>
+            </tr>
+            <tr>
+              <th><%= t('user.category')%></th>
+              <td><%= @user.category.name %></td>
+            </tr>
+            <tr>
+              <th><%= t('user.affiliation')%></th>
+              <td><%= @user.affiliation %></td>
+            </tr>
+             <tr>
+              <th><%= t('user.title')%></th>
+              <td><%= @user.title %></td>
+            </tr>
+            <tr>
+              <th><%= t('user.email')%></th>
+              <td><%= @user.email %></td>
+            </tr>
+          </table>
+        </div>
 
-          <tr>
-            <th>Email</th>
-            <td><%= @user.email %></td>
-          </tr>
-        </table>
+        <div class="col-sm-6">
+          <h3>イベント参加情報</h3>
 
-        <h3>イベント参加情報</h3>
-        <table class="table table-bordered">
-          <tr>
-            <th style="width: 20%;">イベント参加回数</th>
-            <td><%#= member.participated_events.count %></td>
-          </tr>
-        </table>
+          <table class="table table-bordered table-hover table-sm">
+            <thead>
+              <tr>
+                <th width="30%">開催日</th>
+                <th width="70%">イベント名</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <% @user.member.participated_events.order("start_time DESC").each do |event| %>
+                <tr>
+                  <td><%= event.start_time.strftime("%Y-%m-%d") %></td>
+                  <td><%= event.name + ' ' + event.event_category.name %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+          <p>イベント総参加回数: <%= @user.member.participated_events.count %></p>
+
+        </div>
 
       <% else %>
         <p><%= t('user.please_complete_profile') %></p>
       <% end %>
+    </div>
 
-      <% if @user.last_name %>
-        <%= link_to t('user.edit_profile'), edit_user_path(current_user), class: "btn btn-info" %>
-      <% else %>
-        <%= link_to t('user.input_profile'), edit_user_path(current_user), class: "btn btn-info" %>
-      <% end %>
+    <% if @user.last_name %>
+      <%= link_to t('user.edit_profile'), edit_user_path(current_user), class: "btn btn-info btn-lg col-sm-4" %>
+    <% else %>
+      <%= link_to t('user.input_profile'), edit_user_path(current_user), class: "btn btn-info btn-lg col-sm-4" %>
+    <% end %>
 
-      <% if staff_signed_in? %>
-        <%= link_to "Delete user", user_path(@user), class: "btn btn-danger",
-          method: :delete, data: { confirm: "本当に削除してもよろしいですか？" } %>
-      <% end %>
-    </center>
+    <% if staff_signed_in? %>
+      <%= link_to "Delete user", user_path(@user), class: "btn btn-danger btn-lg col-sm-4",
+        method: :delete, data: { confirm: "本当に削除してもよろしいですか？" } %>
+    <% end %>
+
   </div>
 </div>

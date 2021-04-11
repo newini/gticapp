@@ -5,7 +5,7 @@ class Member < ActiveRecord::Base
   has_many :relationships, foreign_key: "member_id", dependent: :destroy
   has_many :events, through: :relationships, source: :event
   has_many :registed_events, -> { where "status = 2"}, through: :relationships, source: :event
-  has_many :participated_events, -> { where "status = 3 or status = 6"}, through: :relationships, source: :event # with dotasan
+  has_many :participated_events, -> { where "status = 3 or status = 6"}, through: :relationships, source: :event # participate and dotasan
   has_many :presentationships, foreign_key: "member_id", dependent: :destroy
   has_many :presentations, through: :presentationships, source: :presentation
 #  has_many :presentations, foreign_key: "member_id", dependent: :destroy

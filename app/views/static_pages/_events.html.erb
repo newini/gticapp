@@ -22,7 +22,7 @@
               <li>
                 <mark><%= detail[:title] %></mark><br>
                 <% detail[:presenter].reverse_each do |presenter| %>
-                  <strong><%= presenter[:affiliation] %></strong> <%= " " + presenter[:title] + " " + presenter[:name] + " " + "氏" %>
+                  <strong><%= presenter[:affiliation] %></strong> <%= presenter[:title] %> <strong><%= presenter[:name] %></strong> 氏
                 <% end %>
               </li>
             <% end %>
@@ -31,7 +31,13 @@
 
         <div class="col-sm-1">
           <%= link_to "詳細", event_detail_path(event_id: event[:event][:id]), class: 'btn btn-outline-info btn-block' %>
-          <%= link_to "参加登録", event_detail_path(event_id: event[:event][:id], anchor: 'registration'), class: 'btn btn-outline-success btn-block' %>
+          <% if current_user %>
+            <% if Relationship.where(event_id: event[:event][:id], member_id: current_user.member_id).first.status != 4 %>
+              <p>参加登録済み</p>
+            <% else %>
+              <%= link_to "参加登録", event_detail_path(event_id: event[:event][:id], anchor: 'registration'), class: 'btn btn-outline-success btn-block' %>
+            <% end %>
+          <% end %>
           <%= link_to "https://facebook.com/"+event[:event][:fb_event_id], class: 'btn btn-outline-primary btn-block', target: 'blank' do %>
             <i class="fab fa-facebook-f"></i>
           <% end %>
