@@ -1,7 +1,7 @@
 <h2><%= @title %></h2>
 
 <p>* = <%= t('required') %></p>
-<%= form_with model: @event, html: { class: 'form-horizontal center' }, multipart: true do |f| %>
+<%= form_with model: @event, html: { class: 'form-horizontal center' } do |f| %>
   <div class="form-group row">
     <%= f.label :name, 'イベント名(*)', class: 'col-sm-2' %>
     <%= f.text_field :name, class: "form-control col-sm-4", :required => 'required' %>
@@ -25,7 +25,7 @@
     <%= f.select :place_id, options_from_collection_for_select(Place.all, :id, :name, @event.place_id), { include_blank: 'Select a place' }, { class: "form-control col-sm-4", required: true } %>
 
     <%= f.label :event_category_id, 'イベントタイプ(*)', class: 'col-sm-2' %>
-    <%= f.select :event_category_id, options_from_collection_for_select(EventCategory.all, :id, :name, @event.event_category_id), {}, { class: "form-control col-sm-4", required: true } %>
+    <%= f.select :event_category_id, options_from_collection_for_select(EventCategory.all, :id, :name, @event.event_category_id), { include_blank: 'Select a event category' }, { class: "form-control col-sm-4", required: true } %>
   </div>
   <div class="form-group row">
     <%= f.label :fee, '参加費(*)', class: 'col-sm-2' %>

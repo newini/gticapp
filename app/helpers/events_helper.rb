@@ -69,13 +69,13 @@ module EventsHelper
 
     case status_code
     when 1, nil
-      link_to("追加", change_status_event_path(member_id: member.id, direction: 2), method: :post, class: "btn btn-xs btn-secondary", remote: true)
+      link_to("追加", change_status_event_path(member_id: member.id, direction: 2, referer: @referer), method: :post, class: "btn btn-xs btn-secondary", remote: true)
     else
       content_tag(:div, class: "btn-group") {
         concat content_tag(:button, class: "btn dropdown-toggle btn-info btn-xs", data: {toggle: "dropdown"}) {
           content_tag( :span, status_now[0], class: "caret")
         }
-        concat content_tag(:div, class: "dropdown-menu", role: "menu") {
+        concat content_tag(:div, class: "dropdown-menu") {
           status_array.each do |status|
             concat link_to(status[0], change_status_event_path(member_id: member.id, direction: status[1], referer: @referer), class: 'dropdown-item', method: 'post', remote: true)
           end

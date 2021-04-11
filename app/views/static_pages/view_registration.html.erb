@@ -1,0 +1,31 @@
+<% content_for :title, 'View registration' %>
+
+<div class="container-fluid">
+  <div class="row">
+    <h1>参加登録証 / Registration confirmation</h1>
+  </div>
+
+  <br><br>
+
+  <div class="row">
+    <div class="col-sm-4">
+      <h4 class="center">受付のときにQRコードのご提示お願いします。Please show QR code on reception.</h4>
+    </div>
+
+    <div class="col">
+      <%= @qrcode_svg.html_safe %>
+    </div>
+
+    <div class="col">
+      <p>一回限りのQRコードになります。This is one-time only QR code.</p>
+    </div>
+  </div>
+
+  <br><br>
+
+  <div class="row">
+    <h3>Event</h3>
+    <%= render 'events' %>
+  </div>
+
+</div>

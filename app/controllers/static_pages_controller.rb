@@ -23,8 +23,7 @@ class StaticPagesController < ApplicationController
     else
       base = Event.where(:start_time => @last_date.beginning_of_year...@last_date.end_of_year).group(:start_time)
     end
-    record = base.order("start_time DESC")
-    @events = get_formated_events(record)
+    @events = base.order("start_time DESC")
   end
 
   def search_event
@@ -39,7 +38,7 @@ class StaticPagesController < ApplicationController
     end
     @event = Event.find(params[:event_id])
 
-    @is_expired_event =  is_expired_event(@event.start_time)
+    @is_expired_event =  isExpiredEvent(@event.start_time)
 
     @presentations = @event.presentations.order("created_at desc")
     if current_user
@@ -48,19 +47,16 @@ class StaticPagesController < ApplicationController
   end
 
   def register_event
-    if not params[:event_id]
-      redirect_to root_path, notice: "Not validate url."
-      return
-    end
+    validateEventId(params[:event_id])
     event = Event.find(params[:event_id])
 
     # Check time
-    if is_expired_event(event.start_time)
+    if isExpiredEvent(event.start_time)
       redirect_to event_detail_path(event_id: event.id), notice: "今は参加登録できません。GTICスタッフに直接連絡お願いします。Cannot register now. Please contact to GTIC staff directry."
       return
     end
 
-    # Get member id
+    # Get member
     if current_user
       user = User.find(current_user.id)
       member = user.member
@@ -68,71 +64,105 @@ class StaticPagesController < ApplicationController
         redirect_to edit_user_path(user), flash: { notice: "ユーザー情報をご記入ください。Please fill your information." }
         return
       end
-      member_id = member.id
     else
       member = Member.from_registration(params)
-      member_id = member.id
     end
+
     # Find if member already registered
-    relationship = event.relationships.find_by_member_id(member_id)
+    relationship = event.relationships.find_by_member_id(member.id)
     # If member not regitered
     if relationship
-      if relationship == 2
-        redirect_to event_detail_path(event_id: event.id), flash: { notice: "Already registered!" }
-      else
-        relationship.update(status: 2)
-        redirect_to event_detail_path(event_id: event.id), flash: { success: "Successfully registered!" }
-      end
+      relationship.update(status: 2)
     else
-      Relationship.new(member_id: member_id, event_id: event.id, status: 2).save
-      # Send mail
-      NoReplyMailer.registration_confirmation(event, member).deliver
-      redirect_to event_detail_path(event_id: event.id), flash: { success: "Successfully registered!" }
+      Relationship.new(member_id: member.id, event_id: event.id, status: 2).save
     end
+
+    # Send register confirm mail
+    NoReplyMailer.registration_confirmation(event, member).deliver
+    redirect_to view_registration_path(event_id: event.id, member_id: generate_hash_from_string(member.id)), flash: { success: "Successfully registered!" }
   end
 
   def deregister_event
-    if not params[:event_id]
-      redirect_to root_path, notice: "Not validate url."
-      return
-    end
+    validateEventId(params[:event_id])
     event = Event.find(params[:event_id])
 
     # Check time
-    if is_expired_event(event.start_time)
+    if isExpiredEvent(event.start_time)
       redirect_to root_path, notice: "今はキャンセルできません。GTICスタッフに直接連絡お願いします。Cannot deregister now. Please contact to GTIC staff directry."
       return
     end
 
+    # get member
     if current_user
       user = User.find(current_user.id)
       member = user.member
-      member_id = member.id
     else
       if not params[:member_id]
         redirect_to root_path, notice: "Not validate url."
         return
       end
-
       member_id = verify_string_from_hash(params[:member_id])
       member = Member.find(id: member_id)
       if not member
         redirect_to root_path, notice: "Not validate url."
         return
       end
-      member_id = member.id
     end
 
     # Find member already registered
-    relationship = event.relationships.find_by_member_id(member_id)
+    relationship = event.relationships.find_by_member_id(member.id)
     if relationship.blank?
       redirect_to root_path, notice: "Not registerd yet."
     else
       relationship.update(status: 4)
-      # Send mail
+      # Send cancel confirm mail
       NoReplyMailer.deregistration_confirmation(event, member).deliver
       redirect_to event_detail_path(event_id: event.id), notice: "参加登録をキャンセルしました。Successfully deregistered the event."
     end
+  end
+
+  def view_registration
+    validateEventId(params[:event_id])
+    @events = Event.where(id: params[:event_id]) # get array for convenience
+    event = @events.first
+
+    # Check time
+    if isExpiredEvent(event.start_time, 6)
+      redirect_to root_path, notice: "このURLは有効でありません。Cannot request with this URL."
+      return
+    end
+
+    # get member
+    if current_user
+      user = User.find(current_user.id)
+      member = user.member
+      member_id_hash = generate_hash_from_string(member.id)
+    else
+      if not params[:member_id]
+        redirect_to root_path, notice: "Not validate url."
+        return
+      end
+      member_id_hash = params[:member_id]
+      member_id = verify_string_from_hash(member_id_hash)
+      member = Member.find(member_id)
+      if not member
+        redirect_to root_path, notice: "Not validate url."
+        return
+      end
+    end
+
+    # Check registered
+    relationship = event.relationships.find_by_member_id(member.id)
+    if not relationship or relationship.status == 4
+      #render file: "#{Rails.root}/public/404.html", layout: false, status: 404
+      redirect_to root_path, notice: "このURLは有効でありません。Cannot request with this URL."
+      return
+    end
+
+    # Generate QR code
+    require 'rqrcode'
+    qrcode = RQRCode::QRCode.new( "https://gtic.jp"+check_in_event_path(id: params[:event_id], member_id: member_id_hash) )
+    @qrcode_svg = qrcode.as_svg(module_size: 6)
   end
 
   def organizer
@@ -151,9 +181,17 @@ class StaticPagesController < ApplicationController
     end
   end
 
+
   private
-    def is_expired_event(start_time)
-      return DateTime.now > start_time-60*60*7 # Before 7h before start
+    def isExpiredEvent(start_time, hour=-7)
+      return DateTime.now > start_time+60*60*hour # Default 7h before start
+    end
+
+    def validateEventId(event_id)
+      if not event_id or not Event.find(event_id)
+        redirect_to root_path, notice: "Not validate url."
+        return
+      end
     end
 
 

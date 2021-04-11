@@ -91,3 +91,7 @@ gem "chartkick"
 # country_select in form
 # https://github.com/stefanpenner/country_select
 gem 'country_select'
+
+# Generate QR code
+# https://github.com/whomwah/rqrcode
+gem 'rqrcode'

@@ -1,25 +1,26 @@
+<style>
+.event-bkg::after {
+  content: "";
+  background-image: url('<%= serve_file_event_path(header: 'bkg')%>');
+  background-repeat: no-repeat; /* Do not repeat the image */
+  filter: blur(8px);
+  opacity: 0.5;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;
+}
+</style>
+
+
 <div class="row">
   <div class="col-md-2">
     <%= render 'side' %>
   </div>
 
   <div class="col-md-10">
-
-    <style>
-    .event-bkg::after {
-      content: "";
-      background-image: url('<%= serve_file_event_path(header: 'bkg')%>');
-      background-repeat: no-repeat; /* Do not repeat the image */
-      filter: blur(8px);
-      opacity: 0.5;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      right: 0;
-      position: absolute;
-      z-index: -1;
-    }
-    </style>
 
     <div class="row event-bkg">
       <h2>イベント情報</h2>
@@ -36,7 +37,7 @@
           <% if @event.header_filename %>
             <%= image_tag serve_file_event_path(header: 'header'), class: 'img-thumbnail mx-auto d-block' %>
           <% else %>
-            <p>Click to upload header image</p>
+            <h4><strong>Click to upload header image</strong></h4>
           <% end %>
         </button>
       </div>
@@ -129,11 +130,11 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="headerImage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="headerImage" tabindex="-1" role="dialog" aria-labelledby="headerImageModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Header Image</h5>
+        <h5 class="modal-title" id="headerImageModalLabel">Header Image</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -147,7 +148,7 @@
             <%= form.label :file, "Header Image", class: 'col-sm-6' %>
             <%= form.file_field :file, class: 'form-control-file col-sm-6' %>
           </div>
-          <%= form.submit "Upload" %>
+          <%= form.submit "Upload", class: 'btn btn-primary' %>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <% end %>
       </div>
@@ -155,11 +156,11 @@
   </div>
 </div>
 
-<div class="modal fade" id="bkgImage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="bkgImage" tabindex="-1" role="dialog" aria-labelledby="bkgImageModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Header Image</h5>
+        <h5 class="modal-title" id="bkgImageModalLabel">Header Image</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -173,7 +174,7 @@
             <%= form.label :file, "Background Image", class: 'col-sm-6' %>
             <%= form.file_field :file, class: 'form-control-file col-sm-6' %>
           </div>
-          <%= form.submit "Upload" %>
+          <%= form.submit "Upload", class: 'btn btn-primary' %>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <% end %>
       </div>

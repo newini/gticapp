@@ -70,22 +70,27 @@
   </div>
 
   <div class="form-group row">
-    <div class="col-sm-3">
+    <div class="col-sm-2">
+      <%= form.check_box :gtic_flg, class: "form-check-input" %>
+      <%= form.label :gtic_flg, "GTIC Staff", class: 'form-check-label' %>
+    </div>
+
+    <div class="col-sm-2">
       <%= form.check_box :past_presenter_flg, class:"form-check-input" %>
       <%= form.label :past_presenter_flg, "過去登壇者", class: 'form-check-label' %>
     </div>
 
-    <div class="col-sm-3">
+    <div class="col-sm-2">
       <%= form.check_box :azsa_flg, class:"form-check-input" %>
       <%= form.label :azsa_flg, "Azsa?", class: 'form-check-label' %>
     </div>
 
-    <div class="col-sm-3">
+    <div class="col-sm-2">
       <%= form.check_box :contributor_flg, class:"form-check-input" %>
       <%= form.label :contributor_flg, "Contributor", class: 'form-check-label' %>
     </div>
 
-    <div class="col-sm-3">
+    <div class="col-sm-2">
       <%= form.check_box :black_list_flg, class:"form-check-input" %>
       <%= form.label :black_list_flg, "Black list", class: 'form-check-label' %>
     </div>

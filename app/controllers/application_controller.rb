@@ -58,15 +58,15 @@ class ApplicationController < ActionController::Base
       record = Event.group(:start_time).order("start_time DESC")
       # Search algorithm
       if keyword.present?
-        record = []
+        events = []
         Event.all.order("start_time DESC").each do |event|
           if event.presentations.search_presentation(keyword).present? # Search in presentation
-            record.push(event)
+            events.push(event)
           end
           event.presentations.each do |presentation|
             if presentation.presenters.find_member(keyword).present? # search in presenter's member
-              if !record.include? event # check duplicate
-                record.push(event)
+              if !events.include? event # check duplicate
+                events.push(event)
               end
             end
           end
@@ -75,8 +75,7 @@ class ApplicationController < ActionController::Base
         @start_date = Event.order("start_time ASC").first.start_time.beginning_of_year
         @last_date = Event.order("start_time ASC").last.start_time.end_of_year
       end
-      @events = get_formated_events(record)
-      return @events
+      return events
     end
 
     # For member
@@ -115,7 +114,7 @@ class ApplicationController < ActionController::Base
     def active_staff_only
       if current_user.present?
         staff = Staff.find_by_uid(current_user.uid)
-        if staff.is_active
+        if staff and staff.is_active
           return true
         end
       end

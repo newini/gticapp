@@ -39,10 +39,8 @@ class EventsController < ApplicationController
 
   def create
     @event = Event.new(event_params)
-    upload_file(@event, params[:header_file], 'header')
-    upload_file(@event, params[:bkg_file], 'bkg')
     if @event.save
-      redirect_to events_path
+      redirect_to event_path(@event)
     else
       render 'new'
     end
@@ -60,7 +58,7 @@ class EventsController < ApplicationController
 
   def update
     if @event.update(event_params)
-      redirect_to event_path, :flash => {:success => '変更しました'}
+      redirect_to event_path(@event), :flash => {:success => '変更しました'}
     else
       render 'edit'
     end
@@ -98,6 +96,38 @@ class EventsController < ApplicationController
     end
   end
 
+  def check_in
+    if not params[:id] or not Event.find(params[:id])
+      redirect_to root_path, notice: "ERROR! Not validate 'event' id."
+      return
+    end
+    event = Event.find(params[:id])
+
+    # Get member
+    if not params[:member_id]
+      redirect_to event_path(event), notice: "ERROR! No member_id_hash."
+      return
+    end
+    member_id = verify_string_from_hash(params[:member_id])
+    member = Member.find(member_id)
+    if not member
+      redirect_to event_path(event), notice: "ERROR! Not validate member_id_hash."
+      return
+    end
+
+    # Find registered member
+    relationship = event.relationships.find_by_member_id(member.id)
+    if relationship.blank?
+      redirect_to event_path(event), notice: "ERROR! Not registerd yet."
+    else
+      if relationship.status == 3
+        redirect_to participants_event_path(event), flash: { notice: "WARNING! Already Checked in: " + member.last_name + member.first_name }
+      else
+        relationship.update(status: 3) # registered --> participated
+        redirect_to participants_event_path(event), flash: { success: "SUCCESS! Checked in: " + member.last_name + member.first_name }
+      end
+    end
+  end
 
   # =================================================
   # Member status list pages
@@ -194,7 +224,7 @@ class EventsController < ApplicationController
     relationship = @event.relationships.find_by_member_id(params[:member_id])
     direction = params[:direction].to_i
     if relationship.blank?
-      relationship = Relationship.new(member_id: params[:member_id], event_id: params[:id], status: 2)
+      relationship = Relationship.new(member_id: params[:member_id], event_id: params[:id], status: 2).save
     else
       case direction
       when 0
@@ -370,6 +400,8 @@ class EventsController < ApplicationController
         dotacan
       when "no_show"
         no_show
+      when "waiting"
+        redirect_to waiting_event_path, turbolinks: false # off turbolinks for ajax
       end
     end
 end

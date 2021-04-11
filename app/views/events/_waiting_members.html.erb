@@ -8,17 +8,16 @@
   <%= form.submit 'Search', class: 'btn btn-primary' %>
 <% end %>
 
-<table class='table table-sm table-bordered table-striped'>
+<table class='table table-sm table-bordered table-striped' style="font-size: 13px;">
   <thead>
     <tr>
       <th width="3em">id</th>
-      <th width="1em">頭</th>
       <th width="10%">氏名</th>
-      <th width="10%">Fb</th>
+      <th width="15%">Fb</th>
       <th width="10%">属性</th>
       <th width="20%">所属</th>
       <th>役職</th>
-      <th width="10%">備考</th>
+      <th width="15%">備考</th>
       <th width="5%"></th>
     </tr>
   </thead>
@@ -27,7 +26,6 @@
     <% @members.each do |member| %>
       <tr>
         <td><%= member.id %></td>
-        <td><%= member.last_name_alphabet[0] if member.last_name_alphabet.present? %></td>
         <td><%= link_to "#{member.last_name} #{member.first_name}", member_path(member) %></td>
         <td><%= link_to image_tag("https://graph.facebook.com/#{member.uid}/picture", class: "fb_user_icon") + "#{member.name}", "https://facebook.com/#{member.uid}", target: :blank %></td>
         <td><%= Category.find(member.category_id).try(:name) if member.category_id.present? %></td>

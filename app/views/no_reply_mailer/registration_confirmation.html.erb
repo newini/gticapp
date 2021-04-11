@@ -8,13 +8,23 @@
     <p><%= @member.last_name %> 様</p>
     <br>
     <p>
-      Global Techno Innovation Cafe, <%= @event.name %> <%= EventCategory.find(@event.event_category_id).name %>に参加登録を承りました。<br>
-      追って詳細について連絡致します。</p>
+      Global Techno Innovation Cafe, <%= @event.name %> <%= @event.event_category.name %>に参加登録を承りました。
+    </p>
     <br>
-    <p>イベントページ: https://gtic.jp/event_detail?event_id=<%= @event.id %>&locale=ja</p>
+    <p>
+      イベントページ:
+      https://gtic.jp/event_detail?event_id=<%= @event.id %>&locale=ja
+    </p>
     <br>
-    <p>キャンセルはこちらでお願いします。<br>
-    <p>https://gtic.jp/deregister_event?event_id=<%= @event.id %>&member_id=<%= @member_id_hash %>&locale=ja</p>
+    <p>
+      当日受付用QRコード:
+      https://gtic.jp/view_registration?event_id=<%= @event.id %>&member_id=<%= @member_id_hash %>&locale=ja
+    </p>
+    <br>
+    <p>
+      キャンセルはこちらでお願いします。<br>
+      https://gtic.jp/deregister_event?event_id=<%= @event.id %>&member_id=<%= @member_id_hash %>&locale=ja
+    </p>
 
     <small>
       This is send-only email. If you have any question, please send to gtic.information@gmail.com

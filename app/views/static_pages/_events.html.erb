@@ -4,40 +4,38 @@
     <div class="card-body">
       <div class="row">
         <div class="col-sm-4">
-          <%= image_tag serve_file_event_path(id: event[:event][:id], header: 'header'), class: 'img-fluid' %>
+          <%= image_tag serve_file_event_path(id: event.id, header: 'header'), class: 'img-fluid' %>
         </div>
 
         <div class="col-sm-7">
           <h5 class="card-title">
-            <%= link_to event_detail_path(event_id: event[:event][:id]) do %>
-              <%= "#{event[:event][:name]}" %><%= "本会" if event[:event][:event_category_id] == 1 %>
+            <%= link_to event_detail_path(event_id: event.id) do %>
+              <%= event.name + ' ' + event.event_category.name %>
             <% end %>
           </h5>
 
-          <%= event[:event][:date] %>
-          <%= Place.find(event[:event][:place]).name if event[:event][:place].present? %>
+          <%= l(event.start_time) %>
+          <%= event.place.name %>
 
-          <% if event[:detail] %>
-            <% event[:detail].sort_by{|e| e[:id]}.each do |detail| %>
-              <li>
-                <mark><%= detail[:title] %></mark><br>
-                <% detail[:presenter].reverse_each do |presenter| %>
-                  <strong><%= presenter[:affiliation] %></strong> <%= presenter[:title] %> <strong><%= presenter[:name] %></strong> 氏
+          <% event.presentations.sort_by{|e| e[:id]}.each do |presentation| %>
+            <li>
+              <mark><%= presentation.title %></mark><br>
+                <% presentation.presenters.each do |presenter| %>
+                  <strong><%= presenter.affiliation %></strong> <%= presenter.title %> <strong><%= presenter.name %></strong> 氏
                 <% end %>
-              </li>
-            <% end %>
+            </li>
           <% end %>
         </div>
 
         <div class="col-sm-1">
-          <%= link_to t('detail'), event_detail_path(event_id: event[:event][:id]), class: 'btn btn-outline-info btn-block' %>
-          <% relationship = Relationship.where(event_id: event[:event][:id], member_id: current_user.member_id).first %>
+          <%= link_to t('detail'), event_detail_path(event_id: event.id), class: 'btn btn-outline-info btn-block' %>
+          <% relationship = Relationship.where(event_id: event.id, member_id: current_user.member_id).first if current_user %>
           <% if current_user && relationship && relationship.status == 2 %>
             <%= link_to t('already_registered'), nil, class: 'btn btn-outline-success btn-block disabled' %>
           <% else %>
-            <%= link_to t('register'), event_detail_path(event_id: event[:event][:id], anchor: 'registration'), class: 'btn btn-outline-success btn-block' %>
+            <%= link_to t('register'), event_detail_path(event_id: event.id, anchor: 'registration'), class: 'btn btn-outline-success btn-block' %>
           <% end %>
-          <%= link_to "https://facebook.com/"+event[:event][:fb_event_id], class: 'btn btn-outline-primary btn-block', target: 'blank' do %>
+          <%= link_to "https://facebook.com/"+event.fb_event_id, class: 'btn btn-outline-primary btn-block', target: 'blank' do %>
             <i class="fab fa-facebook-f"></i>
           <% end %>
         </div>

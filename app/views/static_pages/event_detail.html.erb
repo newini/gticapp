@@ -228,8 +228,9 @@
           <% end %>
 
         <% else %>
-          <%= link_to t('gtic_user_sign_in'), new_user_session_path, class: "btn btn-primary btn-lg col-sm-6" %>
+          <%= link_to t('gtic_user_sign_in'), new_user_session_path, class: "btn btn-primary btn-lg" %>
           <h5>または、記入して送信してください。or, fill and submit</h5>
+
           <%= form_with url: register_event_path(event_id: @event.id) do |f| %>
             <div class="form-group row">
               <%= f.label :last_name, t('user.last_name')+"(*)", class: 'col-sm-4' %>
