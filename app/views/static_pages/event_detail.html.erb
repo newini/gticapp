@@ -75,7 +75,7 @@
     </div>
 
     <div class="text-right" data-aos="fade-left">
-      <%= link_to "参加登録", '#registration', class: 'btn btn-success btn-lg btn-block' %>
+      <%= link_to t('register'), '#registration', class: 'btn btn-success btn-lg btn-block' %>
     </div>
   </div>
 
@@ -123,7 +123,7 @@
     </div>
     <div class="vl" ></div>
     <div class="col">
-      <h4>Registration</h4>
+      <h4>受付 / Reception</h4>
       <hr>
     </div>
   </div>
@@ -134,7 +134,7 @@
     </div>
     <div class="vl" ></div>
     <div class="col">
-      <h4>Opening Speech</h4>
+      <h4>オープニングスピーチ / Opening Speech</h4>
       <hr>
     </div>
   </div>
@@ -175,7 +175,7 @@
     </div>
     <div class="vl" ></div>
     <div class="col">
-      <h4>アンケート記入</h4>
+      <h4>アンケート記入 / Fill out the questionnaire</h4>
       <hr>
     </div>
   </div>
@@ -186,7 +186,7 @@
     </div>
     <div class="vl" ></div>
     <div class="col">
-      <h4>懇親会</h4>
+      <h4>懇親会 / Networking party</h4>
       <hr>
     </div>
   </div>
@@ -197,7 +197,7 @@
     </div>
     <div class="vl" ></div>
     <div class="col">
-      <h4>集合写真&終了</h4>
+      <h4>集合写真&終了 / Group Photo time & Event end</h4>
       <hr>
     </div>
   </div>
@@ -209,33 +209,27 @@
 <div class="container-fluid" style="background: white; padding: 60px;" id="registration">
   <div class="row">
     <div class="offset-1">
-      <h1>Registration & Price</h1>
+      <h1>Registration & Fee</h1>
     </div>
   </div>
 
   <div class="row">
     <div class="col-sm-6" data-aos="fade-right">
       <% if @is_expired_event %>
-        <h4>イベントは終了しました。The event end.</h4>
+        <h4>イベント参加登録を締め切りました。GTICスタッフに直接連絡お願いします。Cannot register the event now. Please contact to GTIC staffs directly.</h4>
 
       <% else %>
         <% if user_signed_in? %>
 
-          <% if @relationship %>
-            <% if @relationship.status == 2 %>
-              <h4>参加登録ありがとうございます！Thank you for the registration!</h4>
-            <% elsif @relationship.status == 3 %>
-              <h4>ご参加ありがとうございました！Thank you for participation!</h4>
-            <% elsif @relationship.status == 4 %>
-              <%= link_to "参加登録", register_event_path(event_id: @event.id), method: 'post', class: 'btn btn-primary btn-lg btn-block' %>
-            <% end %>
+          <% if @relationship && @relationship.status == 2 %>
+            <h4>ご参加登録ありがとうございます！Thank you for the registration!</h4>
           <% else %>
-            <%= link_to "参加登録", register_event_path(event_id: @event.id), method: 'post', class: 'btn btn-primary btn-lg btn-block' %>
+            <%= link_to t('register'), register_event_path(event_id: @event.id), method: 'post', class: 'btn btn-primary btn-lg btn-block' %>
           <% end %>
 
         <% else %>
-          <%= link_to "Is a GTIC User? Please Sign in", new_user_session_path, class: "btn btn-primary btn-lg col-sm-6" %>
-          <h5>または、記入して送信してください。</h5>
+          <%= link_to t('gtic_user_sign_in'), new_user_session_path, class: "btn btn-primary btn-lg col-sm-6" %>
+          <h5>または、記入して送信してください。or, fill and submit</h5>
           <%= form_with url: register_event_path(event_id: @event.id) do |f| %>
             <div class="form-group row">
               <%= f.label :last_name, t('user.last_name')+"(*)", class: 'col-sm-4' %>

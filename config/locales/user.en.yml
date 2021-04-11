@@ -19,13 +19,17 @@ en:
     edit_profile: Edit Profile
     input_profile: Input Profile
 
-  cancel: Cancel
-
-  required: Required item
-
-  submit: Submit
-
   contact:
     subject: Subject
     body: Body (at least 100 characters)
     minimum_characters_message: Please input at least 100 characters.
+
+  already_registered: Already registered
+  cancel: Cancel
+  detail: Detail
+  gtic_user_sign_in: Already a GTIC user? Please sign in
+  register: Register
+  required: Required item
+  submit: Submit
+
+

@@ -30,15 +30,12 @@
         </div>
 
         <div class="col-sm-1">
-          <%= link_to "詳細", event_detail_path(event_id: event[:event][:id]), class: 'btn btn-outline-info btn-block' %>
-          <% if current_user && Relationship.where(event_id: event[:event][:id], member_id: current_user.member_id).first %>
-            <% if Relationship.where(event_id: event[:event][:id], member_id: current_user.member_id).first.status == 2 %>
-              <p>参加登録済み</p>
-            <% else %>
-              <%= link_to "参加登録", event_detail_path(event_id: event[:event][:id], anchor: 'registration'), class: 'btn btn-outline-success btn-block' %>
-            <% end %>
+          <%= link_to t('detail'), event_detail_path(event_id: event[:event][:id]), class: 'btn btn-outline-info btn-block' %>
+          <% relationship = Relationship.where(event_id: event[:event][:id], member_id: current_user.member_id).first %>
+          <% if current_user && relationship && relationship.status == 2 %>
+            <%= link_to t('already_registered'), nil, class: 'btn btn-outline-success btn-block disabled' %>
           <% else %>
-            <%= link_to "参加登録", event_detail_path(event_id: event[:event][:id], anchor: 'registration'), class: 'btn btn-outline-success btn-block' %>
+            <%= link_to t('register'), event_detail_path(event_id: event[:event][:id], anchor: 'registration'), class: 'btn btn-outline-success btn-block' %>
           <% end %>
           <%= link_to "https://facebook.com/"+event[:event][:fb_event_id], class: 'btn btn-outline-primary btn-block', target: 'blank' do %>
             <i class="fab fa-facebook-f"></i>

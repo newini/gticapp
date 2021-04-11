@@ -19,13 +19,17 @@ ja:
     edit_profile: プロフィール修正
     input_profile: プロフィール入力
 
-  cancel: キャンセル
-
-  required: 必須項目
-
-  submit: 送信
-
   contact:
     subject: 件名
     body: 本文 (100文字以上)
     minimum_characters_message: 100文字以上入力してください。
+
+  already_registered: 参加登録済み
+  cancel: キャンセル
+  detail: 詳細
+  gtic_user_sign_in: GTICユーザーですか？ログインしてください
+  register: 参加登録
+  required: 必須項目
+  submit: 送信
+
+
