@@ -1,11 +1,11 @@
 <% content_for :title, 'Contact us' %>
 
 <div class="container">
-  <h1>お問い合わせ/Contact</h1>
+  <h1>お問い合わせ/Contact us</h1>
 
-  <div class="border">
+  <div class="border-left">
     <% if @after_submit %>
-      <%= render 'after_contact_submit' %>
+      <h3>正常に送信されました!/Sent success fully!</h3>
     <% else %>
       <%= render 'contacts/form' %>
     <% end %>

@@ -9,6 +9,7 @@ en:
     affiliation: Company
     title: Job title
     email: E-mail address
+    email_confirm: E-mail address confirmation
 
     edit_cancel_warning: If not complete profile, Can not register event. Are you sure?
 
@@ -21,8 +22,8 @@ en:
 
   contact:
     subject: Subject
-    body: Body (at least 100 characters)
-    minimum_characters_message: Please input at least 100 characters.
+    body: Body (at least 50 characters)
+    minimum_characters_message: Please input at least 50 characters.
 
   already_registered: Already registered
   cancel: Cancel

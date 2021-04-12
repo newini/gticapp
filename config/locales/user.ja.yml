@@ -9,6 +9,7 @@ ja:
     affiliation: 所属
     title: 役職
     email: メールアドレス
+    email_confirm: メールアドレス確認
 
     edit_cancel_warning: プロフィール未入力時、GTICイベントを正常に参加登録することができません。キャンセルしますか？
 
@@ -21,8 +22,8 @@ ja:
 
   contact:
     subject: 件名
-    body: 本文 (100文字以上)
-    minimum_characters_message: 100文字以上入力してください。
+    body: 本文 (50文字以上)
+    minimum_characters_message: 50文字以上入力してください。
 
   already_registered: 参加登録済み
   cancel: キャンセル

@@ -2,54 +2,45 @@
 <%= form_for @contact, html: { onsubmit: "return CheckLength ()" } do |f| %>
   <div class="form-group row">
     <%= f.label :name, t('user.name')+"(*)", class: 'col-sm-2' %>
-    <div class="col-sm-10">
-      <%= f.text_field :name, placeholder: "山田太郎", class: "form-control", required: 'required' %>
-    </div>
+    <%= f.text_field :name, placeholder: "山田太郎", class: "form-control col-sm-10", required: 'required' %>
   </div>
 
   <div class="form-group row">
     <%= f.label :category_id, t('user.category')+"(*)", class: 'col-sm-2' %>
-    <div class="col-sm-10">
-      <%= f.select :category_id, options_from_collection_for_select(Category.all, :id, :name, @contact.category_id), { include_blank: true }, { class: "form-control", required: 'required' } %>
-    </div>
+    <%= f.select :category_id, options_from_collection_for_select(Category.all, :id, :name, @contact.category_id), { include_blank: true }, { class: "form-control col-sm-10", required: 'required' } %>
   </div>
 
   <div class="form-group row">
     <%= f.label :affiliation, t('user.affiliation')+"(*)", class: 'col-sm-2' %>
-    <div class="col-sm-10">
-      <%= f.text_field :affiliation, placeholder:  "海山商事", class: "form-control", required: 'required' %>
-    </div>
+    <%= f.text_field :affiliation, placeholder:  "海山商事", class: "form-control col-sm-10", required: 'required' %>
   </div>
 
   <div class="form-group row">
     <%= f.label :title, t('user.title')+"(*)", class: 'col-sm-2' %>
-    <div class="col-sm-10">
-      <%= f.text_field :title, placeholder:  "代表取締役社長", class: "form-control", required: 'required' %>
-    </div>
+    <%= f.text_field :title, placeholder:  "代表取締役社長", class: "form-control col-sm-10", required: 'required' %>
   </div>
 
   <div class="form-group row">
     <%= f.label :email, t('user.email')+"(*)", class: 'col-sm-2' %>
-    <div class="col-sm-10">
-      <%= f.email_field :email, placeholder: "taro@gmail.com", class: "form-control", required: 'required' %>
-    </div>
+    <%= f.email_field :email, placeholder: "taro@gmail.com", class: "form-control col-sm-10", required: 'required' %>
+  </div>
+
+  <div class="form-group row">
+    <%= f.label :email_confirm, t('user.email_confirm')+"(*)", class: 'col-sm-2' %>
+    <%= f.email_field :email, id: 'email_confirm', placeholder: "taro@gmail.com", class: "form-control col-sm-10", onblur: "confirmEmail()", required: 'required' %>
   </div>
 
   <div class="form-group row">
     <%= f.label :subject, t('contact.subject')+"(*)", class: 'col-sm-2' %>
-    <div class="col-sm-10">
-      <%= f.text_field :subject, placeholder: "...", class: "form-control", required: 'required' %>
-    </div>
+    <%= f.text_field :subject, placeholder: "...", class: "form-control col-sm-10", required: 'required' %>
   </div>
 
   <div class="form-group row">
     <%= f.label :body, t('contact.body')+"(*)", class: 'col-sm-2' %>
-    <div class="col-sm-10">
-      <%= f.text_area :body, placeholder: "...", class: "form-control", rows: 10, required: 'required',
-        onKeyUp: "textCounter(this,'count_display',100);", onBlur: "textCounter(this,'count_display',100);" %>
-      <span id="count_display">100</span>
-      <span id="Message" style="color: #ff0000"></span>
-    </div>
+    <%= f.text_area :body, placeholder: "...", class: "form-control col-sm-10", rows: 10, required: 'required',
+      onKeyUp: "textCounter(this, 'count_display', 50);", onBlur: "textCounter(this, 'count_display', 50);" %>
+    <span id="count_display" class="offset-sm-2">50</span>
+    <span id="Message" class="offset-sm-2" style="color: #ff0000"></span>
   </div>
 
 
@@ -58,22 +49,30 @@
   </div>
 <% end %>
 
-<script>
-function CheckLength() {
-  var msg_area = document.getElementById("Message");
-  msg_area.innerHTML = "";
-  if (document.getElementById("contact_body").value.length < 100) {
-    msg_area.innerHTML = "<%= t('contact.minimum_characters_message') %>";
-      return false;
-  } else document.getElementById("new_contact").submit();
-}
-function textCounter(membershortdescription, counterID, minLen) {
-  cnt = document.getElementById(counterID);
 
-  if (membershortdescription.value.length < minLen) {
-   cnt.innerHTML = minLen - membershortdescription.value.length;
-  } else {
-   cnt.innerHTML = "OK";
+<script type="text/javascript">
+  function confirmEmail() {
+    var email = document.getElementById("contact_email").value
+    var email_confirm = document.getElementById("email_confirm").value
+    if(email != email_confirm) {
+        alert('メールアドレスが一致しません。Email Not Matching!');
+    }
   }
-}
+  function CheckLength() {
+    var msg_area = document.getElementById("Message");
+    msg_area.innerHTML = "";
+    if (document.getElementById("contact_body").value.length < 50) {
+      msg_area.innerHTML = "<%= t('contact.minimum_characters_message') %>";
+        return false;
+    } else document.getElementById("new_contact").submit();
+  }
+  function textCounter(membershortdescription, counterID, minLen) {
+    cnt = document.getElementById(counterID);
+
+    if (membershortdescription.value.length < minLen) {
+     cnt.innerHTML = minLen - membershortdescription.value.length;
+    } else {
+     cnt.innerHTML = "OK";
+    }
+  }
 </script>

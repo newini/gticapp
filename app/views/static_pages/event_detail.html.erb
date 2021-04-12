@@ -262,7 +262,11 @@
             </div>
             <div class="form-group row">
               <%= f.label :email, t('user.email')+"(*)", class: 'col-sm-4' %>
-              <%= f.email_field :email, placeholder: "test@example.com", class: "form-control col", required: 'required' %>
+              <%= f.email_field :email, id: 'email', placeholder: "test@example.com", class: "form-control col", required: 'required' %>
+            </div>
+            <div class="form-group row">
+              <%= f.label :email_confirm, t('user.email_confirm')+"(*)", class: 'col-sm-4' %>
+              <%= f.email_field :email, id: 'email_confirm', placeholder: "test@example.com", class: "form-control col", onblur: "confirmEmail()", required: 'required' %>
             </div>
 
             <div class="form-group">
@@ -291,6 +295,16 @@
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+  function confirmEmail() {
+    var email = document.getElementById("email").value
+    var email_confirm = document.getElementById("email_confirm").value
+    if(email != email_confirm) {
+        alert('メールアドレスが一致しません。Email Not Matching!');
+    }
+  }
+</script>
 
 
 <!----------- Map --------------->
