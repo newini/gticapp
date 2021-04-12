@@ -173,7 +173,8 @@ class StaticPagesController < ApplicationController
   end
 
   def contact_us
-    @contact = Contact.new
+    @contact = contact_params ? Contact.new(contact_params) : @contact = Contact.new
+
     if params[:after_submit]
       @after_submit = true
     end
@@ -181,6 +182,13 @@ class StaticPagesController < ApplicationController
 
 
   private
+    def contact_params
+      params.fetch(:contact, {}).permit(
+        :name, :category_id, :affiliation, :title, :email,
+        :subject, :body
+      )
+    end
+
     def isExpiredEvent(start_time, hour=-7)
       return DateTime.now > start_time+60*60*hour # Default 7h before start
     end

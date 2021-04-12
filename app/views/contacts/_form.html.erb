@@ -43,6 +43,9 @@
     <span id="Message" class="offset-sm-2" style="color: #ff0000"></span>
   </div>
 
+  <!-- reCAPTCHA -->
+  <%= flash[:recaptcha_error] %>
+  <%= recaptcha_tags %>
 
   <div class="form-group">
     <%= f.submit t('submit'), class: "btn btn-primary", data: { disable_with: false } %>
