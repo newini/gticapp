@@ -23,14 +23,12 @@ class EventsController < ApplicationController
       #base = Event.where(:start_time => @start_date..@last_date).group(:start_time)
       base = Event.where(:start_time => @last_date.beginning_of_year...@last_date.end_of_year).group(:start_time)
     end
-    record = base.order("start_time DESC")
-    @events = get_formated_events(record)
+    @events = base.order("start_time DESC")
 
     array = Member.where(:gtic_flg => nil).pluck(:id)
     @total_events = Event.count
     @total_participants = Relationship.where(member_id: array).where(status: 3).count
     @participants = Relationship.where(member_id: array).where(status: 3).group(:member_id).pluck(:member_id).count
-
   end
 
   def new

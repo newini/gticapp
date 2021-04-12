@@ -18,8 +18,7 @@ class UsersController < ApplicationController
     @user = get_correct_user
 
     # Get events
-    record = Event.where('start_time < ?', DateTime.now-24*60*60).group(:start_time).order("start_time DESC")
-    @events = get_formated_events(record)
+    @events = Event.where('start_time > ?', DateTime.now).group(:start_time).order("start_time DESC")
   end
 
   def edit

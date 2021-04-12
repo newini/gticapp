@@ -385,6 +385,8 @@ members.each do |member|
 end
 ```
 
+
+
 # TODO
 - translate static pages and put to config/locale/.
-- connect with LINE bot
+- connect with GOOGLE

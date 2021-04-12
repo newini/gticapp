@@ -1,17 +1,15 @@
 class StaticPagesController < ApplicationController
 
   def home
-    # Get events
-    record = Event.where('start_time < ?', DateTime.now-24*60*60).group(:start_time).order("start_time DESC")
-    @events = get_formated_events(record)
+    # Get new events
+    @events = Event.where('start_time > ?', DateTime.now).group(:start_time).order("start_time DESC")
 
     # Get one media article
     @media_article = MediaArticle.where('date > ?', DateTime.now-31*24*60*60).order(date: :DESC)[0]
   end
 
   def about
-    record = Event.all.group(:start_time).order("start_time DESC")
-    @events = get_formated_events(record)
+    @events = Event.all.order("start_time DESC")
   end
 
   def event_list

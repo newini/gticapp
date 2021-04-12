@@ -68,27 +68,13 @@
         <p><strong>これまでの開催実績</strong></p>
 
         <!-- bunkakai event -->
-        <% n = 0 %>
-        <% @events.each do |event| %>
-          <% break if n == 5 %>
-          <% if event[:event][:event_category_id] == 2 %>
-            <% i=0 %>
-            <% event[:detail].each do |detail| %>
-              <% if i == 0 %>
-                <%= content_tag :td, rowspan: event[:detail].length do %>
-                  <%= "#{event[:event][:name]}" %>
-                <% end %>
-                <strong><%= "　#{detail[:title]}" %></strong>
-              <% else %>
-                <strong><%= " / #{detail[:title]}" %></strong>
-              <% end %>
-              <% i += 1 %>
-            <% end %>
-            <% n += 1 %>
-            <br>
-          <% end %>
+        <% @events.where(event_category_id: 2).limit(5).each do |event| %>
+          <td>
+            <%= event.name + ' ' + event.event_category.name %>
+            <strong><%= event.presentations.map{ |presentation| presentation.title }.join(" / ") %></strong>
+          </td><br>
         <% end %>
-        <p>...(詳しくは<a href="/presenter">Presenter</a>ページへ)</p>
+        <p>...(詳しくは<a href=event_list_path>Events</a>ページへ)</p>
 
         <br>
 
@@ -97,27 +83,13 @@
         <br>
 
         <!-- Chisiki no izumi event -->
-        <% n = 0 %>
-        <% @events.each do |event| %>
-          <% break if n == 5 %>
-          <% if event[:event][:event_category_id] == 3 %>
-            <% i=0 %>
-            <% event[:detail].each do |detail| %>
-              <% if i == 0 %>
-                <%= content_tag :td, rowspan: event[:detail].length do %>
-                  <%= "#{event[:event][:name]}" %>
-                <% end %>
-                <td><strong><%= "　#{detail[:title]}" %></strong></td>
-              <% else %>
-                <strong><%= " / #{detail[:title]}" %></strong>
-              <% end %>
-              <% i += 1 %>
-            <% end %>
-            <% n += 1 %>
-            <br>
-          <% end %>
+        <% @events.where(event_category_id: 3).limit(5).each do |event| %>
+          <td>
+            <%= event.name %>
+            <strong><%= event.presentations.map{ |presentation| presentation.title }.join(" / ") %></strong>
+          </td><br>
         <% end %>
-        <p>...(詳しくは<a href="/presenter">Presenter</a>ページへ)</p>
+        <p>...(詳しくは<a href=event_list_path>Events</a>ページへ)</p>
 
       </div>
     </div>
