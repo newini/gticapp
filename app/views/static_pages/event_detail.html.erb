@@ -231,7 +231,7 @@
           <%= link_to t('gtic_user_sign_in'), new_user_session_path, class: "btn btn-primary btn-lg" %>
           <h5>または、記入して送信してください。or, fill and submit</h5>
 
-          <%= form_with url: register_event_path(event_id: @event.id) do |f| %>
+          <%= form_with model: @member, url: register_event_path(event_id: @event.id) do |f| %>
             <div class="form-group row">
               <%= f.label :last_name, t('user.last_name')+"(*)", class: 'col-sm-4' %>
               <%= f.text_field :last_name, placeholder: "山田", class: "form-control col", required: 'required' %>
@@ -250,7 +250,7 @@
             </div>
             <div class="form-group row">
               <%= f.label :category_id, t('user.category')+"(*)", class: 'col-sm-4' %>
-              <%= f.select :category_id, options_from_collection_for_select(Category.all, :id, :name), { include_blank: true }, { class: "form-control col", required: 'required' } %>
+              <%= f.select :category_id, options_from_collection_for_select(Category.all, :id, :name, @member.category_id), { include_blank: true }, { class: "form-control col", required: 'required' } %>
             </div>
             <div class="form-group row">
               <%= f.label :affiliation, t('user.affiliation')+"(*)", class: 'col-sm-4' %>
@@ -268,6 +268,11 @@
               <%= f.label :email_confirm, t('user.email_confirm')+"(*)", class: 'col-sm-4' %>
               <%= f.email_field :email, id: 'email_confirm', placeholder: "test@example.com", class: "form-control col", onblur: "confirmEmail()", required: 'required' %>
             </div>
+
+
+            <!-- reCAPTCHA -->
+            <%= flash[:recaptcha_error] %>
+            <%= recaptcha_tags %>
 
             <div class="form-group">
               <%= f.submit t('submit'), class: "btn btn-primary" %>

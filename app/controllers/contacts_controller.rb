@@ -1,7 +1,6 @@
 class ContactsController < ApplicationController
   # reCAPTCHA
-  # See, https://github.com/heartcombo/devise/wiki/How-To:-Use-Recaptcha-with-Devise
-  prepend_before_action :check_captcha, only: [:create] # Change this to be any actions you want to protect.
+  prepend_before_action :check_captcha, only: [:create]
 
 
   def index
@@ -53,8 +52,6 @@ class ContactsController < ApplicationController
     # reCAPTCHA
     def check_captcha
       unless verify_recaptcha
-        #self.resource = resource_class.new contact_params
-        #respond_with_navigational(resource) { render :new }
         redirect_to contact_us_path(contact: contact_params)
       end
     end

@@ -1,4 +1,7 @@
 class StaticPagesController < ApplicationController
+  # reCAPTCHA
+  prepend_before_action :check_captcha, only: [:register_event]
+
 
   def home
     # Get new events
@@ -42,6 +45,8 @@ class StaticPagesController < ApplicationController
     if current_user
       @relationship = @event.relationships.find_by_member_id(current_user.member_id)
     end
+
+    @member = member_params ? Member.new(member_params) : Member.new
   end
 
   def register_event
@@ -63,7 +68,7 @@ class StaticPagesController < ApplicationController
         return
       end
     else
-      member = Member.from_registration(params)
+      member = Member.from_registration(member_params)
     end
 
     # Find if member already registered
@@ -189,6 +194,14 @@ class StaticPagesController < ApplicationController
       )
     end
 
+    def member_params
+      params.fetch(:member, {}).permit(
+        :first_name, :last_name, :first_name_alphabet, :last_name_alphabet,
+        :category_id, :affiliation, :title, :email
+      )
+    end
+
+
     def isExpiredEvent(start_time, hour=-7)
       return DateTime.now > start_time+60*60*hour # Default 7h before start
     end
@@ -197,6 +210,13 @@ class StaticPagesController < ApplicationController
       if not event_id or not Event.find(event_id)
         redirect_to root_path, notice: "Not validate url."
         return
+      end
+    end
+
+    # reCAPTCHA
+    def check_captcha
+      unless verify_recaptcha
+        redirect_to event_detail_path(event_id: params[:event_id], member: member_params, anchor: 'registration')
       end
     end
 
