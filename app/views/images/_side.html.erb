@@ -1,5 +1,5 @@
 <div class="btn-group-vertical btn-block" >
-  <%= link_to "All Files", attachment_files_path, class: "btn btn-secondary" %>
+  <%= link_to "All Files", images_path, class: "btn btn-secondary" %>
   <!-- Button trigger modal -->
   <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modalUploadImage">
     Upload image file
@@ -17,7 +17,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <%= form_with url: '/attachment_files#create', id: 'formUploadImage', multipart: true, :remote => true do |form| %>
+        <%= form_with url: '/images#create', id: 'formUploadImage', multipart: true, :remote => true do |form| %>
           <div class="form-group">
             <%= label_tag :file, "File" %>
             <%= file_field nil, :file, id: 'fileInputImage', class: 'form-control-file' %>
@@ -52,7 +52,7 @@
           filename = filename.substring(1);
       }
       // Get filename array in db
-      <% af = AttachmentFile.all.to_a.map {|a| a.filename} %>
+      <% af = Image.all.to_a.map {|a| a.filename} %>
       var filename_array = <%= af.to_json.html_safe %>;
       // Check if dup
       if (filename_array.indexOf(filename) >= 0) {

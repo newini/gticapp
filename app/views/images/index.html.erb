@@ -1,0 +1,27 @@
+<div class="row">
+  <aside class="col-lg-2">
+    <%= render "side" %>
+  </aside>
+
+  <div class="col-lg-10">
+    <h1>Images</h1>
+
+    <div class="row">
+      <% @images.each do |image| %>
+        <div class="col">
+          <div class="card">
+            <%= image_tag(serve_images_path(filename: image.filename), class: "card-img-top") %>
+            <div class="card-body">
+              <h5 class="card-title"><%= image.filename %></h5>
+              <p>&lt;img src="<%= serve_images_path(filename: image.filename) %>" class="img-fluid" &gt;</p>
+              <%= link_to "Destroy", image_path(image), class: 'btn btn-danger btn-sm',
+                            method: :delete,
+                            data: { confirm: "Delete, Are you sure?" } %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+  </div>
+</div>

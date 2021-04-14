@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_10_021633) do
+ActiveRecord::Schema.define(version: 2021_04_13_152018) do
 
   create_table "accounts", force: :cascade do |t|
     t.string "title", limit: 255
@@ -23,15 +23,6 @@ ActiveRecord::Schema.define(version: 2021_04_10_021633) do
     t.index ["event_id"], name: "index_accounts_on_event_id"
     t.index ["positive"], name: "index_accounts_on_positive"
     t.index ["title"], name: "index_accounts_on_title"
-  end
-
-  create_table "attachment_files", force: :cascade do |t|
-    t.binary "data"
-    t.string "filename", null: false
-    t.string "mime_type"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["filename"], name: "index_attachment_files_on_filename", unique: true
   end
 
   create_table "broadcast_members", force: :cascade do |t|
@@ -111,6 +102,16 @@ ActiveRecord::Schema.define(version: 2021_04_10_021633) do
     t.index ["name"], name: "index_events_on_name"
     t.index ["place_id"], name: "index_events_on_place_id"
     t.index ["start_time"], name: "index_events_on_start_time"
+  end
+
+  create_table "images", force: :cascade do |t|
+    t.binary "data"
+    t.string "filename", null: false
+    t.string "mime_type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "tags"
+    t.index ["filename"], name: "index_images_on_filename", unique: true
   end
 
   create_table "manuals", force: :cascade do |t|

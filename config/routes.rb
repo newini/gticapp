@@ -136,9 +136,9 @@ Rails.application.routes.draw do
   resources :manuals
 
   # Treat attachment file
-  resources :attachment_files do
+  resources :images do
     collection do
-      get :serve_file
+      get :serve
     end
   end
 
