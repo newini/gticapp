@@ -33,13 +33,11 @@
             </td>
 
             <% if media_article.member_id.present? %>
-              <% member = Member.find(media_article.member_id) %>
-              <td><%= member.affiliation %></td>
-              <td><%= "#{member.title} #{member.last_name} #{member.first_name} 氏" %></td>
+              <td><%= media_article.member.affiliation %></td>
+              <td><%= "#{media_article.member.title} #{media_article.member.last_name} #{media_article.member.first_name} 氏" %></td>
               <td>
-                <% presentationships = Presentationship.where(member_id: member.id) %>
                 <% previous_event_id = 0 %>
-                <% presentationships.each do |presentationship| %>
+                <% media_article.member.presentationships.each do |presentationship| %>
                   <% if not previous_event_id == presentationship.event_id %>
                     <% event = Event.find(presentationship.event_id) %>
                     <%= "第#{event.cumulative_number}回GTIC, #{event.start_time.strftime('%Y-%m-%d')}" %><br>
@@ -91,4 +89,4 @@
 
   <br><br><br>
 
-<br><br><br>
+</div>

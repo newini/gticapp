@@ -14,9 +14,9 @@ class Member < ActiveRecord::Base
   has_many :broadcast_members
   has_many :broadcast, through: :broadcast_members
 
-  # Staff
   has_one :staff
   has_one :user
+  has_one :media_article
 
 # scope
   scope :find_member, ->(keyword) { where(

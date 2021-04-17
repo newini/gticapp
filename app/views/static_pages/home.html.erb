@@ -1,39 +1,135 @@
 <% content_for :title, 'Home' %>
 
-<div class="container-fluid my-home-head" data-aos="zoom-out" style="padding: 60px; text-align: center;">
-  <div class="row">
-    <div class="col">
+<div class="container-fluid w-100 h-100" data-aos="zoom-out">
+  <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+      <% n = 0 %>
+      <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+      <% @events.each do |event| %>
+        <li data-target="#carouselExampleIndicators" data-slide-to="<%= n %>"></li>
+        <% n += 1 %>
+      <% end %>
+      <li data-target="#carouselExampleIndicators" data-slide-to="<%= n %>"></li>
+      <% n += 1 %>
+    </ol>
 
-      <%= image_tag 'logo200x200.png' %>
-      <h2>よりオープンに、よりグローバルに、よりイノベイティブに、<br>
-        ベンチャー、起業、スタートアップ、イノベーションを考えよう！</h2>
-      <h3 style="opacity: 0.5;">More open, more global, more innovative! <br>Let’s think about the Venture, Startup, Innovation , regardless of field, Age, Nationality!</h3>
-      <a href="/about" class="btn btn-primary btn-lg">GTICについて(ABOUT)</a>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <div class="my-home-head" style="width: 100%; height: 650px; padding: 60px;">
+          <%= image_tag 'logo200x200.png', class: "mx-auto d-block" %>
+          <div class="offset-sm-2">
+            <h2>よりオープンに、よりグローバルに、よりイノベイティブに、<br>
+              ベンチャー、起業、スタートアップ、イノベーションを考えよう！</h2>
+            <h4 style="opacity: 0.5;">More open, more global, more innovative! <br>
+              Let’s think about the Venture, Startup, Innovation , regardless of field, Age, Nationality!</h4>
+          </div>
+          <div class="text-center">
+            <a href="/about" class="btn btn-primary btn-lg">GTICについて(ABOUT)</a>
+          </div>
+        </div>
+      </div>
+
+      <% @events.each do |event| %>
+        <style>
+          .my-home-event-<%= event.id %>::after {
+          content: "";
+          background-image: url('<%= serve_file_event_path(id: event.id, header: 'bkg')%>');
+          background-position: center; /* Center the image */
+          background-repeat: no-repeat;
+          background-size: cover;
+          opacity: 0.5;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          right: 0;
+          position: absolute;
+          z-index: -1;
+          }
+        </style>
+
+        <div class="carousel-item">
+          <div class="my-home-event-<%= event.id %>" style="width: 100%; height: 650px; padding: 60px;">
+            <div class="offset-sm-2 col-sm-8">
+              <h5 style="color: red;">New event!</h5>
+              <h2><%= event.name + ' ' + event.event_category.name %></h2>
+              <h5>
+                <% event.presentations.sort_by{|e| e[:id]}.each do |presentation| %>
+                  <li>
+                    <%= presentation.title %>
+                    <% presentation.presenters.each do |presenter| %>
+                      <strong><%= presenter.affiliation %></strong> <%= presenter.title %> <strong><%= presenter.last_name + ' ' + presenter.first_name %></strong> 氏
+                    <% end %>
+                  </li>
+                <% end %>
+              </h5>
+              <br>
+
+              <div class="row">
+                <h1><i class="fas fa-calendar"></i></h1>
+                <div class="col">
+                  <strong>WHEN</strong><br>
+                  <h5><%= l event.start_time, format: :default%></h5>
+                </div>
+              </div>
+              <br>
+
+              <div class="row">
+                <h1><i class="fas fa-map-marker-alt"></i></h1>
+                <div class="col">
+                  <strong>WHERE</strong><br>
+                  <h5><%= event.place.name %></h5>
+                </div>
+                <div class="text-right">
+                  <%= link_to t('detail'), event_detail_path(event_id: event.id), class: 'btn btn-success btn-lg btn-block' %>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      <div class="carousel-item">
+        <div class="my-home-success" style="width: 100%; height: 650px; padding: 60px;">
+          <div class="offset-sm-2">
+            <h3>GTIC登壇企業が続々活躍！</h3>
+            <br>
+            <% @media_articles.each do |media_article| %>
+              <h5>・<%= media_article.media %>「<%= media_article.title %>」 <strong><%= media_article.member.affiliation %></strong></h5>
+            <% end %>
+            など
+            <br>
+            <h3>詳細は<a href="/media">MEDIA ARTICLEページ</a>で</h3>
+          </div>
+        </div>
+      </div>
 
     </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
   </div>
 </div>
 
-<!-- time -->
-<% require "active_support/time"%>
-<% time = Time.now %>
-
-<% if @media_article.present? %>
-  <div class="container" data-aos="fade-up">
-    <h3>新しい記事が登録されました。詳細は<a href="'/media">MEDIA ARTICLEページ</a>で</h3>
-  </div>
-<% end %>
-
 
 <!-- unheld event -->
-<div class="container-fluid" data-aos="fade-up" style="background:lightcyan; padding: 60px;">
+<div class="container-fluid" data-aos="fade-up" style="background: rgb(255, 255, 250); padding: 60px;">
   <div class="row">
     <div class="col">
 
       <h1 class="text-center">-最新イベント情報-</h1>
       <p class="text-center"><%= link_to "全てイベント一覧はこちら", event_list_path %></p>
 
-      <%= render 'static_pages/events' %>
+      <% if @events.count != 0 %>
+        <%= render 'static_pages/events' %>
+      <% else %>
+        <h5 class="text-center">To be announced</h5>
+      <% end %>
 
     </div>
   </div>

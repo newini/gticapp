@@ -5,10 +5,10 @@ class StaticPagesController < ApplicationController
 
   def home
     # Get new events
-    @events = Event.where('start_time > ?', DateTime.now).group(:start_time).order("start_time DESC")
+    @events = Event.where('start_time > ?', DateTime.now).order("start_time DESC")
 
     # Get one media article
-    @media_article = MediaArticle.where('date > ?', DateTime.now-31*24*60*60).order(date: :DESC)[0]
+    @media_articles = MediaArticle.where('date > ?', DateTime.now - 30*3).order(date: :DESC) # now - days
   end
 
   def about

@@ -16,7 +16,6 @@ class Event < ActiveRecord::Base
   has_many :guests, -> {where :relationships => {guest_flg: true}}, through: :relationships, source: :member
   has_many :participants, -> { where "status = 3 or status = 6"}, through: :relationships, source: :member
 
-  has_many :invitations, dependent: :destroy
   has_many :presentationships, foreign_key: "event_id", dependent: :destroy
   has_many :presentations, -> { distinct }, through: :presentationships, source: :presentation
   has_many :registers, foreign_key: "event_id", dependent: :destroy

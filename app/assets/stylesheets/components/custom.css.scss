@@ -1,10 +1,5 @@
 /* mixins, variables, etc. */
-$grayMediumLight: #eaeaea;
-@mixin box_sizing {
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-}
+
 
 /* global setting */
 html {
@@ -17,14 +12,6 @@ body {
   background: url(asset_path("fabric_of_squares_gray.png"));
 }
 
-section {
-  overflow: auto;
-}
-
-textarea {
-  resize: vertical;
-}
-
 .center {
   text-align: center;
   h1 {
@@ -32,10 +19,6 @@ textarea {
   }
 }
 
-/* header */
-.nav {
-    margin-top: 6px;
-}
 
 /* static page */
 /* home */
@@ -51,12 +34,20 @@ textarea {
     z-index: -1;
 }
 
-/* logo-wrapper */
-.logo-wrapper{
-  display: inline-block;
-  background-color: rgba(245, 245, 245, 0.6);
-  padding: 10px 10px;
+.my-home-success::after {
+    content: "";
+    background-image: url(asset_path("business_success.jpg"));
+    background-position: center; /* Center the image */
+    background-size: cover;
+    opacity: 0.5;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;
 }
+
 
 /* table */
 .table > thead > tr > th, .table > thead > tr > td, .table > tbody > tr > th, .table > tbody > tr > td, .table > tfoot > tr > th, .table > tfoot > tr > td{
@@ -80,41 +71,8 @@ textarea {
   width: 30px;
 }
 
-/* sidebar */
-aside {
-  section {
-    padding: 10px 0;
-    border-top: 1px solid $grayMediumLight;
-    &:first-child {
-      border: 0;
-      padding-top: 0;
-    }
-    span {
-      display: block;
-      margin-bottom: 3px;
-      line-height: 1;
-    }
-    h1 {
-      font-size: 1.4em;
-      text-align: left;
-      letter-spacing: -1px;
-      margin-bottom: 3px;
-      margin-top: 0px;
-    }
-  }
-}
-
 .gravatar {
   float: left; margin-right: 10px;
-}
-
-/* miscellaneous */
-.debug_dump {
-  clear: both;
-  float: left;
-  width: 100%;
-  margin-top: 45px;
-  @include box_sizing;
 }
 
 #error_explanation {
@@ -139,3 +97,8 @@ aside {
   border-left: 4px solid green;
 }
 
+
+/* Change text size response to display size */
+html {
+  font-size: calc(0.6em + 0.4vw);
+}
