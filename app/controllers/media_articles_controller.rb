@@ -13,6 +13,7 @@ class MediaArticlesController < ApplicationController
     @media_article = MediaArticle.new(media_article_params)
 
     upload_file(@media_article, params[:file])
+    retrieveLinkThumbnail(@media_article, media_article_params[:url])
 
     if @media_article.save
       redirect_to media_articles_path, :flash => {:success => "Saved!"}
@@ -33,6 +34,7 @@ class MediaArticlesController < ApplicationController
     @media_article = MediaArticle.find(params[:id])
 
     upload_file(@media_article, params[:file])
+    retrieveLinkThumbnail(@media_article, media_article_params[:url])
 
     if @media_article.update(media_article_params)
       redirect_to media_articles_path , :flash => {:success => 'Saved'}
@@ -70,6 +72,13 @@ class MediaArticlesController < ApplicationController
     def upload_file(media_article, file)
       if file
         media_article.update(file_data: file.read, file_name: file.original_filename, file_mime_type: file.content_type)
+      end
+    end
+
+    def retrieveLinkThumbnail(media_article, url)
+      if url
+        object = LinkThumbnailer.generate(url)
+        media_article.update(description: object.description, image_url: object.images.first.src.to_s)
       end
     end
 

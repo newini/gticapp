@@ -95,3 +95,7 @@ gem 'country_select'
 # Generate QR code
 # https://github.com/whomwah/rqrcode
 gem 'rqrcode'
+
+# Get tumbnail from url
+# https://github.com/gottfrois/link_thumbnailer
+gem 'link_thumbnailer'
