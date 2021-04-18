@@ -33,10 +33,11 @@
         <style>
           .my-home-event-<%= event.id %>::after {
             content: "";
-            background-image: url('<%= serve_file_event_path(id: event.id, header: 'bkg')%>');
+            background-image: url('<%= serve_images_path(id: event.bkg_image_id)%>');
             background-position: center; /* Center the image */
             background-repeat: no-repeat;
             background-size: cover;
+            filter: blur(8px);
             opacity: 0.5;
             top: 0;
             left: 0;

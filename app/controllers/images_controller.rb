@@ -24,7 +24,11 @@ class ImagesController < ApplicationController
   end
 
   def serve
-    @image = Image.find_by_filename(params[:filename])
+    if params[:id]
+      @image = Image.find(params[:id])
+    elsif params[:filename]
+      @image = Image.find_by_filename(params[:filename])
+    end
     send_data(@image.data, :type => @image.mime_type, :filename => "@{@image.filename}", :disposition => "inline")
   end
 

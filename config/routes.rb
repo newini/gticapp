@@ -92,6 +92,7 @@ Rails.application.routes.draw do
       post :update_birthday
       post :create_member
       post 'upload_file'
+      post 'set_bkg_image'
     end
   end
 

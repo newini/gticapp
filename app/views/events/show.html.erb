@@ -1,7 +1,7 @@
 <style>
 .event-bkg::after {
   content: "";
-  background-image: url('<%= serve_file_event_path(header: 'bkg')%>');
+  background-image: url('<%= serve_images_path(id: @event.bkg_image_id) %>');
   background-repeat: no-repeat; /* Do not repeat the image */
   filter: blur(8px);
   opacity: 0.5;
@@ -35,7 +35,7 @@
         <!-- Button trigger modal -->
         <button type="button" class="btn" data-toggle="modal" data-target="#headerImage">
           <% if @event.header_filename %>
-            <%= image_tag serve_file_event_path(header: 'header'), class: 'img-thumbnail mx-auto d-block' %>
+            <%= image_tag serve_file_event_path(), class: 'img-thumbnail mx-auto d-block' %>
           <% else %>
             <h4><strong>Click to upload header image</strong></h4>
           <% end %>
@@ -140,7 +140,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <%= image_tag serve_file_event_path(header: 'header'), class: 'img-fluid' %>
+        <%= image_tag serve_file_event_path(), class: 'img-fluid' %>
       </div>
       <div class="modal-footer">
         <%= form_with url: upload_file_event_path(header: 'header') do |form| %>
@@ -157,7 +157,7 @@
 </div>
 
 <div class="modal fade" id="bkgImage" tabindex="-1" role="dialog" aria-labelledby="bkgImageModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="bkgImageModalLabel">Header Image</h5>
@@ -166,18 +166,56 @@
         </button>
       </div>
       <div class="modal-body">
-        <%= image_tag serve_file_event_path(header: 'bkg'), class: 'img-fluid' %>
+        <%= image_tag serve_images_path(id: @event.bkg_image_id), class: 'mx-auto d-block', width: '300' %>
+        <div class="row">
+          <% @images.each do |image| %>
+            <div class="col-sm-4">
+              <%= link_to set_bkg_image_event_path(bkg_image_id: image.id), method: 'post' do %>
+                <%= image_tag(serve_images_path(id: image.id), class: "img-thumbnail") %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
       </div>
       <div class="modal-footer">
-        <%= form_with url: upload_file_event_path(header: 'bkg') do |form| %>
+        <%= form_with url: '/images#create', id: 'formUploadImage', multipart: true, remote: true do |form| %>
           <div class="form-group row">
-            <%= form.label :file, "Background Image", class: 'col-sm-6' %>
-            <%= form.file_field :file, class: 'form-control-file col-sm-6' %>
+            <%= label_tag :file, "File", class: 'col-sm-1' %>
+            <%= file_field nil, :file, id: 'fileInputImage', class: 'form-control-file col-sm-7' %>
+            <button class="btn btn-primary" type="submit" onclick="addImgTag()">Submit</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           </div>
-          <%= form.submit "Upload", class: 'btn btn-primary' %>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <% end %>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+  // Check filename dup
+  var filename = null;
+  document.getElementById('fileInputImage').onchange = function () {
+    var fullPath = this.value;
+    if (fullPath) {
+      var startIndex = (fullPath.indexOf('\\') >= 0 ? fullPath.lastIndexOf('\\') : fullPath.lastIndexOf('/'));
+      filename = fullPath.substring(startIndex);
+      if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
+          filename = filename.substring(1);
+      }
+      // Get filename array in db
+      <% af = Image.all.to_a.map {|a| a.filename} %>
+      var filename_array = <%= af.to_json.html_safe %>;
+      // Check if dup
+      if (filename_array.indexOf(filename) >= 0) {
+        alert('Same file name exist in database! Please check or change file name.');
+      }
+    }
+  };
+
+  // after image submit
+  function addImgTag() {
+    setTimeout(function () {
+      location.reload();
+    }, 500); // Wait 0.5 sec
+  }
+</script>

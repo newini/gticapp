@@ -47,6 +47,7 @@ class EventsController < ApplicationController
   def show
     @presentations = @event.presentations.order("created_at desc")
     @fb_event = facebook_objects(@event.fb_event_id)
+    @images = Image.all.limit(9)
   end
 
   def edit
@@ -76,22 +77,20 @@ class EventsController < ApplicationController
     event = Event.find(params[:id])
     file = params[:file]
     if file
-      if params[:header] == 'header'
-        event.update(header_data: file.read, header_filename: file.original_filename, header_mime_type: file.content_type)
-      else
-        event.update(bkg_data: file.read, bkg_filename: file.original_filename, bkg_mime_type: file.content_type)
-      end
+      event.update(header_data: file.read, header_filename: file.original_filename, header_mime_type: file.content_type)
     end
     redirect_to event_path(event)
   end
 
   def serve_file
     @event = Event.find(params[:id])
-    if params[:header] == 'header'
-      send_data(@event.header_data, :type => @event.header_mime_type, :filename => "@{@event.header_filename}", :disposition => "inline")
-    else
-      send_data(@event.bkg_data, :type => @event.bkg_mime_type, :filename => "@{@event.bkg_filename}", :disposition => "inline")
-    end
+    send_data(@event.header_data, :type => @event.header_mime_type, :filename => "@{@event.header_filename}", :disposition => "inline")
+  end
+
+  def set_bkg_image
+    @event = Event.find(params[:id])
+    @event.update(bkg_image_id: params[:bkg_image_id])
+    redirect_to event_path
   end
 
   def check_in
