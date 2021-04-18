@@ -32,18 +32,18 @@
       <% @events.each do |event| %>
         <style>
           .my-home-event-<%= event.id %>::after {
-          content: "";
-          background-image: url('<%= serve_file_event_path(id: event.id, header: 'bkg')%>');
-          background-position: center; /* Center the image */
-          background-repeat: no-repeat;
-          background-size: cover;
-          opacity: 0.5;
-          top: 0;
-          left: 0;
-          bottom: 0;
-          right: 0;
-          position: absolute;
-          z-index: -1;
+            content: "";
+            background-image: url('<%= serve_file_event_path(id: event.id, header: 'bkg')%>');
+            background-position: center; /* Center the image */
+            background-repeat: no-repeat;
+            background-size: cover;
+            opacity: 0.5;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            position: absolute;
+            z-index: -1;
           }
         </style>
 
@@ -92,7 +92,7 @@
       <div class="carousel-item">
         <div class="my-home-success" style="width: 100%; height: 650px; padding: 60px;">
           <div class="offset-sm-2">
-            <h3>GTIC登壇企業が続々活躍！</h3>
+            <h3>GTICイベント登壇企業が続々活躍！</h3>
             <br>
             <% @media_articles.each do |media_article| %>
               <h5>・<%= media_article.media %>「<%= media_article.title %>」 <strong><%= media_article.member.affiliation %></strong></h5>
@@ -118,39 +118,28 @@
 
 
 <!-- unheld event -->
-<div class="container-fluid" data-aos="fade-up" style="background: rgb(255, 255, 250); padding: 60px;">
-  <div class="row">
-    <div class="col">
+<div class="container" data-aos="fade-up" style="padding: 60px;">
+  <h1 class="text-center">-最新イベント情報-</h1>
+  <p class="text-center"><%= link_to "すべてのイベント一覧はこちら", event_list_path %></p>
 
-      <h1 class="text-center">-最新イベント情報-</h1>
-      <p class="text-center"><%= link_to "全てイベント一覧はこちら", event_list_path %></p>
-
-      <% if @events.count != 0 %>
-        <%= render 'static_pages/events' %>
-      <% else %>
-        <h5 class="text-center">To be announced</h5>
-      <% end %>
-
-    </div>
-  </div>
+  <% if @events.count != 0 %>
+    <%= render 'static_pages/events' %>
+  <% else %>
+    <h5 class="text-center">To be announced</h5>
+  <% end %>
 </div>
 
 
 <!-- Cards -->
-<div class="container-fluid" data-aos="fade-up" style="background:gainsboro; padding: 60px;">
-  <div class="row">
-    <div class="col">
+<div class="container" data-aos="fade-up" style="padding: 60px;">
+  <h1 class="text-center">-活動-</h1>
 
-      <h1 class="text-center">-活動-</h1>
-
-      <center>
-        <a href="https://www.facebook.com/GTICafe/photos/?ref=page_internal" class="btn btn-secondary">GTIC開催様子アルバム(外部ページ)</a>
-      </center>
-    </div>
+  <div class="text-center">
+    <a href="https://www.facebook.com/GTICafe/photos/?ref=page_internal" class="btn btn-secondary">GTIC開催様子アルバム(外部ページ)</a>
   </div>
 
-  <div class="row justify-content-center">
-    <div class="col-sm-5 hvr-bounce-in">
+  <div class="row">
+    <div class="col-sm-6 hvr-bounce-in">
       <div class="card" data-aos="fade-up">
         <!--<img class="card-img-top" src="..." alt="Card image cap">-->
         <div class="card-body">
@@ -163,9 +152,8 @@
       </div>
     </div>
 
-    <div class="col-sm-5 hvr-bounce-in">
+    <div class="col-sm-6 hvr-bounce-in">
       <div class="card" data-aos="fade-up">
-        <!--<img class="card-img-top" src="..." alt="Card image cap">-->
         <div class="card-body">
           <h5 class="card-title text-center">
             <i class="fa fa-link"></i>
@@ -177,10 +165,9 @@
     </div>
   </div>
 
-  <div class="row justify-content-center">
-    <div class="col-sm-5 hvr-bounce-in">
+  <div class="row">
+    <div class="col-sm-6 hvr-bounce-in">
       <div class="card" data-aos="fade-up">
-        <!--<img class="card-img-top" src="..." alt="Card image cap">-->
         <div class="card-body">
           <h5 class="card-title text-center">
             <i class="fa fa-book"></i>
@@ -191,9 +178,8 @@
       </div>
     </div>
 
-    <div class="col-sm-5 hvr-bounce-in">
+    <div class="col-sm-6 hvr-bounce-in">
       <div class="card" data-aos="fade-up">
-        <!--<img class="card-img-top" src="..." alt="Card image cap">-->
         <div class="card-body">
           <h5 class="card-title text-center">
             <i class="fa fa-edit"></i>
@@ -208,21 +194,14 @@
 
 
 <div class="container" data-aos="fade-up">
-  <center>
-    <h1 class="text-center">-お知らせ-</h1>
+  <h1 class="text-center">-Facebook page-</h1>
 
-    <div class="row">
-      <div class="col">
-
-        <div class="fb-page" data-href="https://www.facebook.com/GTICafe/" data-tabs="timeline" data-width="500" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
-          <blockquote cite="https://www.facebook.com/GTICafe/" class="fb-xfbml-parse-ignore">
-            <a href="https://www.facebook.com/GTICafe/">Global Techno Innovation Cafe (GTIC)</a>
-          </blockquote>
-        </div>
-
-      </div>
+  <div class="text-center">
+    <div class="fb-page" data-href="https://www.facebook.com/GTICafe/" data-tabs="timeline" data-width="500" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
+      <blockquote cite="https://www.facebook.com/GTICafe/" class="fb-xfbml-parse-ignore">
+        <a href="https://www.facebook.com/GTICafe/">Global Techno Innovation Cafe (GTIC)</a>
+      </blockquote>
     </div>
-
     <p>すべてのお知らせは<a href="https://www.facebook.com/GTICafe" target="_blank">公式Facebookページ</a>へ</p>
-  </center>
+  </div>
 </div>
