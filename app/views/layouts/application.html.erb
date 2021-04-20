@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="<%= params[:locale] ? params[:locale] : 'ja' %>">
   <head>
     <title>GTIC User</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -16,24 +16,8 @@
 
     <!-- Page icon -->
     <link rel="shortcut icon" href="<%= asset_path('gtic_logo_c_30x30.png') %>"/>
-  <!--
-    <%#= javascript_include_tag "highcharts/highcharts.js", "data-turbolinks-track" => true %>
-    <%#= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
-    <meta name="robots" content="noindex,follow" >
-    <meta name="robots" content="noindex,nofollow,noarchive" >
-    <meta name="googlebot" content="noindex,nofollow,noarchive">
-
-    <script>
-      $(document).on('ajax:before ajaxStart page:fetch', function(){
-        var top = $(window).height()/2 + $(window).scrollTop();
-        $('body').spin({top: top});
-      });
-      $(document).on('ajax:complete ajaxComplete page:change', function(){
-        $('body').spin(false);
-      });
-    </script>
-    -->
   </head>
+
 
   <body>
     <%= render 'layouts/header' %>

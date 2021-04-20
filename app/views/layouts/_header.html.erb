@@ -1,9 +1,9 @@
 <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
   <%= link_to root_path, class: "navbar-brand" do %>
     <% unless staff_signed_in? %>
-      <%= image_tag 'logo2.png' %>
+      <%= image_tag 'logo2.png', alt: 'GTIC logo full' %>
     <% else %>
-      <div><%= image_tag 'gtic_logo_c_30x30.png' %></div>
+      <div><%= image_tag 'gtic_logo_c_30x30.png', alt: 'GTIC logo 30x30' %></div>
     <% end %>
   <% end %>
 
