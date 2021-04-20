@@ -2,7 +2,14 @@
 <html lang="<%= params[:locale] ? params[:locale] : 'ja' %>">
   <head>
     <title>GTIC User</title>
+
+    <!-- For mobile view -->
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <!-- Meta keywords, description for SEO -->
+    <meta name="keywords" content="Event, Startup, Venture">
+    <meta name="description" content="GTIC (Global Techno Innovation Cafe) organizes events for Startup companies, venture capitals.">
+    <meta name="author" content="Tomo Akiyama, Eunchong Kim">
+
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
