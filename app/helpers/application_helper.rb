@@ -48,6 +48,7 @@ module ApplicationHelper
   end
 
   def staff_signed_in?
+    return true if ENV['RAILS_ENV'] == 'development'
     if current_user.present?
       staff = Staff.find_by_uid(current_user.uid)
       if staff.present?
@@ -58,6 +59,7 @@ module ApplicationHelper
   end
 
   def admin?
+    return true if ENV['RAILS_ENV'] == 'development'
     if current_user.present?
       staff = Staff.find_by_uid(current_user.uid)
       return staff.is_admin if staff
