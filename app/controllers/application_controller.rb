@@ -22,38 +22,6 @@ class ApplicationController < ActionController::Base
   # ======================================================
   private
     # For events
-    def get_formated_events(record)
-      @events = record.map{
-        |event| [
-          event: {
-            id: event.id,
-            name: event.name,
-            cumulative_number: event.cumulative_number,
-            date: event.start_time.strftime("%Y-%m-%d"),
-            place: event.place_id,
-            participants: event.participants.count,
-            event_category_id: event.event_category_id,
-            fb_event_id: event.fb_event_id
-          },
-          detail: event.presentations.map{
-            |presentation| [
-              title: presentation.try(:title),
-              abstract: presentation.try(:abstract),
-              note: presentation.try(:note),
-              presenter: presentation.presenters.order('id asc').map{
-                |presenter| [
-                  name: [presenter.last_name, presenter.first_name].join(" "),
-                  affiliation: presenter.affiliation,
-                  title: presenter.title,
-                ]
-              }.flatten
-            ]
-          }.flatten
-        ]
-      }.flatten
-      return @events
-    end
-
     def get_search_event(keyword)
       record = Event.group(:start_time).order("start_time DESC")
       # Search algorithm

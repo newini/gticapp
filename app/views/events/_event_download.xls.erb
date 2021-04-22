@@ -1,9 +1,3 @@
-<!-- count -->
-<% max_id = 1 %>
-<% @events.each do |event| %>
-  <% max_id += 1 %>
-<% end %>
-
 <?xml version="1.0" encoding="UTF-8"?>
 <?mso-application progid="Excel.Sheet"?>
 <Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
@@ -46,18 +40,18 @@
       </Row>
       <% i = 0 %>
       <% @events.each do |event| %>
-        <% event[:detail].reverse_each do |detail| %>
-          <% detail[:presenter].reverse_each do |presenter| %>
+        <% event.presentations.each do |presentation| %>
+          <% presentation.presenters.each do |presenter| %>
             <Row>
               <Cell ss:StyleID="s57"><Data ss:Type="String"></Data></Cell>
-              <Cell ss:StyleID="s57"><Data ss:Type="String"><%= "第#{max_id-i}回" %></Data></Cell>
-              <Cell ss:StyleID="s57"><Data ss:Type="String"><%= if event[:event][:event_category_id] == 1 then "GTIC本会#{event[:event][:name]}" else "#{event[:event][:name]}" end %></Data></Cell>
-              <Cell ss:StyleID="s57"><Data ss:Type="String"><%= event[:event][:date] %></Data></Cell>
-              <Cell ss:StyleID="s57"><Data ss:Type="String"><%= "#{presenter[:affiliation]}" %></Data></Cell>
-              <Cell ss:StyleID="s57"><Data ss:Type="String"><%= "#{presenter[:title]}" %></Data></Cell>
-              <Cell ss:StyleID="s57"><Data ss:Type="String"><%= "#{presenter[:name]}" %></Data></Cell>
-              <Cell ss:StyleID="s57"><Data ss:Type="String"><%= "#{detail[:title]}" %></Data></Cell>
-              <Cell ss:StyleID="s57"><Data ss:Type="String"><%#= "#{detail[:abstract]}" %></Data></Cell>
+              <Cell ss:StyleID="s57"><Data ss:Type="String"><%= "第#{event.cumulative_number}回" %></Data></Cell>
+              <Cell ss:StyleID="s57"><Data ss:Type="String"><%= event.name + ' ' + event.event_category.name %></Data></Cell>
+              <Cell ss:StyleID="s57"><Data ss:Type="String"><%= l event.start_date %></Data></Cell>
+              <Cell ss:StyleID="s57"><Data ss:Type="String"><%= presenter.affiliation %></Data></Cell>
+              <Cell ss:StyleID="s57"><Data ss:Type="String"><%= presenter.title" %></Data></Cell>
+              <Cell ss:StyleID="s57"><Data ss:Type="String"><%= presenter.last_name + ' ' + presenter.first_name %></Data></Cell>
+              <Cell ss:StyleID="s57"><Data ss:Type="String"><%= presentation.title %></Data></Cell>
+              <Cell ss:StyleID="s57"><Data ss:Type="String"><%= presentation.abstract %></Data></Cell>
             </Row>
           <% end %>
         <% end %>
