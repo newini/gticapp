@@ -1,1 +1,73 @@
-<%= render 'event_download' %>
+<?xml version="1.0" encoding="UTF-8"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+
+  <Styles>
+    <Style ss:ID="s62">
+      <Alignment ss:Horizontal="Center" ss:Vertical="Center" ss:WrapText="1"/>
+      <Borders>
+        <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+        <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+        <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+        <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+      </Borders>
+      <Font ss:FontName="Calibri" x:CharSet="128" x:Family="Swiss" ss:Color="#000000"/>
+    </Style>
+  </Styles>
+
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Column ss:AutoFitWidth="0" ss:Width="40"/>
+      <Column ss:AutoFitWidth="0" ss:Width="80"/>
+      <Column ss:AutoFitWidth="0" ss:Width="80"/>
+      <Column ss:AutoFitWidth="0" ss:Width="100"/>
+      <Column ss:AutoFitWidth="0" ss:Width="50"/>
+      <Column ss:AutoFitWidth="0" ss:Width="250"/>
+      <Column ss:AutoFitWidth="0" ss:Width="150"/>
+      <Column ss:AutoFitWidth="0" ss:Width="100"/>
+      <Column ss:AutoFitWidth="0" ss:Width="100"/>
+      <Row ss:Index="2">
+        <Cell ss:StyleID="s62"><Data ss:Type="String">通算#</Data></Cell>
+        <Cell ss:StyleID="s62"><Data ss:Type="String">開催日</Data></Cell>
+        <Cell ss:StyleID="s62"><Data ss:Type="String">イベント名</Data></Cell>
+        <Cell ss:StyleID="s62"><Data ss:Type="String">会場</Data></Cell>
+        <Cell ss:StyleID="s62"><Data ss:Type="String">参加者数</Data></Cell>
+        <Cell ss:StyleID="s62"><Data ss:Type="String">プレゼン題名</Data></Cell>
+        <Cell ss:StyleID="s62"><Data ss:Type="String">登壇企業</Data></Cell>
+        <Cell ss:StyleID="s62"><Data ss:Type="String">肩書</Data></Cell>
+        <Cell ss:StyleID="s62"><Data ss:Type="String">登壇者</Data></Cell>
+      </Row>
+
+      <% @events.each do |event| %>
+        <% all_presenters_count = event.presentations.map{ |p| p.presenters.count }.inject(0, :+) %>
+        <Row>
+          <Cell ss:StyleID="s62" ss:MergeDown="<%= all_presenters_count-1 %>"><Data ss:Type="String"><%= "第#{event.cumulative_number}回" %></Data></Cell>
+          <Cell ss:StyleID="s62" ss:MergeDown="<%= all_presenters_count-1 %>"><Data ss:Type="String"><%= l event.start_time %></Data></Cell>
+          <Cell ss:StyleID="s62" ss:MergeDown="<%= all_presenters_count-1 %>"><Data ss:Type="String"><%= event.name + ' ' + event.event_category.name %></Data></Cell>
+          <Cell ss:StyleID="s62" ss:MergeDown="<%= all_presenters_count-1 %>"><Data ss:Type="String"><%= event.place.name %></Data></Cell>
+          <Cell ss:StyleID="s62" ss:MergeDown="<%= all_presenters_count-1 %>"><Data ss:Type="String"><%= event.participants.count %></Data></Cell>
+          <% event.presentations.each_with_index do |presentation, p_index| %>
+            <% if p_index > 0%>
+              </Row>
+              <Row>
+            <% end %>
+            <Cell ss:StyleID="s62" <%= 'ss:Index="6"' if p_index > 0 %> ss:MergeDown="<%= presentation.presenters.count-1 %>"><Data ss:Type="String"><%= presentation.title %></Data></Cell>
+            <% presentation.presenters.each_with_index do |presenter, pp_index| %>
+              <% if pp_index > 0%>
+                </Row>
+                <Row>
+              <% end %>
+              <Cell ss:StyleID="s62" <%= 'ss:Index="7"' if pp_index > 0 %>><Data ss:Type="String"><%= presenter.affiliation %></Data></Cell>
+              <Cell ss:StyleID="s62"><Data ss:Type="String"><%= presenter.title %></Data></Cell>
+              <Cell ss:StyleID="s62"><Data ss:Type="String"><%= presenter.last_name + ' ' + presenter.first_name %></Data></Cell>
+            <% end %>
+          <% end %>
+        </Row>
+      <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

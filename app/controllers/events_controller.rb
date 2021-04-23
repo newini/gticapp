@@ -350,11 +350,8 @@ class EventsController < ApplicationController
       base = Event.where(:start_time => @start_date..@last_date).group(:start_time)
     end
     @events = base.order("start_time DESC")
-
     respond_to do |format|
-      format.html
-      format.xls {send_data render_to_string(partial: "event_download"),  filename: "events.xls"}
-      format.js
+      format.xls {send_data render_to_string(),  filename: "GTIC_all_events.xls"}
     end
   end
 
