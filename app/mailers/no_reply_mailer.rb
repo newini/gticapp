@@ -29,7 +29,12 @@ class NoReplyMailer < ActionMailer::Base
     @event = event
     @member = member
     @member_id_hash = generate_hash_from_string(member.id)
-    mail(to: @member.email, subject: '【自動/auto】GTIC '+@event.name+'参加登録')
+    # Generate QR code
+    require 'rqrcode'
+    qrcode = RQRCode::QRCode.new( "https://gtic.jp/events/#{@event.id}/check_in?member_id=#{@member_id_hash}" )
+    qrcode_png = qrcode.as_png(size: 400)
+    attachments.inline['qrcode.png'] = qrcode_png.to_s
+    mail(to: @member.email, subject: '【自動/auto】GTIC '+@event.name+'参加登録 Registration confirmation')
   end
 
 

@@ -46,7 +46,6 @@ class EventsController < ApplicationController
 
   def show
     @presentations = @event.presentations.order("created_at desc")
-    @fb_event = facebook_objects(@event.fb_event_id)
     @images = Image.all.limit(9)
   end
 

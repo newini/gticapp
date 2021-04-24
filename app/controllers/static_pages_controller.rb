@@ -43,7 +43,10 @@ class StaticPagesController < ApplicationController
 
     @presentations = @event.presentations.order("created_at desc")
     if current_user
-      @relationship = @event.relationships.find_by_member_id(current_user.member_id)
+      relationship = @event.relationships.find_by_member_id(current_user.member_id)
+      @is_registered = true if relationship.status == 2
+    else
+      @is_registered = params[:is_registered] if params[:is_registered]
     end
 
     @member = member_params ? Member.new(member_params) : Member.new
@@ -82,7 +85,7 @@ class StaticPagesController < ApplicationController
 
     # Send register confirm mail
     NoReplyMailer.registration_confirmation(event, member).deliver
-    redirect_to view_registration_path(event_id: event.id, member_id: generate_hash_from_string(member.id)), flash: { success: "Successfully registered!" }
+    redirect_to event_detail_path(event_id: event.id, is_registered: true, anchor: 'registration'), flash: { success: "Successfully registered!" }
   end
 
   def deregister_event
@@ -122,50 +125,6 @@ class StaticPagesController < ApplicationController
       NoReplyMailer.deregistration_confirmation(event, member).deliver
       redirect_to event_detail_path(event_id: event.id), notice: "参加登録をキャンセルしました。Successfully deregistered the event."
     end
-  end
-
-  def view_registration
-    validateEventId(params[:event_id])
-    @events = Event.where(id: params[:event_id]) # get array for convenience
-    event = @events.first
-
-    # Check time
-    if isExpiredEvent(event.start_time, 6)
-      redirect_to root_path, notice: "このURLは有効でありません。Cannot request with this URL."
-      return
-    end
-
-    # get member
-    if current_user
-      user = User.find(current_user.id)
-      member = user.member
-      member_id_hash = generate_hash_from_string(member.id)
-    else
-      if not params[:member_id]
-        redirect_to root_path, notice: "Not validate url."
-        return
-      end
-      member_id_hash = params[:member_id]
-      member_id = verify_string_from_hash(member_id_hash)
-      member = Member.find(member_id)
-      if not member
-        redirect_to root_path, notice: "Not validate url."
-        return
-      end
-    end
-
-    # Check registered
-    relationship = event.relationships.find_by_member_id(member.id)
-    if not relationship or relationship.status == 4
-      #render file: "#{Rails.root}/public/404.html", layout: false, status: 404
-      redirect_to root_path, notice: "このURLは有効でありません。Cannot request with this URL."
-      return
-    end
-
-    # Generate QR code
-    require 'rqrcode'
-    qrcode = RQRCode::QRCode.new( "https://gtic.jp"+check_in_event_path(id: params[:event_id], member_id: member_id_hash) )
-    @qrcode_svg = qrcode.as_svg(module_size: 6)
   end
 
   def organizer

@@ -33,16 +33,6 @@ module EventsHelper
     end
   end
 
-  def facebook_objects(fb_event_id)
-    key = current_user.access_token
-    graph = Koala::Facebook::API.new(key)
-    begin
-      return graph.get_connection(fb_event_id, '/')
-    rescue => e
-      return nil
-    end
-  end
-
   def select_status(member)
     relation = member.relationships.find_by_event_id(@event)
     status_code = relation.present? ? relation.status : nil

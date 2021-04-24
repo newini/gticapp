@@ -5,25 +5,31 @@
   </head>
 
   <body>
-    <p><%= @member.last_name %> 様</p>
-    <br>
+    <h3>参加登録完了 Registration confirmation</h3>
+    <p><strong><%= @member.last_name %> 様</strong></p>
     <p>
-      Global Techno Innovation Cafe, <%= @event.name %> <%= @event.event_category.name %>に参加登録を承りました。
-    </p>
-    <br>
-    <p>
-      イベントページ:
+      Global Techno Innovation Cafe, <%= @event.name %> <%= @event.event_category.name %>に参加登録を承りました。<br>
+      イベントページ Event page:<br>
       https://gtic.jp/event_detail?event_id=<%= @event.id %>&locale=ja
     </p>
+
     <br>
+    <hr>
+
+    <h4>参加登録証 / Registration confirmation</h4>
     <p>
-      当日受付用QRコード:
-      https://gtic.jp/view_registration?event_id=<%= @event.id %>&member_id=<%= @member_id_hash %>&locale=ja
+      受付のときにQRコードのご提示お願いします。Please show QR code on reception.<br>
+      当日受付用QRコード QR code for reception:<br>
+      *) 一回限りのQRコードになります。This is one-time only QR code.
     </p>
+    <%= image_tag attachments['qrcode.png'].url -%>
+
     <br>
+    <hr>
+
     <p>
-      キャンセルはこちらでお願いします。<br>
-      https://gtic.jp/deregister_event?event_id=<%= @event.id %>&member_id=<%= @member_id_hash %>&locale=ja
+    キャンセルは<a href="https://gtic.jp/deregister_event?event_id=<%= @event.id %>&member_id=<%= @member_id_hash %>&locale=ja">こちら</a>でお願いします。
+    Click <a href="https://gtic.jp/deregister_event?event_id=<%= @event.id %>&member_id=<%= @member_id_hash %>&locale=ja">here</a> to cancel.
     </p>
 
     <small>
