@@ -44,7 +44,7 @@ class StaticPagesController < ApplicationController
     @presentations = @event.presentations.order("created_at desc")
     if current_user
       relationship = @event.relationships.find_by_member_id(current_user.member_id)
-      @is_registered = true if relationship.status == 2
+      @is_registered = true if relationship and relationship.status == 2
     else
       @is_registered = params[:is_registered] if params[:is_registered]
     end
