@@ -7,6 +7,9 @@ class MembersController < ApplicationController
     if params[:count].present?
       @members = Member.joins(:participated_events).group(:member_id).order("count(event_id) DESC").paginate(page: params[:page])
     end
+    if params[:affiliation].present?
+      @members = Member.order(affiliation: :desc).paginate(page: params[:page])
+    end
     respond_to do |format|
       format.html
       format.xls

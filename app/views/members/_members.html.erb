@@ -5,15 +5,15 @@
 <table class="table table-bordered table-striped table-sm" style="font-size: 13px;">
   <thead>
     <tr>
-      <th scope="col">Member ID</th>
-      <th scope="col">氏名（登録画面にジャンプ）</th>
-      <th scope="col">Facebook名前<br>（ページにジャンプ）</th>
-      <th scope="col">属性</th>
-      <th scope="col"><%= sortable('affiliation',"所属") %></th>
-      <th scope="col">役職</th>
-      <th scope="col">備考</th>
-      <th scope="col"><%= link_to "出席回数", count: true %></th>
-      <th scope="col" style="width: 5%;"></th>
+      <th width="5%"><%= link_to members_path(page: params[:page]) do %>Member ID<i class="fas fa-caret-down"></i><% end %></th>
+      <th width="10%">氏名（登録画面にジャンプ）</th>
+      <th width="10%">Facebook名前<br>（ページにジャンプ）</th>
+      <th width="5%">属性</th>
+      <th width="15%"><%= link_to members_path(page: params[:page], affiliation: true) do %>所属<i class="fas fa-caret-down"></i><% end %></th>
+      <th width="15%">役職</th>
+      <th>備考</th>
+      <th width="5%"><%= link_to members_path(page: params[:page], count: true) do %>出席回数<i class="fas fa-caret-down"></i><% end %></th>
+      <th width="5%"></th>
     </tr>
   </body>
 
