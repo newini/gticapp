@@ -226,7 +226,8 @@ class MembersController < ApplicationController
         :category_id, :email,
         :biography, :note,
         :affiliation, :title,
-        :uid, :website,
+        :website,
+        :provider, :uid,
         :country_code, :age, :gender, :birthday,
         :azsa_flg, :black_list_flg, :past_presenter_flg, :contributor_flg
       )
