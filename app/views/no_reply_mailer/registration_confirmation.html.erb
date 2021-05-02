@@ -8,9 +8,11 @@
     <h3>参加登録完了 Registration confirmation</h3>
     <p><strong><%= @member.last_name %> 様</strong></p>
     <p>
-      Global Techno Innovation Cafe, <%= @event.name %> <%= @event.event_category.name %>に参加登録を承りました。<br>
-      イベントページ Event page:<br>
-      https://gtic.jp/event_detail?event_id=<%= @event.id %>&locale=ja
+      Global Techno Innovation Cafe, <%= @event.name %> <%= @event.event_category.name %>に参加登録を承りました。We have confirmed the event registeration. <br>
+      HPイベントページ HP event page:<br>
+      https://gtic.jp/event_detail?event_id=<%= @event.id %>&locale=ja<br>
+      Facebookイベントページ Facebook event page:<br>
+      https://facebook.com/<%= @event.fb_event_id %>
     </p>
 
     <br>
@@ -28,8 +30,8 @@
     <hr>
 
     <p>
-    キャンセルは<a href="https://gtic.jp/deregister_event?event_id=<%= @event.id %>&member_id=<%= @member_id_hash %>&locale=ja">こちら</a>でお願いします。
-    Click <a href="https://gtic.jp/deregister_event?event_id=<%= @event.id %>&member_id=<%= @member_id_hash %>&locale=ja">here</a> to cancel.
+    キャンセルは<a href="https://gtic.jp/deregister_event_confirm?event_id=<%= @event.id %>&member_id=<%= @member_id_hash %>&locale=ja">こちら</a>でお願いします。
+    Click <a href="https://gtic.jp/deregister_event_confirm?event_id=<%= @event.id %>&member_id=<%= @member_id_hash %>&locale=ja">here</a> to cancel.
     </p>
 
     <small>

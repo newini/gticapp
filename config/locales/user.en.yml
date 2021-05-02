@@ -27,6 +27,7 @@ en:
 
   already_registered: Already registered
   cancel: Cancel
+  confirm: Confirm
   detail: Detail
   gtic_user_sign_in: Already a GTIC user? Please sign in
   register: Register

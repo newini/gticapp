@@ -52,7 +52,7 @@ class StaticPagesController < ApplicationController
     @member = member_params ? Member.new(member_params) : Member.new
   end
 
-  def register_event
+  def register_event(member)
     validateEventId(params[:event_id])
     event = Event.find(params[:event_id])
 
@@ -60,18 +60,6 @@ class StaticPagesController < ApplicationController
     if isExpiredEvent(event.start_time)
       redirect_to event_detail_path(event_id: event.id), notice: "今は参加登録できません。GTICスタッフに直接連絡お願いします。Cannot register now. Please contact to GTIC staff directry."
       return
-    end
-
-    # Get member
-    if current_user
-      user = User.find(current_user.id)
-      member = user.member
-      if not member
-        redirect_to edit_user_path(user), flash: { notice: "ユーザー情報をご記入ください。Please fill your information." }
-        return
-      end
-    else
-      member = Member.from_registration(member_params)
     end
 
     # Find if member already registered
@@ -88,6 +76,21 @@ class StaticPagesController < ApplicationController
     redirect_to event_detail_path(event_id: event.id, is_registered: true, anchor: 'registration'), flash: { success: "Successfully registered!" }
   end
 
+  def register_event_form
+    member = Member.from_registration(member_params)
+    register_event(member)
+  end
+
+  def register_event_user
+    user = User.find(current_user.id)
+    member = user.member
+    if not member
+      redirect_to edit_user_path(user), flash: { notice: "ユーザー情報をご記入ください。Please fill your information." }
+      return
+    end
+    register_event(member)
+  end
+
   def deregister_event
     validateEventId(params[:event_id])
     event = Event.find(params[:event_id])
@@ -99,20 +102,15 @@ class StaticPagesController < ApplicationController
     end
 
     # get member
-    if current_user
-      user = User.find(current_user.id)
-      member = user.member
-    else
-      if not params[:member_id]
-        redirect_to root_path, notice: "Not validate url."
-        return
-      end
-      member_id = verify_string_from_hash(params[:member_id])
-      member = Member.find(id: member_id)
-      if not member
-        redirect_to root_path, notice: "Not validate url."
-        return
-      end
+    if not params[:member_id]
+      redirect_to root_path, notice: "Not validate url."
+      return
+    end
+    member_id = verify_string_from_hash(params[:member_id])
+    member = Member.find(member_id)
+    if not member
+      redirect_to root_path, notice: "Not validate url."
+      return
     end
 
     # Find member already registered
@@ -120,11 +118,18 @@ class StaticPagesController < ApplicationController
     if relationship.blank?
       redirect_to root_path, notice: "Not registerd yet."
     else
-      relationship.update(status: 4)
-      # Send cancel confirm mail
-      NoReplyMailer.deregistration_confirmation(event, member).deliver
-      redirect_to event_detail_path(event_id: event.id), notice: "参加登録をキャンセルしました。Successfully deregistered the event."
+      if relationship.status == 4
+        redirect_to event_detail_path(event_id: event.id), notice: "すでにキャンセルしています。Already deregistered the event."
+      elsif relationship.status == 2
+        relationship.update(status: 4)
+        # Send cancel confirm mail
+        NoReplyMailer.deregistration_confirmation(event, member).deliver
+        redirect_to event_detail_path(event_id: event.id), notice: "参加登録をキャンセルしました。Successfully deregistered the event."
+      end
     end
+  end
+
+  def deregister_event_confirm
   end
 
   def organizer
