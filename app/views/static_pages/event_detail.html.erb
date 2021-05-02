@@ -226,11 +226,12 @@
         <% else %>
 
           <% if current_user %>
-            <%= link_to t('register'), register_event_path(event_id: @event.id), method: 'post', class: 'btn btn-primary btn-lg btn-block' %>
+            <%= link_to t('register'), register_event_path(event_id: @event.id), method: 'post', class: 'btn btn-primary btn-lg btn-block',
+              data: { confirm: "イベント参加登録に進みます。よろしいでしょうか？Register this event. Are you confirm?" } %>
           <% else %>
             <%= link_to t('gtic_user_sign_in'), new_user_session_path, class: "btn btn-primary btn-lg" %>
 
-            <h5>または、記入して送信してください。or, fill and submit</h5>
+            <h5>アカウントをお持ちでない方は以下の情報をご記入して送信してください。If you don't have the account, fill below and submit</h5>
             <%= form_with model: @member, url: register_event_path(event_id: @event.id) do |f| %>
               <div class="form-group row">
                 <%= f.label :last_name, t('user.last_name')+"(*)", class: 'col-sm-4' %>
@@ -269,15 +270,17 @@
                 <%= f.email_field :email, id: 'email_confirm', placeholder: "test@example.com", class: "form-control col", onblur: "confirmEmail()", required: 'required' %>
               </div>
 
-              <!-- reCAPTCHA -->
-              <%= flash[:recaptcha_error] %>
-              <%= recaptcha_tags %>
-
               <div class="form-group">
-                <%= f.submit t('submit'), class: "btn btn-primary" %>
+                <%= f.submit t('submit'), class: "btn btn-primary",
+                  data: { confirm: "イベント参加登録に進みます。よろしいでしょうか？Register this event. Are you confirm?" } %>
               </div>
             <% end %><!-- end of form -->
           <% end %><!-- end of if current user -->
+
+          <!-- reCAPTCHA -->
+          <%= flash[:recaptcha_error] %>
+          <%= recaptcha_tags %>
+
         <% end %><!-- end of if registerd -->
       <% end %><!-- end of if expired -->
 
