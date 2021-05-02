@@ -72,8 +72,8 @@ class ApplicationController < ActionController::Base
     def admin_staff_only
       return if ENV['RAILS_ENV'] == 'development'
       if current_user.present?
-        member = Member.where(provider: current_user.provider, uid: current_user.uid).limit(1)
-        staff = Staff.find_by_member_id(member.id)
+        member = Member.where(provider: current_user.provider, uid: current_user.uid).first
+        staff = Staff.find_by_member_id(member.id) if member
         if staff and staff.is_admin
           return true
         end
@@ -84,8 +84,8 @@ class ApplicationController < ActionController::Base
     def active_staff_only
       return if ENV['RAILS_ENV'] == 'development'
       if current_user.present?
-        member = Member.where(provider: current_user.provider, uid: current_user.uid).limit(1)
-        staff = Staff.find_by_member_id(member.id)
+        member = Member.where(provider: current_user.provider, uid: current_user.uid).first
+        staff = Staff.find_by_member_id(member.id) if member
         if staff and staff.is_active
           return true
         end

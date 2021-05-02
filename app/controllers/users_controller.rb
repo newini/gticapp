@@ -58,8 +58,8 @@ class UsersController < ApplicationController
     end
 
     def get_correct_user
-      member = Member.where(provider: current_user.provider, uid: current_user.uid).limit(1)
-      staff = Staff.find_by_member_id(member.id)
+      member = Member.where(provider: current_user.provider, uid: current_user.uid).first
+      staff = Staff.find_by_member_id(member.id) if member
       if staff.present?   # If Staff
         @user = User.find(params[:id])
       else                # Normal user

@@ -50,8 +50,8 @@ module ApplicationHelper
   def staff_signed_in?
     return true if ENV['RAILS_ENV'] == 'development'
     if current_user.present?
-      member = Member.where(provider: current_user.provider, uid: current_user.uid).limit(1)
-      staff = Staff.find_by_member_id(member.id)
+      member = Member.where(provider: current_user.provider, uid: current_user.uid).first
+      staff = Staff.find_by_member_id(member.id) if member
       return staff.is_active if staff
     end
     return false
@@ -60,8 +60,8 @@ module ApplicationHelper
   def admin?
     return true if ENV['RAILS_ENV'] == 'development'
     if current_user.present?
-      member = Member.where(provider: current_user.provider, uid: current_user.uid).limit(1)
-      staff = Staff.find_by_member_id(member.id)
+      member = Member.where(provider: current_user.provider, uid: current_user.uid).first
+      staff = Staff.find_by_member_id(member.id) if member
       return staff.is_admin if staff
     end
     return false
