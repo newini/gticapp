@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_18_092904) do
+ActiveRecord::Schema.define(version: 2021_05_02_024654) do
 
   create_table "accounts", force: :cascade do |t|
     t.string "title", limit: 255
@@ -239,16 +239,12 @@ ActiveRecord::Schema.define(version: 2021_04_18_092904) do
   end
 
   create_table "staffs", force: :cascade do |t|
-    t.string "provider", limit: 255
-    t.string "uid", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean "is_admin", default: false
     t.integer "member_id"
     t.boolean "is_active", default: false
     t.string "description"
-    t.index ["provider"], name: "index_staffs_on_provider"
-    t.index ["uid"], name: "index_staffs_on_uid", unique: true
   end
 
   create_table "users", force: :cascade do |t|
