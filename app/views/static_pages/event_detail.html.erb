@@ -85,13 +85,13 @@
 
 
 <!----------- Speakers --------------->
-<div class="container-fluid" style="background: white; padding: 60px;">
-
+<div class="container-fluid" style="background: lightsteelblue; padding: 60px;">
   <div class="row">
     <div class="offset-1">
       <h1>The Speakers</h1>
     </div>
   </div>
+  <br>
 
   <div class="row">
     <% @event.presenters.each do |presenter| %>
@@ -105,7 +105,6 @@
 
     <% end %>
   </div>
-
 </div>
 
 
@@ -116,6 +115,7 @@
       <h1>Schedule</h1>
     </div>
   </div>
+  <br>
 
   <div class="row" data-aos="fade-up">
     <div class="col-3">
@@ -205,6 +205,53 @@
 </div>
 
 
+<!----------- Sponsors --------------->
+<div class="container-fluid" style="background: lightsteelblue; padding: 60px;">
+  <div class="row">
+    <div class="offset-1">
+      <h1>Our sponsors</h1>
+    </div>
+  </div>
+  <br>
+  <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" data-aos="fade-up">
+    <ol class="carousel-indicators">
+      <% @sponsors.each_with_index do |sponsor, index| %>
+        <% if index%4 == 0 %>
+          <li data-target="#carouselExampleIndicators" data-slide-to="<%= index/4.to_i %>"></li>
+        <% end %>
+      <% end %>
+    </ol>
+    <div class="carousel-inner">
+      <% @sponsors.each_with_index do |sponsor, index| %>
+        <% if index%4 == 0 %>
+          <div class="carousel-item <%= 'active' if index == 0 %>" style="margin-bottom: 60px;">
+            <div class="row">
+              <div class="offset-sm-2"></div>
+        <% end %>
+              <div class="col-sm-2" style="height: 200px; <%= "opacity: 0.5;" if sponsor.is_end %>" >
+                <%= link_to our_sponsors_path(anchor: sponsor.id), class: 'btn' do %>
+                  <h5 class="text-center"><%= sponsor.name %></h5>
+                  <%= image_tag serve_logo_image_sponsor_path(sponsor), class: 'd-block w-100' %>
+                <% end %>
+              </div>
+        <% if index%4 == 3 or index == @sponsors.count-1 %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+</div>
+
+
 <!----------- Registration --------------->
 <div class="container-fluid" style="background: white; padding: 60px;" id="registration">
   <div class="row">
@@ -212,6 +259,8 @@
       <h1>Registration & Fee</h1>
     </div>
   </div>
+
+  <br>
 
   <div class="row">
     <div class="col-sm-6" data-aos="fade-right">
@@ -317,7 +366,7 @@
 
 
 <!----------- Map --------------->
-<div class="container-fluid" style="background: white; padding: 60px;" id="how_to_go">
+<div class="container-fluid" style="background: lightsteelblue; padding: 60px;" id="how_to_go">
   <div class="row">
     <div class="offset-1">
       <h1>Location</h1>

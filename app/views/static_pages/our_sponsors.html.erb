@@ -1,0 +1,36 @@
+<% content_for :title, 'Sponsors' %>
+
+<div class="container" style="padding: 60px;">
+  <h1>Our Sponsors</h1>
+  <p>Companies that support us</p>
+  <br>
+
+  <% @sponsors.each do |sponsor| %>
+    <div class="row border rounded" data-aos="fade-up" id="<%= sponsor.id %>" style="padding: 30px; margin-bottom: 60px;">
+      <div class="col">
+        <h2 class="text-center"><%= sponsor.name %></h2>
+      </div>
+      <div class="w-100"></div>
+      <div class="col">
+        <%= image_tag serve_logo_image_sponsor_path(sponsor), class: 'mx-auto d-block', height: '300' %>
+      </div>
+      <div class="w-100"></div>
+      <div class="col">
+        <h3 class="text-center"><%= sponsor.slogan %></h3>
+        <p class="text-center"><%= sponsor.description %></p>
+        <p class="text-center"><%= link_to sponsor.website, sponsor.website %></p>
+      </div>
+    </div>
+
+  <% end %>
+
+  <div class="row">
+    <% @sponsors_end.each do |sponsor| %>
+      <div class="col-sm-3" data-aos="fade-up" style="margin-right: 10px; opacity: 0.5;">
+        <h5 class="text-center"><%= sponsor.name %></h5>
+        <%= image_tag serve_logo_image_sponsor_path(sponsor), class: 'card-img-bottom' %>
+      </div>
+    <% end %>
+  </div>
+
+</div>

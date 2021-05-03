@@ -49,6 +49,8 @@ class StaticPagesController < ApplicationController
       @is_registered = params[:is_registered] if params[:is_registered]
     end
 
+    @sponsors = Sponsor.order(:is_end)
+
     @member = member_params ? Member.new(member_params) : Member.new
   end
 
@@ -139,6 +141,11 @@ class StaticPagesController < ApplicationController
 
   def media
     @media_articles = MediaArticle.paginate(page: params[:page], per_page: 9).order(date: :desc)
+  end
+
+  def our_sponsors
+    @sponsors = Sponsor.where(is_end: false)
+    @sponsors_end = Sponsor.where(is_end: true)
   end
 
   def contact_us

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_02_024654) do
+ActiveRecord::Schema.define(version: 2021_05_02_083107) do
 
   create_table "accounts", force: :cascade do |t|
     t.string "title", limit: 255
@@ -236,6 +236,20 @@ ActiveRecord::Schema.define(version: 2021_05_02_024654) do
     t.index ["note"], name: "index_relationships_on_note"
     t.index ["presentation_role"], name: "index_relationships_on_presentation_role"
     t.index ["status"], name: "index_relationships_on_status"
+  end
+
+  create_table "sponsors", force: :cascade do |t|
+    t.string "name"
+    t.binary "logo_data"
+    t.string "logo_name"
+    t.string "logo_mime_type"
+    t.string "slogan"
+    t.string "description"
+    t.string "website"
+    t.string "note"
+    t.boolean "is_end"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "staffs", force: :cascade do |t|
