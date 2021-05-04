@@ -9,6 +9,7 @@ class EventsController < ApplicationController
     :update_registed_member, :update_participants,
     :registed, :participants, :dotasan, :declined, :dotacan, :no_show,
     :waiting, :search_member,
+    :add_presenter, :add_as_presenter,
     :account,
     :serve_file
   ]
@@ -195,12 +196,11 @@ class EventsController < ApplicationController
     end
   end
 
-  # Search member
   def waiting # Get for member
+    @referer = "waiting"
+    @title = "参加予定者手動追加"
     @recorded = Member.recorded_member(@event)
     @members = Member.limit(50)
-    @not_found_members = []
-    @referer = "waiting"
     respond_to do |format|
       format.js
       format.json { render :json => @members.select(:id, :last_name, :name) }
@@ -208,9 +208,35 @@ class EventsController < ApplicationController
   end
 
   def search_member
+    @referer = params[:referer]
+    @title = params[:title]
     @recorded = Member.recorded_member(@event)
     @members = get_search_member(params[:keyword])
     respond_to :js
+  end
+
+  def add_presenter
+    @referer = "add_presenter"
+    @title = "Add presenter"
+    @members = Member.limit(50)
+    respond_to do |format|
+      format.js
+      format.json { render :json => @members.select(:id, :last_name, :name) }
+    end
+  end
+
+  def add_as_presenter
+    # Create new relationship if need
+    relationship = @event.relationships.find_by_member_id(params["member_id"])
+    if relationship.blank?
+      relationship = Relationship.new(member_id: params["member_id"], event_id: params[:id], status: 2).save
+    end
+    # Add as presenter
+    relationship.update(presentation_role: 1)
+    member = Member.find(params[:member_id])
+    member.update(past_presenter_flg: true)
+
+    redirect_to event_path
   end
 
 
@@ -388,7 +414,8 @@ class EventsController < ApplicationController
       when "no_show"
         no_show
       when "waiting"
-        redirect_to waiting_event_path, turbolinks: false # off turbolinks for ajax
+        #redirect_to waiting_event_path, turbolinks: false # off turbolinks for ajax
+        redirect_to registed_event_path
       end
     end
 end

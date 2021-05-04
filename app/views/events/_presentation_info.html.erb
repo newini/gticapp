@@ -15,9 +15,7 @@
           <th>開始時間～終了時間</th>
         </tr>
         <tr>
-          <td>
-            <%= presentation.start_time.strftime('%H:%M') + ' ~ ' + presentation.end_time.strftime('%H:%M') if presentation.start_time %>
-          </td>
+          <td><%= presentation.start_time.strftime('%H:%M') + ' ~ ' + presentation.end_time.strftime('%H:%M') if presentation.start_time %></td>
         </tr>
 
         <tr>

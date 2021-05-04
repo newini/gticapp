@@ -150,7 +150,6 @@ class StaticPagesController < ApplicationController
 
   def contact_us
     @contact = contact_params ? Contact.new(contact_params) : @contact = Contact.new
-
     if params[:after_submit]
       @after_submit = true
     end

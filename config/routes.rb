@@ -98,6 +98,8 @@ Rails.application.routes.draw do
         get :dotacan
         get :no_show
         get :waiting
+        get :add_presenter
+        get :add_as_presenter
         get :search_member
         get :statistics
         get :account

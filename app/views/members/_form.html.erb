@@ -3,7 +3,8 @@
 <p>*: <%= t('required') %></p>
 
 <%= form_with model: @member do |form| %>
-  <%= hidden_field_tag :event, @event.id, name: "event[id]" if @event.present? %>
+  <%= hidden_field_tag :event_id, @event.id if @event.present? %>
+  <%= hidden_field_tag :referer, @referer if @event.present? %>
 
   <div class="row">
     <div class="col-sm-9">

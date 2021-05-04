@@ -19,17 +19,23 @@ class MembersController < ApplicationController
   def new
     @title = "メンバー登録"
     @member = Member.new
+    @referer = params[:referer]
     @event = Event.find(params[:event_id]) if params[:event_id].present?
   end
 
   def create
     @member = Member.new(member_params)
     if @member.save
-      if params[:event].present?
-        @member.relationships.create(event_id: params[:event][:id], status: 2)
-        redirect_to :back
+      if params[:event_id].present?
+        if params[:referer] == 'waiting'
+          @member.relationships.create(event_id: params[:event_id], status: 2)
+          redirect_to registed_event_path(params[:event_id])
+        elsif params[:referer] == 'add_presenter'
+          @member.relationships.create(event_id: params[:event_id], status: 2, presentation_role: 1)
+          redirect_to event_path(params[:event_id])
+        end
       else
-        redirect_to :members
+        redirect_to member_path(@member)
       end
     else
       render 'new'
@@ -240,7 +246,7 @@ class MembersController < ApplicationController
         :website,
         :provider, :uid,
         :country_code, :age, :gender, :birthday,
-        :azsa_flg, :black_list_flg, :past_presenter_flg, :contributor_flg
+        :azsa_flg, :black_list_flg, :past_presenter_flg, :contributor_flg, :gtic_flg
       )
     end
 

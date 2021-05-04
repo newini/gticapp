@@ -16,35 +16,32 @@
 
 
 <div class="row">
-  <div class="col-md-2">
+  <div class="col-md-2" id="side-nav">
     <%= render 'side' %>
   </div>
 
-  <div class="col-md-10">
+  <div class="col event-bkg" id="ajax_container">
+    <h1>イベント情報</h1>
 
-    <div class="row event-bkg">
-      <h2>イベント情報</h2>
+    <div class="text-right">
+      <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#bkgImage">
+        Change Background Image
+      </button>
+    </div>
 
-      <div class="offset-10 col-2">
-        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#bkgImage">
-          Change Background Image
-        </button>
-      </div>
-
-      <div class="offset-3 col-6">
-        <!-- Button trigger modal -->
-        <button type="button" class="btn" data-toggle="modal" data-target="#headerImage">
-          <% if @event.header_filename %>
-            <%= image_tag serve_file_event_path(), class: 'img-thumbnail mx-auto d-block' %>
-          <% else %>
-            <h4><strong>Click to upload header image</strong></h4>
-          <% end %>
-        </button>
-      </div>
+    <div class="mx-auto col-6">
+      <!-- Button trigger modal -->
+      <button type="button" class="btn" data-toggle="modal" data-target="#headerImage">
+        <% if @event.header_filename %>
+          <%= image_tag serve_file_event_path(), class: 'img-thumbnail mx-auto d-block' %>
+        <% else %>
+          <h4><strong>Click to upload header image</strong></h4>
+        <% end %>
+      </button>
     </div>
 
     <div class="row" style="background: white;">
-      <div class="col-6">
+      <div class="col-sm-6">
         <table class="table table-bordered table-sm">
           <tr>
             <th>イベント名</th>
@@ -115,7 +112,7 @@
         </div>
       </div>
 
-      <div class="col-md-6">
+      <div class="col-sm-6">
         <h2>プレゼンテーション内容</h2>
         <% if not @presentations.present? %>
           <strong>プレゼンターを登録して下さい</strong>

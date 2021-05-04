@@ -1,17 +1,17 @@
 <div class="row">
   <div class="col-sm-2" id="side-nav">
-    <%= render'side' %>
+    <%= render 'side' %>
   </div>
 
   <div class="col-md-10">
     <h2>参加者リスト</h2>
 
     <div class="btn-group" role="group" aria-label="Basic example">
-      <%= link_to update_participants_event_path, class: "btn btn-light",remote: true do %>
+      <%= link_to update_participants_event_path, class: "btn btn-dark",remote: true do %>
         <span class="fa fa-edit"></span> 出席者情報編集
       <% end %>
-      <%= link_to participants_event_path(format: 'xls'), method: "get", class: "btn btn-light" do %>
-        <span class="fa fa-download"></span> Download
+      <%= link_to participants_event_path(format: 'xls'), method: "get", class: "btn btn-dark" do %>
+        <span class="fa fa-download"></span> Download List
       <% end %>
     </div>
 

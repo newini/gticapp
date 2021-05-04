@@ -7,14 +7,14 @@
     <h2>参加予定者一覧</h2>
 
     <div class="btn-group">
-      <%= link_to update_registed_member_event_path, class: "btn btn-light", remote: true do %>
+      <%= link_to waiting_event_path, class: "btn btn-dark", remote: true do %>
+        <span class="fa fa-plus"></span> 参加予定者手動追加
+      <% end %>
+      <%= link_to update_registed_member_event_path, class: "btn btn-dark", remote: true do %>
         <span class="fa fa-edit"></span> 参加予定者情報編集
       <% end %>
-      <%= link_to waiting_event_path, class: "btn btn-light", remote: true do %>
-        <span class="fa fa-plus"></span> 参加予定者追加
-      <% end %>
-      <%= link_to registed_event_path(format: 'xls'), method: "get", class: "btn btn-light" do %>
-        <span class="fa fa-download"></span> Download
+      <%= link_to registed_event_path(format: 'xls'), method: "get", class: "btn btn-dark" do %>
+        <span class="fa fa-download"></span> Download registered list
       <% end %>
     </div>
 
