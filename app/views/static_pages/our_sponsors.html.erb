@@ -12,7 +12,8 @@
       </div>
       <div class="w-100"></div>
       <div class="col">
-        <%= image_tag serve_logo_image_sponsor_path(sponsor), class: 'mx-auto d-block', height: '300' %>
+        <%= image_tag "data:#{sponsor.logo_mime_type};base64,#{Base64.strict_encode64(sponsor.logo_data)}",
+            alt: sponsor.logo_name, class: 'mx-auto d-block', height: '300' if sponsor.logo_name %>
       </div>
       <div class="w-100"></div>
       <div class="col">
@@ -28,7 +29,8 @@
     <% @sponsors_end.each do |sponsor| %>
       <div class="col-sm-3" data-aos="fade-up" style="margin-right: 10px; opacity: 0.5;">
         <h5 class="text-center"><%= sponsor.name %></h5>
-        <%= image_tag serve_logo_image_sponsor_path(sponsor), class: 'card-img-bottom' %>
+        <%= image_tag "data:#{sponsor.logo_mime_type};base64,#{Base64.strict_encode64(sponsor.logo_data)}",
+            alt: sponsor.logo_name, class: 'card-img-bottom' if sponsor.logo_name %>
       </div>
     <% end %>
   </div>

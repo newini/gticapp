@@ -141,6 +141,9 @@ Rails.application.routes.draw do
         get :search
         post :fill_alphabet_from_kanji_name
       end
+      member do
+        post 'upload_profile_picture'
+      end
     end
 
     resources :places, only: [:index, :new, :create, :edit, :update, :destroy]
@@ -150,7 +153,6 @@ Rails.application.routes.draw do
     resources 'sponsors' do
       member do
         post 'upload_logo_image'
-        get 'serve_logo_image'
       end
     end
     resources :staffs

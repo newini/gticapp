@@ -1,23 +1,36 @@
 <%= form_with model: @sponsor do |form| %>
-  <div class="form-group row">
-    <%= form.label :name, "Name (*)", class: 'col-sm-2' %>
-    <%= form.text_field :name, placeholder: "Amazon", class: "form-control col-sm-4", :required => 'required' %>
-  </div>
+  <div class="row">
+    <div class="col-sm-8">
+      <div class="form-group row">
+        <%= form.label :name, "Name (*)", class: 'col-sm-2' %>
+        <%= form.text_field :name, placeholder: "Amazon", class: "form-control col", :required => 'required' %>
+      </div>
 
-  <div class="form-group row">
-    <%= form.label :slogan, "Slogan", class: 'col-sm-2' %>
-    <%= form.text_field :slogan, placeholder: "Make world great", class: "form-control col-sm-4" %>
+      <div class="form-group row">
+        <%= form.label :website, "Website (*)", class: 'col-sm-2' %>
+        <%= form.text_field :website, placeholder: "https://example.com", class: "form-control col", :required => 'required' %>
+      </div>
 
-    <%= form.label :website, "Website (*)", class: 'col-sm-2' %>
-    <%= form.text_field :website, placeholder: "https://example.com", class: "form-control col-sm-4", :required => 'required' %>
-  </div>
+      <div class="form-group row">
+        <%= form.label :slogan, "Slogan", class: 'col-sm-2' %>
+        <%= form.text_field :slogan, placeholder: "Make world great", class: "form-control col" %>
+      </div>
 
-  <div class="form-group row">
-    <%= form.label :description, "Description", class: 'col-sm-2' %>
-    <%= form.text_area :description, placeholder: "hogehogehogehogeho", class: "form-control col-sm-4", rows: 4 %>
+      <div class="form-group row">
+        <%= form.label :description, "Description", class: 'col-sm-2' %>
+        <%= form.text_area :description, placeholder: "hogehogehogehogeho", class: "form-control col", rows: 4 %>
+      </div>
 
-    <%= form.label :note, "Note", class: 'col-sm-2' %>
-    <%= form.text_area :note, placeholder: "hogehogehogehogeho", class: "form-control col-sm-4", rows: 4 %>
+      <div class="form-group row">
+        <%= form.label :note, "Note", class: 'col-sm-2' %>
+        <%= form.text_area :note, placeholder: "hogehogehogehogeho", class: "form-control col", rows: 4 %>
+      </div>
+    </div>
+
+    <div class="col">
+      <%= image_tag "data:#{@sponsor.logo_mime_type};base64,#{Base64.strict_encode64(@sponsor.logo_data)}",
+          alt: @sponsor.logo_name, class: 'mx-auto d-block', height: '200' if @sponsor.logo_name %>
+    </div>
   </div>
 
   <div class="form-group row">
@@ -27,8 +40,8 @@
     </div>
   </div>
 
-  <div class="form-group">
-    <%= form.submit class: "btn btn-primary" %>
-    <%= link_to 'Cancel & Back', :back, class: 'btn btn-primary' %>
+  <div class="form-group row">
+    <%= form.submit class: "btn btn-primary col-sm-2" %>
+    <%= link_to 'Cancel & Back', :back, class: 'btn btn-primary offset-sm-1 col-sm-2' %>
   </div>
 <% end %>

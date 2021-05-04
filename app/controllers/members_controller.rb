@@ -221,6 +221,14 @@ class MembersController < ApplicationController
     end
   end
 
+  def upload_profile_picture
+    @member = Member.find(params[:id])
+    file = params[:file]
+    if file
+      @member.update(profile_picture_data: file.read, profile_picture_name: file.original_filename, profile_picture_mime_type: file.content_type)
+    end
+    redirect_to member_path(@member)
+  end
 
   private
     def member_params

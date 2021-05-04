@@ -1,5 +1,5 @@
 class SponsorsController < ApplicationController
-  before_action :active_staff_only, expect: [:serve_logo_image]
+  before_action :active_staff_only
 
   def index
     @sponsors = Sponsor.all
@@ -51,11 +51,6 @@ class SponsorsController < ApplicationController
       @sponsor.update(logo_data: file.read, logo_name: file.original_filename, logo_mime_type: file.content_type)
     end
     redirect_to sponsor_path(@sponsor)
-  end
-
-  def serve_logo_image
-    @sponsor = Sponsor.find(params[:id])
-    send_data(@sponsor.logo_data, :type => @sponsor.logo_mime_type, :filename => "@{@sponsor.logo_filename}", :disposition => "inline")
   end
 
   private

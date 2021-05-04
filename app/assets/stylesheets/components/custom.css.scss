@@ -102,3 +102,9 @@ body {
 html {
   font-size: calc(0.8em + 0.25vw);
 }
+
+/* Bootstrap 4 Popover size! */
+.popover{
+   width:100%;
+   max-width:50%;
+}

@@ -87,23 +87,32 @@
 <!----------- Speakers --------------->
 <div class="container-fluid" style="background: lightsteelblue; padding: 60px;">
   <div class="row">
-    <div class="offset-1">
-      <h1>The Speakers</h1>
-    </div>
-  </div>
-  <br>
+    <div class="offset-sm-1">
+      <h2>The Speakers</h2>
+      <br>
 
-  <div class="row">
-    <% @event.presenters.each do |presenter| %>
+      <div class="row">
+        <% @event.presenters.each do |presenter| %>
 
-      <div class="card col-sm-4" data-aos="fade-up">
-        <h3 style="display: inline;"><%= "#{presenter.try(:last_name)} #{presenter.try(:first_name)} 氏" %></h3>
-        <h5><strong><%= presenter.affiliation %></strong></h5> <%= presenter.title %><br>
-        <%= link_to presenter.website, presenter.website if presenter.website %>
-        <p><%= presenter.biography %></p>
+          <div class="col-sm-<%= 12/@event.presenters.count.to_i %>" data-aos="fade-up">
+            <%= image_tag "data:#{presenter.profile_picture_mime_type};base64,#{Base64.strict_encode64(presenter.profile_picture_data)}",
+                alt: presenter.profile_picture_name, class: 'img-thumbnail mx-auto d-block', style: 'max-height: 200px;' if presenter.profile_picture_name %>
+            <h4><%= presenter.last_name+' '+presenter.first_name+' 氏' %></h4>
+            <p>
+              <strong><%= presenter.title %></strong><br>
+              @<%= presenter.affiliation %><br>
+              <%= link_to presenter.website, presenter.website if presenter.website %>
+            </p>
+            <button type="button" class="btn btn-info" data-toggle="popover"
+                title="<%= presenter.last_name+' '+presenter.first_name+' 氏' %>"
+                data-content="<%= presenter.biography %>">
+              Biography
+            </button>
+          </div>
+
+        <% end %>
       </div>
-
-    <% end %>
+    </div>
   </div>
 </div>
 
@@ -118,7 +127,7 @@
   <br>
 
   <div class="row" data-aos="fade-up">
-    <div class="col-3">
+    <div class="col-2">
       <h5 class="text-right" style="color: red;"><%= (@event.start_time-60*30).strftime('%H:%M') %></h5>
     </div>
     <div class="vl" ></div>
@@ -129,7 +138,7 @@
   </div>
 
   <div class="row" data-aos="fade-up">
-    <div class="col-3">
+    <div class="col-2">
       <h5 class="text-right" style="color: red;"><%= @event.start_time.strftime('%H:%M') %></h5>
     </div>
     <div class="vl" ></div>
@@ -142,7 +151,7 @@
   <% n = 1 %>
   <% @presentations.sort_by{|e| e[:id]}.each do |presentation| %>
     <div class="row" data-aos="fade-up">
-      <div class="col-3">
+      <div class="col-2">
         <h5 class="text-right" style="color: red;"><%= presentation.start_time.strftime('%H:%M') + ' ~ ' + presentation.end_time.strftime('%H:%M') if presentation.start_time %></h5>
       </div>
 
@@ -170,7 +179,7 @@
   <% end %>
 
   <div class="row" data-aos="fade-up">
-    <div class="col-3">
+    <div class="col-2">
       <h5 class="text-right" style="color: red;"><%= (@event.start_time+60*80).strftime('%H:%M') %></h5>
     </div>
     <div class="vl" ></div>
@@ -181,7 +190,7 @@
   </div>
 
   <div class="row" data-aos="fade-up">
-    <div class="col-3">
+    <div class="col-2">
       <h5 class="text-right" style="color: red;"><%= (@event.start_time+60*90).strftime('%H:%M') %></h5>
     </div>
     <div class="vl" ></div>
@@ -192,7 +201,7 @@
   </div>
 
   <div class="row" data-aos="fade-up">
-    <div class="col-3">
+    <div class="col-2">
       <h5 class="text-right" style="color: red;"><%= @event.end_time.strftime('%H:%M') %></h5>
     </div>
     <div class="vl" ></div>
@@ -231,7 +240,8 @@
               <div class="col-sm-2" style="height: 200px; <%= "opacity: 0.5;" if sponsor.is_end %>" >
                 <%= link_to our_sponsors_path(anchor: sponsor.id), class: 'btn' do %>
                   <h5 class="text-center"><%= sponsor.name %></h5>
-                  <%= image_tag serve_logo_image_sponsor_path(sponsor), class: 'd-block w-100' %>
+                  <%= image_tag "data:#{sponsor.logo_mime_type};base64,#{Base64.strict_encode64(sponsor.logo_data)}",
+                      alt: sponsor.logo_name, class: 'd-block w-100' if sponsor.logo_name %>
                 <% end %>
               </div>
         <% if index%4 == 3 or index == @sponsors.count-1 %>

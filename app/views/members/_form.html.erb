@@ -5,28 +5,55 @@
 <%= form_with model: @member do |form| %>
   <%= hidden_field_tag :event, @event.id, name: "event[id]" if @event.present? %>
 
-  <div class="form-group row">
-    <%= form.label :last_name, t('user.last_name')+"(*)", class: 'col-sm-2' %>
-    <%= form.text_field :last_name, placeholder: "山田/John", class: "form-control col-sm-4", :required => 'required' %>
+  <div class="row">
+    <div class="col-sm-9">
+      <div class="form-group row">
+        <%= form.label :last_name, t('user.last_name')+"(*)", class: 'col-sm-2' %>
+        <%= form.text_field :last_name, placeholder: "山田/John", class: "form-control col-sm-4", :required => 'required' %>
 
-    <%= form.label :first_name, t('user.first_name')+"(*)", class: 'col-sm-2' %>
-    <%= form.text_field :first_name, placeholder: "太郎/SMITH", class: "form-control col-sm-4", :required => 'required' %>
-  </div>
+        <%= form.label :first_name, t('user.first_name')+"(*)", class: 'col-sm-2' %>
+        <%= form.text_field :first_name, placeholder: "太郎/SMITH", class: "form-control col-sm-4", :required => 'required' %>
+      </div>
 
-  <div class="form-group row">
-    <%= form.label :last_name_alphabet, t('user.last_name_alphabet'), class: 'col-sm-2' %>
-    <%= form.text_field :last_name_alphabet, placeholder: "Yamada", class: "form-control col-sm-4" %>
+      <div class="form-group row">
+        <%= form.label :last_name_alphabet, t('user.last_name_alphabet'), class: 'col-sm-2' %>
+        <%= form.text_field :last_name_alphabet, placeholder: "Yamada", class: "form-control col-sm-4" %>
 
-    <%= form.label :first_name_alphabet, t('user.first_name_alphabet'), class: 'col-sm-2' %>
-    <%= form.text_field :first_name_alphabet, placeholder: "Taro", class: "form-control col-sm-4" %>
-  </div>
+        <%= form.label :first_name_alphabet, t('user.first_name_alphabet'), class: 'col-sm-2' %>
+        <%= form.text_field :first_name_alphabet, placeholder: "Taro", class: "form-control col-sm-4" %>
+      </div>
 
-  <div class="form-group row">
-    <%= form.label :category_id, t('user.category'), class: 'col-sm-2' %>
-    <%= form.select :category_id, options_from_collection_for_select(Category.all, :id, :name, @member.category_id), { include_blank: true }, { class: "form-control col-sm-4" } %>
+      <div class="form-group row">
+        <%= form.label :country_code, "国籍", class: 'col-sm-2' %>
+        <%= form.country_select :country_code, { selected: @member.country_code ? @member.country_code : "JP", include_blank: 'Select a country' }, { class: "form-control col-sm-4" } %>
 
-    <%= form.label :email, t('user.email'), class: 'col-sm-2' %>
-    <%= form.email_field :email, placeholder: "test@example.com", class: "form-control col-sm-4" %>
+        <%= form.label :gender, "性別", class: 'col-sm-2' %>
+        <%= form.select :gender, [['Man', 1], ['Woman', 2]], { include_blank: true }, { class: "form-control col-sm-4" } %>
+      </div>
+
+      <div class="form-group row">
+        <%= form.label :age, "年代", class: 'col-sm-2' %>
+        <%= form.select :age, [['~20s', 1], ['30s', 2], ['40s', 3], ['50s', 4], ['60s~', 5]], { include_blank: true }, { class: "form-control col-sm-4" } %>
+
+        <%= form.label :birthday, "BirthMonth", class: 'col-sm-2' %>
+        <%= form.date_select :birthday, { discard_year: true, discard_day: true, include_blank: true }, { class: "form-control col-sm-4" } %>
+      </div>
+
+      <div class="form-group row">
+        <%= form.label :category_id, t('user.category'), class: 'col-sm-2' %>
+        <%= form.select :category_id, options_from_collection_for_select(Category.all, :id, :name, @member.category_id), { include_blank: true }, { class: "form-control col-sm-4" } %>
+
+      </div>
+    </div>
+
+    <div class="col">
+      <% if @member.profile_picture_name %>
+        <%= image_tag "data:#{@member.profile_picture_mime_type};base64,#{Base64.strict_encode64(@member.profile_picture_data)}",
+            alt: @member.profile_picture_name, class: 'mx-auto d-block', style: 'max-height: 200px;' %>
+      <% else %>
+        <%= image_tag "/assets/blank_profile_picture.png", class: 'mx-auto d-block', style: 'max-height: 200px;' %>
+      <% end %>
+    </div>
   </div>
 
   <div class="form-group row">
@@ -38,6 +65,9 @@
   </div>
 
   <div class="form-group row">
+    <%= form.label :email, t('user.email'), class: 'col-sm-2' %>
+    <%= form.email_field :email, placeholder: "test@example.com", class: "form-control col-sm-4" %>
+
     <%= form.label :website, class: 'col-sm-2' %>
     <%= form.text_field :website, placeholder: "https://example.com", class: "form-control col-sm-4" %>
   </div>
@@ -56,20 +86,6 @@
 
     <%= form.label :uid, "User ID", class: 'col-sm-2' %>
     <%= form.text_field :uid, placeholder: "00000000000", class: "form-control col-sm-4" %>
-  </div>
-
-  <div class="form-group row">
-    <%= form.label :country_code, "国籍", class: 'col-sm-1' %>
-    <%= form.country_select :country_code, { selected: @member.country_code ? @member.country_code : "JP", include_blank: 'Select a country' }, { class: "form-control col-sm-2" } %>
-
-    <%= form.label :gender, "性別", class: 'col-sm-1' %>
-    <%= form.select :gender, [['Man', 1], ['Woman', 2]], { include_blank: true }, { class: "form-control col-sm-2" } %>
-
-    <%= form.label :age, "年代", class: 'col-sm-1' %>
-    <%= form.select :age, [['~20s', 1], ['30s', 2], ['40s', 3], ['50s', 4], ['60s~', 5]], { include_blank: true }, { class: "form-control col-sm-2" } %>
-
-    <%= form.label :birthday, "Birthday", class: 'col-sm-1' %>
-    <%= form.date_select :birthday, { discard_year: true, discard_day: true, include_blank: true }, { class: "form-control col-sm-2" } %>
   </div>
 
   <div class="form-group row">
@@ -101,9 +117,8 @@
 
 
   <div class="form-group row">
-    <div class="col-sm-offset-6 col-sm-6">
-      <%= form.submit "送信", class: "btn btn-primary btn-block" %>
-    </div>
+    <%= form.submit "送信", class: "btn btn-primary col-sm-4" %>
+    <%= link_to 'Cancel & Back', :back, class: 'btn btn-primary offset-sm-1 col-sm-4' %>
   </div>
 
 <% end %>
