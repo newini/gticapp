@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_04_073849) do
+ActiveRecord::Schema.define(version: 2021_05_04_140516) do
 
   create_table "accounts", force: :cascade do |t|
     t.string "title", limit: 255
@@ -162,6 +162,7 @@ ActiveRecord::Schema.define(version: 2021_05_04_073849) do
     t.binary "profile_picture_data"
     t.string "profile_picture_name"
     t.string "profile_picture_mime_type"
+    t.string "facebook_id"
     t.index ["affiliation"], name: "index_members_on_affiliation"
     t.index ["birthday"], name: "index_members_on_birthday"
     t.index ["black_list_flg"], name: "index_members_on_black_list_flg"

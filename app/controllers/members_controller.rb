@@ -245,6 +245,7 @@ class MembersController < ApplicationController
         :affiliation, :title,
         :website,
         :provider, :uid,
+        :facebook_id,
         :country_code, :age, :gender, :birthday,
         :azsa_flg, :black_list_flg, :past_presenter_flg, :contributor_flg, :gtic_flg
       )

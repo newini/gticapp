@@ -11,8 +11,8 @@
         <tr>
           <th style="width: 8%;">登録した日にち</th>
           <th style="width: 15%;">Member Name</th>
-          <th>Facebook ID（クリックしてFBページへ）</th>
           <th>Member ID（クリックしてメンバーページへ）</th>
+          <th>Facebook ID（クリックしてFBページへ）</th>
           <th>Active（管理者画面にアクセス可能な人）</th>
           <th>Admin（管理者画面を修正できる人）</th>
           <th>Description（右の編集ボタンで編集ページにジャンプ。そこを編集すると幹事紹介ページに反映）</th>
@@ -25,8 +25,8 @@
           <tr>
             <td><%= staff.created_at.strftime("%Y-%m-%d") %></td>
             <td><%= get_name_from_member_id(staff.member_id) %></td>
-            <td><%= get_facebook_user_id_link_from_member_id(staff.member_id) %></td>
             <td><%= link_to staff.member_id, "/members/#{staff.member_id}" %></td>
+            <td><%= link_to staff.member.facebook_id, "https://facebook.com/#{staff.member.facebook_id}" if staff.member.facebook_id %></td>
             <td><%= get_check_icon(staff.is_active) %></td>
             <td><%= get_check_icon(staff.is_admin) %></td>
             <td><%= staff.description[0..10] + "..." if staff.description.present? %></td>

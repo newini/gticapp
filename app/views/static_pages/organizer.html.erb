@@ -8,7 +8,7 @@
     <% @organizers.each do |organizer| %>
       <% if organizer.is_active %>
 
-        <div class="col hvr-bounce-in" style="max-width: 400px;">
+        <div class="col-sm-4 hvr-bounce-in">
           <div class="card" data-aos="fade-up">
             <div class="card-body">
               <div class="card-title" style="background-color: darkmagenta;">
@@ -30,15 +30,16 @@
                 </div>
               </div>
 
-              <div style="background-color: gainsboro;">
-                <i class="fa fa-facebook-square" style="color: blue;"></i>
-                <small><a href="https://facebook.com/<%= organizer.member.uid %>">https://facebook.com/<%= organizer.member.uid %></a></small>
-                <br>
-                <a tabindex="0" class="btn btn-sm btn-info float-right" role="button" data-toggle="popover" data-trigger="focus"
+              <div style="background-color: gainsboro; padding-top: 10px; padding-bottom: 10px;">
+                <a tabindex="0" class="btn btn-sm btn-info" role="button" data-toggle="popover" data-trigger="focus"
                     title="<%= get_member_english_name(organizer.member_id) %>" data-content="<%= organizer.description %>">
                   <%= t('organizer.about') %>
                 </a>
-                <br>
+                <% if organizer.member.facebook_id %>
+                  <%= link_to "https://facebook.com/"+organizer.member.facebook_id, class: 'btn btn-primary float-right btn-sm', target: 'blank' do %>
+                    <i class="fab fa-facebook-f"></i>
+                  <% end %>
+                <% end %>
               </div>
             </div>
           </div>
@@ -56,7 +57,7 @@
     <% @organizers.reverse_each do |organizer| %>
       <% if not organizer.is_active %>
 
-        <div class="col hvr-bounce-in" style="max-width: 400px;">
+        <div class="col-sm-4 hvr-bounce-in">
           <div class="card" data-aos="fade-up">
             <div class="card-body">
               <div class="card-title" style="background-color: darkmagenta;">
@@ -78,16 +79,18 @@
                 </div>
               </div>
 
-              <div style="background-color: gainsboro;">
-                <i class="fa fa-facebook-square" style="color: blue;"></i>
-                <small><a href="https://facebook.com/<%= organizer.member.uid %>">https://facebook.com/<%= organizer.member.uid %></a></small>
-                <br>
-                <a tabindex="0" class="btn btn-sm btn-info float-right" role="button" data-toggle="popover" data-trigger="focus"
+              <div style="background-color: gainsboro; padding-top: 10px; padding-bottom: 10px;">
+                <a tabindex="0" class="btn btn-sm btn-info" role="button" data-toggle="popover" data-trigger="focus"
                     title="<%= get_member_english_name(organizer.member_id) %>" data-content="<%= organizer.description %>">
                   <%= t('organizer.about') %>
                 </a>
-                <br>
+                <% if organizer.member.facebook_id %>
+                  <%= link_to "https://facebook.com/"+organizer.member.facebook_id, class: 'btn btn-primary float-right btn-sm', target: 'blank' do %>
+                    <i class="fab fa-facebook-f"></i>
+                  <% end %>
+                <% end %>
               </div>
+
             </div>
           </div>
         </div>
