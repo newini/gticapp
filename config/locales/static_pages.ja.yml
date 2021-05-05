@@ -1,4 +1,22 @@
 ja:
-  organizer:
-    about: 自己紹介
-    past_organizers: 過去の幹事たち
+    organizer:
+        about: 自己紹介
+        past_organizers: 過去の幹事たち
+
+    home:
+        top_message: 'よりオープンに、よりグローバルに、よりイノベイティブに、ベンチャー、起業、スタートアップ、イノベーションを考えよう！'
+        about: GTICについて
+        media_message: GTICイベント登壇企業が続々活躍！
+        fb_album: GTIC開催様子アルバム(Facebookページ)
+        conference_point: 毎月、都内でベンチャー企業の代表を招いてプレゼンテーション会議を開催しています。
+        networking_party_point: 会議の後はビールと食事を片手にプレゼンター、参加者が歓談します。
+        chisikinoizumi_point: 海外時事を通して実践英語を学ぶ勉強会を開催しています。
+        breakout_session_point: 不定期でビジネスに役立つワークショップを開催しています。
+
+    new_event: 最新イベント情報
+    all_events: すべてのイベント一覧はこちら
+    activities: 活動
+    conference: 本会魏
+    networking_party: 懇親会
+    chisikinoizumi: 知識の泉
+    breakout_session: 分科会/ワークショップ

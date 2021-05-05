@@ -18,13 +18,10 @@
         <div class="my-home-head" style="width: 100%; height: 650px; padding: 60px;">
           <%= image_tag 'logo200x200.png', alt: 'GTIC logo 200x200', class: "mx-auto d-block" %>
           <div class="offset-sm-2">
-            <h2>よりオープンに、よりグローバルに、よりイノベイティブに、<br>
-              ベンチャー、起業、スタートアップ、イノベーションを考えよう！</h2>
-            <h4 style="opacity: 0.5;">More open, more global, more innovative! <br>
-              Let’s think about the Venture, Startup, Innovation , regardless of field, Age, Nationality!</h4>
+            <h2><%= t('home.top_message')%></h2>
           </div>
           <div class="text-center">
-            <a href="/about" class="btn btn-primary btn-lg">GTICについて(ABOUT)</a>
+            <%= link_to t('home.about'), :about, class: "btn btn-info btn-lg" %>
           </div>
         </div>
       </div>
@@ -93,14 +90,14 @@
       <div class="carousel-item">
         <div class="my-home-success" style="width: 100%; height: 650px; padding: 60px;">
           <div class="offset-sm-2">
-            <h3>GTICイベント登壇企業が続々活躍！</h3>
+            <h3><%= t('home.media_message') %></h3>
             <br>
             <% @media_articles.each do |media_article| %>
               <h5>・<%= media_article.media %>「<%= media_article.title %>」 <strong><%= media_article.member.affiliation %></strong></h5>
             <% end %>
             など
             <br>
-            <h3>詳細は<a href="/media">MEDIA ARTICLEページ</a>で</h3>
+            <h3>More on <a href="/media">MEDIA ARTICLE PAGE</a></h3>
           </div>
         </div>
       </div>
@@ -120,8 +117,8 @@
 
 <!-- unheld event -->
 <div class="container" data-aos="fade-up" style="padding: 60px;">
-  <h1 class="text-center">-最新イベント情報-</h1>
-  <p class="text-center"><%= link_to "すべてのイベント一覧はこちら", event_list_path %></p>
+  <h1 class="text-center">-<%= t('new_event') %>-</h1>
+  <p class="text-center"><%= link_to t('all_events'), event_list_path %></p>
 
   <% if @events.count != 0 %>
     <%= render 'static_pages/events' %>
@@ -133,10 +130,10 @@
 
 <!-- Cards -->
 <div class="container" data-aos="fade-up" style="padding: 60px;">
-  <h1 class="text-center">-活動-</h1>
+  <h1 class="text-center">-<%= t('activities') %>-</h1>
 
   <div class="text-center">
-    <a href="https://www.facebook.com/GTICafe/photos/?ref=page_internal" class="btn btn-secondary">GTIC開催様子アルバム(外部ページ)</a>
+    <a href="https://www.facebook.com/GTICafe/photos/?ref=page_internal" class="btn btn-secondary"><%= t('home.fb_album') %></a>
   </div>
 
   <div class="row">
@@ -146,9 +143,9 @@
         <div class="card-body">
           <h5 class="card-title text-center">
             <i class="fa fa-globe"></i>
-            <a href="/about#conference">CONFERENCE (本会)</a>
+            <a href="/about#conference"><%= t('conference') %></a>
           </h5>
-          <p class="card-text">毎月都内でベンチャー企業によるプレゼンテーションを開催しています。</p>
+          <p class="card-text"><%= t('home.conference_point') %></p>
         </div>
       </div>
     </div>
@@ -158,9 +155,9 @@
         <div class="card-body">
           <h5 class="card-title text-center">
             <i class="fa fa-link"></i>
-            <a href="/about#networking_party">懇親会</a>
+            <a href="/about#networking_party"><%= t('networking_party') %></a>
           </h5>
-          <p class="card-text">会議の後はビールと食事を片手にプレゼンター、参加者が歓談します。</p>
+          <p class="card-text"><%= t('home.networking_party_point') %></p>
         </div>
       </div>
     </div>
@@ -172,9 +169,9 @@
         <div class="card-body">
           <h5 class="card-title text-center">
             <i class="fa fa-book"></i>
-            <a href="/about#workshop">知識の泉</a>
+            <a href="/about#workshop"><%= t('chisikinoizumi') %></a>
           </h5>
-          <p class="card-text">海外時事を通して実践英語を学ぶパネルディスカッションを開催しています。</p>
+          <p class="card-text"><%= t('home.chisikinoizumi_point') %></p>
         </div>
       </div>
     </div>
@@ -184,9 +181,9 @@
         <div class="card-body">
           <h5 class="card-title text-center">
             <i class="fa fa-edit"></i>
-            <a href="/about#workshop">WORKSHOP (分科会)</a>
+            <a href="/about#workshop"><%= t('breakout_session') %></a>
           </h5>
-          <p class="card-text">不定期でビジネスマンに役立つ勉強会を開催しています。</p>
+          <p class="card-text"><%= t('home.breakout_session_point') %></p>
         </div>
       </div>
     </div>
@@ -203,6 +200,5 @@
         <a href="https://www.facebook.com/GTICafe/">Global Techno Innovation Cafe (GTIC)</a>
       </blockquote>
     </div>
-    <p>すべてのお知らせは<a href="https://www.facebook.com/GTICafe" target="_blank">公式Facebookページ</a>へ</p>
   </div>
 </div>

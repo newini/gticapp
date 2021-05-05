@@ -6,7 +6,7 @@
   <div class="col">
     <h2>Contact List</h2>
 
-    <table class="table table-bordered table-striped table-sm">
+    <table class="table table-bordered table-striped table-sm" style="font-size: 13px;">
       <thead>
         <tr>
           <th width="10%">登録した日にち</th>
@@ -29,11 +29,11 @@
             <td><%= contact.created_at.strftime("%Y-%m-%d") %></td>
             <td><%= contact.name %></td>
             <td><%= Category.find(contact.category_id).name if contact.category_id %></td>
-            <td><%= contact.affiliation %></td>
-            <td><%= contact.title %></td>
+            <td><%= contact.affiliation.truncate(10) %></td>
+            <td><%= contact.title.truncate(10) %></td>
             <td><%= contact.email %></td>
-            <td><%= contact.subject %></td>
-            <td><%= contact.body[0..10] + "..." if contact.body.present? %></td>
+            <td><%= contact.subject.truncate(10) %></td>
+            <td><%= contact.body.truncate(20) %></td>
             <td><%= get_check_icon(contact.is_read) %></td>
             <td><%= get_check_icon(contact.is_response_completed) %></td>
             <td><%= link_to "詳細", contact_path(contact), class: 'btn btn-info btn-sm' %></td>

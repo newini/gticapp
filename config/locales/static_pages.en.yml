@@ -1,4 +1,23 @@
 en:
-  organizer:
-    about: About
-    past_organizers: Past Organizers
+    organizer:
+        about: About
+        past_organizers: Past Organizers
+
+    home:
+        top_message: 'More open, more global, more innovative! Let’s think about the Venture, Startup, Innovation , regardless of field, Age, Nationality!'
+        about: 'About GTIC'
+        media_message: GTIC presenters and companies are proudly active!
+        fb_album: GTIC event pictures()
+        conference_point: We invite representatives of venture companies and VC, and hold a conference with presentations by CEO of venture, in Tokyo, every month.
+        networking_party_point: We have a networking party after presentations to connect with presenters and participants.
+        chisikinoizumi_point: We hold a seminor to learn English through oversea's political/social events.
+        breakout_session_point: We hold a workshop to learn useful knowledge for business.
+
+    new_event: New events
+    all_events: All events
+    activities: Activities
+    conference: Conference
+    networking_party: Networking Party
+    chisikinoizumi: Chisiki no Izumi(spring of knowledge)
+    breakout_session: Breakout Session / Workshop
+
