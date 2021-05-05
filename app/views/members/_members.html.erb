@@ -7,7 +7,7 @@
     <tr>
       <th width="5%"><%= link_to members_path(page: params[:page]) do %>Member ID<i class="fas fa-caret-down"></i><% end %></th>
       <th width="10%">氏名（登録画面にジャンプ）</th>
-      <th width="10%">Facebook名前<br>（ページにジャンプ）</th>
+      <th width="10%">ソーシャルアカウント</th>
       <th width="5%">属性</th>
       <th width="15%"><%= link_to members_path(page: params[:page], affiliation: true) do %>所属<i class="fas fa-caret-down"></i><% end %></th>
       <th width="15%">役職</th>
@@ -22,7 +22,7 @@
       <%= content_tag :tr do %>
         <td><%= member.id %></td>
         <td><%= link_to "#{member.last_name} #{member.first_name}", member_path(member) %></td>
-        <td><%= link_to "#{member.name}", "https://facebook.com/#{member.uid}", target: :blank %></td>
+        <td><%= link_to tag.i('', class: 'fab fa-facebook-f'), "https://facebook.com/#{member.facebook_id}", class: 'btn btn-primary btn-xs', target: :blank if member.facebook_id %></td>
         <td><%= Category.find(member.category_id).try(:name) if member.category_id.present? %></td>
         <td><%= member.affiliation %></td>
         <td><%= member.title %></td>

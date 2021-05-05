@@ -35,9 +35,7 @@
           <% else %>
             <%= link_to t('register'), event_detail_path(event_id: event.id, anchor: 'registration'), class: 'btn btn-outline-success btn-block' %>
           <% end %>
-          <%= link_to "https://facebook.com/"+event.fb_event_id, class: 'btn btn-outline-primary btn-block', target: 'blank' do %>
-            <i class="fab fa-facebook-f"></i>
-          <% end %>
+          <%= link_to tag.i('', class: 'fab fa-facebook-f'), "https://facebook.com/"+event.fb_event_id, class: 'btn btn-outline-primary btn-block', target: 'blank' if event.fb_event_id.present? %>
         </div>
       </div>
     </div>

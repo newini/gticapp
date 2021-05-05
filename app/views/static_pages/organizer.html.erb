@@ -18,7 +18,11 @@
 
               <div class="row">
                 <div class="col-2">
-                  <%= image_tag "https://graph.facebook.com/#{organizer.member.uid}/picture?height=80&width=50", class: "rounded" %>
+                  <% if organizer.member.uid %>
+                    <%= image_tag "https://graph.facebook.com/#{organizer.member.uid}/picture?height=80&width=50", class: "rounded" %>
+                  <% else %>
+                    <%= image_tag "/assets/blank_profile_picture.png", class: "rounded", height: 80, width: 50 %>
+                  <% end %>
                 </div>
                 <div class="col-7 text-center">
                   <%= get_member_name(organizer.member_id) %>
@@ -35,11 +39,8 @@
                     title="<%= get_member_english_name(organizer.member_id) %>" data-content="<%= organizer.description %>">
                   <%= t('organizer.about') %>
                 </a>
-                <% if organizer.member.facebook_id %>
-                  <%= link_to "https://facebook.com/"+organizer.member.facebook_id, class: 'btn btn-primary float-right btn-sm', target: 'blank' do %>
-                    <i class="fab fa-facebook-f"></i>
-                  <% end %>
-                <% end %>
+                <%= link_to tag.i('', class: 'fab fa-facebook-f'), "https://facebook.com/"+organizer.member.facebook_id,
+                    class: 'btn btn-primary float-right btn-sm', target: 'blank' if organizer.member.facebook_id %>
               </div>
             </div>
           </div>
@@ -67,7 +68,11 @@
 
               <div class="row">
                 <div class="col-2">
-                  <%= image_tag "https://graph.facebook.com/#{organizer.member.uid}/picture?height=80&width=50", class: "rounded" %>
+                  <% if organizer.member.uid %>
+                    <%= image_tag "https://graph.facebook.com/#{organizer.member.uid}/picture?height=80&width=50", class: "rounded" %>
+                  <% else %>
+                    <%= image_tag "/assets/blank_profile_picture.png", class: "rounded", height: 80, width: 50 %>
+                  <% end %>
                 </div>
                 <div class="col-7 text-center">
                   <%= get_member_name(organizer.member_id) %>
@@ -84,11 +89,8 @@
                     title="<%= get_member_english_name(organizer.member_id) %>" data-content="<%= organizer.description %>">
                   <%= t('organizer.about') %>
                 </a>
-                <% if organizer.member.facebook_id %>
-                  <%= link_to "https://facebook.com/"+organizer.member.facebook_id, class: 'btn btn-primary float-right btn-sm', target: 'blank' do %>
-                    <i class="fab fa-facebook-f"></i>
-                  <% end %>
-                <% end %>
+                <%= link_to tag.i('', class: 'fab fa-facebook-f'), "https://facebook.com/"+organizer.member.facebook_id,
+                    class: 'btn btn-primary float-right btn-sm', target: 'blank' if organizer.member.facebook_id %>
               </div>
 
             </div>

@@ -1,46 +1,38 @@
-<style>
-.event-bkg::after {
-  content: "";
-  background-image: url('<%= serve_images_path(id: @event.bkg_image_id) %>');
-  background-repeat: no-repeat; /* Do not repeat the image */
-  filter: blur(8px);
-  opacity: 0.5;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  position: absolute;
-  z-index: -1;
-}
-</style>
-
-
 <div class="row">
   <div class="col-md-2" id="side-nav">
     <%= render 'side' %>
   </div>
 
-  <div class="col event-bkg" id="ajax_container">
+  <div class="col" id="ajax_container">
     <h1>イベント情報</h1>
 
-    <div class="text-right">
-      <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#bkgImage">
-        Change Background Image
-      </button>
-    </div>
+    <div class="row">
+      <div class="col-sm-4">
+        <h3>Header Image</h3>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn-outline-primary" data-toggle="modal" data-target="#headerImage">
+          <% if @event.header_filename %>
+            <%= image_tag serve_file_event_path(), class: 'img-thumbnail mx-auto d-block' %>
+          <% else %>
+            <h4><strong>Click to upload header image</strong></h4>
+          <% end %>
+        </button>
+      </div>
 
-    <div class="mx-auto col-6">
-      <!-- Button trigger modal -->
-      <button type="button" class="btn" data-toggle="modal" data-target="#headerImage">
-        <% if @event.header_filename %>
-          <%= image_tag serve_file_event_path(), class: 'img-thumbnail mx-auto d-block' %>
-        <% else %>
-          <h4><strong>Click to upload header image</strong></h4>
-        <% end %>
-      </button>
+      <div class="offset-sm-2 col-sm-4">
+        <h3>Background Image</h3>
+        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#bkgImage">
+          <% if @event.bkg_image_id %>
+            <%= image_tag serve_images_path(id: @event.bkg_image_id), class: 'img-thumbnail mx-auto d-block' %>
+          <% else %>
+            <h4><strong>Click to upload Background image</strong></h4>
+          <% end %>
+        </button>
+      </div>
     </div>
+    <hr>
 
-    <div class="row" style="background: white;">
+    <div class="row">
       <div class="col-sm-6">
         <table class="table table-bordered table-sm">
           <tr>
@@ -128,7 +120,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="headerImage" tabindex="-1" role="dialog" aria-labelledby="headerImageModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="headerImageModalLabel">Header Image</h5>
@@ -137,17 +129,20 @@
         </button>
       </div>
       <div class="modal-body">
+        Current header image:
         <%= image_tag serve_file_event_path(), class: 'img-fluid' %>
-      </div>
-      <div class="modal-footer">
+        <hr>
+        Upload new header image:
         <%= form_with url: upload_file_event_path(header: 'header') do |form| %>
           <div class="form-group row">
-            <%= form.label :file, "Header Image", class: 'col-sm-6' %>
-            <%= form.file_field :file, class: 'form-control-file col-sm-6' %>
+            <%= form.label :file, "File", class: 'col-sm-2' %>
+            <%= form.file_field :file, class: 'form-control-file col-sm-8' %>
+            <%= form.submit "Upload", class: 'btn btn-primary' %>
           </div>
-          <%= form.submit "Upload", class: 'btn btn-primary' %>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
@@ -157,13 +152,16 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="bkgImageModalLabel">Header Image</h5>
+        <h5 class="modal-title" id="bkgImageModalLabel">Background Image</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
+        Current Background image:
         <%= image_tag serve_images_path(id: @event.bkg_image_id), class: 'mx-auto d-block', width: '300' %>
+        <hr>
+        Click to set Background image:
         <div class="row">
           <% @images.each do |image| %>
             <div class="col-sm-4">
@@ -173,16 +171,18 @@
             </div>
           <% end %>
         </div>
-      </div>
-      <div class="modal-footer">
+        <hr>
+        Or, upload new image:
         <%= form_with url: '/images#create', id: 'formUploadImage', multipart: true, remote: true do |form| %>
           <div class="form-group row">
-            <%= label_tag :file, "File", class: 'col-sm-1' %>
+            <%= label_tag :file, "File", class: 'col-sm-2' %>
             <%= file_field nil, :file, id: 'fileInputImage', class: 'form-control-file col-sm-7' %>
             <button class="btn btn-primary" type="submit" onclick="addImgTag()">Submit</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           </div>
         <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>

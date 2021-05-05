@@ -226,16 +226,13 @@ class EventsController < ApplicationController
   end
 
   def add_as_presenter
-    # Create new relationship if need
     relationship = @event.relationships.find_by_member_id(params["member_id"])
     if relationship.blank?
-      relationship = Relationship.new(member_id: params["member_id"], event_id: params[:id], status: 2).save
+      # Create new relationship if need
+      Relationship.new(member_id: params["member_id"], event_id: params[:id], status: 2, presentation_role: 1).save
+    else
+      relationship.update(presentation_role: 1)
     end
-    # Add as presenter
-    relationship.update(presentation_role: 1)
-    member = Member.find(params[:member_id])
-    member.update(past_presenter_flg: true)
-
     redirect_to event_path
   end
 

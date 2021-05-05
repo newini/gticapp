@@ -1,4 +1,4 @@
-<h2><%= @title %></h2>
+<h1><%= @title %></h1>
 
 <p>*: <%= t('required') %></p>
 
@@ -6,6 +6,7 @@
   <%= hidden_field_tag :event_id, @event.id if @event.present? %>
   <%= hidden_field_tag :referer, @referer if @event.present? %>
 
+  <h5><strong>基本公開情報</strong></h5>
   <div class="row">
     <div class="col-sm-9">
       <div class="form-group row">
@@ -25,25 +26,21 @@
       </div>
 
       <div class="form-group row">
-        <%= form.label :country_code, "国籍", class: 'col-sm-2' %>
-        <%= form.country_select :country_code, { selected: @member.country_code ? @member.country_code : "JP", include_blank: 'Select a country' }, { class: "form-control col-sm-4" } %>
-
-        <%= form.label :gender, "性別", class: 'col-sm-2' %>
-        <%= form.select :gender, [['Man', 1], ['Woman', 2]], { include_blank: true }, { class: "form-control col-sm-4" } %>
-      </div>
-
-      <div class="form-group row">
-        <%= form.label :age, "年代", class: 'col-sm-2' %>
-        <%= form.select :age, [['~20s', 1], ['30s', 2], ['40s', 3], ['50s', 4], ['60s~', 5]], { include_blank: true }, { class: "form-control col-sm-4" } %>
-
-        <%= form.label :birthday, "BirthMonth", class: 'col-sm-2' %>
-        <%= form.date_select :birthday, { discard_year: true, discard_day: true, include_blank: true }, { class: "form-control col-sm-4" } %>
-      </div>
-
-      <div class="form-group row">
         <%= form.label :category_id, t('user.category'), class: 'col-sm-2' %>
         <%= form.select :category_id, options_from_collection_for_select(Category.all, :id, :name, @member.category_id), { include_blank: true }, { class: "form-control col-sm-4" } %>
+      </div>
 
+      <div class="form-group row">
+        <%= form.label :affiliation, t('user.affiliation'), class: 'col-sm-2' %>
+        <%= form.text_field :affiliation, placeholder:  "海山商事", class: "form-control col-sm-4" %>
+
+        <%= form.label :title, t('user.title'), class: 'col-sm-2' %>
+        <%= form.text_field :title, placeholder:  "代表取締役社長", class: "form-control col-sm-4" %>
+      </div>
+
+      <div class="form-group row">
+        <%= form.label :biography, "略歴 / Biography", class: 'col-sm-2' %>
+        <%= form.text_area :biography, class: "form-control col", rows: 5 %>
       </div>
     </div>
 
@@ -57,14 +54,7 @@
     </div>
   </div>
 
-  <div class="form-group row">
-    <%= form.label :affiliation, t('user.affiliation'), class: 'col-sm-2' %>
-    <%= form.text_field :affiliation, placeholder:  "海山商事", class: "form-control col-sm-4" %>
-
-    <%= form.label :title, t('user.title'), class: 'col-sm-2' %>
-    <%= form.text_field :title, placeholder:  "代表取締役社長", class: "form-control col-sm-4" %>
-  </div>
-
+  <h5><strong>ソーシャル情報</strong></h5>
   <div class="form-group row">
     <%= form.label :email, t('user.email'), class: 'col-sm-2' %>
     <%= form.email_field :email, placeholder: "test@example.com", class: "form-control col-sm-4" %>
@@ -74,25 +64,30 @@
   </div>
 
   <div class="form-group row">
-    <%= form.label :biography, "略歴 / Biography", class: 'col-sm-2' %>
-    <%= form.text_area :biography, placeholder: "biography", class: "form-control col-sm-4", rows: 5 %>
-
-    <%= form.label :note, "備考 / note", class: 'col-sm-2' %>
-    <%= form.text_area :note, placeholder: "備考", class: "form-control col-sm-4", rows: 5 %>
-  </div>
-
-  <div class="form-group row">
-    <%= form.label :provider, "Provider", class: 'col-sm-2' %>
-    <%= form.text_field :provider, placeholder: "facebook", class: "form-control col-sm-4" %>
-
-    <%= form.label :uid, "User ID", class: 'col-sm-2' %>
-    <%= form.text_field :uid, placeholder: "00000000000", class: "form-control col-sm-4" %>
-  </div>
-
-  <div class="form-group row">
-    <%= form.label :facebook_id, "Facebook ID (Not user id)(ユニークなプロフィールID)", class: 'col-sm-2' %>
+    <%= form.label :facebook_id, "Facebook ID (ユニークなプロフィールID)", class: 'col-sm-2' %>
     <%= form.text_field :facebook_id, class: "form-control col-sm-4" %>
+
     <%= link_to "このサイトからIDを探す。https://lookup-id.com", "https://lookup-id.com" %>
+  </div>
+
+  <h5><strong>GTICで使う情報</strong></h5>
+  <div class="form-group row">
+    <%= form.label :note, "備考 / note", class: 'col-sm-2' %>
+    <%= form.text_area :note, class: "form-control col-sm-4", rows: 5 %>
+  </div>
+
+  <div class="form-group row">
+    <%= form.label :country_code, "国籍", class: 'col-sm-1' %>
+    <%= form.country_select :country_code, { selected: @member.country_code ? @member.country_code : "JP", include_blank: 'Select a country' }, { class: "form-control col-sm-2" } %>
+
+    <%= form.label :gender, "性別", class: 'col-sm-1' %>
+    <%= form.select :gender, [['Man', 1], ['Woman', 2]], { include_blank: true }, { class: "form-control col-sm-2" } %>
+
+    <%= form.label :age, "年代", class: 'col-sm-1' %>
+    <%= form.select :age, [['~20s', 1], ['30s', 2], ['40s', 3], ['50s', 4], ['60s~', 5]], { include_blank: true }, { class: "form-control col-sm-2" } %>
+
+    <%= form.label :birthday, "BirthMonth", class: 'col-sm-1' %>
+    <%= form.date_select :birthday, { discard_year: true, discard_day: true, include_blank: true }, { class: "form-control col-sm-2" } %>
   </div>
 
   <div class="form-group row">
@@ -122,10 +117,20 @@
     </div>
   </div>
 
+  <h5><strong>ログイン関連情報</strong></h5>
+  <div class="form-group row">
+    <%= form.label :provider, "Provider", class: 'col-sm-2' %>
+    <%= form.text_field :provider, class: "form-control col-sm-4" %>
+
+    <%= form.label :uid, "User ID", class: 'col-sm-2' %>
+    <%= form.text_field :uid, class: "form-control col-sm-4" %>
+  </div>
 
   <div class="form-group row">
-    <%= form.submit "送信", class: "btn btn-primary col-sm-4" %>
-    <%= link_to 'Cancel & Back', :back, class: 'btn btn-primary offset-sm-1 col-sm-4' %>
+    <%= form.submit "送信", class: "btn btn-primary col-sm-2" %>
+    <%= link_to 'Cancel & Back', :back, class: 'btn btn-primary offset-sm-1 col-sm-2' %>
   </div>
 
 <% end %>
+
+<hr>
