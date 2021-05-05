@@ -20,7 +20,7 @@ module StaticPagesHelper
     end
 
     content_tag(:li, class: "nav-item dropdown") {
-      concat content_tag(:a, href: '#', id: 'dropdowmLocale',class: "nav-link dropdown-toggle", data: {toggle: "dropdown"}, 'aria-haspopup': "true", 'aria-expanded': "false") {
+      concat content_tag(:a, href: '#', id: 'dropdowmLocale',class: "nav-link dropdown-toggle py-0", data: {toggle: "dropdown"}, 'aria-haspopup': "true", 'aria-expanded': "false") {
         content_tag(:b, locale_now[0], class: "caret")
       }
       concat content_tag(:div, class: "dropdown-menu", id: 'dropdowmLocale') {
