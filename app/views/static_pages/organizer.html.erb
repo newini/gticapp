@@ -4,59 +4,17 @@
 
   <h1>Organizers</h1>
 
+  <% is_first = true%>
   <div class="row justify-content-center">
     <% @organizers.each do |organizer| %>
-      <% if organizer.is_active %>
 
-        <div class="col-sm-4 hvr-bounce-in">
-          <div class="card" data-aos="fade-up">
-            <div class="card-body">
-              <div class="card-title" style="background-color: darkmagenta;">
-                <br>
-                <small style="font: 11pt; color: white;">Global Techno Innovation Cafe</small>
-              </div>
-
-              <div class="row">
-                <div class="col-2">
-                  <% if organizer.member.uid %>
-                    <%= image_tag "https://graph.facebook.com/#{organizer.member.uid}/picture?height=80&width=50", class: "rounded" %>
-                  <% else %>
-                    <%= image_tag "/assets/blank_profile_picture.png", class: "rounded", height: 80, width: 50 %>
-                  <% end %>
-                </div>
-                <div class="col-7 text-center">
-                  <%= get_member_name(organizer.member_id) %>
-                  <br>
-                  <small class="text-center"><%= get_member_english_name(organizer.member_id) %></small>
-                </div>
-                <div class="col-2">
-                  <%= image_tag 'gtic_logo_c_50x50.png' %>
-                </div>
-              </div>
-
-              <div style="background-color: gainsboro; padding-top: 10px; padding-bottom: 10px;">
-                <a tabindex="0" class="btn btn-sm btn-info" role="button" data-toggle="popover" data-trigger="focus"
-                    title="<%= get_member_english_name(organizer.member_id) %>" data-content="<%= organizer.description %>">
-                  <%= t('organizer.about') %>
-                </a>
-                <%= link_to tag.i('', class: 'fab fa-facebook-f'), "https://facebook.com/"+organizer.member.facebook_id,
-                    class: 'btn btn-primary float-right btn-sm', target: 'blank' if organizer.member.facebook_id %>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      <% end %>
-    <% end %>
+      <% if is_first and organizer.is_active == false%>
   </div>
-
   <br>
-
   <h1><%= t('organizer.past_organizers') %></h1>
-
   <div class="row justify-content-center">
-    <% @organizers.reverse_each do |organizer| %>
-      <% if not organizer.is_active %>
+  <% is_first = false %>
+      <% end %>
 
         <div class="col-sm-4 hvr-bounce-in">
           <div class="card" data-aos="fade-up">
@@ -75,9 +33,9 @@
                   <% end %>
                 </div>
                 <div class="col-7 text-center">
-                  <%= get_member_name(organizer.member_id) %>
+                  <%= organizer.member.last_name + " " + organizer.member.first_name %>
                   <br>
-                  <small class="text-center"><%= get_member_english_name(organizer.member_id) %></small>
+                  <small class="text-center"><%= organizer.member.first_name_alphabet + " " + organizer.member.last_name_alphabet %></small>
                 </div>
                 <div class="col-2">
                   <%= image_tag 'gtic_logo_c_50x50.png' %>
@@ -86,18 +44,16 @@
 
               <div style="background-color: gainsboro; padding-top: 10px; padding-bottom: 10px;">
                 <a tabindex="0" class="btn btn-sm btn-info" role="button" data-toggle="popover" data-trigger="focus"
-                    title="<%= get_member_english_name(organizer.member_id) %>" data-content="<%= organizer.description %>">
+                    title="<%= organizer.member.first_name_alphabet + " " + organizer.member.last_name_alphabet %>" data-content="<%= organizer.description %>">
                   <%= t('organizer.about') %>
                 </a>
                 <%= link_to tag.i('', class: 'fab fa-facebook-f'), "https://facebook.com/"+organizer.member.facebook_id,
                     class: 'btn btn-primary float-right btn-sm', target: 'blank' if organizer.member.facebook_id %>
               </div>
-
             </div>
           </div>
         </div>
 
-      <% end %>
     <% end %>
   </div>
 

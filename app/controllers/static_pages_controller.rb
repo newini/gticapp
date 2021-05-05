@@ -136,7 +136,7 @@ class StaticPagesController < ApplicationController
 
   def organizer
     @access_token = get_app_access_token
-    @organizers = Staff.all
+    @organizers = Staff.order(is_active: :desc)
   end
 
   def media
