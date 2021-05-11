@@ -21,7 +21,7 @@
             <li>
               <mark><%= presentation.title %></mark><br>
                 <% presentation.presenters.each do |presenter| %>
-                  <strong><%= presenter.affiliation %></strong> <%= presenter.title %> <strong><%= presenter.name %></strong> 氏
+                  <strong><%= presenter.affiliation %></strong> <%= presenter.title %> <strong><%= presenter.last_name + ' ' + presenter.first_name %></strong> 氏
                 <% end %>
             </li>
           <% end %>

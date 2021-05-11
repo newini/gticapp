@@ -71,7 +71,7 @@
           <strong><%= event.presentations.map{ |presentation| presentation.title }.join(" / ") %></strong>
         </td><br>
       <% end %>
-      <p>...(詳しくは<a href=event_list_path>Events</a>ページへ)</p>
+      <p>...(詳しくは<%= link_to 'Events', event_list_path %>ページへ)</p>
 
       <br>
 
@@ -86,7 +86,7 @@
           <strong><%= event.presentations.map{ |presentation| presentation.title }.join(" / ") %></strong>
         </td><br>
       <% end %>
-      <p>...(詳しくは<a href=event_list_path>Events</a>ページへ)</p>
+      <p>...(詳しくは<%= link_to 'Events', event_list_path %>ページへ)</p>
 
     </div>
   </div>
