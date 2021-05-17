@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="<%= params[:locale] ? params[:locale] : 'ja' %>">
   <head>
-    <title>GTIC User</title>
+    <title><%= (yield(:title) + " - " unless yield(:title).blank?).to_s + "GTIC : Global Techno Innovation Cafe" %></title>
 
     <!-- For mobile view -->
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -29,20 +29,20 @@
   <body>
     <%= render 'layouts/header' %>
 
-    <div class="container">
-      <% flash.each do |key,value| %>
-        <%= content_tag(:div, value, class: "alert alert-#{key}") %>
-      <% end %>
-    </div>
+    <% if not flash.empty? %>
+      <div class="container">
+        <% flash.each do |key,value| %>
+          <%= content_tag(:div, value, class: "alert alert-#{key}") %>
+        <% end %>
+      </div>
+    <% end %>
 
     <div class="container-fluid">
       <%= yield %>
     </div>
 
-    <div class="container-fluid">
-      <%= render 'layouts/footer' %>
-      <%= debug(params) if Rails.env.development? %>
-    </div>
+    <%= render 'layouts/footer' %>
+    <%= debug(params) if Rails.env.development? %>
 
 
 
