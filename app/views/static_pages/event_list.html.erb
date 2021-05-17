@@ -1,25 +1,32 @@
 <% content_for :title, 'Events' %>
 
-<div class="container-fluid">
+<div class="container">
   <h1>GTIC Events</h1>
 
   <!-- Search -->
-  <%= form_tag '/search_event', method: 'get', remote: true, class: "form-inline", role: "form" do %>
-     <div class="form-group">
-      <strong>イベント検索</strong>
-      <span>Keyword: </span>
-      <%= text_field_tag :keyword, params[:keyword], class: "form-control", placeholder: "keyword" %>
+  <%= form_tag '/search_event', method: 'get', remote: true, role: "form" do %>
+    <div class="row">
+      <div class="col-auto">
+        <%= label_tag :keyword, 'イベント検索', class: 'col-form-label' %>
+      </div>
+      <div class="col-auto">
+        <%= text_field_tag :keyword, params[:keyword], class: "form-control", placeholder: "keyword" %>
+      </div>
+      <div class="col-auto">
+        <%= submit_tag 'Search', :name => nil, class: 'btn btn-primary' %>
+      </div>
+      <div class="col-auto">
+        <span class='form-text'>アルファベットによる検索もOK（ひらがな、カタカナは未対応）</span>
+      </div>
     </div>
-    <%= submit_tag 'Search', :name => nil, class: 'btn btn-primary' %>
-    アルファベットによる検索もOK（ひらがな、カタカナは未対応）
   <% end %>
 
   <!-- per year Paginate -->
   <% if @start_date.present? and @last_date.present? %>
-    <div class="row">
+    <div class="btn-group btn-group-sm row">
       <% date = @last_date%>
       <% while date >= @start_date do %>
-        <%= link_to "#{date.strftime("%Y")}年", event_list_path(:year => date.strftime("%Y-%m-%d")), class: "btn btn-info", remote: true %>
+        <%= link_to "#{date.strftime("%Y")}年", event_list_path(:year => date.strftime("%Y-%m-%d")), class: "btn btn-info col-auto", remote: true %>
         <% date = date - 1.year %>
       <% end %>
     </div>

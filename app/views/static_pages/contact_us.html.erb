@@ -3,11 +3,14 @@
 <div class="container">
   <h1>お問い合わせ/Contact us</h1>
 
-  <div class="border-left">
-    <% if @after_submit %>
-      <h3>正常に送信されました!/Sent success fully!</h3>
-    <% else %>
-      <%= render 'contacts/form' %>
-    <% end %>
-  </div>
+  <br>
+
+  <% if @after_submit %>
+    <h3>正常に送信されました!/Sent success fully!</h3>
+  <% else %>
+    <%= render 'contacts/form' %>
+  <% end %>
+
+  <br>
+
 </div>

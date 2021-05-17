@@ -1,43 +1,43 @@
 <p>* = <%= t('required') %></p>
 <%= form_for @contact, html: { onsubmit: "return CheckLength ()" } do |f| %>
-  <div class="form-group row">
+  <div class="row">
     <%= f.label :name, t('user.name')+"(*)", class: 'col-sm-2' %>
-    <%= f.text_field :name, placeholder: "山田太郎", class: "form-control col-sm-10", required: 'required' %>
+    <%= f.text_field :name, placeholder: "山田太郎", class: "form-control col", required: 'required' %>
   </div>
 
-  <div class="form-group row">
+  <div class="row">
     <%= f.label :category_id, t('user.category')+"(*)", class: 'col-sm-2' %>
-    <%= f.select :category_id, options_from_collection_for_select(Category.all, :id, :name, @contact.category_id), { include_blank: true }, { class: "form-control col-sm-10", required: 'required' } %>
+    <%= f.select :category_id, options_from_collection_for_select(Category.all, :id, :name, @contact.category_id), { include_blank: true }, { class: "form-control col", required: 'required' } %>
   </div>
 
-  <div class="form-group row">
+  <div class="row">
     <%= f.label :affiliation, t('user.affiliation')+"(*)", class: 'col-sm-2' %>
-    <%= f.text_field :affiliation, placeholder:  "海山商事", class: "form-control col-sm-10", required: 'required' %>
+    <%= f.text_field :affiliation, placeholder:  "海山商事", class: "form-control col", required: 'required' %>
   </div>
 
-  <div class="form-group row">
+  <div class="row">
     <%= f.label :title, t('user.title')+"(*)", class: 'col-sm-2' %>
-    <%= f.text_field :title, placeholder:  "代表取締役社長", class: "form-control col-sm-10", required: 'required' %>
+    <%= f.text_field :title, placeholder:  "代表取締役社長", class: "form-control col", required: 'required' %>
   </div>
 
-  <div class="form-group row">
+  <div class="row">
     <%= f.label :email, t('user.email')+"(*)", class: 'col-sm-2' %>
-    <%= f.email_field :email, placeholder: "taro@gmail.com", class: "form-control col-sm-10", required: 'required' %>
+    <%= f.email_field :email, placeholder: "taro@gmail.com", class: "form-control col", required: 'required' %>
   </div>
 
-  <div class="form-group row">
+  <div class="row">
     <%= f.label :email_confirm, t('user.email_confirm')+"(*)", class: 'col-sm-2' %>
-    <%= f.email_field :email, id: 'email_confirm', placeholder: "taro@gmail.com", class: "form-control col-sm-10", onblur: "confirmEmail()", required: 'required' %>
+    <%= f.email_field :email, id: 'email_confirm', placeholder: "taro@gmail.com", class: "form-control col", onblur: "confirmEmail()", required: 'required' %>
   </div>
 
-  <div class="form-group row">
+  <div class="row">
     <%= f.label :subject, t('contact.subject')+"(*)", class: 'col-sm-2' %>
-    <%= f.text_field :subject, placeholder: "...", class: "form-control col-sm-10", required: 'required' %>
+    <%= f.text_field :subject, placeholder: "...", class: "form-control col", required: 'required' %>
   </div>
 
-  <div class="form-group row">
+  <div class="row">
     <%= f.label :body, t('contact.body')+"(*)", class: 'col-sm-2' %>
-    <%= f.text_area :body, placeholder: "...", class: "form-control col-sm-10", rows: 10, required: 'required',
+    <%= f.text_area :body, placeholder: "...", class: "form-control col", rows: 10, required: 'required',
       onKeyUp: "textCounter(this, 'count_display', 50);", onBlur: "textCounter(this, 'count_display', 50);" %>
     <span id="count_display" class="offset-sm-2">50</span>
     <span id="Message" class="offset-sm-2" style="color: #ff0000"></span>
@@ -47,9 +47,7 @@
   <%= flash[:recaptcha_error] %>
   <%= recaptcha_tags %>
 
-  <div class="form-group">
-    <%= f.submit t('submit'), class: "btn btn-primary", data: { disable_with: false } %>
-  </div>
+  <%= f.submit t('submit'), class: "btn btn-primary", data: { disable_with: false } %>
 <% end %>
 
 

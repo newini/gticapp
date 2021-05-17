@@ -7,12 +7,12 @@
     <% end %>
   <% end %>
 
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse flex-column" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
+      <ul class="navbar-nav me-auto">
         <li class="nav-item hvr-underline-from-center"><%= link_to "Home", root_path, class:"nav-link py-0" %></li>
         <li class="nav-item hvr-underline-from-center"><%= link_to "About", :about, class:"nav-link py-0", onclick:'FB.AppEvents.logEvent("buttonClicked")' %></li>
         <li class="nav-item hvr-underline-from-center"><%= link_to "Message from CEO", :ceo_message, class:"nav-link py-0" %></li>
@@ -23,11 +23,11 @@
         <li class="nav-item hvr-underline-from-center"><%= link_to "Contact Us", contact_us_path, class:"nav-link py-0" %></li>
       </ul>
 
-      <ul class="navbar-nav ml-auto">
+      <ul class="navbar-nav ms-auto">
         <!-- Only Gtic Staff -->
         <% if staff_signed_in? %>
           <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle py-0" id="dropdownStaffMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">管理メニュー<b class="caret"></b></a>
+            <a href="#" class="nav-link dropdown-toggle py-0" id="dropdownStaffMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">管理メニュー<b class="caret"></b></a>
             <div class="dropdown-menu" aria-labelledby="dropdownStaffMenu">
               <%= link_to "Event管理", events_path, class: "dropdown-item" %>
               <%= link_to "Members管理", members_path, class: "dropdown-item" %>
@@ -48,7 +48,7 @@
         <!-- User -->
         <% if signed_in? %>
           <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle py-0" id="dropdownUserMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <%= current_user.name %> <b class="caret"></b></a>
+            <a href="#" class="nav-link dropdown-toggle py-0" id="dropdownUserMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <%= current_user.name %> <b class="caret"></b></a>
             <div class="dropdown-menu" aria-labelledby="dropdownUserMenu">
               <%= link_to "My Page", current_user, class: "dropdown-item" %>
               <div class="dropdown-divider"></div>

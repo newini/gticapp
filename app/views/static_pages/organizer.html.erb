@@ -16,7 +16,7 @@
   <% is_first = false %>
       <% end %>
 
-        <div class="col-sm-4 hvr-bounce-in">
+        <div class="col-sm-3 hvr-bounce-in">
           <div class="card" data-aos="fade-up">
             <div class="card-body">
               <div class="card-title" style="background-color: darkmagenta;">
@@ -43,8 +43,9 @@
               </div>
 
               <div style="background-color: gainsboro; padding-top: 10px; padding-bottom: 10px;">
-                <a tabindex="0" class="btn btn-sm btn-info" role="button" data-toggle="popover" data-trigger="focus"
-                    title="<%= organizer.member.first_name_alphabet + " " + organizer.member.last_name_alphabet %>" data-content="<%= organizer.description %>">
+                <a tabindex="0" class="btn btn-sm btn-info" role="button" data-bs-toggle="popover" data-trigger="focus"
+                    title="<%= organizer.member.first_name_alphabet + " " + organizer.member.last_name_alphabet %>"
+                    data-bs-content="<%= organizer.description.present? ? organizer.description : 'To be added' %>">
                   <%= t('organizer.about') %>
                 </a>
                 <%= link_to tag.i('', class: 'fab fa-facebook-f'), "https://facebook.com/"+organizer.member.facebook_id,

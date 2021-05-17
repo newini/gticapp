@@ -15,9 +15,9 @@
 
 <% content_for :title, @event.name+' '+@event.event_category.name %>
 
-<div class="container-fluid event-bkg" style="padding: 60px;">
+<div class="container-fluid event-bkg" style="padding: 60px 0;">
 
-  <div class="text-right" data-aos="fade-left">
+  <div class="float-end" data-aos="fade-left">
     <div class="btn-group">
       <!-- Share with Facebook -->
       <div class="fb-share-button"
@@ -54,10 +54,10 @@
   <br><br><br>
 
   <div class="row" data-aos="fade-right">
-    <div class="offset-1">
+    <div class="offset-sm-1 col-auto">
       <h1 style="font-size: 50px;"><i class="fas fa-calendar"></i></h1>
     </div>
-    <div class="col">
+    <div class="col-auto">
       <strong>WHEN</strong><br>
       <h5><%= l @event.start_time, format: :default%></h5>
     </div>
@@ -66,15 +66,15 @@
   <br><br>
 
   <div class="row">
-    <div class="offset-1">
+    <div class="offset-sm-1 col-auto">
       <h1 style="font-size: 50px;"><i class="fas fa-map-marker-alt"></i></h1>
     </div>
-    <div class="col" data-aos="fade-right">
+    <div class="col-auto" data-aos="fade-right">
       <strong>WHERE</strong><br>
       <h5><%= link_to @event.place.name, '#how_to_go' %></h5>
     </div>
 
-    <div class="text-right" data-aos="fade-left">
+    <div class="offset-sm-7 col-auto text-end" data-aos="fade-left">
       <%= link_to t('register'), '#registration', class: 'btn btn-success btn-lg btn-block' %>
     </div>
   </div>
@@ -85,7 +85,7 @@
 
 
 <!----------- Speakers --------------->
-<div class="container-fluid" style="background: lightsteelblue; padding: 60px;">
+<div class="container-fluid" style="background: lightsteelblue; padding: 60px 0;">
   <div class="row">
     <div class="offset-sm-1">
       <h2>The Speakers</h2>
@@ -94,7 +94,7 @@
       <div class="row">
         <% @event.presenters.each do |presenter| %>
 
-          <div class="col-sm-<%= 12/@event.presenters.count.to_i %>" data-aos="fade-up">
+          <div class="col-sm-4" data-aos="fade-up">
             <%= image_tag "data:#{presenter.profile_picture_mime_type};base64,#{Base64.strict_encode64(presenter.profile_picture_data)}",
                 alt: presenter.profile_picture_name, class: 'img-thumbnail mx-auto d-block', style: 'max-height: 200px;' if presenter.profile_picture_name %>
             <h4><%= presenter.last_name+' '+presenter.first_name+' 氏' %></h4>
@@ -103,9 +103,9 @@
               @<%= presenter.affiliation %><br>
               <%= link_to presenter.website, presenter.website if presenter.website %>
             </p>
-            <button type="button" class="btn btn-info" data-toggle="popover"
+            <button type="button" class="btn btn-info" data-bs-toggle="popover"
                 title="<%= presenter.last_name+' '+presenter.first_name+' 氏' %>"
-                data-content="<%= presenter.biography %>">
+                data-bs-content="<%= presenter.biography.present? ? presenter.biography : 'To be added' %>">
               Biography
             </button>
           </div>
@@ -118,7 +118,7 @@
 
 
 <!----------- Schedule --------------->
-<div class="container-fluid" style="background: rgb(250, 255, 255); padding: 60px;">
+<div class="container-fluid" style="background: rgb(250, 255, 255); padding: 60px 0;">
   <div class="row">
     <div class="offset-1">
       <h1>Schedule</h1>
@@ -128,9 +128,9 @@
 
   <div class="row" data-aos="fade-up">
     <div class="col-2">
-      <h5 class="text-right" style="color: red;"><%= (@event.start_time-60*30).strftime('%H:%M') %></h5>
+      <h5 class="text-end" style="color: red;"><%= (@event.start_time-60*30).strftime('%H:%M') %></h5>
     </div>
-    <div class="vl" ></div>
+    <div class="col-auto vl" ></div>
     <div class="col">
       <h4>受付 / Reception</h4>
       <hr>
@@ -139,9 +139,9 @@
 
   <div class="row" data-aos="fade-up">
     <div class="col-2">
-      <h5 class="text-right" style="color: red;"><%= @event.start_time.strftime('%H:%M') %></h5>
+      <h5 class="text-end" style="color: red;"><%= @event.start_time.strftime('%H:%M') %></h5>
     </div>
-    <div class="vl" ></div>
+    <div class="col-auto vl" ></div>
     <div class="col">
       <h4>オープニングスピーチ / Opening Speech</h4>
       <hr>
@@ -152,10 +152,10 @@
   <% @presentations.sort_by{|e| e[:id]}.each do |presentation| %>
     <div class="row" data-aos="fade-up">
       <div class="col-2">
-        <h5 class="text-right" style="color: red;"><%= presentation.start_time.strftime('%H:%M') + ' ~ ' + presentation.end_time.strftime('%H:%M') if presentation.start_time %></h5>
+        <h5 class="text-end" style="color: red;"><%= presentation.start_time.strftime('%H:%M') + ' ~ ' + presentation.end_time.strftime('%H:%M') if presentation.start_time %></h5>
       </div>
 
-      <div class="vl" ></div>
+      <div class="col-auto vl" ></div>
 
       <div class="col">
         <sub><small><%= "Presentation ##{n}" %></small></sub>
@@ -180,9 +180,9 @@
 
   <div class="row" data-aos="fade-up">
     <div class="col-2">
-      <h5 class="text-right" style="color: red;"><%= (@event.start_time+60*80).strftime('%H:%M') %></h5>
+      <h5 class="text-end" style="color: red;"><%= (@event.start_time+60*80).strftime('%H:%M') %></h5>
     </div>
-    <div class="vl" ></div>
+    <div class="col-auto vl" ></div>
     <div class="col">
       <h4>アンケート記入 / Fill out the questionnaire</h4>
       <hr>
@@ -191,9 +191,9 @@
 
   <div class="row" data-aos="fade-up">
     <div class="col-2">
-      <h5 class="text-right" style="color: red;"><%= (@event.start_time+60*90).strftime('%H:%M') %></h5>
+      <h5 class="text-end" style="color: red;"><%= (@event.start_time+60*90).strftime('%H:%M') %></h5>
     </div>
-    <div class="vl" ></div>
+    <div class="col-auto vl" ></div>
     <div class="col">
       <h4>懇親会 / Networking party</h4>
       <hr>
@@ -202,9 +202,9 @@
 
   <div class="row" data-aos="fade-up">
     <div class="col-2">
-      <h5 class="text-right" style="color: red;"><%= @event.end_time.strftime('%H:%M') %></h5>
+      <h5 class="text-end" style="color: red;"><%= @event.end_time.strftime('%H:%M') %></h5>
     </div>
-    <div class="vl" ></div>
+    <div class="col-auto vl" ></div>
     <div class="col">
       <h4>集合写真&終了 / Group Photo time & Event end</h4>
       <hr>
@@ -215,7 +215,7 @@
 
 
 <!----------- Sponsors --------------->
-<div class="container-fluid" style="background: lightsteelblue; padding: 60px;">
+<div class="container-fluid" style="background: lightsteelblue; padding: 60px 0;">
   <div class="row">
     <div class="offset-1">
       <h1>Our sponsors</h1>
@@ -263,7 +263,7 @@
 
 
 <!----------- Registration --------------->
-<div class="container-fluid" style="background: white; padding: 60px;" id="registration">
+<div class="container-fluid" style="background: white; padding: 60px 0;" id="registration">
   <div class="row">
     <div class="offset-1">
       <h1>Registration & Fee</h1>
@@ -272,7 +272,7 @@
 
   <br>
 
-  <div class="row">
+  <div class="row" style="padding: 0 60px;">
     <div class="col-sm-6" data-aos="fade-right">
       <% if @is_expired_event %>
 
@@ -305,7 +305,7 @@
                 <%= f.text_field :last_name_alphabet, placeholder: "Yamada", class: "form-control col", required: 'required' %>
               </div>
               <div class="form-group row">
-                <%= f.label :first_name_alphabet, t('user.last_name_alphabet')+"(*)", class: 'col-sm-4' %>
+                <%= f.label :first_name_alphabet, t('user.first_name_alphabet')+"(*)", class: 'col-sm-4' %>
                 <%= f.text_field :first_name_alphabet, placeholder: "Taro", class: "form-control col", required: 'required' %>
               </div>
               <div class="form-group row">
@@ -376,14 +376,14 @@
 
 
 <!----------- Map --------------->
-<div class="container-fluid" style="background: lightsteelblue; padding: 60px;" id="how_to_go">
+<div class="container-fluid" style="background: lightsteelblue; padding: 60px 0;" id="how_to_go">
   <div class="row">
     <div class="offset-1">
       <h1>Location</h1>
     </div>
   </div>
 
-  <div class="row">
+  <div class="row" style="padding: 0 60px;">
     <div class="col-sm-6">
       <li>Place name: <%= @event.place.name %></li>
       <li>Nearest Station: <%= @event.place.nearest_station %></li>
@@ -398,20 +398,20 @@
 
 
 <!----------- Note --------------->
-<div class="container-fluid" style="background: white; padding: 60px;" id="note">
+<div class="container-fluid" style="background: white; padding: 60px 0;" id="note">
   <div class="row">
     <div class="offset-1">
       <h1>Note</h1>
     </div>
   </div>
 
-  <div class="row">
+  <div class="row" style="padding: 0 60px;">
     <%= simple_format(@event.note) %>
   </div>
 </div>
 
 
 <!----------- Go to Top button --------------->
-<div class="fixed-bottom text-right">
+<div class="fixed-bottom text-end">
   <a href="#top" class="btn btn-info"><i class="fas fa-arrow-up" style="font-size: 40px;"></i></a>
 </div>

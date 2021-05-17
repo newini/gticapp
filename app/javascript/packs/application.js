@@ -42,7 +42,7 @@ window.$ = window.jQuery = jQuery;
 // Bootstrap popover
 document.addEventListener("turbolinks:load", function() {
     $(function () {
-        $('[data-toggle="popover"]').popover({
+        $('[data-bs-toggle="popover"]').popover({
             trigger: 'focus'
         })
     })
