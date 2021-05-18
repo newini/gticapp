@@ -1,4 +1,4 @@
-<%= form_with model: @sponsor do |form| %>
+<%= form_with model: @sponsor, html: { multipart: true } do |form| %>
   <div class="row">
     <div class="col-sm-8">
       <div class="form-group row">
@@ -25,9 +25,17 @@
         <%= form.label :note, "Note", class: 'col-sm-2' %>
         <%= form.text_area :note, placeholder: "hogehogehogehogeho", class: "form-control col", rows: 4 %>
       </div>
+
     </div>
 
     <div class="col">
+      <div class="row">
+        <%= form.label :file, "Logo Image", class: 'col-form-label col-auto' %>
+        <%= file_field_tag :file, class: 'col-form-label col' %>
+      </div>
+
+      <hr>
+
       <%= image_tag "data:#{@sponsor.logo_mime_type};base64,#{Base64.strict_encode64(@sponsor.logo_data)}",
           alt: @sponsor.logo_name, class: 'mx-auto d-block', height: '200' if @sponsor.logo_name %>
     </div>

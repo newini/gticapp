@@ -12,38 +12,8 @@
 
     <div class="row">
       <%= link_to 'Sponsor情報編集', edit_sponsor_path(@sponsor), class: "btn btn-primary col-sm-3" %>
-      <!-- Button trigger modal -->
-      <button type="button" class="btn btn-primary offset-sm-1 col-sm-3" data-toggle="modal" data-target="#logoImage">
-        Click to upload logo image
-      </button>
       <%= link_to 'Sponsor削除', @sponsor, value: @sponsor.id, class: 'btn btn-warning offset-1 col-sm-3',
         method: :delete, data: { confirm: "削除してもよろしいですか？" } %>
-    </div>
-  </div>
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="logoImage" tabindex="-1" role="dialog" aria-labelledby="logoImageModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="logoImageModalLabel">Logo Image</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <%= form_with url: upload_logo_image_sponsor_path(@sponsor) do |form| %>
-          <div class="form-group row">
-            <%= form.label :file, "Logo image", class: 'col-sm-2' %>
-            <%= form.file_field :file, class: 'form-control-file col-sm-8' %>
-            <%= form.submit "Upload", class: 'btn btn-primary' %>
-          </div>
-        <% end %>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
     </div>
   </div>
 </div>

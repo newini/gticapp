@@ -11,12 +11,12 @@
     <% end %>
 
     <!-- Search -->
-    <%= form_with url: search_members_path, method: 'get', data: { remote: true }, class: "form-inline" do |form| %>
-      <div class="form-group">
-        <%= form.label :keyword, "メンバー検索" %>
-        <%= form.text_field :keyword, class: "form-control", placeholder: "Keyword" %>
+    <%= form_with url: search_members_path, method: 'get', data: { remote: true } do |form| %>
+      <div class="row">
+        <%= form.label :keyword, "メンバー検索", class: 'col-form-label col-auto' %>
+        <%= form.text_field :keyword, class: "form-control col", placeholder: "Keyword" %>
+        <%= form.submit 'Search', class: 'btn btn-primary col-auto' %>
       </div>
-      <%= form.submit 'Search', class: 'btn btn-primary' %>
     <% end %>
 
     <div id="ajax_container">

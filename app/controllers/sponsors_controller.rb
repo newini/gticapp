@@ -16,6 +16,8 @@ class SponsorsController < ApplicationController
   def create
     @sponsor = Sponsor.new(sponsor_params)
 
+    upload_logo_image(@sponsor, params[:file])
+
     if @sponsor.save
       redirect_to @sponsor
     else
@@ -29,6 +31,8 @@ class SponsorsController < ApplicationController
 
   def update
     @sponsor = Sponsor.find(params[:id])
+
+    upload_logo_image(@sponsor, params[:file])
 
     if @sponsor.update(sponsor_params)
       redirect_to sponsor_path(@sponsor)
@@ -44,15 +48,6 @@ class SponsorsController < ApplicationController
     redirect_to sponsors_path
   end
 
-  def upload_logo_image
-    @sponsor = Sponsor.find(params[:id])
-    file = params[:file]
-    if file
-      @sponsor.update(logo_data: file.read, logo_name: file.original_filename, logo_mime_type: file.content_type)
-    end
-    redirect_to sponsor_path(@sponsor)
-  end
-
   private
     def sponsor_params
       params.require(:sponsor).permit(
@@ -61,6 +56,12 @@ class SponsorsController < ApplicationController
         :description, :note,
         :is_end
       )
+    end
+
+    def upload_logo_image(sponsor, file)
+      if file
+        @sponsor.update(logo_data: file.read, logo_name: file.original_filename, logo_mime_type: file.content_type)
+      end
     end
 
 

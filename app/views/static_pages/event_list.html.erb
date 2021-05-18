@@ -6,18 +6,10 @@
   <!-- Search -->
   <%= form_tag '/search_event', method: 'get', remote: true, role: "form" do %>
     <div class="row">
-      <div class="col-auto">
-        <%= label_tag :keyword, 'イベント検索', class: 'col-form-label' %>
-      </div>
-      <div class="col-auto">
-        <%= text_field_tag :keyword, params[:keyword], class: "form-control", placeholder: "keyword" %>
-      </div>
-      <div class="col-auto">
-        <%= submit_tag 'Search', :name => nil, class: 'btn btn-primary' %>
-      </div>
-      <div class="col-auto">
-        <span class='form-text'>アルファベットによる検索もOK（ひらがな、カタカナは未対応）</span>
-      </div>
+      <%= label_tag :keyword, 'イベント検索', class: 'col-form-label col-auto' %>
+      <%= text_field_tag :keyword, params[:keyword], class: "form-control col", placeholder: "keyword" %>
+      <%= submit_tag 'Search', :name => nil, class: 'btn btn-primary col-auto' %>
+      <span class='form-text col-auto'>アルファベットによる検索もOK（ひらがな、カタカナは未対応）</span>
     </div>
   <% end %>
 

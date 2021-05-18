@@ -1,57 +1,41 @@
-<%= form_for @media_article, html: {class: "form-horizontal", multipart: true} do %>
+<p>*: required</p>
 
-  <p>*: required</p>
+<%= form_with model: @media_article, html: { multipart: true } do |form| %>
 
-  <div class="form-group row">
-    <%= label_tag :date, "Date(*)", class: 'col-sm-2 control-label' %>
-    <div class="col-sm-6">
-      <%= date_field_tag nil, nil, value: (@media_article.date.strftime('%Y-%m-%d') if @media_article.date.present?), name:"media_article[date]", class: "form-control", include_blank: true, :required => 'required' %>
-    </div>
+  <div class="row">
+    <%= form.label :date, "Date(*)", class: 'col-form-label col-sm-2' %>
+    <%= form.date_field :date, value: (@media_article.date.strftime('%Y-%m-%d') if @media_article.date.present?), class: "form-control col", include_blank: true, :required => 'required' %>
   </div>
 
- <div class="form-group row">
-    <%= label_tag :media, "Media(*)", class: 'col-sm-2 control-label' %>
-    <div class="col-sm-6">
-      <%= text_field_tag nil, @media_article.media, name: "media_article[media]", class: "form-control", :required => 'required' %>
-    </div>
+ <div class="row">
+    <%= form.label :media, "Media(*)", class: 'col-form-label col-sm-2' %>
+    <%= form.text_field :media, class: "form-control col", :required => 'required' %>
   </div>
 
-  <div class="form-group row">
-    <%= label_tag :url, "URL", class: 'col-sm-2 control-label' %>
-    <div class="col-sm-6">
-      <%= text_field_tag nil, @media_article.url, name: "media_article[url]", class: "form-control" %>
-    </div>
+  <div class="row">
+    <%= form.label :url, "URL", class: 'col-form-label col-sm-2' %>
+    <%= form.text_field :url, class: "form-control col" %>
   </div>
 
-  <div class="form-group row">
-    <%= label_tag :title, "Title(*)", class: 'col-sm-2 control-label' %>
-    <div class="col-sm-6">
-      <%= text_field_tag nil, @media_article.title, name: "media_article[title]", class: "form-control", :required => 'required' %>
-    </div>
+  <div class="row">
+    <%= form.label :title, "Title(*)", class: 'col-form-label col-sm-2' %>
+    <%= form.text_field :title, class: "form-control col", :required => 'required' %>
   </div>
 
-  <div class="form-group row">
-    <%= label_tag :member_id, "Member ID(*)", class: 'col-sm-2 control-label' %>
-    <div class="col-sm-4">
-      <%= text_field_tag nil, @media_article.member_id, name: "media_article[member_id]", class: "form-control", :required => 'required' %>
-    </div>
-    <div class="col-sm-2">
-      <%= link_to "Find member ID", members_path, class: "btn btn-info btn-block", :target => '_blank' %>
-    </div>
+  <div class="row">
+    <%= form.label :member_id, "Member ID(*)", class: 'col-form-label col-sm-2' %>
+    <%= form.text_field :member_id, class: "form-control col", :required => 'required' %>
+    <%= link_to "Find member ID", members_path, class: "btn btn-info btn-block col-auto", :target => '_blank' %>
   </div>
 
-  <div class="form-group row">
-    <%= label_tag :file, "File" %>
-    <%= file_field nil, :file, class: 'col-sm-2 control-label' %>
+  <div class="row">
+    <%= form.label :file, "File", class: 'col-form-label col-sm-2' %>
+    <%= file_field_tag :file, class: 'col-form-label col' %>
   </div>
 
-  <div class="form-group row">
-    <div class="col-sm-offset-1 col-sm-2">
-      <%= link_to "Back", :back, class: "btn btn-primary btn-block" %>
-    </div>
-    <div class="col-sm-offset-1 col-sm-2">
-      <%= submit_tag "Save", class: "btn btn-primary btn-block" %>
-    </div>
+  <div class="row">
+    <%= link_to "Back", :back, class: "btn btn-primary offset-sm-1 col-sm-2" %>
+    <%= form.submit "Save", class: "btn btn-primary offset-sm-1 col-sm-2" %>
   </div>
 
 <% end %>
