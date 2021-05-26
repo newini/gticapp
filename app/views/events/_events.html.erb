@@ -18,7 +18,7 @@
 
       <tr>
         <td rowspan="<%= event.presentations.count %>"><%= "第#{event.cumulative_number}回" %></td>
-        <td rowspan="<%= event.presentations.count %>"><%= link_to event.name, event_path(event.id) %></td>
+        <td rowspan="<%= event.presentations.count %>"><%= link_to event.name, event_path(event.id) %> (<%= event.is_public ? "公開" : "非公開" %>)</td>
         <td rowspan="<%= event.presentations.count %>"><%= l event.start_time %></td>
         <td rowspan="<%= event.presentations.count %>"><%= event.event_category.name %></td>
         <td rowspan="<%= event.presentations.count %>"><%= event.place.name %></td>

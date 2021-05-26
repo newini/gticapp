@@ -383,8 +383,10 @@ class EventsController < ApplicationController
       params.require(:event).permit(
           :name, :cumulative_number,
           :start_time, :end_time,
-          :fb_event_id, :place_id,
-          :fee, :event_category_id, :note
+          :event_category_id, :place_id,
+          :fee, :is_public,
+          :fb_event_id,
+          :note
       )
     end
 

@@ -5,7 +5,7 @@ class StaticPagesController < ApplicationController
 
   def home
     # Get new events
-    @events = Event.where('start_time > ?', DateTime.now).order("start_time DESC")
+    @events = Event.where('start_time > ?', DateTime.now).where(is_public: true).order("start_time DESC")
 
     # Get one media article
     @media_articles = MediaArticle.where('date > ?', DateTime.now - 30*3).order(date: :DESC) # now - days
@@ -24,11 +24,11 @@ class StaticPagesController < ApplicationController
     else
       base = Event.where(:start_time => @last_date.beginning_of_year...@last_date.end_of_year).group(:start_time)
     end
-    @events = base.order("start_time DESC")
+    @events = base.where(is_public: true).order("start_time DESC")
   end
 
   def search_event
-    @events = get_search_event(params[:keyword])
+    @events = get_search_event(params[:keyword]).where(is_public: true)
     respond_to :js
   end
 
@@ -38,6 +38,8 @@ class StaticPagesController < ApplicationController
       return
     end
     @event = Event.find(params[:event_id])
+
+    redirect_to root_path, notice: "Not public event." if not @event.is_public
 
     @is_expired_event =  isExpiredEvent(@event.start_time)
 

@@ -4,7 +4,7 @@
   </div>
 
   <div class="col" id="ajax_container">
-    <h1>イベント情報</h1>
+    <h1>イベント情報 (<%= @event.is_public ? "公開" : "非公開" %>)</h1>
 
     <div class="row">
       <div class="col-sm-4">
@@ -36,8 +36,8 @@
       <div class="col-sm-6">
         <table class="table table-bordered table-sm">
           <tr>
-            <th>イベント名</th>
-            <td><%= link_to @event.name, "https://www.facebook.com/events/#{@event.fb_event_id}", target: 'blank' %></td>
+            <th width="25%">イベント名</th>
+            <td><%= @event.name %></td>
           </tr>
           <tr>
             <th>通算#</th>
@@ -63,12 +63,13 @@
             <td><%= show_currency(@event.fee) %></td>
           </tr>
           <tr>
+            <th>Facebook event URL</th>
+            <td><%= link_to "https://www.facebook.com/events/#{@event.fb_event_id}", "https://www.facebook.com/events/#{@event.fb_event_id}", target: 'blank' %></td>
+          </tr>
+
+          <tr>
             <th>備考</th>
             <td><%= simple_format(@event.note) %></td>
-          </tr>
-          <tr>
-            <th>Facebook event URL</th>
-            <td><%= link_to truncate("https://www.facebook.com/events/#{@event.fb_event_id}",length:50), "https://www.facebook.com/events/#{@event.fb_event_id}", target: :blank %></td>
           </tr>
           <% if @event.presenters.present? %>
             <% i = 1 %>
