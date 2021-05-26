@@ -30,7 +30,7 @@
               <td><%= place.nearest_station %></td>
               <td><%= truncate place.how_to_go, length: 20 %></td>
               <td>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalPlace<%= place.id %>">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalPlace<%= place.id %>">
                   詳細
                 </button>
               </td>
@@ -51,7 +51,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel"><%= place.name %></h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -66,7 +66,7 @@
           </iframe>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary " data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary " data-bs-dismiss="modal">Close</button>
           <%= link_to "編集", edit_place_path(place), class: 'btn btn-info', remote: true %>
           <%= link_to "削除", place_path(place), class: 'btn btn-danger',
               method: :delete, data: { confirm: "削除してもよろしいですか？"} %>

@@ -9,37 +9,37 @@
   <h5><strong>基本公開情報</strong></h5>
   <div class="row">
     <div class="col-sm-9">
-      <div class="form-group row">
-        <%= form.label :last_name, t('user.last_name')+"(*)", class: 'col-sm-2' %>
-        <%= form.text_field :last_name, placeholder: "山田/John", class: "form-control col-sm-4", :required => 'required' %>
+      <div class="row">
+        <%= form.label :last_name, t('user.last_name')+"(*)", class: 'col-form-label col-sm-2' %>
+        <%= form.text_field :last_name, placeholder: "山田/John", class: "form-control col", :required => 'required' %>
 
-        <%= form.label :first_name, t('user.first_name')+"(*)", class: 'col-sm-2' %>
-        <%= form.text_field :first_name, placeholder: "太郎/SMITH", class: "form-control col-sm-4", :required => 'required' %>
+        <%= form.label :first_name, t('user.first_name')+"(*)", class: 'col-form-label col-sm-2' %>
+        <%= form.text_field :first_name, placeholder: "太郎/SMITH", class: "form-control col", :required => 'required' %>
       </div>
 
-      <div class="form-group row">
-        <%= form.label :last_name_alphabet, t('user.last_name_alphabet'), class: 'col-sm-2' %>
-        <%= form.text_field :last_name_alphabet, placeholder: "Yamada", class: "form-control col-sm-4" %>
+      <div class="row">
+        <%= form.label :last_name_alphabet, t('user.last_name_alphabet'), class: 'col-form-label col-sm-2' %>
+        <%= form.text_field :last_name_alphabet, placeholder: "Yamada", class: "form-control col" %>
 
-        <%= form.label :first_name_alphabet, t('user.first_name_alphabet'), class: 'col-sm-2' %>
-        <%= form.text_field :first_name_alphabet, placeholder: "Taro", class: "form-control col-sm-4" %>
+        <%= form.label :first_name_alphabet, t('user.first_name_alphabet'), class: 'col-form-label col-sm-2' %>
+        <%= form.text_field :first_name_alphabet, placeholder: "Taro", class: "form-control col" %>
       </div>
 
-      <div class="form-group row">
-        <%= form.label :category_id, t('user.category'), class: 'col-sm-2' %>
-        <%= form.select :category_id, options_from_collection_for_select(Category.all, :id, :name, @member.category_id), { include_blank: true }, { class: "form-control col-sm-4" } %>
+      <div class="row">
+        <%= form.label :category_id, t('user.category'), class: 'col-form-label col-sm-2' %>
+        <%= form.select :category_id, options_from_collection_for_select(Category.all, :id, :name, @member.category_id), { include_blank: true }, { class: "form-control col" } %>
       </div>
 
-      <div class="form-group row">
-        <%= form.label :affiliation, t('user.affiliation'), class: 'col-sm-2' %>
-        <%= form.text_field :affiliation, placeholder:  "海山商事", class: "form-control col-sm-4" %>
+      <div class="row">
+        <%= form.label :affiliation, t('user.affiliation'), class: 'col-form-label col-sm-2' %>
+        <%= form.text_field :affiliation, placeholder:  "海山商事", class: "form-control col" %>
 
-        <%= form.label :title, t('user.title'), class: 'col-sm-2' %>
-        <%= form.text_field :title, placeholder:  "代表取締役社長", class: "form-control col-sm-4" %>
+        <%= form.label :title, t('user.title'), class: 'col-form-label col-sm-2' %>
+        <%= form.text_field :title, placeholder:  "代表取締役社長", class: "form-control col" %>
       </div>
 
-      <div class="form-group row">
-        <%= form.label :biography, "略歴 / Biography", class: 'col-sm-2' %>
+      <div class="row">
+        <%= form.label :biography, "略歴 / Biography", class: 'col-form-label col-sm-2' %>
         <%= form.text_area :biography, class: "form-control col", rows: 5 %>
       </div>
     </div>
@@ -55,42 +55,43 @@
   </div>
 
   <h5><strong>ソーシャル情報</strong></h5>
-  <div class="form-group row">
-    <%= form.label :email, t('user.email'), class: 'col-sm-2' %>
-    <%= form.email_field :email, placeholder: "test@example.com", class: "form-control col-sm-4" %>
+  <div class="row">
+    <%= form.label :email, t('user.email'), class: 'col-form-label col-sm-2' %>
+    <%= form.email_field :email, placeholder: "test@example.com", class: "form-control col" %>
 
-    <%= form.label :website, class: 'col-sm-2' %>
-    <%= form.text_field :website, placeholder: "https://example.com", class: "form-control col-sm-4" %>
+    <%= form.label :website, class: 'col-form-label col-sm-2' %>
+    <%= form.text_field :website, placeholder: "https://example.com", class: "form-control col" %>
   </div>
 
-  <div class="form-group row">
-    <%= form.label :facebook_id, "Facebook ID (ユニークなプロフィールID)", class: 'col-sm-2' %>
-    <%= form.text_field :facebook_id, class: "form-control col-sm-4" %>
+  <div class="row">
+    <%= form.label :facebook_id, "Facebook ID (ユニークなプロフィールID)", class: 'col-form-label col-auto' %>
+    <%= form.label :facebook_id, "https://facebook.com/", class: 'input-group-text col-auto' %>
+    <%= form.text_field :facebook_id, class: "form-control col" %>
 
     <%= link_to "このサイトからIDを探す。https://lookup-id.com", "https://lookup-id.com" %>
   </div>
 
   <h5><strong>GTICで使う情報</strong></h5>
-  <div class="form-group row">
-    <%= form.label :note, "備考 / note", class: 'col-sm-2' %>
-    <%= form.text_area :note, class: "form-control col-sm-4", rows: 5 %>
+  <div class="row">
+    <%= form.label :note, "備考 / note", class: 'col-form-label col-sm-2' %>
+    <%= form.text_area :note, class: "form-control col", rows: 5 %>
   </div>
 
-  <div class="form-group row">
-    <%= form.label :country_code, "国籍", class: 'col-sm-1' %>
-    <%= form.country_select :country_code, { selected: @member.country_code ? @member.country_code : "JP", include_blank: 'Select a country' }, { class: "form-control col-sm-2" } %>
+  <div class="row">
+    <%= form.label :country_code, "国籍", class: 'col-form-label col-sm-1' %>
+    <%= form.country_select :country_code, { selected: @member.country_code ? @member.country_code : "JP", include_blank: 'Select a country' }, { class: "form-control col" } %>
 
-    <%= form.label :gender, "性別", class: 'col-sm-1' %>
-    <%= form.select :gender, [['Man', 1], ['Woman', 2]], { include_blank: true }, { class: "form-control col-sm-2" } %>
+    <%= form.label :gender, "性別", class: 'col-form-label col-sm-1' %>
+    <%= form.select :gender, [['Man', 1], ['Woman', 2]], { include_blank: true }, { class: "form-control col" } %>
 
-    <%= form.label :age, "年代", class: 'col-sm-1' %>
-    <%= form.select :age, [['~20s', 1], ['30s', 2], ['40s', 3], ['50s', 4], ['60s~', 5]], { include_blank: true }, { class: "form-control col-sm-2" } %>
+    <%= form.label :age, "年代", class: 'col-form-label col-sm-1' %>
+    <%= form.select :age, [['~20s', 1], ['30s', 2], ['40s', 3], ['50s', 4], ['60s~', 5]], { include_blank: true }, { class: "form-control col" } %>
 
-    <%= form.label :birthday, "BirthMonth", class: 'col-sm-1' %>
-    <%= form.date_select :birthday, { discard_year: true, discard_day: true, include_blank: true }, { class: "form-control col-sm-2" } %>
+    <%= form.label :birthday, "誕生月", class: 'col-form-label col-sm-1' %>
+    <%= form.date_select :birthday, { discard_year: true, discard_day: true, include_blank: true }, { class: "form-control col" } %>
   </div>
 
-  <div class="form-group row">
+  <div class="row">
     <div class="col-sm-2">
       <%= form.check_box :gtic_flg, class: "form-check-input" %>
       <%= form.label :gtic_flg, "GTIC Staff", class: 'form-check-label' %>
@@ -103,12 +104,12 @@
 
     <div class="col-sm-2">
       <%= form.check_box :azsa_flg, class:"form-check-input" %>
-      <%= form.label :azsa_flg, "Azsa?", class: 'form-check-label' %>
+      <%= form.label :azsa_flg, "Azsaの人", class: 'form-check-label' %>
     </div>
 
     <div class="col-sm-2">
       <%= form.check_box :contributor_flg, class:"form-check-input" %>
-      <%= form.label :contributor_flg, "Contributor", class: 'form-check-label' %>
+      <%= form.label :contributor_flg, "GTICに貢献した人", class: 'form-check-label' %>
     </div>
 
     <div class="col-sm-2">
@@ -118,17 +119,19 @@
   </div>
 
   <h5><strong>ログイン関連情報</strong></h5>
-  <div class="form-group row">
-    <%= form.label :provider, "Provider", class: 'col-sm-2' %>
-    <%= form.text_field :provider, class: "form-control col-sm-4" %>
+  <div class="row">
+    <%= form.label :provider, "Provider", class: 'col-form-label col-sm-2' %>
+    <%= form.text_field :provider, class: "form-control col" %>
 
-    <%= form.label :uid, "User ID", class: 'col-sm-2' %>
-    <%= form.text_field :uid, class: "form-control col-sm-4" %>
+    <%= form.label :uid, "User ID", class: 'col-form-label col-sm-2' %>
+    <%= form.text_field :uid, class: "form-control col" %>
   </div>
 
-  <div class="form-group row">
-    <%= form.submit "送信", class: "btn btn-primary col-sm-2" %>
-    <%= link_to 'Cancel & Back', :back, class: 'btn btn-primary offset-sm-1 col-sm-2' %>
+  <br>
+
+  <div class="row">
+    <%= form.submit "送信", class: "btn btn-primary col-auto" %>
+    <%= link_to 'Cancel & Back', :back, class: 'btn btn-primary offset-sm-1 col-auto' %>
   </div>
 
 <% end %>

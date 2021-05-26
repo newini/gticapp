@@ -110,14 +110,20 @@
         <% if not @presentations.present? %>
           <strong>プレゼンターを登録して下さい</strong>
         <% end %>
-
         <%= render 'presentation_info' %>
       </div>
+    </div>
+
+    <div class='row'>
+      <h3>Facebook event page content</h3>
+      <%= render 'fb_event_content' %>
+
     </div>
 
   </div>
 
 </div>
+
 
 <!-- Modal -->
 <div class="modal fade" id="headerImage" tabindex="-1" role="dialog" aria-labelledby="headerImageModalLabel" aria-hidden="true">

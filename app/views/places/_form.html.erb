@@ -4,33 +4,33 @@
 
 <%= form_with model: @place do |form| %>
   <div class="form-group row">
-    <%= form.label :name, '会場名(*)', class: 'col-sm-2' %>
+    <%= form.label :name, '会場名(*)', class: 'col-form-label col-sm-2' %>
     <%= form.text_field :name, class: "form-control col", required: true %>
   </div>
 
   <div class="form-group row">
-    <%= form.label :address, '住所', class: 'col-sm-2' %>
+    <%= form.label :address, '住所', class: 'col-form-label col-sm-2' %>
     <%= form.text_field :address, class: "form-control col" %>
   </div>
 
   <div class="form-group row">
-    <%= form.label :city, 'City', class: 'col-sm-2' %>
+    <%= form.label :city, 'City', class: 'col-form-label col-sm-2' %>
     <%= form.text_field :city, class: "form-control col" %>
 
-    <%= form.label :nearest_station, 'Nearest Station', class: 'col-sm-2' %>
+    <%= form.label :nearest_station, 'Nearest Station', class: 'col-form-label col-sm-2' %>
     <%= form.text_field :nearest_station, class: "form-control col" %>
   </div>
 
   <div class="form-group row">
-    <%= form.label :latitude, 'Latitude（緯度）', class: 'col-sm-2' %>
-    <%= form.text_field :latitude, class: "form-control col-4" %>
+    <%= form.label :latitude, 'Latitude（緯度）', class: 'col-form-label col-sm-2' %>
+    <%= form.text_field :latitude, class: "form-control col" %>
 
-    <%= form.label :longitude, 'Longitude（経度）', class: 'col-sm-2' %>
-    <%= form.text_field :longitude, class: "form-control col-4" %>
+    <%= form.label :longitude, 'Longitude（経度）', class: 'col-form-label col-sm-2' %>
+    <%= form.text_field :longitude, class: "form-control col" %>
   </div>
 
   <div class="form-group row">
-    <%= form.label :how_to_go, '行き方/How to go', class: 'col-sm-2' %>
+    <%= form.label :how_to_go, '行き方/How to go', class: 'col-form-label col-sm-2' %>
     <%= form.text_area :how_to_go, class: "form-control col", rows: 10 %>
   </div>
 

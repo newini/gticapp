@@ -1,0 +1,62 @@
+<%= @event.name %><br>
+<%= '会場: ' + @event.place.name %><br>
+<br>
+「分野・年齢・国籍関係なく繋がり、よりオープンに、よりグローバルに、よりイノベイティブに、ベンチャー、起業、スタートアップ、イノベーションを考えよう！」<br>
+("Let's exchange your opinions of start-up, entrepreneurship, innovation beyond field, age, nationality. --- more open, more global, more innovative!!")<br>
+GTICは日本におけるスタートアップ、投資家のマッチングの場や、企業・大学・研究機関との提携なども含めた、リアルビジネス創造の場を提供しております。<br>
+<br>
+＜当日スケジュール＞<br>
+・<%= (@event.start_time-30*60).strftime("%H:%M") %>-会場オープン、受付開始(Open)<br>
+(<%= (@event.start_time-30*60).strftime("%H:%M") %>までは鍵が開いておらず部屋へ入ることができませんので、時間になるまでは同ビルの一階にてお待ちください。)<br>
+・<%= (@event.start_time).strftime("%H:%M") %>-<%= (@event.start_time+5*60).strftime("%H:%M") %> Opening Speech<br>
+<br>
+<% @event.presentations.each_with_index do |presentation, index| %>
+  ・<%= (presentation.start_time).strftime("%H:%M") %>-<%= (presentation.end_time).strftime("%H:%M") %><br>
+  ①Presentation　その<%= index+1%><br>
+  <% presentation.presenters.each do |presenter| %>
+    <%= presenter.affiliation %><br>
+    <%= presenter.title + ' ' + presenter.last_name + ' ' + presenter.first_name %><br>
+    略歴: <%= presenter.biography %><br>
+  <% end %>
+  ■プレゼン題名<br>
+  <%= presentation.title %><br>
+  ■プレゼン概要<br>
+  <%= presentation.abstract %><br>
+  <br>
+<% end %>
+
+・<%= (@event.end_time-100*60).strftime("%H:%M") %>-<%= (@event.end_time-90*60).strftime("%H:%M") %>アンケート記入　(Fill out a questionnaire)<br>
+・<%= (@event.end_time-90*60).strftime("%H:%M") %>- : 懇親会　Networking party --- drink, eat, and talk!!<br>
+※Elevator Pitch: Birthday attenders, First-time attenders<br>
+※Muslims are welcome ! : We prepare Halal foods.<br>
+・<%= (@event.end_time).strftime("%H:%M") %>: 集合写真、終了（Taking pictures, Closing）<br>
+<br>
+----------------------------------------<br>
+＜GTICへの参加方法＞<br>
+GTICホームページのイベントページ<br>
+https://gtic.jp<%= event_detail_path(event_id: @event.id, anchor: 'registration') %><br>
+にて参加登録をしてください。
+また、Facebook上で繋がりを広めるために、このイベントページ上方の「参加予定」ボタンを押して下さい。<br>
+----------------------------------------<br>
+<br>
+〈会場〉<br>
+場所: <%= @event.place.name %><br>
+住所: <%= @event.place.address %><br>
+Google Map: https://www.google.com/maps/search/?api=1&query=<%= @event.place.latitude %>,<%= @event.place.longitude %><br>
+Access: <%= @event.place.how_to_go %>
+----------------------------------------<br>
+＜会費 fee＞<br>
+・一般 business person 及び、仕事を持っていらっしゃる社会人学生: 5,000円<br>
+・フルタイムの学生 full time student: 3,000円（学生証をお持ち下さい。Bring your student ID.）<br>
+・GTIC開催日と同じ月の誕生日の方は1000円割引です。（上記学生割引との併用OKです。）　誕生日がわかる運転免許証や、学生証などを受付で提示してください。<br>
+(If your birthday is in this same month, discount by JPY1,000. )<br>
+レセプション時に誕生日の方には、一言ショート・スピーチをお願いしています。<br>
+※懇親会では、お食事・お飲物をご用意しております。<br>
+※「分野・国籍・年齢を超えてつながり、新しい発想で具体的に一歩踏み出してみよう！！」<br>
+"We prepare refreshment in Networking-party."<br>
+"Amalgamate different business area, nationalities, and ages... and one step forward!!"<br>
+"That's one small step for man, one giant leap for mankind," (astronaut Neil Armstrong, July 20, 1969)<br>
+"We prepare Halal foods for Muslim participants."<br>
+------------------------------------------------------------------------------------------<br>
+<br>
+<%= simple_format(@event.note) %>
