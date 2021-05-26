@@ -1,5 +1,15 @@
 <% content_for :title, 'Home' %>
 
+<!-- unheld event -->
+<% if @events.count != 0 %>
+  <div class="container">
+    <h2 class="text-center">-<%= t('new_event') %>-</h2>
+    <%= render 'static_pages/events' %>
+  </div>
+<% end %>
+
+
+<!-- Carousel -->
 <div class="container-fluid w-100 h-100" data-aos="zoom-out">
   <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-indicators">
@@ -115,22 +125,9 @@
 </div>
 
 
-<!-- unheld event -->
-<div class="container" data-aos="fade-up" style="padding: 60px 0;">
-  <h1 class="text-center">-<%= t('new_event') %>-</h1>
-  <p class="text-center"><%= link_to t('all_events'), event_list_path %></p>
-
-  <% if @events.count != 0 %>
-    <%= render 'static_pages/events' %>
-  <% else %>
-    <h5 class="text-center">To be announced</h5>
-  <% end %>
-</div>
-
-
 <!-- Cards -->
 <div class="container" data-aos="fade-up" style="padding: 60px 0;">
-  <h1 class="text-center">-<%= t('activities') %>-</h1>
+  <h2 class="text-center">-<%= t('activities') %>-</h2>
 
   <div class="text-center">
     <a href="https://www.facebook.com/GTICafe/photos/?ref=page_internal" class="btn btn-secondary"><%= t('home.fb_album') %></a>
@@ -192,7 +189,7 @@
 
 
 <div class="container" data-aos="fade-up">
-  <h1 class="text-center">-Facebook page-</h1>
+  <h2 class="text-center">-Facebook page-</h2>
 
   <div class="text-center">
     <div class="fb-page" data-href="https://www.facebook.com/GTICafe/" data-tabs="timeline" data-width="500" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
