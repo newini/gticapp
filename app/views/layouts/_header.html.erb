@@ -64,7 +64,10 @@
           <%= select_locale %>
 
           <!-- Social -->
-          <li class="nav-item ml-2"><%= link_to tag.i(class: 'fab fa-facebook-square'), 'https://facebook.com/GTICafe' %></li>
+          <li class="nav-item ml-2">
+            <%= link_to tag.i(class: 'fab fa-facebook-square'), 'https://facebook.com/GTICafe', target: 'blank' %>
+            <%= link_to tag.i(class: 'fab fa-line'), 'https://lin.ee/i6liGlO', style: 'color: green;', target: 'blank' %>
+          </li>
         </ul>
 
       </div>
