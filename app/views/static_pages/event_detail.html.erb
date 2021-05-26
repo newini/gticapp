@@ -391,9 +391,9 @@
       <p><%= simple_format(@event.place.how_to_go) %></p>
     </div>
 
-      <iframe height="300" frameborder="0" class= "col-sm-6" style="border:0"
-        src="https://maps.google.com/maps?q=<%= @event.place.latitude %>,<%= @event.place.longitude %>&hl=ja&z=14&output=embed" allowfullscreen>
-      </iframe>
+    <iframe height="450" class="col-sm-6" style="border:0" loading="lazy" allowfullscreen
+      src="https://www.google.com/maps/embed/v1/search?q=<%= @event.place.latitude %>%2C<%= @event.place.longitude %>&key=<%= ENV['GOOGLE_API_KEY'] %>">
+    </iframe>
   </div>
 </div>
 
