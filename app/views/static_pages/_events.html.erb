@@ -4,7 +4,7 @@
     <div class="card-body">
       <div class="row">
         <div class="col-sm-4">
-          <%= image_tag serve_file_event_path(id: event.id), class: 'img-fluid' %>
+          <%= image_tag serve_file_event_path(id: event.id), class: 'img-fluid' if event.header_data %>
         </div>
 
         <div class="col-sm-7">
@@ -21,21 +21,22 @@
             <li>
               <mark><%= presentation.title %></mark><br>
                 <% presentation.presenters.each do |presenter| %>
-                  <strong><%= presenter.affiliation %></strong> <%= presenter.title %> <strong><%= presenter.last_name + ' ' + presenter.first_name %></strong> 氏
+                  <strong><%= presenter.affiliation %></strong>
+                  <%= presenter.title %> <strong><%= presenter.last_name + ' ' + presenter.first_name %></strong> 氏
                 <% end %>
             </li>
           <% end %>
         </div>
 
         <div class="col-sm-1">
-          <%= link_to t('detail'), event_detail_path(event_id: event.id), class: 'btn btn-outline-info btn-block' %>
+          <%= link_to t('detail'), event_detail_path(event_id: event.id), class: 'btn btn-outline-info' %>
           <% relationship = Relationship.where(event_id: event.id, member_id: current_user.member_id).first if current_user %>
           <% if current_user && relationship && relationship.status == 2 %>
-            <%= link_to t('already_registered'), nil, class: 'btn btn-outline-success btn-block disabled' %>
+            <%= link_to t('already_registered'), nil, class: 'btn btn-outline-success disabled' %>
           <% else %>
-            <%= link_to t('register'), event_detail_path(event_id: event.id, anchor: 'registration'), class: 'btn btn-outline-success btn-block' %>
+            <%= link_to t('register'), event_detail_path(event_id: event.id, anchor: 'registration'), class: 'btn btn-outline-success' %>
           <% end %>
-          <%= link_to tag.i('', class: 'fab fa-facebook-f'), "https://facebook.com/"+event.fb_event_id, class: 'btn btn-outline-primary btn-block', target: 'blank' if event.fb_event_id.present? %>
+          <%= link_to tag.i('', class: 'fab fa-facebook-f'), "https://facebook.com/"+event.fb_event_id, class: 'btn btn-outline-primary', target: 'blank' if event.fb_event_id.present? %>
         </div>
       </div>
     </div>

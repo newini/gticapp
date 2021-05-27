@@ -77,14 +77,19 @@ class EventsController < ApplicationController
     event = Event.find(params[:id])
     file = params[:file]
     if file
-      event.update(header_data: file.read, header_filename: file.original_filename, header_mime_type: file.content_type)
+      event.update(header_data: file.read,
+                   header_filename: file.original_filename,
+                   header_mime_type: file.content_type)
     end
     redirect_to event_path(event)
   end
 
   def serve_file
     @event = Event.find(params[:id])
-    send_data(@event.header_data, :type => @event.header_mime_type, :filename => "@{@event.header_filename}", :disposition => "inline")
+    send_data(@event.header_data,
+              :type => @event.header_mime_type,
+              :filename => "@{@event.header_filename}",
+              :disposition => "inline")
   end
 
   def set_bkg_image
