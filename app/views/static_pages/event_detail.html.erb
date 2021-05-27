@@ -20,7 +20,7 @@
 
 
 <!-- first view -->
-<div class="container-fluid event-bkg" style="padding: 60px 0;">
+<div class="container-fluid event-bkg" style="padding: 4vw 6vw 4vw 6vw;">
 
   <!-- Social -->
   <div class="float-end" data-aos="fade-left">
@@ -46,22 +46,20 @@
 
   <br><br><br><br>
 
-  <div class="row" data-aos="fade-down">
-    <div class="offset-1">
-      <h1 style="font-size: 70px;"><%= @event.name %> <%= @event.event_category.name %></h1>
-      <h5>
-        <% @presentations.sort_by{|e| e[:id]}.each do |presentation| %>
-          <li><%= presentation.title %></li>
-        <% end %>
-      </h5>
-    </div>
+  <div data-aos="fade-down">
+    <h1><%= @event.name %> <%= @event.event_category.name %></h1>
+    <h5>
+      <% @presentations.sort_by{|e| e[:id]}.each do |presentation| %>
+        <li><%= presentation.title %></li>
+      <% end %>
+    </h5>
   </div>
 
   <br><br><br>
 
   <div class="row" data-aos="fade-right">
-    <div class="offset-sm-1 col-auto">
-      <h1 style="font-size: 50px;"><i class="fas fa-calendar"></i></h1>
+    <div class="col-auto">
+      <h1><i class="fas fa-calendar"></i></h1>
     </div>
     <div class="col-auto">
       <strong>WHEN</strong><br>
@@ -72,64 +70,54 @@
   <br><br>
 
   <div class="row">
-    <div class="offset-sm-1 col-auto">
-      <h1 style="font-size: 50px;"><i class="fas fa-map-marker-alt"></i></h1>
+    <div class="col-auto">
+      <h1><i class="fas fa-map-marker-alt"></i></h1>
     </div>
     <div class="col-auto" data-aos="fade-right">
       <strong>WHERE</strong><br>
       <h5><%= link_to @event.place.name, '#how_to_go' %></h5>
     </div>
 
-    <div class="offset-sm-7 col-auto text-end" data-aos="fade-left">
+    <div class="offset-sm-9 col-auto text-end" data-aos="fade-left">
       <%= link_to t('register'), '#registration', class: 'btn btn-success btn-lg btn-block' %>
     </div>
   </div>
-
-  <br><br>
 
 </div>
 
 
 <!----------- Speakers --------------->
-<div class="container-fluid" style="background: lightsteelblue; padding: 60px 0;">
+<div class="container-fluid" style="background: lightsteelblue; padding: 4vw 6vw 4vw 6vw;">
+  <h2>The Speakers</h2>
+  <br>
+
   <div class="row">
-    <div class="offset-sm-1">
-      <h2>The Speakers</h2>
-      <br>
+    <% @event.presenters.each do |presenter| %>
 
-      <div class="row">
-        <% @event.presenters.each do |presenter| %>
-
-          <div class="col-sm-4" data-aos="fade-up">
-            <%= image_tag "data:#{presenter.profile_picture_mime_type};base64,#{Base64.strict_encode64(presenter.profile_picture_data)}",
-                alt: presenter.profile_picture_name, class: 'img-thumbnail mx-auto d-block', style: 'max-height: 200px;' if presenter.profile_picture_name %>
-            <h4><%= presenter.last_name+' '+presenter.first_name+' 氏' %></h4>
-            <p>
-              <strong><%= presenter.title %></strong><br>
-              @<%= presenter.affiliation %><br>
-              <%= link_to presenter.website, presenter.website if presenter.website %>
-            </p>
-            <button type="button" class="btn btn-info" data-bs-toggle="popover"
-                title="<%= presenter.last_name+' '+presenter.first_name+' 氏' %>"
-                data-bs-content="<%= presenter.biography.present? ? presenter.biography : 'To be added' %>">
-              Biography
-            </button>
-          </div>
-
-        <% end %>
+      <div class="col-sm-4" data-aos="fade-up">
+        <%= image_tag "data:#{presenter.profile_picture_mime_type};base64,#{Base64.strict_encode64(presenter.profile_picture_data)}",
+            alt: presenter.profile_picture_name, class: 'img-thumbnail mx-auto d-block', style: 'max-height: 200px;' if presenter.profile_picture_name %>
+        <h4><%= presenter.last_name+' '+presenter.first_name+' 氏' %></h4>
+        <p>
+          <strong><%= presenter.title %></strong><br>
+          @<%= presenter.affiliation %><br>
+          <%= link_to presenter.website, presenter.website if presenter.website %>
+        </p>
+        <button type="button" class="btn btn-info" data-bs-toggle="popover"
+            title="<%= presenter.last_name+' '+presenter.first_name+' 氏' %>"
+            data-bs-content="<%= presenter.biography.present? ? presenter.biography : 'To be added' %>">
+          Biography
+        </button>
       </div>
-    </div>
+
+    <% end %>
   </div>
 </div>
 
 
 <!----------- Schedule --------------->
-<div class="container-fluid" style="background: rgb(250, 255, 255); padding: 60px 0;">
-  <div class="row">
-    <div class="offset-1">
-      <h1>Schedule</h1>
-    </div>
-  </div>
+<div class="container-fluid" style="background: rgb(250, 255, 255); padding: 4vw 6vw 4vw 6vw;">
+  <h1>Schedule</h1>
   <br>
 
   <div class="row" data-aos="fade-up">
@@ -221,13 +209,12 @@
 
 
 <!----------- Sponsors --------------->
-<div class="container-fluid" style="background: lightsteelblue; padding: 60px 0;">
-  <div class="row">
-    <div class="offset-1">
-      <h1>Our sponsors</h1>
-    </div>
+<div class="container-fluid" style="background: lightsteelblue; padding: 4vw 0 4vw 0;">
+  <div style="padding-left: 6vw">
+    <h1>Our sponsors</h1>
   </div>
   <br>
+
   <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" data-aos="fade-up">
     <div class="carousel-indicators">
       <% @sponsors.each_with_index do |sponsor, index| %>
@@ -270,16 +257,11 @@
 
 
 <!----------- Registration --------------->
-<div class="container-fluid" style="background: white; padding: 60px 0;" id="registration">
-  <div class="row">
-    <div class="offset-1">
-      <h1>Registration & Fee</h1>
-    </div>
-  </div>
-
+<div class="container-fluid" style="background: white; padding: 4vw 6vw 4vw 6vw;" id="registration">
+  <h1>Registration & Fee</h1>
   <br>
 
-  <div class="row" style="padding: 0 60px;">
+  <div class="row">
     <div class="col-sm-6" data-aos="fade-right">
       <% if @is_expired_event %>
 
@@ -383,14 +365,11 @@
 
 
 <!----------- Map --------------->
-<div class="container-fluid" style="background: lightsteelblue; padding: 60px 0;" id="how_to_go">
-  <div class="row">
-    <div class="offset-1">
-      <h1>Location</h1>
-    </div>
-  </div>
+<div class="container-fluid" style="background: lightsteelblue; padding: 4vw 6vw 4vw 6vw;" id="how_to_go">
+  <h1>Location</h1>
+  <br>
 
-  <div class="row" style="padding: 0 60px;">
+  <div class="row">
     <div class="col-sm-6">
       <li>Place name: <%= @event.place.name %></li>
       <li>Nearest Station: <%= @event.place.nearest_station %></li>
@@ -405,14 +384,11 @@
 
 
 <!----------- Note --------------->
-<div class="container-fluid" style="background: white; padding: 60px 0;" id="note">
-  <div class="row">
-    <div class="offset-1">
-      <h1>Note</h1>
-    </div>
-  </div>
+<div class="container-fluid" style="background: white; padding: 4vw 6vw 4vw 6vw;" id="note">
+  <h1>Note</h1>
+  <br>
 
-  <div class="row" style="padding: 0 60px;">
+  <div class="row">
     <%= simple_format(@event.note) %>
   </div>
 </div>
