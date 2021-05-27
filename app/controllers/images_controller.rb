@@ -1,5 +1,5 @@
 class ImagesController < ApplicationController
-  before_action :active_staff_only
+  before_action :active_staff_only, except: [:serve]
 
   def index
     @images = Image.all
