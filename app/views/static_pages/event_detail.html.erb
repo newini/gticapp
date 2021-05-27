@@ -15,8 +15,14 @@
 
 <% content_for :title, @event.name+' '+@event.event_category.name %>
 
+<!-- hidden image for thumbnail -->
+<%= image_tag serve_file_event_path(id: @event.id), style: 'display:none' if @event.header_data %>
+
+
+<!-- first view -->
 <div class="container-fluid event-bkg" style="padding: 60px 0;">
 
+  <!-- Social -->
   <div class="float-end" data-aos="fade-left">
     <div class="btn-group">
       <!-- Share with Facebook -->
@@ -36,7 +42,7 @@
         data-color="default" data-size="large" data-count="true" style="display: none;"></div>
       <script src="https://www.line-website.com/social-plugins/js/thirdparty/loader.min.js" async="async" defer="defer"></script>
     </div>
-   </div>
+  </div>
 
   <br><br><br><br>
 
