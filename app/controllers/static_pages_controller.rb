@@ -8,7 +8,7 @@ class StaticPagesController < ApplicationController
     @events = Event.where('start_time > ?', DateTime.now).where(is_public: true).order("start_time DESC")
 
     # Get one media article
-    @media_articles = MediaArticle.where('date > ?', DateTime.now - 30*3).order(date: :DESC) # now - days
+    @media_articles = MediaArticle.where('date > ?', DateTime.now - 30*3).limit(3).order(date: :DESC) # now - days
   end
 
   def about

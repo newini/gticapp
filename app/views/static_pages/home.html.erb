@@ -27,7 +27,7 @@
       <div class="carousel-item active">
         <div class="my-home-head" style="width: 100%; height: 650px; padding: 60px;">
           <%= image_tag 'logo200x200.png', alt: 'GTIC logo 200x200', class: "mx-auto d-block" %>
-          <div class="offset-sm-2">
+          <div class="offset-sm-2 col-sm-8">
             <h2><%= t('home.top_message')%></h2>
             <h4 style="opacity: 0.8;"><%= t('home.short_about')%></h4>
           </div>
@@ -100,7 +100,7 @@
 
       <div class="carousel-item">
         <div class="my-home-success" style="width: 100%; height: 650px; padding: 60px;">
-          <div class="offset-sm-2">
+          <div class="offset-sm-2 col-sm-8">
             <h3><%= t('home.media_message') %></h3>
             <br>
             <% @media_articles.each do |media_article| %>
@@ -200,7 +200,9 @@
         <%= link_to tag.i(class: 'fab fa-facebook-square'), 'https://facebook.com/GTICafe', target: 'blank' %>
       </h3>
       <br>
-      <div class="fb-page" data-href="https://www.facebook.com/GTICafe/" data-tabs="timeline" data-width="500" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
+      <div class="fb-page" data-href="https://www.facebook.com/GTICafe/" data-tabs="timeline"
+          data-width="500" data-height="" data-small-header="false" data-adapt-container-width="true"
+          data-hide-cover="false" data-show-facepile="true">
         <blockquote cite="https://www.facebook.com/GTICafe/" class="fb-xfbml-parse-ignore">
           <a href="https://www.facebook.com/GTICafe/">Global Techno Innovation Cafe (GTIC)</a>
         </blockquote>
