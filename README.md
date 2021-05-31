@@ -10,9 +10,12 @@ Things you may want to cover:
 
 * System dependencies
 
+* npm version: 7.15.0
+* yarn version: 2.4.1 (to use yarn v2, follow https://yarnpkg.com/getting-started/migration#step-by-step)
+
 * Configuration
 
-* Database creation: ./db/production.sqlite3
+* Database creation: ./db/production.sqlite3 (DO NOT COMMIT in Github)
 
 * Database initialization
 

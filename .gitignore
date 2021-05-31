@@ -77,3 +77,13 @@ yarn-debug.log*
 /storage/*
 !/storage/.keep
 /public/uploads
+
+# yarn
+# https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
