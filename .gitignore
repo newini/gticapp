@@ -40,7 +40,8 @@ config/master.key
 .env.*
 
 ## Environment normalization:
-#/.bundle # Not ignore for GTICAPP
+/.bundle/*
+!/.bundle/config
 /vendor/bundle
 
 # these should all be checked in to normalize the environment:
