@@ -23,27 +23,20 @@ class ApplicationController < ActionController::Base
   private
     # For events
     def get_search_event(keyword)
-      record = Event.group(:start_time).order("start_time DESC")
-      # Search algorithm
       if keyword.present?
-        events = []
-        Event.all.order("start_time DESC").each do |event|
+        event_ids = []
+        Event.all.each do |event|
           if event.presentations.search_presentation(keyword).present? # Search in presentation
-            events.push(event)
+            event_ids.push(event.id)
           end
           event.presentations.each do |presentation|
             if presentation.presenters.find_member(keyword).present? # search in presenter's member
-              if !events.include? event # check duplicate
-                events.push(event)
-              end
+              event_ids.push(event.id) if not event_ids.include? event # check duplicate
             end
           end
         end
-      else
-        @start_date = Event.order("start_time ASC").first.start_time.beginning_of_year
-        @last_date = Event.order("start_time ASC").last.start_time.end_of_year
       end
-      return events
+      return Event.where(id: event_ids).order("start_time DESC")
     end
 
     # For member
