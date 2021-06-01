@@ -1,42 +1,40 @@
 <p>* = <%= t('required') %></p>
 <%= form_for @user do |f| %>
-  <div class="form-group row">
-    <%= f.label :last_name, t('user.last_name')+"(*)", class: 'col-sm-2' %>
-    <%= f.text_field :last_name, placeholder: "山田", class: "form-control col-sm-4", required: 'required' %>
+  <div class="row">
+    <%= f.label :last_name, t('user.last_name')+"(*)", class: 'col-form-label col-sm-2' %>
+    <%= f.text_field :last_name, placeholder: "山田", class: "form-control col", required: 'required' %>
 
-    <%= f.label :first_name, t('user.first_name')+"(*)", class: 'col-sm-2' %>
-    <%= f.text_field :first_name, placeholder: "太郎", class: "form-control col-sm-4", required: 'required' %>
+    <%= f.label :first_name, t('user.first_name')+"(*)", class: 'col-form-label col-sm-2' %>
+    <%= f.text_field :first_name, placeholder: "太郎", class: "form-control col", required: 'required' %>
   </div>
 
-  <div class="form-group row">
-    <%= f.label :last_name_alphabet, t('user.last_name_alphabet')+"(*)", class: 'col-sm-2' %>
-    <%= f.text_field :last_name_alphabet, placeholder: "Yamada", class: "form-control col-sm-4", required: 'required' %>
+  <div class="row">
+    <%= f.label :last_name_alphabet, t('user.last_name_alphabet')+"(*)", class: 'col-form-label col-sm-2' %>
+    <%= f.text_field :last_name_alphabet, placeholder: "Yamada", class: "form-control col", required: 'required' %>
 
-    <%= f.label :first_name_alphabet, t('user.last_name_alphabet')+"(*)", class: 'col-sm-2' %>
-    <%= f.text_field :first_name_alphabet, placeholder: "Taro", class: "form-control col-sm-4", required: 'required' %>
+    <%= f.label :first_name_alphabet, t('user.last_name_alphabet')+"(*)", class: 'col-form-label col-sm-2' %>
+    <%= f.text_field :first_name_alphabet, placeholder: "Taro", class: "form-control col", required: 'required' %>
   </div>
 
-  <div class="form-group row">
-    <%= f.label :email, t('user.email')+"(*)", class: 'col-sm-2' %>
-    <%= f.email_field :email, placeholder: "test@example.com", class: "form-control col-sm-4", required: 'required' %>
+  <div class="row">
+    <%= f.label :email, t('user.email')+"(*)", class: 'col-form-label col-sm-2' %>
+    <%= f.email_field :email, placeholder: "test@example.com", class: "form-control col", required: 'required' %>
 
-    <%= f.label :email_confirm, t('user.email_confirm')+"(*)", class: 'col-sm-2' %>
-    <%= f.email_field :email, id: 'email_confirm', placeholder: "test@example.com", class: "form-control col-sm-4", onblur: "confirmEmail()", required: 'required' %>
+    <%= f.label :email_confirm, t('user.email_confirm')+"(*)", class: 'col-form-label col-sm-2' %>
+    <%= f.email_field :email, id: 'email_confirm', placeholder: "test@example.com", class: "form-control col", onblur: "confirmEmail()", required: 'required' %>
   </div>
 
-  <div class="form-group row">
-    <%= f.label :category_id, t('user.category')+"(*)", class: 'col-sm-2' %>
-    <%= f.select :category_id, options_from_collection_for_select(Category.all, :id, :name, @user.category_id), { include_blank: true }, { class: "form-control col-sm-10", required: 'required' } %>
+  <div class="row">
+    <%= f.label :category_id, t('user.category')+"(*)", class: 'col-form-label col-sm-2' %>
+    <%= f.select :category_id, options_from_collection_for_select(Category.all, :id, :name, @user.category_id), { include_blank: true }, { class: "form-control col", required: 'required' } %>
   </div>
 
-  <div class="form-group row">
-    <%= f.label :affiliation, t('user.affiliation')+"(*)", class: 'col-sm-2' %>
-    <%= f.text_field :affiliation, placeholder:  "海山商事", class: "form-control col-sm-10", required: 'required' %>
-  </div>
+  <div class="row">
+    <%= f.label :affiliation, t('user.affiliation')+"(*)", class: 'col-form-label col-sm-2' %>
+    <%= f.text_field :affiliation, placeholder:  "海山商事", class: "form-control col", required: 'required' %>
 
-  <div class="form-group row">
-    <%= f.label :title, t('user.title')+"(*)", class: 'col-sm-2' %>
-    <%= f.text_field :title, placeholder:  "代表取締役社長", class: "form-control col-sm-10", required: 'required' %>
+    <%= f.label :title, t('user.title')+"(*)", class: 'col-form-label col-sm-2' %>
+    <%= f.text_field :title, placeholder:  "代表取締役社長", class: "form-control col", required: 'required' %>
   </div>
 
   <% if false %>
@@ -44,29 +42,27 @@
     <hr>
     <p>よろしければ、以下の情報もご記入ください。</p>
 
-    <div class="form-group row">
-      <%= f.label :gender, "性別", class: 'col-sm-2' %>
+    <div class="row">
+      <%= f.label :gender, "性別", class: 'col-form-label col-sm-2' %>
       <%= f.select :gender, [['Man', 1], ['Woman', 2]], { include_blank: true }, { class: "form-control col-sm-2" } %>
 
-      <%= f.label :age, "年代", class: 'col-sm-2' %>
+      <%= f.label :age, "年代", class: 'col-form-label col-sm-2' %>
       <%= f.select :age, [['~20s', 1], ['30s', 2], ['40s', 3], ['50s', 4], ['60s~', 5]], { include_blank: true }, { class: "form-control col-sm-2" } %>
 
-      <%= f.label :birthday, "誕生月", class: 'col-sm-2' %>
+      <%= f.label :birthday, "誕生月", class: 'col-form-label col-sm-2' %>
       <%= f.date_select :birthday, { discard_year: true, discard_day: true, include_blank: true }, { class: "form-control col-sm-2" } %>
     </div>
 
   <% end%><!-- end of if false -->
 
 
-  <div class="form-group">
-    <%= f.submit class: "btn btn-primary" %>
-    <% if @user.last_name? %>
-      <%= link_to t('cancel'), user_path(current_user), class: 'btn btn-warning' %>
-    <% else %>
-      <%= link_to t('cancel'), user_path(current_user), class: 'btn btn-warning',
-          data: { confirm: t('user.edit_cancel_warning') } %>
-    <% end %>
-  </div>
+  <%= f.submit class: "btn btn-primary" %>
+  <% if @user.last_name? %>
+    <%= link_to t('cancel'), user_path(current_user), class: 'btn btn-warning' %>
+  <% else %>
+    <%= link_to t('cancel'), user_path(current_user), class: 'btn btn-warning',
+        data: { confirm: t('user.edit_cancel_warning') } %>
+  <% end %>
 <% end %>
 
 
