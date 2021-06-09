@@ -11,7 +11,7 @@ GTICは日本におけるスタートアップ、投資家のマッチングの�
 ・<%= (@event.start_time).strftime("%H:%M") %>-<%= (@event.start_time+5*60).strftime("%H:%M") %> Opening Speech<br>
 <br>
 <% @event.presentations.each_with_index do |presentation, index| %>
-  ・<%= (presentation.start_time).strftime("%H:%M") %>-<%= (presentation.end_time).strftime("%H:%M") %><br>
+  ・<%= (presentation.start_time).strftime("%H:%M") if presentation.start_time %>-<%= (presentation.end_time).strftime("%H:%M") if presentation.start_time %><br>
   ①Presentation　その<%= index+1%><br>
   <% presentation.presenters.each do |presenter| %>
     <%= presenter.affiliation %><br>
