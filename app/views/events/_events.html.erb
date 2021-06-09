@@ -31,7 +31,7 @@
           <td>
             <% presentation.presenters.each do |presenter| %>
               <strong><%= presenter.affiliation %></strong><br>
-              <%= presenter.title + ' ' + presenter.last_name + ' ' + presenter.first_name + ' 氏'%>
+              <%= presenter.title %> <%= presenter.last_name + ' ' + presenter.first_name + ' 氏' %>
             <% end %>
           </td>
           <td><%= presentation.title %></td>
