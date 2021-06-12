@@ -26,6 +26,7 @@ Rails.application.routes.draw do
   match '/deregister_event', to: 'static_pages#deregister_event', via: 'post'
   match '/deregister_event_confirm', to: 'static_pages#deregister_event_confirm', via: 'get'
   match '/search_event', to: 'static_pages#search_event', via: 'get'
+  match '/search_media_article', to: 'static_pages#search_media_article', via: 'get'
 
 
   #===================================================

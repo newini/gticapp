@@ -145,6 +145,11 @@ class StaticPagesController < ApplicationController
     @media_articles = MediaArticle.paginate(page: params[:page], per_page: 9).order(date: :desc)
   end
 
+  def search_media_article
+    @media_articles = get_search_media_article(params[:keyword])
+    respond_to :js
+  end
+
   def our_sponsors
     @sponsors = Sponsor.where(is_end: false)
     @sponsors_end = Sponsor.where(is_end: true)

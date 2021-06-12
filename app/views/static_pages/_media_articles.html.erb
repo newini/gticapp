@@ -1,0 +1,37 @@
+<% @media_articles.each do |media_article| %>
+
+  <div class="col-sm-4" data-aos="fade-up">
+    <div class="card">
+      <%= image_tag media_article.image_url, height: "200" if media_article.image_url %>
+      <div class="card-body">
+        <h5 class="card-title"><%= media_article.media %> <strong>「<%= media_article.title %>」</strong></h5>
+        <p class="card-text"><%= media_article.description[0..50] + '...' if media_article.description %></p>
+        <small><%= media_article.date.strftime('%Y-%m-%d') %></small>
+        <%= link_to "（記事URL版）", "#{media_article.url}" if media_article.url.present? %>
+        <%= link_to "（記事PDF版）", serve_file_media_article_path(media_article) if media_article.file_name.present? %>
+
+        <% if media_article.member_id.present? %>
+          <hr>
+          <p>
+            登壇者:
+            <strong><%= media_article.member.affiliation %></strong>
+            <%= media_article.member.title %>
+            <strong> <%= media_article.member.last_name + ' ' + media_article.member.first_name %></strong> 氏
+          </p>
+          <% previous_event_id = 0 %>
+          <p>
+            登壇日（回号(年月日)）:
+            <% media_article.member.presentationships.each do |presentationship| %>
+              <% if not previous_event_id == presentationship.event_id %>
+                <% event = Event.find(presentationship.event_id) %>
+                <%= " 第#{event.cumulative_number}回GTIC (#{event.start_time.strftime('%Y-%m-%d')})" %><br>
+              <% end %>
+              <% previous_event_id = presentationship.event_id %>
+            <% end %>
+          </p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+<% end %>

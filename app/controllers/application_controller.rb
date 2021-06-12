@@ -24,32 +24,61 @@ class ApplicationController < ActionController::Base
     # For events
     def get_search_event(keyword)
       if keyword.present?
-        event_ids = []
-        Event.all.each do |event|
-          if event.presentations.search_presentation(keyword).present? # Search in presentation
-            event_ids.push(event.id)
-          end
-          event.presentations.each do |presentation|
-            if presentation.presenters.find_member(keyword).present? # search in presenter's member
-              event_ids.push(event.id) if not event_ids.include? event # check duplicate
+        events = Event.all
+        words = keyword.to_s.split(" ")
+        words.each do |word|
+          event_ids = []
+          events.all.each do |event|
+            if event.presentations.search_presentation(word).present? # Search in presentation
+              event_ids.push(event.id)
+              next
+            end
+            event.presentations.each do |presentation|
+              if presentation.presenters.find_member(word).present? # search in presenter's member
+                event_ids.push(event.id) if not event_ids.include? event.id # check duplicate
+              end
             end
           end
+          events = Event.where(id: event_ids).order("start_time DESC")
         end
+        return events
+      else
+        last_date = Event.order("start_time ASC").last.start_time.end_of_year
+        return Event.where(:start_time => last_date.beginning_of_year...last_date.end_of_year).group(:start_time)
       end
-      return Event.where(id: event_ids).order("start_time DESC")
     end
 
     # For member
     def get_search_member(keyword)
       if keyword.present?
+        members = Member.all
         words = keyword.to_s.split(" ")
-        @members = Member.all
         words.each do |word|
-          @members = @members.find_member(word).order("last_name_alphabet").paginate(page: params[:page])
+          members = members.find_member(word).order("last_name_alphabet").paginate(page: params[:page])
         end
-        return @members
+        return members
       else
-        return Member.order("last_name_alphabet").paginate(page: params[:page])
+        return Member.paginate(page: params[:page])
+      end
+    end
+
+    # For media article
+    def get_search_media_article(keyword)
+      if keyword.present?
+        media_articles = MediaArticle.all
+        words = keyword.to_s.split(" ")
+        words.each do |word|
+          media_article_ids = media_articles.search_media_article(word).map{ |ma| ma.id }
+          media_articles.all.each do |media_article|
+            if Member.where(id: media_article.member_id).find_member(word).present? # Search in member
+              media_article_ids.push(media_article.id) if not media_article_ids.include? media_article.id
+            end
+          end
+          media_articles = MediaArticle.where(id: media_article_ids).order(date: :desc)
+        end
+        return media_articles
+      else
+        return MediaArticle.paginate(page: params[:page], per_page: 9).order(date: :desc)
       end
     end
 
