@@ -1,4 +1,4 @@
-<strong>㊟Name, Email, Provider, User ID, Facebook IDはMEMBERのデータを編集すること</strong>
+<strong>㊟Name, Email, Provider, User ID, Facebook IDはMemberのデータを編集すること</strong><br>
 <strong>Active Staff, Admin Staffの設定はAdmin Staffのみ可能</strong>
 
 <p>*: <%= t('required') %></p>
@@ -11,9 +11,10 @@
 
   <div class="form-group row">
     <%= form.label :description, "自己紹介文(organizer pageに反映)", class: 'col-sm-4' %>
-    <%= form.text_area :description, placeholder: "description", class: "form-control col", rows: 10 %>
+    <%= form.text_area :description, placeholder: "description", class: "form-control col", rows: 15 %>
   </div>
 
+  <br>
   <% if admin? %>
     <div class="form-group row">
       <div class="col-sm-6">
@@ -28,8 +29,9 @@
     </div>
   <% end %>
 
+  <br>
   <div class="form-group row">
     <%= form.submit class: "btn btn-primary col-sm-3" %>
-    <%= link_to 'Cancel & Back', :back, class: 'btn btn-primary offset-sm-1 col-sm-3' %>
+    <%= link_to 'Cancel & Back', :back, class: 'btn btn-warning offset-sm-1 col-sm-3' %>
   </div>
 <% end %>

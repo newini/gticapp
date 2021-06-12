@@ -6,16 +6,7 @@
   <div class="col-md-10">
     <h2>ドラフト</h2>
 
-    <%= link_to "戻る", :back, class: "btn btn-primary"%>
-    <% if not @broadcast.sent_flg %>
-      <%= link_to '編集', edit_broadcast_path(@broadcast), class:"btn btn-primary" %>
-    <% end %>
-    <%= link_to '削除', broadcast_path(@broadcast), method: :delete, class:"btn btn-primary",
-                              data: {confirm: '削除します。よろしいでしょうか？'} %>
-
-    <hr>
-
-    <h3>宛先指定</h3>
+    <h3>1. 宛先指定</h3>
     <p>㊟ブラックリストメンバーは自動的に除かれる</p>
 
     <table class="table table-bordered">
@@ -71,18 +62,13 @@
       </tr>
     </table>
 
-    <hr>
-
     <%= link_to broadcast_member_list_broadcast_path(@broadcast), class: "btn btn-info btn-lg" do %>
-      <span class="fa fa-list"></span>宛先リスト確認
-    <% end %>
-    <%= link_to send_email_broadcast_path(@broadcast), class:"btn btn-info btn-lg", data: { confirm: '送信しますか？' } do %>
-      <span class="fa fa-paper-plane"></span>メール送信
+      <span class="fa fa-list"></span> 宛先リスト確認
     <% end %>
 
     <hr>
 
-    <h2>以下はメール文面</h2>
+    <h2>2.メール文面確認</h2>
 
     <!-- ここで修正したのもは、必ずno_reply_mailer/broadcast.html.erbに同じく修正すること！ -->
     <table class="table table-bordered table-sm">
@@ -103,11 +89,19 @@
 
     <hr>
 
-    <%= link_to "戻る", :back, class: "btn btn-primary"%>
-    <% if not @broadcast.sent_flg %>
-      <%= link_to '編集', edit_broadcast_path(@broadcast), class:"btn btn-primary" %>
+    <h2>3. 送信</h2>
+
+    <%= link_to send_email_broadcast_path(@broadcast), class:"btn btn-primary btn-lg", data: { confirm: '送信しますか？' } do %>
+      <span class="fa fa-paper-plane"></span> メール送信
     <% end %>
-    <%= link_to '削除', broadcast_path(@broadcast), method: :delete, class:"btn btn-primary",
+
+    <hr>
+
+    <%= link_to "戻る", :back, class: "btn btn-warning"%>
+    <% if not @broadcast.sent_flg %>
+      <%= link_to '編集', edit_broadcast_path(@broadcast), class:"btn btn-info" %>
+    <% end %>
+    <%= link_to '削除', broadcast_path(@broadcast), method: :delete, class:"btn btn-danger",
                               data: {confirm: '削除します。よろしいでしょうか？'} %>
 
   </div>

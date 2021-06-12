@@ -6,12 +6,9 @@
   <div class="col-md-10">
     <h2>送信済み</h2>
 
-    <%= link_to "戻る", :back, class: "btn btn-primary"%>
-    <%= link_to '削除', broadcast_path(@broadcast), method: :delete, class:"btn btn-primary",
-                              data: {confirm: '削除します。よろしいでしょうか？'} %>
-
     <hr>
-    <h3>送信オプション</h3>
+
+    <h3>宛先オプション</h3>
 
     <table class="table table-bordered">
       <tr>
@@ -69,10 +66,8 @@
 
     </table>
 
-    <hr>
-
     <%= link_to broadcast_member_list_broadcast_path(@broadcast), class: "btn btn-info btn-lg" do %>
-      <span class="fa fa-list"></span>宛先リスト
+      <span class="fa fa-list"></span> 宛先リスト
     <% end %>
 
     <hr>
@@ -100,8 +95,8 @@
 
     <hr>
 
-    <%= link_to "戻る", :back, class: "btn btn-primary"%>
-    <%= link_to '削除', broadcast_path(@broadcast), method: :delete, class:"btn btn-primary",
+    <%= link_to "戻る", :back, class: "btn btn-warning"%>
+    <%= link_to '削除', broadcast_path(@broadcast), method: :delete, class:"btn btn-danger",
                               data: {confirm: '削除します。よろしいでしょうか？'} %>
 
   </div>

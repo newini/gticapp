@@ -9,14 +9,14 @@
     <table class="table table-bordered table-striped table-sm">
       <thead>
         <tr>
-          <th style="width: 8%;">登録した日にち</th>
-          <th style="width: 15%;">Member Name</th>
+          <th width="8%">登録した日にち</th>
+          <th width="15%">Member Name</th>
           <th>Member ID（クリックしてメンバーページへ）</th>
           <th>Facebook ID（クリックしてFBページへ）</th>
           <th>Active（管理者画面にアクセス可能な人）</th>
           <th>Admin（管理者画面を修正できる人）</th>
           <th>Description（右の編集ボタンで編集ページにジャンプ。そこを編集すると幹事紹介ページに反映）</th>
-          <th style="width: 5%;"></th>
+          <th width="5%"></th>
         </tr>
       </thead>
 
@@ -30,7 +30,7 @@
             <td><%= get_check_icon(staff.is_active) %></td>
             <td><%= get_check_icon(staff.is_admin) %></td>
             <td><%= staff.description[0..10] + "..." if staff.description.present? %></td>
-            <td><%= link_to "詳細", staff_path(staff), class: 'btn btn-info btn-sm' %></td>
+            <td><%= link_to "詳細&編集", edit_staff_path(staff), class: 'btn btn-info btn-sm' %></td>
           </tr>
         <% end %>
       </tbody>
