@@ -233,7 +233,7 @@ class BroadcastsController < ApplicationController
         res = email.to_s.split("<")
         name = res[0]
         email_address = res[1].tr(">", "").tr(" ", "") # Remove ">" and spaces in email
-        member = Member.find(3347) # Use dami member!
+        member = Member.new
         member.last_name = name
         member.email = email_address
         NoReplyMailer.broadcast(member, @broadcast).deliver
