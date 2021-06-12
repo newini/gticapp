@@ -46,7 +46,7 @@
 
       <tr>
         <th>GTIC幹事メンバーの中でActiveになっている人を含める<br>
-        （右上の名前をプルダウンメニューの幹事リストの中でActiveになってる）：</th>
+          （右上の管理メニュー⇒Staffリスト⇒Activeに変更）：</th>
         <td><%= select_include_gtic_members(@broadcast) %></td>
       </tr>
 
@@ -74,7 +74,7 @@
     <hr>
 
     <%= link_to broadcast_member_list_broadcast_path(@broadcast), class: "btn btn-info btn-lg" do %>
-      <span class="fa fa-list"></span>宛先リスト
+      <span class="fa fa-list"></span>宛先リスト確認
     <% end %>
     <%= link_to send_email_broadcast_path(@broadcast), class:"btn btn-info btn-lg", data: { confirm: '送信しますか？' } do %>
       <span class="fa fa-paper-plane"></span>メール送信

@@ -9,7 +9,7 @@
       <%= label_tag :keyword, 'イベント検索', class: 'col-form-label col-auto' %>
       <%= text_field_tag :keyword, params[:keyword], class: "form-control col", placeholder: "keyword" %>
       <%= submit_tag 'Search', :name => nil, class: 'btn btn-primary col-auto' %>
-      <span class='form-text col-auto'>アルファベットによる検索もOK（ひらがな、カタカナは未対応）</span>
+      <span class='form-text col-auto'>読み方による検索はアルファベットのみ可能（ひらがな・カタカナは未対応）</span>
     </div>
   <% end %>
 
