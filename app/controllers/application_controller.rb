@@ -3,6 +3,10 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+  # Call python module
+  require 'pycall/import'
+  include PyCall::Import
+
 
   # ======================================================
   # Locale
@@ -24,24 +28,40 @@ class ApplicationController < ActionController::Base
     # For events
     def get_search_event(keyword)
       if keyword.present?
+        # Define kakasi from python module
+        pyimport :pykakasi
+        kks = pykakasi.kakasi.new()
+
         events = Event.all
         words = keyword.tr("０-９Ａ-Ｚａ-ｚ　", "0-9A-Za-z ").to_s.split(" ")
+        event_id_hash = Hash.new(0)
         words.each do |word|
-          event_ids = []
+          word_roman = kks_to_roman(kks, word)
           events.all.each do |event|
-            if event.presentations.search_presentation(word).present? # Search in presentation
-              event_ids.push(event.id)
-              next
-            end
+            # Search in presentation
+            event_id_hash[event.id] += 10 if event.presentations.search_presentation(word).present?
+
+            # Search with roman in presentation
+            event_id_hash[event.id] += 4 if kks_to_roman( kks, event.presentations.map{|p| p.title }.join(" ") ).match(word_roman)
+            #event_id_hash[event.id] += 1 if kks_to_roman( kks, event.presentations.map{|p| p.abstract }.join(" ") ).match(word_roman)
+
+            # search in presenter's member
             event.presentations.each do |presentation|
-              if presentation.presenters.find_member(word).present? # search in presenter's member
-                event_ids.push(event.id) if not event_ids.include? event.id # check duplicate
+              if presentation.presenters
+                event_id_hash[event.id] += 10 if presentation.presenters.find_member(word).present?
+
+                # Search with roman
+                event_id_hash[event.id] += 10 if kks_to_roman(kks, presentation.presenters.map{ |m| m.last_name }.join(' ')).match(word_roman)
+                event_id_hash[event.id] += 10 if kks_to_roman(kks, presentation.presenters.map{ |m| m.first_name }.join(' ')).match(word_roman)
+                event_id_hash[event.id] += 10 if kks_to_roman(kks, presentation.presenters.map{ |m| m.affiliation }.join(' ')).match(word_roman)
               end
             end
           end
-          events = Event.where(id: event_ids).order("start_time DESC")
+          events = Event.where(id: event_id_hash.keys).order("start_time DESC")
         end
-        return events
+        event_id_hash = event_id_hash.filter{ |k,v| v >= 10 } if event_id_hash.count >= 10
+        event_ids = event_id_hash.sort_by{ |e| e[1] }.reverse.map{ |e| e[0] }
+        return Event.where(id: event_ids).order(Arel.sql(event_ids.map{ |e| "id="+e.to_s+" DESC" }.join(', ')))
       else
         return nil
       end
@@ -88,6 +108,11 @@ class ApplicationController < ActionController::Base
 
     def verify_string_from_hash(hash)
       return Rails.application.message_verifier(ENV['SECRET_KEY_BASE']).verify(hash)[:token]
+    end
+
+    # Kanji/Hira/Kana to roman
+    def kks_to_roman(kks, word)
+      return kks.convert(word).map{ |r| r['hepburn'] }.join("")
     end
 
     def admin_staff_only

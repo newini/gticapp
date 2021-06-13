@@ -97,3 +97,6 @@ gem 'rqrcode'
 # Get tumbnail from url
 # https://github.com/gottfrois/link_thumbnailer
 gem 'link_thumbnailer'
+
+# PyCall: Calling Python functions from the Ruby language
+gem 'pycall'
