@@ -15,17 +15,9 @@
     </div>
   <% end %>
 
-  <nav aria-label="Page navigation">
-    <%= will_paginate @media_articles, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
-  </nav>
-
-    <div class="row" id="ajax_container">
-      <%= render 'media_articles' %>
+  <div class="row" id="ajax_container">
+    <%= render 'media_articles' %>
   </div>
-
-  <nav aria-label="Page navigation">
-    <%= will_paginate @media_articles, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
-  </nav>
 
   <br><br><br>
 

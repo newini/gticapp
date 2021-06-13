@@ -1,3 +1,14 @@
+<!-- per year Paginate -->
+<% if @start_date.present? and @last_date.present? %>
+  <div class="btn-group btn-group-sm row">
+    <% date = @last_date%>
+    <% while date >= @start_date do %>
+      <%= link_to "#{date.strftime("%Y")}年", event_list_path(:year => date.strftime("%Y-%m-%d")), class: "btn btn-info col-auto", remote: true %>
+      <% date = date - 1.year %>
+    <% end %>
+  </div>
+<% end %>
+
 <% @events.each do |event| %>
 
   <div class="card" data-aos="fade-up">

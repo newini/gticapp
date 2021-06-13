@@ -16,7 +16,9 @@ class StaticPagesController < ApplicationController
   end
 
   def event_list
+    logger.info('hoashfoiasdhfoi')
     @start_date = Event.order("start_time ASC").first.start_time.beginning_of_year
+    logger.info(@start_date)
     @last_date = Event.order("start_time ASC").last.start_time.end_of_year
     if params[:year].present?
       year = Date.parse(params[:year])
@@ -28,8 +30,13 @@ class StaticPagesController < ApplicationController
   end
 
   def search_event
-    @events = get_search_event(params[:keyword]).where(is_public: true)
-    respond_to :js
+    @events = get_search_event(params[:keyword])
+    if @events
+      @events = @events.where(is_public: true)
+      respond_to :js
+    else
+      redirect_to event_list_path
+    end
   end
 
   def event_detail
@@ -147,7 +154,12 @@ class StaticPagesController < ApplicationController
 
   def search_media_article
     @media_articles = get_search_media_article(params[:keyword])
-    respond_to :js
+    if @media_articles
+      @is_search = true
+      respond_to :js
+    else
+      redirect_to media_path
+    end
   end
 
   def our_sponsors

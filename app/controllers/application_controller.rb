@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
     def get_search_event(keyword)
       if keyword.present?
         events = Event.all
-        words = keyword.to_s.split(" ")
+        words = keyword.tr("０-９Ａ-Ｚａ-ｚ　", "0-9A-Za-z ").to_s.split(" ")
         words.each do |word|
           event_ids = []
           events.all.each do |event|
@@ -43,8 +43,7 @@ class ApplicationController < ActionController::Base
         end
         return events
       else
-        last_date = Event.order("start_time ASC").last.start_time.end_of_year
-        return Event.where(:start_time => last_date.beginning_of_year...last_date.end_of_year).group(:start_time)
+        return nil
       end
     end
 
@@ -52,7 +51,7 @@ class ApplicationController < ActionController::Base
     def get_search_member(keyword)
       if keyword.present?
         members = Member.all
-        words = keyword.to_s.split(" ")
+        words = keyword.tr("０-９Ａ-Ｚａ-ｚ　", "0-9A-Za-z ").to_s.split(" ")
         words.each do |word|
           members = members.find_member(word).order("last_name_alphabet").paginate(page: params[:page])
         end
@@ -66,7 +65,7 @@ class ApplicationController < ActionController::Base
     def get_search_media_article(keyword)
       if keyword.present?
         media_articles = MediaArticle.all
-        words = keyword.to_s.split(" ")
+        words = keyword.tr("０-９Ａ-Ｚａ-ｚ　", "0-9A-Za-z ").to_s.split(" ")
         words.each do |word|
           media_article_ids = media_articles.search_media_article(word).map{ |ma| ma.id }
           media_articles.all.each do |media_article|
@@ -78,7 +77,7 @@ class ApplicationController < ActionController::Base
         end
         return media_articles
       else
-        return MediaArticle.paginate(page: params[:page], per_page: 9).order(date: :desc)
+        return nil
       end
     end
 

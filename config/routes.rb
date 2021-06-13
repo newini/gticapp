@@ -16,17 +16,17 @@ Rails.application.routes.draw do
   match '/ceo_message', to: 'static_pages#ceo_message', via: 'get'
   match '/organizer', to: 'static_pages#organizer', via: 'get'
   match '/media', to: 'static_pages#media', via: 'get'
+  match '/search_media_article', to: 'static_pages#search_media_article', via: 'get'
   match '/our_sponsors', to: 'static_pages#our_sponsors', via: 'get'
   match '/contact_us', to: 'static_pages#contact_us', via: 'get'
   # Events
   match '/event_list', to: 'static_pages#event_list', via: 'get'
+  match '/search_event', to: 'static_pages#search_event', via: 'get'
   match '/event_detail', to: 'static_pages#event_detail', via: 'get'
   match '/register_event_form', to: 'static_pages#register_event_form', via: 'post'
   match '/register_event_user', to: 'static_pages#register_event_user', via: 'post'
   match '/deregister_event', to: 'static_pages#deregister_event', via: 'post'
   match '/deregister_event_confirm', to: 'static_pages#deregister_event_confirm', via: 'get'
-  match '/search_event', to: 'static_pages#search_event', via: 'get'
-  match '/search_media_article', to: 'static_pages#search_media_article', via: 'get'
 
 
   #===================================================

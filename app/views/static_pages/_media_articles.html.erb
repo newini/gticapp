@@ -1,3 +1,9 @@
+<% if not @is_search %>
+  <nav aria-label="Page navigation">
+    <%= will_paginate @media_articles, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+  </nav>
+<% end %>
+
 <% @media_articles.each do |media_article| %>
 
   <div class="col-sm-4" data-aos="fade-up">
