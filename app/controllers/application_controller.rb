@@ -3,10 +3,6 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  # Call python module
-  #require 'pycall/import'
-  #include PyCall::Import
-
 
   # ======================================================
   # Locale
@@ -28,9 +24,6 @@ class ApplicationController < ActionController::Base
     # For events
     def get_search_event(keyword)
       if keyword.present?
-        # Define kakasi from python module
-        #pyimport :pykakasi
-        #kks = pykakasi.kakasi.new()
 
         events = Event.all
         words = keyword.tr("０-９Ａ-Ｚａ-ｚ　", "0-9A-Za-z ").to_s.split(" ")
