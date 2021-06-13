@@ -4,8 +4,8 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   # Call python module
-  require 'pycall/import'
-  include PyCall::Import
+  #require 'pycall/import'
+  #include PyCall::Import
 
 
   # ======================================================
@@ -29,20 +29,20 @@ class ApplicationController < ActionController::Base
     def get_search_event(keyword)
       if keyword.present?
         # Define kakasi from python module
-        pyimport :pykakasi
-        kks = pykakasi.kakasi.new()
+        #pyimport :pykakasi
+        #kks = pykakasi.kakasi.new()
 
         events = Event.all
         words = keyword.tr("０-９Ａ-Ｚａ-ｚ　", "0-9A-Za-z ").to_s.split(" ")
         event_id_hash = Hash.new(0)
         words.each do |word|
-          word_roman = kks_to_roman(kks, word)
+          #word_roman = kks_to_roman(kks, word)
           events.all.each do |event|
             # Search in presentation
             event_id_hash[event.id] += 10 if event.presentations.search_presentation(word).present?
 
             # Search with roman in presentation
-            event_id_hash[event.id] += 4 if kks_to_roman( kks, event.presentations.map{|p| p.title }.join(" ") ).match(word_roman)
+            #event_id_hash[event.id] += 4 if kks_to_roman( kks, event.presentations.map{|p| p.title }.join(" ") ).match(word_roman)
             #event_id_hash[event.id] += 1 if kks_to_roman( kks, event.presentations.map{|p| p.abstract }.join(" ") ).match(word_roman)
 
             # search in presenter's member
@@ -51,9 +51,9 @@ class ApplicationController < ActionController::Base
                 event_id_hash[event.id] += 10 if presentation.presenters.find_member(word).present?
 
                 # Search with roman
-                event_id_hash[event.id] += 10 if kks_to_roman(kks, presentation.presenters.map{ |m| m.last_name }.join(' ')).match(word_roman)
-                event_id_hash[event.id] += 10 if kks_to_roman(kks, presentation.presenters.map{ |m| m.first_name }.join(' ')).match(word_roman)
-                event_id_hash[event.id] += 10 if kks_to_roman(kks, presentation.presenters.map{ |m| m.affiliation }.join(' ')).match(word_roman)
+                #event_id_hash[event.id] += 10 if kks_to_roman(kks, presentation.presenters.map{ |m| m.last_name }.join(' ')).match(word_roman)
+                #event_id_hash[event.id] += 10 if kks_to_roman(kks, presentation.presenters.map{ |m| m.first_name }.join(' ')).match(word_roman)
+                #event_id_hash[event.id] += 10 if kks_to_roman(kks, presentation.presenters.map{ |m| m.affiliation }.join(' ')).match(word_roman)
               end
             end
           end
