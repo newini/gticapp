@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_17_013305) do
+ActiveRecord::Schema.define(version: 2021_06_17_031017) do
 
   create_table "accounts", force: :cascade do |t|
     t.string "title", limit: 255
@@ -98,6 +98,7 @@ ActiveRecord::Schema.define(version: 2021_06_17_013305) do
     t.binary "header_data"
     t.integer "bkg_image_id"
     t.boolean "is_public", default: false
+    t.integer "views", default: 0
     t.index ["event_category_id"], name: "index_events_on_event_category_id"
     t.index ["place_id"], name: "index_events_on_place_id"
     t.index ["start_time"], name: "index_events_on_start_time"

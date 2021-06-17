@@ -46,6 +46,9 @@ class StaticPagesController < ApplicationController
     end
     @event = Event.find(params[:event_id])
 
+    # Count up view
+    @event.update(views: @event.views + 1)
+
     redirect_to root_path, notice: "Not public event." if not @event.is_public
 
     @is_expired_event =  isExpiredEvent(@event.start_time)

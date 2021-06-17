@@ -71,7 +71,34 @@
 
           Plotly.newPlot( events_stat, data, layout );
         </script>
+
+        <div id="events_views_stat"></div>
+        <script>
+          var views = {
+            x: <%= raw @event_names %>,
+            y: <%= @events.map{ |e| e.views } %>,
+            name: 'Views',
+            type: 'bar'
+          };
+          var layout = {
+            title: 'Views',
+            xaxis: {
+              title: 'Event#',
+              tickangle: -45
+            },
+            yaxis: {
+              title: 'views'
+            }
+          };
+          var data = [views];
+
+          events_views_stat = document.getElementById('events_views_stat');
+
+          Plotly.newPlot( events_views_stat, data, layout );
+        </script>
+
       <% end %>
     </div>
+
   </div>
 </div>

@@ -66,11 +66,16 @@
             <th>Facebook event URL</th>
             <td><%= link_to "https://www.facebook.com/events/#{@event.fb_event_id}", "https://www.facebook.com/events/#{@event.fb_event_id}", target: 'blank' %></td>
           </tr>
-
           <tr>
             <th>備考</th>
             <td><%= simple_format(@event.note) %></td>
           </tr>
+          <tr>
+            <th>Views</th>
+            <td><%= @event.views %></td>
+          </tr>
+
+
           <% if @event.presenters.present? %>
             <% i = 1 %>
             <% @event.presenters.each do |presenter| %>
