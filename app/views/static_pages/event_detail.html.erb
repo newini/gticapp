@@ -153,19 +153,19 @@
 
       <div class="col">
         <sub><small><%= "Presentation ##{n}" %></small></sub>
-        <h5><%= presentation.try(:title) %></h5>
+        <h5><%= presentation.title %></h5>
 
         <div style="height: 3px;"></div>
 
         <% presentation.presenters.each do |presenter| %>
-          <h5 style="display: inline;"><strong><%= "#{presenter.try(:last_name)} #{presenter.try(:first_name)} 氏" %></strong></h5>
+          <h5 style="display: inline;"><strong><%= "#{presenter.last_name} #{presenter.first_name} 氏" %></strong></h5>
           <small><%= presenter.affiliation %></small>
           <br>
         <% end %>
 
         <div style="height: 3px;"></div>
 
-        <%= presentation.try(:abstract) %>
+        <%= presentation.abstract %>
         <hr>
       </div>
     </div>
