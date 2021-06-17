@@ -29,6 +29,21 @@ Things you may want to cover:
 Please feel free to use a different markup language if you do not plan to run
 `rake doc:app`
 
+
+
+# 0. Preparation
+## a. Install Sendmail
+- `sendmail` for send email
+```
+sudo apt install sendmail -y
+```
+After installation, configure by
+```
+sudo sendmailconfig
+```
+
+
+
 # 1. Full Installation
 ## a. Install Ruby
 Install requirements.
@@ -175,11 +190,13 @@ SetEnv VARIABLE_NAME some_value
 ```
 
 ## h. Enable gticapp site
+- ポートを通す使うアプリ指定
 ```
-# ポートを通す使うアプリ指定
 sudo a2ensite gticapp
+```
 
-# 使わないアプリを取り除く
+- 使わないアプリを取り除く
+```
 sudo a2dissite (gticapp以外は全部取り除く)
 ```
 

@@ -9,14 +9,11 @@
     <h3>正常に送信されました!/Sent success fully!</h3>
   <% else %>
     <%= render 'contacts/form' %>
+
+    <hr>
+
+    <h3>または、ソーシャルアカウントでお問い合わせ / or, contact via social account</h3>
+    <%= link_to tag.i(class: 'fab fa-facebook-square')+' facebook', 'https://facebook.com/GTICafe', class: 'btn btn-primary', target: 'blank' %>
   <% end %>
-
-  <hr>
-
-  <h3>または、ソーシャルアカウントでお問い合わせ / or, contact via social account</h3>
-  <%= link_to tag.i(class: 'fab fa-facebook-square')+' facebook', 'https://facebook.com/GTICafe', class: 'btn btn-primary', target: 'blank' %>
-  <a href="https://lin.ee/i6liGlO", target='blank'>
-    <img src="https://scdn.line-apps.com/n/line_add_friends/btn/ja.png" alt="友だち追加" height='36' border="0">
-  </a>
 
 </div>
