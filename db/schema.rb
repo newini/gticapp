@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_26_044334) do
+ActiveRecord::Schema.define(version: 2021_06_17_013305) do
 
   create_table "accounts", force: :cascade do |t|
     t.string "title", limit: 255
@@ -72,6 +72,7 @@ ActiveRecord::Schema.define(version: 2021_05_26_044334) do
     t.boolean "is_response_completed", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "ip"
   end
 
   create_table "event_categories", force: :cascade do |t|

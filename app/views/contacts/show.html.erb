@@ -47,10 +47,14 @@
         <th>is response completed?</th>
         <td><%= get_check_icon(@contact.is_response_completed) %></td>
       </tr>
+      <tr>
+        <th>IP</th>
+        <td><%= @contact.ip %></td>
+      </tr>
     </table>
 
     <% if not @contact.is_response_completed %>
-      <%= link_to 'Response Complated', update_response_completed_contact_path(@contact), class: 'btn btn-info', method: 'post' %>
+      <%= link_to 'Set as response Complated', update_response_completed_contact_path(@contact), class: 'btn btn-info', method: 'post' %>
     <% end %>
     <%= link_to "Delete", contact_path(@contact), class: 'btn btn-danger',
                   method: :delete, data: { confirm: "Delete, Are you sure?" } %>

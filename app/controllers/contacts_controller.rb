@@ -10,6 +10,9 @@ class ContactsController < ApplicationController
   def create
     @contact = Contact.new(contact_params)
 
+    # Add remote ip
+    @contact.update(ip: request.remote_ip)
+
     if @contact.save
       # Send auto reply mail to user
       NoReplyMailer.contact_autoreply(@contact).deliver
