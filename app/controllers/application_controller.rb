@@ -49,6 +49,9 @@ class ApplicationController < ActionController::Base
                 #event_id_hash[event.id] += 10 if kks_to_roman(kks, presentation.presenters.map{ |m| m.affiliation }.join(' ')).match(word_roman)
               end
             end
+
+            # Search in place
+            event_id_hash[event.id] += 10 if event.place.name.match(word)
           end
           events = Event.where(id: event_id_hash.keys).order("start_time DESC")
         end
