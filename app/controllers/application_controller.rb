@@ -69,18 +69,23 @@ class ApplicationController < ActionController::Base
     # For media article
     def get_search_media_article(keyword)
       if keyword.present?
-        media_articles = MediaArticle.all
         words = keyword.tr("０-９Ａ-Ｚａ-ｚ　", "0-9A-Za-z ").to_s.split(" ")
+        media_article_id_hash = Hash.new(0) # Score for OR search
         words.each do |word|
-          media_article_ids = media_articles.search_media_article(word).map{ |ma| ma.id }
-          media_articles.all.each do |media_article|
-            if Member.where(id: media_article.member_id).find_member(word).present? # Search in member
-              media_article_ids.push(media_article.id) if not media_article_ids.include? media_article.id
-            end
+          # Find in media article
+          MediaArticle.search_media_article(word).each do |media_article|
+            media_article_id_hash[media_article.id] += 10
           end
-          media_articles = MediaArticle.where(id: media_article_ids).order(date: :desc)
+
+          # Find in members
+          MediaArticle.all.each do |media_article|
+            media_article_id_hash[media_article.id] += 15 if Member.where(id: media_article.member_id).find_member(word).present?
+          end
         end
-        return media_articles
+        # Sort by score
+        media_article_ids = media_article_id_hash.sort_by{ |e| e[1] }.reverse.map{ |e| e[0] }
+
+        return MediaArticle.where(id: media_article_ids).order(Arel.sql(media_article_ids.map{ |e| "id="+e.to_s+" DESC" }.join(', ')))
       else
         return nil
       end
