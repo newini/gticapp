@@ -24,27 +24,26 @@ class ApplicationController < ActionController::Base
     # For events
     def get_search_event(keyword)
       if keyword.present?
-        events = Event.all
         words = keyword.tr("０-９Ａ-Ｚａ-ｚ　", "0-9A-Za-z ").to_s.split(" ")
-        event_id_hash = Hash.new(0)
+        event_id_hash = Hash.new(0) # Score for OR search
         words.each do |word|
-          events.all.each do |event|
+          Event.all.each do |event|
             # Search in presentation
-            event_id_hash[event.id] += 10 if event.presentations.search_presentation(word).present?
+            event_id_hash[event.id] += 15 if event.presentations.search_presentation(word).present?
 
             # search in presenter's member
             event.presentations.each do |presentation|
               if presentation.presenters
-                event_id_hash[event.id] += 10 if presentation.presenters.find_member(word).present?
+                event_id_hash[event.id] += 15 if presentation.presenters.find_member(word).present?
               end
             end
 
             # Search in place
             event_id_hash[event.id] += 10 if event.place.name.match(word)
           end
-          events = Event.where(id: event_id_hash.keys).order("start_time DESC")
         end
-        event_id_hash = event_id_hash.filter{ |k,v| v >= 10 } if event_id_hash.count >= 10
+        #event_id_hash = event_id_hash.filter{ |k,v| v >= 10 } if event_id_hash.count >= 10
+        # Sort by score
         event_ids = event_id_hash.sort_by{ |e| e[1] }.reverse.map{ |e| e[0] }
         return Event.where(id: event_ids).order(Arel.sql(event_ids.map{ |e| "id="+e.to_s+" DESC" }.join(', ')))
       else
