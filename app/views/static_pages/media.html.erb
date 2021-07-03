@@ -11,7 +11,7 @@
       <%= label_tag :keyword, '記事検索', class: 'col-form-label col-auto' %>
       <%= text_field_tag :keyword, params[:keyword], class: "form-control col", placeholder: "keyword" %>
       <%= submit_tag 'Search', :name => nil, class: 'btn btn-primary col-auto' %>
-      <span class='form-text col-auto'>メディア名、記事名、企業名、登壇者名から検索</span>
+      <span class='form-text col-auto'>メディア名、記事名、企業名、登壇者名から検索(AND検索：スペースで区切る)</span>
     </div>
   <% end %>
 
