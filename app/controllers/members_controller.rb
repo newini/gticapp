@@ -24,18 +24,21 @@ class MembersController < ApplicationController
   end
 
   def create
-    @member = Member.new(member_params)
-    if @member.save
+    member = Member.new(member_params)
+    if member.save
+      # Fill alphabet name
+      fill_alphabet_from_kanji_name(member)
+      # Go back to event page
       if params[:event_id].present?
         if params[:referer] == 'waiting'
-          @member.relationships.create(event_id: params[:event_id], status: 2)
+          member.relationships.create(event_id: params[:event_id], status: 2)
           redirect_to registed_event_path(params[:event_id])
         elsif params[:referer] == 'add_presenter'
-          @member.relationships.create(event_id: params[:event_id], status: 2, presentation_role: 1)
+          member.relationships.create(event_id: params[:event_id], status: 2, presentation_role: 1)
           redirect_to event_path(params[:event_id])
         end
       else
-        redirect_to member_path(@member)
+        redirect_to member_path(member)
       end
     else
       render 'new'
@@ -52,20 +55,26 @@ class MembersController < ApplicationController
   end
 
   def update
-    @member = Member.find(params[:id])
+    member = Member.find(params[:id])
+    # Update facebook name from facebook uid
     if member_params[:uid].to_i.to_s == member_params[:uid].to_s # If integer
-      @member.update(name: get_facebook_name(member_params[:uid]))
+      member.update(name: get_facebook_name(member_params[:uid]))
     end
+
     # Validate email address
     if member_params[:email].present?
       if not member_params[:email].match? $mailRegex
         flash.now[:error] = 'Invalid email combination'
         render 'edit'
       end
-    else
-      @member.update(member_params)
-      redirect_to member_path , :flash => {:success => '変更しました'}
     end
+
+    member.update(member_params)
+
+    # Fill alphabet name
+    fill_alphabet_from_kanji_name(member)
+
+    redirect_to member_path , :flash => {:success => '変更しました'}
   end
 
   def destroy
@@ -156,45 +165,16 @@ class MembersController < ApplicationController
   end
 
   # Change member's kanji or hiragana to alphabet
-  def fill_alphabet_from_kanji_name
-    #@members = Member.where.not(last_name: [nil, ""], first_name: [nil, ""])
-    @members = Member.where(id: 3348)
-    total = @members.count
-    i = 0
-    @members.each do |member|
-      if not member.last_name_alphabet.present? ||
-          ( (member.last_name_alphabet.present?) && (not member.last_name_alphabet.ascii_only?) ) # If not alphabet
-        last_name_alphabet = get_alphabet_from_kanji(member.last_name)
-        member.update(last_name_alphabet: last_name_alphabet)
-        i += 1
-      end
-
-      if not member.first_name_alphabet.present? ||
-          ( (member.first_name_alphabet.present?) && (not member.first_name_alphabet.ascii_only?) ) # If not alphabet
-        first_name_alphabet = get_alphabet_from_kanji(member.first_name)
-        member.update(first_name_alphabet: first_name_alphabet)
-      end
+  def fill_alphabet_from_kanji_name(member)
+    # Last name
+    if not member.last_name_alphabet.present? ||
+        ( (member.last_name_alphabet.present?) && (not member.last_name_alphabet.ascii_only?) ) # If not alphabet
+      member.update(last_name_alphabet: kanji_to_romaji(member.last_name).capitalize )
     end
-    redirect_to members_path, :flash => {:success => "#{i} / #{total}件更新しました" }
-  end
-
-  # Change kanji and hiragana to alphabet
-  # https://developer.yahoo.co.jp/webapi/jlp/furigana/v1/furigana.html
-  def get_alphabet_from_kanji(word)
-    sentence = CGI.escape(word) # Convert to ascii
-    base_url = 'http://jlp.yahooapis.jp/FuriganaService/V1/furigana'
-    req_url = "#{base_url}?sentence=#{sentence}&appid=#{ENV['YAHOO_APPID']}"
-    response = Net::HTTP.get_response(URI.parse(req_url)) # Get
-    result_hash = Hash.from_xml(response.body) # Convert xml to hash
-    if result_hash["ResultSet"].present?
-      word_hashs = result_hash["ResultSet"]["Result"]["WordList"]["Word"]
-      if word_hashs.class == Hash
-        return word_hashs['Roman'].capitalize
-      else # If hash in array
-        return word_hashs.collect { |word| word['Roman']  }.join().capitalize
-      end
-    else
-      ""
+    # First name
+    if not member.first_name_alphabet.present? ||
+        ( (member.first_name_alphabet.present?) && (not member.first_name_alphabet.ascii_only?) ) # If not alphabet
+      member.update(first_name_alphabet: kanji_to_romaji(member.first_name).capitalize )
     end
   end
 
