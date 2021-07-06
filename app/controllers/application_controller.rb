@@ -3,6 +3,10 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+  # Kanji to kana
+  # Declare hear, only once due to slow down
+  $tagger = Suika::Tagger.new
+
 
   # ======================================================
   # Locale
@@ -21,12 +25,13 @@ class ApplicationController < ActionController::Base
 
   # ======================================================
   private
-    # For events
+    # Search for events
     def get_search_event(keyword)
       if keyword.present?
         words = keyword.tr("０-９Ａ-Ｚａ-ｚ　", "0-9A-Za-z ").to_s.split(" ")
         event_id_hash = Hash.new(0) # Score for OR search
         words.each do |word|
+          word_romaji = kanji_to_romaji(word)
           Event.all.each do |event|
             # Search in presentation
             event_id_hash[event.id] += 15 if event.presentations.search_presentation(word).present?
@@ -51,7 +56,7 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    # For member
+    # Search for member
     def get_search_member(keyword)
       if keyword.present?
         members = Member.all
@@ -65,7 +70,7 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    # For media article
+    # Search for media article
     def get_search_media_article(keyword)
       if keyword.present?
         words = keyword.tr("０-９Ａ-Ｚａ-ｚ　", "0-9A-Za-z ").to_s.split(" ")
@@ -99,9 +104,17 @@ class ApplicationController < ActionController::Base
       return Rails.application.message_verifier(ENV['SECRET_KEY_BASE']).verify(hash)[:token]
     end
 
-    # Kanji/Hira/Kana to roman
-    def kks_to_roman(kks, word)
-      return kks.convert(word).map{ |r| r['hepburn'] }.join("")
+    # Kanji to romaji
+    def kanji_to_romaji(word)
+      kana_arr = $tagger.parse(word).map{ |w|
+        if w.split(',')[-1] != '*'
+          w.split(',')[-1] # Get last kana
+        else
+          w.split("\t")[0] # Get original
+        end
+      }
+      romaji = kana_arr.map{ |k| Romaji.kana2romaji(k) }.join()
+      return romaji
     end
 
     def admin_staff_only

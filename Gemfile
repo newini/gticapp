@@ -97,3 +97,7 @@ gem 'rqrcode'
 # Get tumbnail from url
 # https://github.com/gottfrois/link_thumbnailer
 gem 'link_thumbnailer'
+
+# Convert Kanji to romaji
+gem 'suika' # 形態素解析器
+gem 'romaji' # Kana/hira -> romaji
