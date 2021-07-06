@@ -11,12 +11,12 @@
     </fieldset>
 
     <div class="row">
-      <%= link_to 'メンバー情報編集', edit_member_path(@member), class: "btn btn-primary col-sm-3" %>
+      <%= link_to 'メンバー情報編集', edit_member_path(@member), class: "btn btn-lg btn-primary col-sm-3" %>
       <!-- Button trigger modal -->
-      <button type="button" class="btn btn-primary offset-sm-1 col-sm-3" data-toggle="modal" data-target="#profilePicture">
+      <button type="button" class="btn btn-lg btn-secondary offset-sm-1 col-sm-3" data-toggle="modal" data-target="#profilePicture">
         Click to upload Profile picture
       </button>
-      <%= link_to 'メンバー削除', @member, value:@member.id, class: 'btn btn-warning offset-sm-1 col-sm-3',
+      <%= link_to 'メンバー削除', @member, value:@member.id, class: 'btn btn-lg btn-danger offset-sm-1 col-sm-3',
         method: :delete, data: { confirm: "削除してもよろしいですか？" } %>
     </div>
 

@@ -6,7 +6,7 @@
   <%= hidden_field_tag :event_id, @event.id if @event.present? %>
   <%= hidden_field_tag :referer, @referer if @event.present? %>
 
-  <h5><strong>基本公開情報</strong></h5>
+  <h5><strong>1. 基本公開情報</strong></h5>
   <div class="row">
     <div class="col-sm-9">
       <div class="row">
@@ -54,7 +54,7 @@
     </div>
   </div>
 
-  <h5><strong>ソーシャル情報</strong></h5>
+  <h5><strong>2. ソーシャル情報</strong></h5>
   <div class="row">
     <%= form.label :email, t('user.email'), class: 'col-form-label col-sm-2' %>
     <%= form.email_field :email, placeholder: "test@example.com", class: "form-control col" %>
@@ -71,7 +71,8 @@
     <%= link_to "このサイトからIDを探す。https://lookup-id.com", "https://lookup-id.com" %>
   </div>
 
-  <h5><strong>GTICで使う情報</strong></h5>
+  <h5><strong>3. GTICで使う情報</strong></h5>
+  <small><公開禁止></small>
   <div class="row">
     <%= form.label :note, "備考 / note", class: 'col-form-label col-sm-2' %>
     <%= form.text_area :note, class: "form-control col", rows: 5 %>
@@ -118,7 +119,8 @@
     </div>
   </div>
 
-  <h5><strong>ログイン関連情報</strong></h5>
+  <h5><strong>4. ログイン関連情報</strong></h5>
+  <small><基本的に触らないこと!></small>
   <div class="row">
     <%= form.label :provider, "Provider", class: 'col-form-label col-sm-2' %>
     <%= form.text_field :provider, class: "form-control col" %>
@@ -130,8 +132,8 @@
   <br>
 
   <div class="row">
-    <%= form.submit "送信", class: "btn btn-primary col-auto" %>
-    <%= link_to 'Cancel & Back', :back, class: 'btn btn-primary offset-sm-1 col-auto' %>
+    <%= form.submit class: "btn btn-primary col-auto" %>
+    <%= link_to 'Cancel & Back', :back, class: 'btn btn-warning offset-sm-1 col-auto' %>
   </div>
 
 <% end %>
