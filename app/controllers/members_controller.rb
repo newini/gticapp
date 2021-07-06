@@ -26,8 +26,10 @@ class MembersController < ApplicationController
   def create
     member = Member.new(member_params)
     if member.save
-      # Fill alphabet name
       fill_alphabet_from_kanji_name(member)
+
+      fill_romaji(member)
+
       # Go back to event page
       if params[:event_id].present?
         if params[:referer] == 'waiting'
@@ -57,7 +59,7 @@ class MembersController < ApplicationController
   def update
     member = Member.find(params[:id])
     # Update facebook name from facebook uid
-    if member_params[:uid].to_i.to_s == member_params[:uid].to_s # If integer
+    if member_params[:uid].present? && (not member.name.present?)
       member.update(name: get_facebook_name(member_params[:uid]))
     end
 
@@ -71,8 +73,9 @@ class MembersController < ApplicationController
 
     member.update(member_params)
 
-    # Fill alphabet name
     fill_alphabet_from_kanji_name(member)
+
+    fill_romaji(member)
 
     redirect_to member_path , :flash => {:success => '変更しました'}
   end
@@ -164,45 +167,6 @@ class MembersController < ApplicationController
     respond_to :js
   end
 
-  # Change member's kanji or hiragana to alphabet
-  def fill_alphabet_from_kanji_name(member)
-    # Last name
-    if not member.last_name_alphabet.present? ||
-        ( (member.last_name_alphabet.present?) && (not member.last_name_alphabet.ascii_only?) ) # If not alphabet
-      member.update(last_name_alphabet: kanji_to_romaji(member.last_name).capitalize )
-    end
-    # First name
-    if not member.first_name_alphabet.present? ||
-        ( (member.first_name_alphabet.present?) && (not member.first_name_alphabet.ascii_only?) ) # If not alphabet
-      member.update(first_name_alphabet: kanji_to_romaji(member.first_name).capitalize )
-    end
-  end
-
-  def get_fb_id_from_str(fb_str) # Not use anymore, but keep to know how to get from https
-    uri = URI.parse("https://findmyfbid.com/")
-    http = Net::HTTP.new(uri.host, uri.port)
-
-    http.use_ssl = true
-    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-    req = Net::HTTP::Post.new(uri.request_uri)
-    req["Content-Type"] = "application/json"
-
-    data = {
-      "url" => "https://facebook.com/#{fb_str}"
-    }.to_json
-
-    req.body = data
-    res = http.request(req)
-
-    if res.body.nil? || res.body == "[]"
-      return "FAIL"
-    else
-      id_hash = JSON.parse(res.body)
-      return id_hash["id"]
-    end
-  end
-
   def upload_profile_picture
     @member = Member.find(params[:id])
     file = params[:file]
@@ -235,6 +199,27 @@ class MembersController < ApplicationController
       %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
     end
 
+    # Change member's kanji or hiragana to alphabet
+    def fill_alphabet_from_kanji_name(member)
+      # Last name
+      if not member.last_name_alphabet.present? ||
+          ( (member.last_name_alphabet.present?) && (not member.last_name_alphabet.ascii_only?) ) # If not alphabet
+        member.update(last_name_alphabet: kanji_to_romaji(member.last_name).capitalize )
+      end
+      # First name
+      if not member.first_name_alphabet.present? ||
+          ( (member.first_name_alphabet.present?) && (not member.first_name_alphabet.ascii_only?) ) # If not alphabet
+        member.update(first_name_alphabet: kanji_to_romaji(member.first_name).capitalize )
+      end
+    end
+
+    def fill_romaji(member)
+      romaji = kanji_to_romaji(member.last_name) + ',' +
+          kanji_to_romaji(member.first_name) + ',' +
+          kanji_to_romaji(member.affiliation)
+      member.update(romaji: romaji)
+    end
+
     def get_facebook_name(uid)
       oauth = Koala::Facebook::OAuth.new(ENV['FACEBOOK_APP_ID'], ENV['FACEBOOK_APP_SECRET'], 'https://gtic.jp/')
       graph = Koala::Facebook::API.new(oauth.get_app_access_token)
@@ -244,6 +229,31 @@ class MembersController < ApplicationController
         return ""
       end
       return fb_profile['name']
+    end
+
+    def get_fb_id_from_str(fb_str) # Not use anymore, but keep to know how to get from https
+      uri = URI.parse("https://findmyfbid.com/")
+      http = Net::HTTP.new(uri.host, uri.port)
+
+      http.use_ssl = true
+      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+      req = Net::HTTP::Post.new(uri.request_uri)
+      req["Content-Type"] = "application/json"
+
+      data = {
+        "url" => "https://facebook.com/#{fb_str}"
+      }.to_json
+
+      req.body = data
+      res = http.request(req)
+
+      if res.body.nil? || res.body == "[]"
+        return "FAIL"
+      else
+        id_hash = JSON.parse(res.body)
+        return id_hash["id"]
+      end
     end
 
 end
