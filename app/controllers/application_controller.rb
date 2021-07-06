@@ -43,6 +43,7 @@ class ApplicationController < ActionController::Base
             event.presentations.each do |presentation|
               if presentation.presenters
                 event_id_hash[event.id] += 15 if presentation.presenters.find_member(word).present?
+                event_id_hash[event.id] += 5 if presentation.presenters.search_in_romaji(word_romaji).present?
               end
             end
 
@@ -109,15 +110,19 @@ class ApplicationController < ActionController::Base
 
     # Kanji to romaji
     def kanji_to_romaji(word)
-      kana_arr = $tagger.parse(word).map{ |w|
-        if w.split(',')[-1] != '*'
-          w.split(',')[-1] # Get last kana
-        else
-          w.split("\t")[0] # Get original
-        end
-      }
-      romaji = kana_arr.map{ |k| Romaji.kana2romaji(k) }.join()
-      return romaji
+      if word
+        kana_arr = $tagger.parse(word).map{ |w|
+          if w.split(',')[-1] != '*'
+            w.split(',')[-1] # Get last kana
+          else
+            w.split("\t")[0] # Get original
+          end
+        }
+        romaji = kana_arr.map{ |k| Romaji.kana2romaji(k) }.join()
+        return romaji
+      else
+        return ''
+      end
     end
 
     def admin_staff_only

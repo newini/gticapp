@@ -45,6 +45,10 @@ class Member < ActiveRecord::Base
       "%#{name}%", "%#{name}%", "%#{name}%", "%#{name}%",
       "%#{name}%", "%#{name}%", "%#{name}%"
   ) }
+  scope :search_in_romaji, ->(keyword) { where(
+      "romaji like ?",
+      "%#{keyword}%"
+  ) }
   scope :sort_by_role_alphabet, -> {
     order("gtic_flg desc")
     .order(Arel.sql("relationships.presentation_role = 1 desc"))
