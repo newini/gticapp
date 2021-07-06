@@ -111,8 +111,7 @@ class BroadcastsController < ApplicationController
           res = email.to_s.split("<")
           name = res[0]
           email_address = res[1].tr(">", "").tr(" ", "") # Remove ">" and spaces in email
-          mailRegex = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
-          if email_address.match? mailRegex
+          if email_address.match? $mailRegex
             emails += ";" if emails != ""
             emails += email
           end
@@ -250,8 +249,7 @@ class BroadcastsController < ApplicationController
       member = Member.find(broadcast_member.member_id)
       if member.email.present?
         # Validate email address
-        mailRegex = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
-        if member.email.match? mailRegex
+        if member.email.match? $mailRegex
           begin
             NoReplyMailer.broadcast(member, @broadcast).deliver
             broadcast_member.update(sent_flg: true)

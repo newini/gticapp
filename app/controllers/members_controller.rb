@@ -57,12 +57,8 @@ class MembersController < ApplicationController
       @member.update(name: get_facebook_name(member_params[:uid]))
     end
     # Validate email address
-    mailRegex = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
     if member_params[:email].present?
-      if member_params[:email].match? mailRegex
-        @member.update(member_params)
-        redirect_to member_path , :flash => {:success => '変更しました'}
-      else
+      if not member_params[:email].match? $mailRegex
         flash.now[:error] = 'Invalid email combination'
         render 'edit'
       end
