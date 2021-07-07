@@ -111,6 +111,7 @@ class ApplicationController < ActionController::Base
     # Kanji to romaji
     def kanji_to_romaji(word)
       if word
+        word = word.gsub(/[^\p{Alnum}]/, '') # Remove special characters
         kana_arr = $tagger.parse(word).map{ |w|
           if w.split(',')[-1] != '*'
             w.split(',')[-1] # Get last kana
