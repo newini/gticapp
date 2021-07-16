@@ -13,7 +13,6 @@
     "jquery": "^3.6.0",
     "mdbootstrap": "^4.19.2",
     "plotly.js-dist": "^1.58.4",
-    "popper.js": "^1.16.1",
     "turbolinks": "^5.2.0"
   },
   "devDependencies": {
