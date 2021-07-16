@@ -10,7 +10,9 @@ Things you may want to cover:
 
 * System dependencies
 
-* npm version: 7.15.0
+* npm version: 7.20.0
+To update npm, `npm install -g npm@latest`
+
 * yarn version: 2.4.1 (to use yarn v2, follow https://yarnpkg.com/getting-started/migration#step-by-step)
 
 * Configuration
