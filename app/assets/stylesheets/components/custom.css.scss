@@ -21,31 +21,39 @@ body {
 
 
 /* static page */
-/* home */
-.my-home-head::after {
-    content: "";
-    background-image: url(asset_path("bg_image_01.png"));
-    opacity: 0.5;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    position: absolute;
-    z-index: -1;
+/* Home */
+.home-carousel {
+  width: 100%;
+  height: 650px;
+}
+.home-carousel-content {
+  width: 70%;
+  margin: auto;
+}
+.home-carousel-bkg::after {
+  content: "";
+  background-image: url(asset_path("bg_image_01.png"));
+  opacity: 0.5;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;
 }
 
-.my-home-success::after {
-    content: "";
-    background-image: url(asset_path("business_success.jpg"));
-    background-position: center; /* Center the image */
-    background-size: cover;
-    opacity: 0.5;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    position: absolute;
-    z-index: -1;
+.home-carousel-success::after {
+  content: "";
+  background-image: url(asset_path("business_success.jpg"));
+  background-position: center; /* Center the image */
+  background-size: cover;
+  opacity: 0.5;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;
 }
 
 
@@ -95,7 +103,7 @@ body {
 
 /* Change text size response to display size */
 html {
-  font-size: calc(0.8em + 0.25vw);
+  //font-size: calc(0.8em + 0.25vw);
 }
 
 /* Bootstrap 4 Popover size! */

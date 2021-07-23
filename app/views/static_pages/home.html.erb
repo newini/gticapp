@@ -2,15 +2,15 @@
 
 <!-- unheld event -->
 <% if @events.count != 0 %>
-  <div class="container">
+  <article class="container">
     <h2 class="text-center">-<%= t('new_event') %>-</h2>
     <%= render 'static_pages/events' %>
-  </div>
+  </article>
 <% end %>
 
 
 <!-- Carousel -->
-<div class="container-fluid w-100 h-100" data-aos="zoom-out">
+<article class="container-fluid w-100 h-100" data-aos="zoom-out">
   <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-indicators">
       <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 0"></button>
@@ -24,22 +24,18 @@
     </div>
 
     <div class="carousel-inner">
-      <div class="carousel-item active">
-        <div class="my-home-head" style="width: 100%; height: 650px; padding: 60px;">
+      <section class="carousel-item active home-carousel home-carousel-bkg">
+        <div class="home-carousel-content py-5">
           <%= image_tag 'logo200x200.png', alt: 'GTIC logo 200x200', class: "mx-auto d-block" %>
-          <div class="offset-sm-2 col-sm-8">
-            <h2><%= t('home.top_message')%></h2>
-            <h4 style="opacity: 0.8;"><%= t('home.short_about')%></h4>
-          </div>
-          <div class="text-center">
-            <%= link_to t('home.about'), :about, class: "btn btn-info btn-lg" %>
-          </div>
+          <h1><%= t('home.top_message')%></h1>
+          <p style="opacity: 0.8; font-size: 1.3em;"><%= t('home.short_about')%></p>
+          <div class='text-center'><%= link_to t('home.about'), :about, class: "btn btn-info btn-lg" %></div>
         </div>
-      </div>
+      </section>
 
       <% @events.each do |event| %>
         <style>
-          .my-home-event-<%= event.id %>::after {
+          .home-carousel-event-<%= event.id %>::after {
             content: "";
             background-image: url('<%= serve_images_path(id: event.bkg_image_id) if event.bkg_image_id %>');
             background-position: center; /* Center the image */
@@ -56,64 +52,56 @@
           }
         </style>
 
-        <div class="carousel-item">
-          <div class="my-home-event-<%= event.id %>" style="width: 100%; height: 650px; padding: 60px;">
-            <div class="offset-sm-2 col-sm-8">
-              <h5 style="color: red;">New event!</h5>
-              <h2><%= event.name + ' ' + event.event_category.name %></h2>
-              <h5>
-                <% event.presentations.sort_by{|e| e[:id]}.each do |presentation| %>
-                  <li>
-                    <%= presentation.title %>
-                    <% presentation.presenters.each do |presenter| %>
-                      <strong><%= presenter.affiliation %></strong> <%= presenter.title %> <strong><%= presenter.last_name + ' ' + presenter.first_name %></strong> 氏
-                    <% end %>
-                  </li>
+        <section class="carousel-item home-carousel home-carousel-event-<%= event.id %>">
+          <div class="home-carousel-content py-5">
+            <p style="color: red;">New event!</p>
+            <h2><%= event.name + ' ' + event.event_category.name %></h2>
+            <% event.presentations.sort_by{|e| e[:id]}.each do |presentation| %>
+              <li>
+                <h3 style='display:inline;'>「<%= presentation.title %>」</h3>
+                <% presentation.presenters.each do |presenter| %>
+                  <strong><%= presenter.affiliation %></strong> <%= presenter.title %> <strong><%= presenter.last_name + ' ' + presenter.first_name %></strong> 氏
                 <% end %>
-              </h5>
-              <br>
+              </li>
+            <% end %>
 
-              <div class="row">
-                <h1 class="col-auto"><i class="fas fa-calendar"></i></h1>
-                <div class="col-auto">
-                  <strong>WHEN</strong><br>
-                  <h5><%= l event.start_time, format: :default%></h5>
-                </div>
+            <div class="row pt-5">
+              <div class="col-auto"><i class="fas fa-calendar" style='font-size: 3em;'></i></div>
+              <div class="col-auto">
+                <strong>WHEN</strong><br>
+                <p><%= l event.start_time, format: :default%></p>
               </div>
-              <br>
-
-              <div class="row">
-                <h1 class="col-auto"><i class="fas fa-map-marker-alt"></i></h1>
-                <div class="col-auto">
-                  <strong>WHERE</strong><br>
-                  <h5><%= event.place.name %></h5>
-                </div>
-                <div class="offset-sm-5 col text-end">
-                  <%= link_to t('detail'), event_detail_path(event_id: event.id), class: 'btn btn-success btn-lg btn-block' %>
-                </div>
-              </div>
-
             </div>
+            <br>
+
+            <div class="row">
+              <div class="col-auto"><i class="fas fa-map-marker-alt" style='font-size: 3em;'></i></div>
+              <div class="col-auto">
+                <strong>WHERE</strong><br>
+                <p><%= event.place.name %></p>
+              </div>
+              <div class="offset-sm-5 col text-end">
+                <%= link_to t('detail'), event_detail_path(event_id: event.id), class: 'btn btn-success btn-lg btn-block' %>
+              </div>
+            </div>
+
           </div>
-        </div>
+        </section>
       <% end %>
 
-      <div class="carousel-item">
-        <div class="my-home-success" style="width: 100%; height: 650px; padding: 60px;">
-          <div class="offset-sm-2 col-sm-8">
-            <h3><%= t('home.media_message') %></h3>
-            <br>
-            <% @media_articles.each do |media_article| %>
-              <h5>・<%= media_article.media %>「<%= media_article.title %>」 <strong><%= media_article.member.affiliation %></strong></h5>
-            <% end %>
-            など
-            <br>
-            <h3>More on <a href="/media">MEDIA ARTICLE PAGE</a></h3>
-          </div>
+      <section class="carousel-item home-carousel home-carousel-success">
+        <div class="home-carousel-content py-5">
+          <h2><%= t('home.media_message') %></h2>
+          <% @media_articles.each do |media_article| %>
+            <h3 style='font-size: 1.3em;'>・<%= media_article.media %>「<%= media_article.title %>」 <strong><%= media_article.member.affiliation %></strong></h3>
+          <% end %>
+          <p>など<p>
+          <h3 class='py-2'>More on <a href="/media">MEDIA ARTICLE PAGE</a></h3>
         </div>
-      </div>
+      </section>
 
-    </div>
+    </div><!-- end of carousel-inner -->
+
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Previous</span>
@@ -122,12 +110,12 @@
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Next</span>
     </button>
-  </div>
-</div>
+  </div><!-- end of carousel -->
+</article>
 
 
 <!-- Cards -->
-<div class="container" data-aos="fade-up" style="padding: 60px 0;">
+<article class="container" data-aos="fade-up" style="padding: 60px 0;">
   <h2 class="text-center">-<%= t('activities') %>-</h2>
 
   <div class="text-center">
@@ -135,62 +123,61 @@
   </div>
 
   <div class="row">
-    <div class="col-sm-6 hvr-bounce-in">
+    <section class="col-sm-6 hvr-bounce-in">
       <div class="card" data-aos="fade-up">
-        <!--<img class="card-img-top" src="..." alt="Card image cap">-->
         <div class="card-body">
-          <h5 class="card-title text-center">
+          <h3 class="card-title text-center">
             <i class="fa fa-globe"></i>
             <a href="/about#conference"><%= t('conference') %></a>
-          </h5>
+          </h3>
           <p class="card-text"><%= t('home.conference_point') %></p>
         </div>
       </div>
-    </div>
+    </section>
 
-    <div class="col-sm-6 hvr-bounce-in">
+    <section class="col-sm-6 hvr-bounce-in">
       <div class="card" data-aos="fade-up">
         <div class="card-body">
-          <h5 class="card-title text-center">
+          <h3 class="card-title text-center">
             <i class="fa fa-link"></i>
             <a href="/about#networking_party"><%= t('networking_party') %></a>
-          </h5>
+          </h3>
           <p class="card-text"><%= t('home.networking_party_point') %></p>
         </div>
       </div>
-    </div>
+    </section>
   </div>
 
   <div class="row">
-    <div class="col-sm-6 hvr-bounce-in">
+    <section class="col-sm-6 hvr-bounce-in">
       <div class="card" data-aos="fade-up">
         <div class="card-body">
-          <h5 class="card-title text-center">
+          <h3 class="card-title text-center">
             <i class="fa fa-book"></i>
             <a href="/about#workshop"><%= t('chisikinoizumi') %></a>
-          </h5>
+          </h3>
           <p class="card-text"><%= t('home.chisikinoizumi_point') %></p>
         </div>
       </div>
-    </div>
+    </section>
 
-    <div class="col-sm-6 hvr-bounce-in">
+    <section class="col-sm-6 hvr-bounce-in">
       <div class="card" data-aos="fade-up">
         <div class="card-body">
-          <h5 class="card-title text-center">
+          <h3 class="card-title text-center">
             <i class="fa fa-edit"></i>
             <a href="/about#workshop"><%= t('breakout_session') %></a>
-          </h5>
+          </h3>
           <p class="card-text"><%= t('home.breakout_session_point') %></p>
         </div>
       </div>
-    </div>
+    </section>
   </div>
-</div>
+</article><!-- end of cards -->
 
 
 <!-- Social -->
-<div class="container text-center" data-aos="fade-up">
+<article class="container text-center" data-aos="fade-up">
   <h2 class="text-center">-Connect us-</h2>
 
   <div class='row'>
@@ -199,8 +186,7 @@
         Facebook page
         <%= link_to tag.i(class: 'fab fa-facebook-square'), 'https://facebook.com/GTICafe', target: 'blank' %>
       </h3>
-      <br>
-      <div class="fb-page" data-href="https://www.facebook.com/GTICafe/" data-tabs="timeline"
+      <div class="fb-page py-3" data-href="https://www.facebook.com/GTICafe/" data-tabs="timeline"
           data-width="500" data-height="" data-small-header="false" data-adapt-container-width="true"
           data-hide-cover="false" data-show-facepile="true">
         <blockquote cite="https://www.facebook.com/GTICafe/" class="fb-xfbml-parse-ignore">
@@ -215,8 +201,8 @@
           <img src="https://scdn.line-apps.com/n/line_add_friends/btn/ja.png" alt="友だち追加" height='36' border="0">
         </a>
       </h3>
-      <br><br>
+      <div class='py-3'></div>
       <img src="https://qr-official.line.me/sid/M/383emaiy.png">
     </div>
   </div>
-</div>
+</article>
