@@ -91,7 +91,7 @@
 
       <section class="carousel-item home-carousel home-carousel-success">
         <div class="home-carousel-content py-5">
-          <h2><%= t('home.media_message') %></h2>
+          <h2 class='py-3'><%= t('home.media_message') %></h2>
           <% @media_articles.each do |media_article| %>
             <h3 style='font-size: 1.3em;'>・<%= media_article.media %>「<%= media_article.title %>」 <strong><%= media_article.member.affiliation %></strong></h3>
           <% end %>
