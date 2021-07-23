@@ -30,7 +30,8 @@ class ApplicationController < ActionController::Base
         words = keyword.tr("０-９Ａ-Ｚａ-ｚ　", "0-9A-Za-z ").to_s.split(" ")
         event_id_hash = Hash.new(0) # Score for OR search
         words.each do |word|
-          word_romaji = kanji_to_romaji(word)
+          #word_romaji = kanji_to_romaji(word) # Slow
+          word_romaji = Romaji.kana2romaji(word)
           Event.all.each do |event|
             # Search in presentation
             event_id_hash[event.id] += 15 if event.presentations.search_presentation(word).present?
