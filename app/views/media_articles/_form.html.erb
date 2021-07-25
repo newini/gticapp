@@ -23,7 +23,7 @@
   </div>
 
   <div class="row">
-    <%= form.label :description, "Description", class: 'col-form-label col-sm-2' %>
+    <%= form.label :description, "Description（概要/見出し）", class: 'col-form-label col-sm-2' %>
     <%= form.text_area :description, class: "form-control col" %>
   </div>
 
@@ -44,8 +44,8 @@
   </div>
 
   <div class="row">
-    <%= link_to "Back", :back, class: "btn btn-primary offset-sm-1 col-sm-2" %>
-    <%= form.submit "Save", class: "btn btn-primary offset-sm-1 col-sm-2" %>
+    <%= link_to "Back", :back, class: "btn btn-warning offset-sm-1 col-sm-2" %>
+    <%= form.submit class: "btn btn-primary offset-sm-1 col-sm-2" %>
   </div>
 
 <% end %>
