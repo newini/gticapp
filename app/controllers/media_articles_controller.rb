@@ -76,7 +76,7 @@ class MediaArticlesController < ApplicationController
     end
 
     def retrieveLinkThumbnail(media_article, url)
-      if url
+      if url.present?
         object = LinkThumbnailer.generate(url)
         media_article.update(description: object.description, image_url: object.images.first.src.to_s)
       end
