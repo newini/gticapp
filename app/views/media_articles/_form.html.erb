@@ -28,6 +28,11 @@
   </div>
 
   <div class="row">
+    <%= form.label :image_url, "ネット上の画像URL", class: 'col-form-label col-sm-2' %>
+    <%= form.text_field :image_url, class: "form-control col" %>
+  </div>
+
+  <div class="row">
     <%= form.label :member_id, "Member ID(*)", class: 'col-form-label col-sm-2' %>
     <%= form.text_field :member_id, class: "form-control col", :required => 'required' %>
     <%= link_to "Find member ID", members_path, class: "btn btn-info btn-block col-auto", :target => '_blank' %>

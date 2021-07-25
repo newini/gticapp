@@ -65,7 +65,7 @@ class MediaArticlesController < ApplicationController
   private
     def media_article_params
       params.require(:media_article).permit(
-        :date, :media, :url, :title, :description, :member_id
+        :date, :media, :url, :title, :description, :image_url, :member_id
       )
     end
 
