@@ -18,23 +18,27 @@
 
         <% if media_article.member_id.present? %>
           <hr>
-          <p>
-            登壇者:
-            <strong><%= media_article.member.affiliation %></strong>
-            <%= media_article.member.title %>
-            <strong> <%= media_article.member.last_name + ' ' + media_article.member.first_name %></strong> 氏
-          </p>
-          <% previous_event_id = 0 %>
-          <p>
-            登壇日（回号(年月日)）:
-            <% media_article.member.presentationships.each do |presentationship| %>
-              <% if not previous_event_id == presentationship.event_id %>
-                <% event = Event.find(presentationship.event_id) %>
-                <%= " 第#{event.cumulative_number}回GTIC (#{event.start_time.strftime('%Y-%m-%d')})" %><br>
+          <% if media_article.member_id == 1 %><!-- For Akiyama -->
+            <p>GTIC主宰・代表　秋山智紀, Startup Accelerator / MBA講師</p>
+          <% else %>
+            <p>
+              登壇者:
+              <strong><%= media_article.member.affiliation %></strong>
+              <%= media_article.member.title %>
+              <strong> <%= media_article.member.last_name + ' ' + media_article.member.first_name %></strong> 氏
+            </p>
+            <% previous_event_id = 0 %>
+            <p>
+              登壇日（回号(年月日)）:
+              <% media_article.member.presentationships.each do |presentationship| %>
+                <% if not previous_event_id == presentationship.event_id %>
+                  <% event = Event.find(presentationship.event_id) %>
+                  <%= " 第#{event.cumulative_number}回GTIC (#{event.start_time.strftime('%Y-%m-%d')})" %><br>
+                <% end %>
+                <% previous_event_id = presentationship.event_id %>
               <% end %>
-              <% previous_event_id = presentationship.event_id %>
-            <% end %>
-          </p>
+            </p>
+          <% end %>
         <% end %>
       </div>
     </div>
