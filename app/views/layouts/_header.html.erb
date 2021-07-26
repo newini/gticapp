@@ -1,5 +1,5 @@
 <header>
-  <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
+  <nav id='navbar' class="navbar navbar-expand-lg fixed-top navbar-light">
     <div class="container-fluid">
       <%= link_to root_path, class: "navbar-brand" do %>
         <% unless staff_signed_in? %>
@@ -15,21 +15,21 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <div class="collapse navbar-collapse flex-column" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto">
-            <li class="nav-item hvr-underline-from-center"><%= link_to "Home", root_path, class:"nav-link py-0" %></li>
-            <li class="nav-item hvr-underline-from-center"><%= link_to "About", :about, class:"nav-link py-0", onclick:'FB.AppEvents.logEvent("buttonClicked")' %></li>
-            <li class="nav-item hvr-underline-from-center"><%= link_to "Message from CEO", :ceo_message, class:"nav-link py-0" %></li>
-            <li class="nav-item hvr-underline-from-center"><%= link_to "Events", :event_list, class:"nav-link py-0" %></li>
-            <li class="nav-item hvr-underline-from-center"><%= link_to "Organizers", :organizer, class:"nav-link py-0" %></li>
-            <li class="nav-item hvr-underline-from-center"><%= link_to "Media Articles", :media, class:"nav-link py-0" %></li>
-            <li class="nav-item hvr-underline-from-center"><%= link_to "Sponsors", :our_sponsors, class:"nav-link py-0" %></li>
-            <li class="nav-item hvr-underline-from-center"><%= link_to "Contact Us", contact_us_path, class:"nav-link py-0" %></li>
+            <li class="nav-item hvr-underline-from-center"><%= link_to "Home", root_path, class:"nav-link py-1" %></li>
+            <li class="nav-item hvr-underline-from-center"><%= link_to "About", :about, class:"nav-link py-1", onclick:'FB.AppEvents.logEvent("buttonClicked")' %></li>
+            <li class="nav-item hvr-underline-from-center"><%= link_to "Message from CEO", :ceo_message, class:"nav-link py-1" %></li>
+            <li class="nav-item hvr-underline-from-center"><%= link_to "Events", :event_list, class:"nav-link py-1" %></li>
+            <li class="nav-item hvr-underline-from-center"><%= link_to "Organizers", :organizer, class:"nav-link py-1" %></li>
+            <li class="nav-item hvr-underline-from-center"><%= link_to "Media Articles", :media, class:"nav-link py-1" %></li>
+            <li class="nav-item hvr-underline-from-center"><%= link_to "Sponsors", :our_sponsors, class:"nav-link py-1" %></li>
+            <li class="nav-item hvr-underline-from-center"><%= link_to "Contact Us", contact_us_path, class:"nav-link py-1" %></li>
           </ul>
 
           <ul class="navbar-nav ms-auto">
             <!-- Only Gtic Staff -->
             <% if staff_signed_in? %>
               <li class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle py-0" id="dropdownStaffMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">管理メニュー<b class="caret"></b></a>
+                <a href="#" class="nav-link dropdown-toggle py-1" id="dropdownStaffMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">管理メニュー<b class="caret"></b></a>
                 <div class="dropdown-menu" aria-labelledby="dropdownStaffMenu">
                   <%= link_to "Event管理", events_path, class: "dropdown-item" %>
                   <%= link_to "Members管理", members_path, class: "dropdown-item" %>
@@ -50,7 +50,7 @@
             <!-- User -->
             <% if signed_in? %>
               <li class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle py-0" id="dropdownUserMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <%= current_user.name %> <b class="caret"></b></a>
+                <a href="#" class="nav-link dropdown-toggle py-1" id="dropdownUserMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <%= current_user.name %> <b class="caret"></b></a>
                 <div class="dropdown-menu" aria-labelledby="dropdownUserMenu">
                   <%= link_to "My Page", current_user, class: "dropdown-item" %>
                   <div class="dropdown-divider"></div>
@@ -58,7 +58,7 @@
                 </div>
               </li>
             <% else %>
-              <li class="nav-item hvr-underline-from-center"><%= link_to "Sign in", new_user_session_path, class: "nav-link py-0" %></li>
+              <li class="nav-item hvr-underline-from-center"><%= link_to "Sign in", new_user_session_path, class: "nav-link py-1" %></li>
             <% end %>
 
             <!-- locale change -->

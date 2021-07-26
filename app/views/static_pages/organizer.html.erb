@@ -43,7 +43,7 @@
               </div>
 
               <div style="background-color: gainsboro; padding-top: 10px; padding-bottom: 10px;">
-                <a tabindex="0" class="btn btn-sm btn-info" role="button" data-bs-toggle="popover" data-trigger="focus"
+                <a tabindex="0" class="btn btn-sm btn-info" role="button" data-bs-toggle="popover" data-bs-trigger="focus"
                     title="<%= organizer.member.first_name_alphabet + " " + organizer.member.last_name_alphabet %>"
                     data-bs-content="<%= organizer.description.present? ? organizer.description : 'To be added' %>">
                   <%= t('organizer.about') %>

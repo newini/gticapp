@@ -19,6 +19,15 @@ body {
   }
 }
 
+/* navbar */
+.navbar {
+  transition: .5s;
+  padding: 20px;
+}
+.navbar-scroll {
+  padding: 0;
+  background: #f7f7f7; // Faded color
+}
 
 /* static page */
 /* Home */

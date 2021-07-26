@@ -15,11 +15,11 @@
     <%= csp_meta_tag %>
 
     <!-- ========== Stylesheet ============= -->
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %><!-- Sprockets -->
+    <%= stylesheet_pack_tag 'application' %><!-- Webpacker, not use now -->
 
     <!-- ========== Javascript ============= -->
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <script src="/assets/application.js?body=1" type="text/javascript"></script>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %><!-- Webpacker -->
     <%= javascript_include_tag "//www.google.com/jsapi" %> <!-- To use geo chart in chartkick -->
 
     <!-- Page icon -->
