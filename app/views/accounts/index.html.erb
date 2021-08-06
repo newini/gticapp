@@ -1,27 +1,32 @@
-<div class="row">
-  <aside class="col-sm-2">
-    <%= render "events/side" %>
-  </aside>
-  <% 2.times do |i| %>
-    <div class="col-sm-5">
-      <div id="ajax-container-<%= i %>">
-        <h2><%= @subtitle[i] %></h2>
-        <table class="table">
-          <tr>
-            <th class="col-lg-2">科目名</th>
-            <th class="col-lg-1"></th>
-            <th class="col-lg-1"></th>
-          </tr>
-          <% @accounts[i].each do |account| %>
+<div class='container-fluid'>
+
+  <div class="row">
+    <aside class="col-sm-2">
+      <%= render "events/side" %>
+    </aside>
+
+    <% 2.times do |i| %>
+      <div class="col-sm-5">
+        <div id="ajax-container-<%= i %>">
+          <h2><%= @subtitle[i] %></h2>
+          <table class="table">
             <tr>
-              <td><%= account.title %></td>
-              <td><%= link_to "編集", edit_account_path(account, num: i), remote: true %> </td>
-              <td><%= link_to "削除", account_path(account), method: :delete %> </td>
+              <th class="col-lg-2">科目名</th>
+              <th class="col-lg-1"></th>
+              <th class="col-lg-1"></th>
             </tr>
-          <% end %>
-        </table>
-        <%= link_to "科目登録", new_account_path(num: i), method: :get, class: "btn btn-primary btn-block", remote: true %>
+            <% @accounts[i].each do |account| %>
+              <tr>
+                <td><%= account.title %></td>
+                <td><%= link_to "編集", edit_account_path(account, num: i), remote: true %> </td>
+                <td><%= link_to "削除", account_path(account), method: :delete %> </td>
+              </tr>
+            <% end %>
+          </table>
+          <%= link_to "科目登録", new_account_path(num: i), method: :get, class: "btn btn-primary btn-block", remote: true %>
+        </div>
       </div>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
+
 </div>
