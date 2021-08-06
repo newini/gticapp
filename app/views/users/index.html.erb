@@ -1,37 +1,41 @@
-<div class="row">
-  <div class="col-md-2">
-    <%= render'side_for_staff' %>
-  </div>
+<div class='container-fluid'>
 
-  <div class="col">
-    <h2>User情報</h2>
-    <p>Facebookでログインしたユーザのリスト。このリストはStaff以外は見れない</p>
+  <div class="row">
+    <div class="col-md-2">
+      <%= render'side_for_staff' %>
+    </div>
 
-    <table class="table table-bordered table-sm">
-      <thead>
-        <tr>
-          <th scope="col">ID</th>
-          <th scope="col">Name</th>
-          <th scope="col">Facebook ID</th>
-          <th scope="col">Member ID</th>
-          <th scope="col" style="width: 5%;"></th>
-        </tr>
-      </thead>
+    <div class="col">
+      <h2>User情報</h2>
+      <p>Facebookでログインしたユーザのリスト。このリストはStaff以外は見れない</p>
 
-      <tbody>
-        <% @users.each do |user| %>
+      <table class="table table-bordered table-sm">
+        <thead>
           <tr>
-            <td><%= user.id %></td>
-            <td>
-              <%= image_tag "https://graph.facebook.com/#{user.uid}/picture?type=large&access_token=#{user.access_token}", class: "img-thumbnail", style: 'height: 50px;' %>
-              <%= user.name %>
-            </td>
-            <td><%= user.uid %></td>
-            <td><%= link_to user.member_id, member_path(user.member_id) if user.member_id %></td>
-            <td><%= link_to "編集", edit_user_path(user) %></td>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Facebook ID</th>
+            <th scope="col">Member ID</th>
+            <th scope="col" style="width: 5%;"></th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
+
+        <tbody>
+          <% @users.each do |user| %>
+            <tr>
+              <td><%= user.id %></td>
+              <td>
+                <%= image_tag "https://graph.facebook.com/#{user.uid}/picture?type=large&access_token=#{user.access_token}", class: "img-thumbnail", style: 'height: 50px;' %>
+                <%= user.name %>
+              </td>
+              <td><%= user.uid %></td>
+              <td><%= link_to user.member_id, member_path(user.member_id) if user.member_id %></td>
+              <td><%= link_to "編集", edit_user_path(user) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
+
 </div>

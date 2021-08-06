@@ -1,15 +1,19 @@
-<div class="row">
-  <div class="col-md-2">
-    <%= render'side_for_user' %>
+<div class='container-fluid'>
+
+  <div class="row">
+    <div class="col-md-2">
+      <%= render 'side_for_user' %>
+    </div>
+
+    <div class="col">
+      <% if @user.last_name? %>
+        <h1><%= t('user.edit_profile') %></h1>
+      <% else%>
+        <h1><%= t('user.input_profile') %></h1>
+      <% end %>
+
+      <%= render'form' %>
+    </div>
   </div>
 
-  <div class="col">
-    <% if @user.last_name? %>
-      <h1><%= t('user.edit_profile') %></h1>
-    <% else%>
-      <h1><%= t('user.input_profile') %></h1>
-    <% end %>
-
-    <%= render'form' %>
-  </div>
 </div>
