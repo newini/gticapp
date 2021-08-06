@@ -1,12 +1,14 @@
-<div class="btn-group-vertical btn-block" >
+<div class="btn-group-vertical" >
+
   <%= link_to "All Files", images_path, class: "btn btn-secondary" %>
   <!-- Button trigger modal -->
   <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modalUploadImage">
     Upload image file
   </button>
+
 </div>
 
-<!-- Modal -->
+<!-- Image Upload Modal -->
 <div class="modal fade" id="modalUploadImage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
