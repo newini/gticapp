@@ -1,25 +1,29 @@
-<div class="row">
-  <div class="col-md-2">
-    <%= render 'side' %>
-  </div>
+<div class='container-fluid'>
 
-  <div class="col-md-10">
-    <h2>Media Article</h2>
-
-    <div class='border'>
-      <fieldset disabled="disabled">
-        <%= render 'form'%>
-      </fieldset>
+  <div class="row">
+    <div class="col-md-2">
+      <%= render 'side' %>
     </div>
 
-    <div class='py-3'></div>
+    <div class="col-md-10">
+      <h2>Media Article</h2>
 
-    <div class="d-grid gap-5 d-md-block">
-      <%= link_to "Back", media_articles_path, class: "btn btn-warning btn-lg" %>
-      <%= link_to "Edit", edit_media_article_path(@media_article), class: "btn btn-secondary btn-lg" %>
-      <%= link_to "Delete", media_article_path(@media_article), class: "btn btn-danger btn-lg",
-        method: :delete, data: { confirm: "削除してもよろしいですか？" } %>
+      <div class='border'>
+        <fieldset disabled="disabled">
+          <%= render 'form'%>
+        </fieldset>
+      </div>
+
+      <div class='py-3'></div>
+
+      <div class="d-grid gap-5 d-md-block">
+        <%= link_to "Back", media_articles_path, class: "btn btn-warning btn-lg" %>
+        <%= link_to "Edit", edit_media_article_path(@media_article), class: "btn btn-secondary btn-lg" %>
+        <%= link_to "Delete", media_article_path(@media_article), class: "btn btn-danger btn-lg",
+          method: :delete, data: { confirm: "削除してもよろしいですか？" } %>
+      </div>
+
     </div>
-
   </div>
+
 </div>

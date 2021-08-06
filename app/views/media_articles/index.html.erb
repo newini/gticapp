@@ -1,74 +1,78 @@
-<div class="row">
-  <aside class="col-md-2">
-    <%= render'side' %>
-  </aside>
+<div class='container-fluid'>
 
-  <div class="col">
+  <div class="row">
+    <aside class="col-md-2">
+      <%= render 'side' %>
+    </aside>
 
-    <h2>Media Articles</h2>
+    <div class="col">
 
-    <nav aria-label="Page navigation">
-      <%= will_paginate @media_articles, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
-    </nav>
+      <h2>Media Articles</h2>
 
-    <table class="table table-bordered table-striped table-sm" style="font-size: 13px;">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col" style="width: 7%;">Date</th>
-          <th scope="col">Media</th>
-          <th scope="col">Media title</th>
-          <th scope="col">GTIC Presenter<br>（会社）</th>
-          <th scope="col">GTIC Presenter<br>（氏名）</th>
-          <th scope="col" style="width: 10%;">GTICへの登壇日<br>（回号, 年月日）</th>
-          <th scope="col" style="width: 5%;"></th>
-        </tr>
-      </thead>
+      <nav aria-label="Page navigation">
+        <%= will_paginate @media_articles, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+      </nav>
 
-      <tbody>
-        <% if @media_articles.present? %>
-          <% i = @media_articles.count %>
-          <% @media_articles.each do |media_article| %>
-            <tr>
-              <td><%= i %></td>
-              <td><%= media_article.date.strftime('%Y-%m-%d') %></td>
-              <td><%= media_article.media %></td>
-              <td>
-                <%= media_article.title %>
-                <%= link_to "（記事URL版）", "#{media_article.url}" if media_article.url.present? %>
-                <%= link_to "（記事PDF版）", serve_file_media_article_path(media_article) if media_article.file_name.present? %>
-              </td>
-              <% if media_article.member_id.present? %>
-                <% member = Member.find(media_article.member_id) %>
-                <td><%= member.affiliation %></td>
-                <td><%= "#{member.title} #{member.last_name} #{member.first_name} 氏" %></td>
+      <table class="table table-bordered table-striped table-sm" style="font-size: 13px;">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col" style="width: 7%;">Date</th>
+            <th scope="col">Media</th>
+            <th scope="col">Media title</th>
+            <th scope="col">GTIC Presenter<br>（会社）</th>
+            <th scope="col">GTIC Presenter<br>（氏名）</th>
+            <th scope="col" style="width: 10%;">GTICへの登壇日<br>（回号, 年月日）</th>
+            <th scope="col" style="width: 5%;"></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% if @media_articles.present? %>
+            <% i = @media_articles.count %>
+            <% @media_articles.each do |media_article| %>
+              <tr>
+                <td><%= i %></td>
+                <td><%= media_article.date.strftime('%Y-%m-%d') %></td>
+                <td><%= media_article.media %></td>
                 <td>
-                  <% presentationships = Presentationship.where(member_id: member.id) %>
-                  <% previous_event_id = 0 %>
-                  <% presentationships.each do |presentationship| %>
-                    <% if not previous_event_id == presentationship.event_id %>
-                      <% event = Event.find(presentationship.event_id) %>
-                      <%= "第#{event.cumulative_number}回GTIC, #{event.start_time.strftime('%Y-%m-%d')}" %><br>
-                    <% end %>
-                    <% previous_event_id = presentationship.event_id %>
-                  <% end %>
+                  <%= media_article.title %>
+                  <%= link_to "（記事URL版）", "#{media_article.url}" if media_article.url.present? %>
+                  <%= link_to "（記事PDF版）", serve_file_media_article_path(media_article) if media_article.file_name.present? %>
                 </td>
-              <% else %>
-                <td></td>
-                <td></td>
-                <td></td>
-              <% end %>
-              <td><%= link_to '選択', media_article_path(media_article), class:"btn btn-xs btn-primary" %></td>
-            </tr>
-            <% i = i - 1 %>
+                <% if media_article.member_id.present? %>
+                  <% member = Member.find(media_article.member_id) %>
+                  <td><%= member.affiliation %></td>
+                  <td><%= "#{member.title} #{member.last_name} #{member.first_name} 氏" %></td>
+                  <td>
+                    <% presentationships = Presentationship.where(member_id: member.id) %>
+                    <% previous_event_id = 0 %>
+                    <% presentationships.each do |presentationship| %>
+                      <% if not previous_event_id == presentationship.event_id and not member.id == 1 %>
+                        <% event = Event.find(presentationship.event_id) %>
+                        <%= "第#{event.cumulative_number}回GTIC, #{event.start_time.strftime('%Y-%m-%d')}" %><br>
+                      <% end %>
+                      <% previous_event_id = presentationship.event_id %>
+                    <% end %>
+                  </td>
+                <% else %>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                <% end %>
+                <td><%= link_to '詳細', media_article_path(media_article), class:"btn btn-xs btn-primary" %></td>
+              </tr>
+              <% i = i - 1 %>
+            <% end %>
           <% end %>
-        <% end %>
-      </tbody>
-    </table>
+        </tbody>
+      </table>
 
-    <nav aria-label="Page navigation">
-      <%= will_paginate @media_articles, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
-    </nav>
+      <nav aria-label="Page navigation">
+        <%= will_paginate @media_articles, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+      </nav>
 
+    </div>
   </div>
+
 </div>
