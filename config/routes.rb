@@ -125,8 +125,6 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :manuals
-
     resources :media_articles do
       member do
         post :delete_file
