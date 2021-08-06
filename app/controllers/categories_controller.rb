@@ -1,12 +1,12 @@
 class CategoriesController < ApplicationController
   before_action :active_staff_only
   def index
-    @title = "会場一覧"
+    @title = "メンバーカテゴリー（属性）一覧"
     @categories = Category.all
   end
 
   def edit
-    @title = "会場名変更"
+    @title = "メンバーカテゴリー名変更"
     @category = Category.find(params[:id])
     respond_to do |format|
       format.html
@@ -24,7 +24,7 @@ class CategoriesController < ApplicationController
   end
 
   def new
-    @title = "会場登録"
+    @title = "メンバーカテゴリー登録"
     @category = Category.new
     respond_to do |format|
       format.html
