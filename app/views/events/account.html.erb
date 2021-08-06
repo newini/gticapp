@@ -1,15 +1,20 @@
-<div class="row">
-  <aside class="col-lg-2">
-    <%= render'side' %>
-  </aside>
-  <div class="col-lg-10">
-    <div class="btn-group">
-      <%= link_to accounts_path, class:"btn btn-light" do %>
-        <span class="fa fa-plus"</span> 会計科目追加
-      <% end %>
+<div class='container-fluid'>
+
+  <div class="row">
+    <aside class="col-md-2">
+      <%= render 'side' %>
+    </aside>
+
+    <div class="col">
+      <div class="btn-group">
+        <%= link_to accounts_path, class:"btn btn-light" do %>
+          <span class="fa fa-plus"</span> 会計科目追加
+        <% end %>
+      </div>
+      <div id="ajax-container">
+        <%= render "account" %>
+      </div>
     </div>
   </div>
-  <div id="ajax-container">
-    <%= render "account" %>
-  </div>
+
 </div>

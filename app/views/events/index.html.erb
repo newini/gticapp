@@ -1,35 +1,39 @@
-<div class="row">
-  <aside class="col-md-2">
-    <%= render'side' %>
-  </aside>
+<div class='container-fluid'>
 
-  <div class="col">
-    <h2>GTICイベント一覧</h2>
+  <div class="row">
+    <aside class="col-md-2">
+      <%= render'side' %>
+    </aside>
 
-    <h3><%= "イベント検索" %></h3>
-    <%= form_with url: search_events_path, method: 'get', data: { remote: true } do |form| %>
-      <div class="row">
-        <%= form.label :keyword, "Keyword: ", class: "col-form-label col-auto" %>
-        <%= form.text_field :keyword, class: "form-control col", placeholder: "Keyword" %>
-        <%= form.submit 'Search', class: 'btn btn-primary col-auto' %>
-        <span class="form-text col-auto">アルファベットによる検索もOK（ひらがな、カタカナは未対応）</span>
+    <div class="col">
+      <h2>GTICイベント一覧</h2>
+
+      <h3><%= "イベント検索" %></h3>
+      <%= form_with url: search_events_path, method: 'get', data: { remote: true } do |form| %>
+        <div class="row">
+          <%= form.label :keyword, "Keyword: ", class: "col-form-label col-auto" %>
+          <%= form.text_field :keyword, class: "form-control col", placeholder: "Keyword" %>
+          <%= form.submit 'Search', class: 'btn btn-primary col-auto' %>
+          <span class="form-text col-auto">アルファベットによる検索もOK（ひらがな、カタカナは未対応）</span>
+        </div>
+      <% end %>
+
+      <!-- per year Paginate -->
+      <% if @start_date.present? and @last_date.present? %>
+        <div class="btn-group btn-group-sm">
+          <% date = @last_date%>
+          <% while date >= @start_date do %>
+            <%= link_to "#{date.strftime("%Y")}年", events_path(year: date.strftime('%Y-%m-%d')), class: "btn btn-info" %>
+            <% date = date - 1.year %>
+          <% end %>
+        </div>
+      <% end %>
+
+      <div id="ajax_container">
+        <%= render 'events' %>
       </div>
-    <% end %>
 
-    <!-- per year Paginate -->
-    <% if @start_date.present? and @last_date.present? %>
-      <div class="btn-group btn-group-sm">
-        <% date = @last_date%>
-        <% while date >= @start_date do %>
-          <%= link_to "#{date.strftime("%Y")}年", events_path(year: date.strftime('%Y-%m-%d')), class: "btn btn-info" %>
-          <% date = date - 1.year %>
-        <% end %>
-      </div>
-    <% end %>
-
-    <div id="ajax_container">
-      <%= render 'events' %>
     </div>
-
   </div>
+
 </div>

@@ -1,104 +1,108 @@
-<div class="row">
-  <div class="col-sm-2">
-    <%= render'side' %>
-  </div>
+<div class='container-fluid'>
 
-  <div class="col-sm-10">
-    <h2><%= @title %></h2>
-    <div id="ajax_container">
-      <% if params[:id].present? %>
-        <%= pie_chart @category,
-          title: "出席者の属性",
-          library: {
-            backgroundColor: "#eee"
-          }
-        %>
-        <br>
-        <%= column_chart @date_count,
-          title: "登録した出席者／参加予定者数の推移",
-          library: {
-            backgroundColor: "#eee"
-          },
-          xtitle: "年月日",
-          ytitle: "人数"
-        %>
-      <% else %>
-        <div id="events_stat"></div>
-        <script>
-          var participants = {
-            x: <%= raw @event_names %>,
-            y: <%= @participants %>,
-            name: '出席',
-            type: 'bar'
-          };
-          var declined = {
-            x: <%= raw @event_names %>,
-            y: <%= @declined %>,
-            name: '欠席',
-            type: 'bar'
-          };
-          var dotasan = {
-            x: <%= raw @event_names %>,
-            y: <%= @dotasan %>,
-            name: 'ドタ参',
-            type: 'bar'
-          };
-          var dotacan = {
-            x: <%= raw @event_names %>,
-            y: <%= @dotacan %>,
-            name: 'ドタキャン',
-            type: 'bar'
-          };
-          var no_show = {
-            x: <%= raw @event_names %>,
-            y: <%= @no_show %>,
-            name: 'No-show',
-            type: 'bar'
-          };
-          var layout = {
-            title: '出席者とNo-show数の推移',
-            xaxis: {
-              title: 'Event#',
-              tickangle: -45
-            },
-            yaxis: {
-              title: 'people'
-            }
-          };
-          var data = [participants, declined, dotasan, dotacan, no_show];
-
-          events_stat = document.getElementById('events_stat');
-
-          Plotly.newPlot( events_stat, data, layout );
-        </script>
-
-        <div id="events_views_stat"></div>
-        <script>
-          var views = {
-            x: <%= raw @event_names %>,
-            y: <%= @events.map{ |e| e.views } %>,
-            name: 'Views',
-            type: 'bar'
-          };
-          var layout = {
-            title: 'Views',
-            xaxis: {
-              title: 'Event#',
-              tickangle: -45
-            },
-            yaxis: {
-              title: 'views'
-            }
-          };
-          var data = [views];
-
-          events_views_stat = document.getElementById('events_views_stat');
-
-          Plotly.newPlot( events_views_stat, data, layout );
-        </script>
-
-      <% end %>
+  <div class="row">
+    <div class="col-sm-2">
+      <%= render'side' %>
     </div>
 
+    <div class="col-sm-10">
+      <h2><%= @title %></h2>
+      <div id="ajax_container">
+        <% if params[:id].present? %>
+          <%= pie_chart @category,
+            title: "出席者の属性",
+            library: {
+              backgroundColor: "#eee"
+            }
+          %>
+          <br>
+          <%= column_chart @date_count,
+            title: "登録した出席者／参加予定者数の推移",
+            library: {
+              backgroundColor: "#eee"
+            },
+            xtitle: "年月日",
+            ytitle: "人数"
+          %>
+        <% else %>
+          <div id="events_stat"></div>
+          <script>
+            var participants = {
+              x: <%= raw @event_names %>,
+              y: <%= @participants %>,
+              name: '出席',
+              type: 'bar'
+            };
+            var declined = {
+              x: <%= raw @event_names %>,
+              y: <%= @declined %>,
+              name: '欠席',
+              type: 'bar'
+            };
+            var dotasan = {
+              x: <%= raw @event_names %>,
+              y: <%= @dotasan %>,
+              name: 'ドタ参',
+              type: 'bar'
+            };
+            var dotacan = {
+              x: <%= raw @event_names %>,
+              y: <%= @dotacan %>,
+              name: 'ドタキャン',
+              type: 'bar'
+            };
+            var no_show = {
+              x: <%= raw @event_names %>,
+              y: <%= @no_show %>,
+              name: 'No-show',
+              type: 'bar'
+            };
+            var layout = {
+              title: '出席者とNo-show数の推移',
+              xaxis: {
+                title: 'Event#',
+                tickangle: -45
+              },
+              yaxis: {
+                title: 'people'
+              }
+            };
+            var data = [participants, declined, dotasan, dotacan, no_show];
+
+            events_stat = document.getElementById('events_stat');
+
+            Plotly.newPlot( events_stat, data, layout );
+          </script>
+
+          <div id="events_views_stat"></div>
+          <script>
+            var views = {
+              x: <%= raw @event_names %>,
+              y: <%= @events.map{ |e| e.views } %>,
+              name: 'Views',
+              type: 'bar'
+            };
+            var layout = {
+              title: 'Views',
+              xaxis: {
+                title: 'Event#',
+                tickangle: -45
+              },
+              yaxis: {
+                title: 'views'
+              }
+            };
+            var data = [views];
+
+            events_views_stat = document.getElementById('events_views_stat');
+
+            Plotly.newPlot( events_views_stat, data, layout );
+          </script>
+
+        <% end %>
+      </div>
+
+    </div>
   </div>
+
 </div>

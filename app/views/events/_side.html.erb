@@ -1,31 +1,35 @@
-<div class="btn-group-vertical btn-block">
-  <%= link_to 'イベント一覧', events_path, class: "btn btn-secondary btn-block" %>
+<div class="btn-group-vertical">
+  <%= link_to 'イベント一覧', events_path, class: "btn btn-secondary" %>
 
-  <div style="height: 4px;"></div>
+  <div style='height: 4px;'></div>
 
   <% if params[:id].present? or params[:event_id].present? %>
-    <%= link_to 'イベント情報', event_path(@event), class: "btn btn-secondary btn-block " %>
+
+    <%= link_to 'イベント情報', event_path(@event), class: "btn btn-secondary" %>
     <div style="height: 4px;"></div>
-    <%= link_to "参加予定者リスト (#{@event.registed_members.count})", registed_event_path(@event), class: "btn btn-secondary  btn-block" %>
-    <%= link_to "出席者リスト (#{@event.participants.count})", participants_event_path(@event), class: "btn btn-secondary  btn-block" %>
-    <%= link_to "ドタ参リスト (#{@event.dotasan.count})", dotasan_event_path(@event), class: "btn btn-secondary  btn-block" %>
-    <%= link_to "欠席者リスト (#{@event.declined_members.count})", declined_event_path(@event), class: "btn btn-secondary  btn-block" %>
-    <%= link_to "ドタキャンリスト (#{@event.dotacan.count})", dotacan_event_path(@event), class: "btn btn-secondary  btn-block" %>
-    <%= link_to "No-showリスト (#{@event.no_show.count})", no_show_event_path(@event), class: "btn btn-secondary  btn-block" %>
+    <%= link_to "参加予定者リスト (#{@event.registed_members.count})", registed_event_path(@event), class: "btn btn-secondary" %>
+    <%= link_to "出席者リスト (#{@event.participants.count})", participants_event_path(@event), class: "btn btn-secondary" %>
+    <%= link_to "ドタ参リスト (#{@event.dotasan.count})", dotasan_event_path(@event), class: "btn btn-secondary" %>
+    <%= link_to "欠席者リスト (#{@event.declined_members.count})", declined_event_path(@event), class: "btn btn-secondary" %>
+    <%= link_to "ドタキャンリスト (#{@event.dotacan.count})", dotacan_event_path(@event), class: "btn btn-secondary" %>
+    <%= link_to "No-showリスト (#{@event.no_show.count})", no_show_event_path(@event), class: "btn btn-secondary" %>
     <div style="height: 4px;"></div>
-    <%= link_to "統計", statistics_event_path(@event), class: "btn btn-secondary  btn-block" %>
+    <%= link_to "統計", statistics_event_path(@event), class: "btn btn-secondary" %>
     <div style="height: 4px;"></div>
-    <%= link_to "会計", account_event_path(@event), class: "btn btn-secondary  btn-block" %>
+    <%= link_to "会計", account_event_path(@event), class: "btn btn-secondary" %>
+
   <% else %>
-    <%= link_to "イベント新規登録", new_event_path, class: "btn btn-secondary btn-block" %>
+
+    <%= link_to "イベント新規登録", new_event_path, class: "btn btn-secondary" %>
     <div style="height: 4px;"></div>
-    <%= link_to "統計", statistics_events_path, class: "btn btn-secondary btn-block" %>
+    <%= link_to "統計", statistics_events_path, class: "btn btn-secondary" %>
     <div style="height: 4px;"></div>
-    <%= link_to "会場管理", places_path, class: "btn btn-secondary btn-block" %>
-    <%= link_to "イベントタイプ管理", event_categories_path, class: "btn btn-secondary btn-block" %>
-    <%= link_to "会計科目管理", accounts_path, class: "btn btn-secondary btn-block" %>
+    <%= link_to "会場管理", places_path, class: "btn btn-secondary" %>
+    <%= link_to "イベントタイプ管理", event_categories_path, class: "btn btn-secondary" %>
+    <%= link_to "会計科目管理", accounts_path, class: "btn btn-secondary" %>
     <div style="height: 4px;"></div>
-    <%= link_to "イベント情報Download", download_events_path(format: 'xls'), method: "get", class: "btn btn-secondary btn-block" %>
+    <%= link_to "イベント情報Download", download_events_path(format: 'xls'), method: "get", class: "btn btn-secondary" %>
+
   <% end %>
 
   <% if request.path_info == "/events" %>
