@@ -7,8 +7,6 @@ Major dependencies:
 * npm version: 7.20.0
 To update npm, `npm install -g npm@latest`
 
-* yarn version: 2.4.1 (to use yarn v2, follow https://yarnpkg.com/getting-started/migration#step-by-step)
-
 * Database creation: ./db/production.sqlite3 (DO NOT COMMIT in Github)
 
 
@@ -313,7 +311,7 @@ bundle exec rake assets:precompile
 
 ## 3. about CSS and JS
 ### Installed CSS
-- bootstrap
+- bootstrap 5
 - hover.css: mouse hover effects. See [documents and examples](http://ianlunn.github.io/Hover/). [How to install hover.css](https://devopspoints.com/bootstrap-4-hover.html)
 - font-awesome: font icons [doc](https://fontawesome.com/)
 
