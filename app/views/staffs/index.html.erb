@@ -1,40 +1,44 @@
-<div class="row">
-  <div class="col-md-2">
-    <%= render'side' %>
-  </div>
+<div class='container-fluid'>
 
-  <div class="col">
-    <h2>Staff情報</h2>
+  <div class="row">
+    <div class="col-md-2">
+      <%= render 'side' %>
+    </div>
 
-    <table class="table table-bordered table-striped table-sm">
-      <thead>
-        <tr>
-          <th width="8%">登録した日にち</th>
-          <th width="15%">Member Name</th>
-          <th>Member ID（クリックしてメンバーページへ）</th>
-          <th>Facebook ID（クリックしてFBページへ）</th>
-          <th>Active（管理者画面にアクセス可能な人）</th>
-          <th>Admin（管理者画面を修正できる人）</th>
-          <th>Description（右の編集ボタンで編集ページにジャンプ。そこを編集すると幹事紹介ページに反映）</th>
-          <th width="5%"></th>
-        </tr>
-      </thead>
+    <div class="col">
+      <h2>Staff情報</h2>
 
-      <tbody>
-        <% @staffs.each do |staff| %>
+      <table class="table table-bordered table-striped table-sm">
+        <thead>
           <tr>
-            <td><%= staff.created_at.strftime("%Y-%m-%d") %></td>
-            <td><%= get_name_from_member_id(staff.member_id) %></td>
-            <td><%= link_to staff.member_id, "/members/#{staff.member_id}" %></td>
-            <td><%= link_to staff.member.facebook_id, "https://facebook.com/#{staff.member.facebook_id}" if staff.member.facebook_id %></td>
-            <td><%= get_check_icon(staff.is_active) %></td>
-            <td><%= get_check_icon(staff.is_admin) %></td>
-            <td><%= staff.description[0..10] + "..." if staff.description.present? %></td>
-            <td><%= link_to "詳細&編集", edit_staff_path(staff), class: 'btn btn-info btn-sm' %></td>
+            <th width="8%">登録した日にち</th>
+            <th width="15%">Member Name</th>
+            <th>Member ID（クリックしてメンバーページへ）</th>
+            <th>Facebook ID（クリックしてFBページへ）</th>
+            <th>Active（管理者画面にアクセス可能な人）</th>
+            <th>Admin（管理者画面を修正できる人）</th>
+            <th>Description（右の編集ボタンで編集ページにジャンプ。そこを編集すると幹事紹介ページに反映）</th>
+            <th width="5%"></th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
 
+        <tbody>
+          <% @staffs.each do |staff| %>
+            <tr>
+              <td><%= staff.created_at.strftime("%Y-%m-%d") %></td>
+              <td><%= get_name_from_member_id(staff.member_id) %></td>
+              <td><%= link_to staff.member_id, "/members/#{staff.member_id}" %></td>
+              <td><%= link_to staff.member.facebook_id, "https://facebook.com/#{staff.member.facebook_id}" if staff.member.facebook_id %></td>
+              <td><%= get_check_icon(staff.is_active) %></td>
+              <td><%= get_check_icon(staff.is_admin) %></td>
+              <td><%= staff.description[0..10] + "..." if staff.description.present? %></td>
+              <td><%= link_to "詳細&編集", edit_staff_path(staff), class: 'btn btn-info btn-sm' %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+    </div>
   </div>
+
 </div>
