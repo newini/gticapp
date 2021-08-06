@@ -1,47 +1,51 @@
-<div class="row">
-  <div class="col-sm-2">
-    <%= render "events/side" %>
-  </div>
+<div class='container-fluid'>
 
-  <div class="col">
-    <div id="ajax_container">
-      <h2>会場一覧</h2>
+  <div class="row">
+    <div class="col-sm-2">
+      <%= render "events/side" %>
+    </div>
 
-      <%= link_to "会場登録", new_place_path, method: :get, class: "btn btn-primary col-2", remote: true %>
+    <div class="col">
+      <div id="ajax_container">
+        <h2>会場一覧</h2>
 
-      <table class="table table-bordered table-hover table-striped table-sm">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Created at</th>
-            <th>会場名</th>
-            <th>最寄り駅</th>
-            <th>行き方</th>
-            <th></th>
-          </tr>
-        </thead>
+        <%= link_to "会場登録", new_place_path, method: :get, class: "btn btn-primary col-2", remote: true %>
 
-        <tbody>
-          <% @places.each do |place| %>
+        <table class="table table-bordered table-hover table-striped table-sm">
+          <thead>
             <tr>
-              <td><%= place.id %></td>
-              <td><%= place.created_at.strftime('%Y-%m-%d') %></td>
-              <td><%= place.name %></td>
-              <td><%= place.nearest_station %></td>
-              <td><%= truncate place.how_to_go, length: 20 %></td>
-              <td>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalPlace<%= place.id %>">
-                  詳細
-                </button>
-              </td>
+              <th>ID</th>
+              <th>Created at</th>
+              <th>会場名</th>
+              <th>最寄り駅</th>
+              <th>行き方</th>
+              <th></th>
             </tr>
-          <% end %>
-        </tbody>
-      </table>
+          </thead>
 
-      <%= link_to "会場登録", new_place_path, method: :get, class: "btn btn-primary col-2", remote: true %>
+          <tbody>
+            <% @places.each do |place| %>
+              <tr>
+                <td><%= place.id %></td>
+                <td><%= place.created_at.strftime('%Y-%m-%d') %></td>
+                <td><%= place.name %></td>
+                <td><%= place.nearest_station %></td>
+                <td><%= truncate place.how_to_go, length: 20 %></td>
+                <td>
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalPlace<%= place.id %>">
+                    詳細
+                  </button>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+
+        <%= link_to "会場登録", new_place_path, method: :get, class: "btn btn-primary col-2", remote: true %>
+      </div>
     </div>
   </div>
+
 </div>
 
 <!-- Modal -->
