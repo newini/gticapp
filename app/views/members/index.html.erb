@@ -1,23 +1,25 @@
-<div class="row">
+<div class='container-fluid'>
 
-  <div class="col-md-2">
-    <%= render'members/side' %>
-  </div>
+  <div class="row">
+    <div class="col-md-2">
+      <%= render 'side' %>
+    </div>
 
-  <div class="col">
-    <%= link_to 'ダウンロード', members_path(format: 'xls'), class: "btn btn-info btn-sm" %>
+    <div class="col">
+      <%= link_to 'ダウンロード', members_path(format: 'xls'), class: "btn btn-info btn-sm" %>
 
-    <!-- Search -->
-    <%= form_with url: search_members_path, method: 'get', data: { remote: true } do |form| %>
-      <div class="row">
-        <%= form.label :keyword, "メンバー検索", class: 'col-form-label col-auto' %>
-        <%= form.text_field :keyword, class: "form-control col", placeholder: "Keyword" %>
-        <%= form.submit 'Search', class: 'btn btn-primary col-auto' %>
+      <!-- Search -->
+      <%= form_with url: search_members_path, method: 'get', data: { remote: true } do |form| %>
+        <div class="row">
+          <%= form.label :keyword, "メンバー検索", class: 'col-form-label col-auto' %>
+          <%= form.text_field :keyword, class: "form-control col", placeholder: "Keyword" %>
+          <%= form.submit 'Search', class: 'btn btn-primary col-auto' %>
+        </div>
+      <% end %>
+
+      <div id="ajax_container">
+        <%= render'members' %>
       </div>
-    <% end %>
-
-    <div id="ajax_container">
-      <%= render'members' %>
     </div>
   </div>
 

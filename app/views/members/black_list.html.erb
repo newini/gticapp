@@ -1,14 +1,18 @@
-<div class="row">
-  <div class="col-md-2">
-    <%= render'members/side' %>
-  </div>
+<div class='container-fluid'>
 
-  <div class="col-md-10">
-    <h2>Black List!!!</h2>
+  <div class="row">
+    <div class="col-md-2">
+      <%= render 'side' %>
+    </div>
 
-    <%= link_to 'ダウンロード', members_path(format: 'xls'), class: "btn btn-primary" %>
-    <div id="ajax_container">
-      <%= render'members' %>
+    <div class="col">
+      <h2>Black List!!!</h2>
+
+      <%= link_to 'ダウンロード', members_path(format: 'xls'), class: "btn btn-primary" %>
+      <div id="ajax_container">
+        <%= render'members' %>
+      </div>
     </div>
   </div>
+
 </div>
