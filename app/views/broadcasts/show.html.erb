@@ -1,108 +1,112 @@
-<div class="row">
-  <div class="col-md-2">
-    <%= render 'side' %>
+<div class='container-fluid'>
+
+  <div class="row">
+    <div class="col-md-2">
+      <%= render 'side' %>
+    </div>
+
+    <div class="col-md-10">
+      <h2>ドラフト</h2>
+
+      <h3>1. 宛先指定</h3>
+      <p>㊟ブラックリストメンバーは自動的に除かれる</p>
+
+      <table class="table table-bordered">
+        <tr>
+          <th style="width: 50%;">参加者全員を宛名に入れる（幹事は含まない）：</th>
+          <td><%= select_include_all_members(@broadcast) %></td>
+        </tr>
+
+        <tr>
+          <th>誕生月ごとに宛名に入れる（複数指定可）</th>
+          <td>
+            <% @birth_months.each do |birth_month| %>
+              <%= "#{birth_month}月" %>
+            <% end %>
+            <%= select_month(@broadcast) %>
+          </td>
+        </tr>
+
+        <tr>
+          <th>イベント会合別に宛名を入れる（複数指定可）</th>
+          <td>
+            <% @event_ids.each do |event_id| %>
+              <%= "第#{Event.find(event_id).cumulative_number}回" %>
+            <% end %>
+            <%= select_event(@broadcast, @events) %>
+          </td>
+        </tr>
+
+        <tr>
+          <th>GTIC幹事メンバーの中でActiveになっている人を含める<br>
+            （右上の管理メニュー⇒Staffリスト⇒Activeに変更）：</th>
+          <td><%= select_include_gtic_members(@broadcast) %></td>
+        </tr>
+
+        <tr>
+          <th>メンバーを個別に追加</th>
+          <td><%= link_to "ここをクリックしてメンバーを探す", find_members_broadcast_path(@broadcast), class: "btn btn-warning" %></td>
+        </tr>
+
+        <tr>
+          <th>
+            <p>手動でメールアドレスを入力して保存する。下の欄には苗字<メールアドレス>のように記入する。複数人に送る場合は間を「;(半角セミコロン)」で区切る。</p>
+            <p>examples: 山田&lt;lemon@gmail.com&gt;; 秋山&lt;neko@yahoo.com&gt;</p>
+            <p>注意：全角英文字、全角記号は使わないこと<p>
+          </th>
+          <td>
+            <%= form_with url: add_emails_broadcast_path, method: 'post' do |f| %>
+              <%= f.label :Email %>
+              <%= f.text_area :emails, value: @broadcast.emails, class: 'form-control', rows: 3 %>
+              <%= f.submit "保存", class: "btn btn-info" %>
+            <% end %>
+          </td>
+        </tr>
+      </table>
+
+      <%= link_to broadcast_member_list_broadcast_path(@broadcast), class: "btn btn-info btn-lg" do %>
+        <span class="fa fa-list"></span> 宛先リスト確認
+      <% end %>
+
+      <hr>
+
+      <h2>2.メール文面確認</h2>
+
+      <!-- ここで修正したのもは、必ずno_reply_mailer/broadcast.html.erbに同じく修正すること！ -->
+      <table class="table table-bordered table-sm">
+        <tr>
+          <th style="width: 20%;">件名</th>
+          <td><%= @broadcast.subject %></td>
+        </tr>
+
+        <tr>
+          <th>本文</th>
+          <td>
+            <p>（自動的に苗字が入る）様</p>
+            <br>
+            <%= @broadcast.body %>
+          </td>
+        </tr>
+      </table>
+
+      <hr>
+
+      <h2>3. 送信</h2>
+
+      <%= link_to send_email_broadcast_path(@broadcast), class:"btn btn-primary btn-lg", data: { confirm: '送信しますか？' } do %>
+        <span class="fa fa-paper-plane"></span> メール送信
+      <% end %>
+
+      <hr>
+
+      <%= link_to "戻る", :back, class: "btn btn-warning"%>
+      <% if not @broadcast.sent_flg %>
+        <%= link_to '編集', edit_broadcast_path(@broadcast), class:"btn btn-info" %>
+      <% end %>
+      <%= link_to '削除', broadcast_path(@broadcast), method: :delete, class:"btn btn-danger",
+                                data: {confirm: '削除します。よろしいでしょうか？'} %>
+
+    </div>
   </div>
 
-  <div class="col-md-10">
-    <h2>ドラフト</h2>
-
-    <h3>1. 宛先指定</h3>
-    <p>㊟ブラックリストメンバーは自動的に除かれる</p>
-
-    <table class="table table-bordered">
-      <tr>
-        <th style="width: 50%;">参加者全員を宛名に入れる（幹事は含まない）：</th>
-        <td><%= select_include_all_members(@broadcast) %></td>
-      </tr>
-
-      <tr>
-        <th>誕生月ごとに宛名に入れる（複数指定可）</th>
-        <td>
-          <% @birth_months.each do |birth_month| %>
-            <%= "#{birth_month}月" %>
-          <% end %>
-          <%= select_month(@broadcast) %>
-        </td>
-      </tr>
-
-      <tr>
-        <th>イベント会合別に宛名を入れる（複数指定可）</th>
-        <td>
-          <% @event_ids.each do |event_id| %>
-            <%= "第#{Event.find(event_id).cumulative_number}回" %>
-          <% end %>
-          <%= select_event(@broadcast, @events) %>
-        </td>
-      </tr>
-
-      <tr>
-        <th>GTIC幹事メンバーの中でActiveになっている人を含める<br>
-          （右上の管理メニュー⇒Staffリスト⇒Activeに変更）：</th>
-        <td><%= select_include_gtic_members(@broadcast) %></td>
-      </tr>
-
-      <tr>
-        <th>メンバーを個別に追加</th>
-        <td><%= link_to "ここをクリックしてメンバーを探す", find_members_broadcast_path(@broadcast), class: "btn btn-warning" %></td>
-      </tr>
-
-      <tr>
-        <th>
-          <p>手動でメールアドレスを入力して保存する。下の欄には苗字<メールアドレス>のように記入する。複数人に送る場合は間を「;(半角セミコロン)」で区切る。</p>
-          <p>examples: 山田&lt;lemon@gmail.com&gt;; 秋山&lt;neko@yahoo.com&gt;</p>
-          <p>注意：全角英文字、全角記号は使わないこと<p>
-        </th>
-        <td>
-          <%= form_with url: add_emails_broadcast_path, method: 'post' do |f| %>
-            <%= f.label :Email %>
-            <%= f.text_area :emails, value: @broadcast.emails, class: 'form-control', rows: 3 %>
-            <%= f.submit "保存", class: "btn btn-info" %>
-          <% end %>
-        </td>
-      </tr>
-    </table>
-
-    <%= link_to broadcast_member_list_broadcast_path(@broadcast), class: "btn btn-info btn-lg" do %>
-      <span class="fa fa-list"></span> 宛先リスト確認
-    <% end %>
-
-    <hr>
-
-    <h2>2.メール文面確認</h2>
-
-    <!-- ここで修正したのもは、必ずno_reply_mailer/broadcast.html.erbに同じく修正すること！ -->
-    <table class="table table-bordered table-sm">
-      <tr>
-        <th style="width: 20%;">件名</th>
-        <td><%= @broadcast.subject %></td>
-      </tr>
-
-      <tr>
-        <th>本文</th>
-        <td>
-          <p>（自動的に苗字が入る）様</p>
-          <br>
-          <%= @broadcast.body %>
-        </td>
-      </tr>
-    </table>
-
-    <hr>
-
-    <h2>3. 送信</h2>
-
-    <%= link_to send_email_broadcast_path(@broadcast), class:"btn btn-primary btn-lg", data: { confirm: '送信しますか？' } do %>
-      <span class="fa fa-paper-plane"></span> メール送信
-    <% end %>
-
-    <hr>
-
-    <%= link_to "戻る", :back, class: "btn btn-warning"%>
-    <% if not @broadcast.sent_flg %>
-      <%= link_to '編集', edit_broadcast_path(@broadcast), class:"btn btn-info" %>
-    <% end %>
-    <%= link_to '削除', broadcast_path(@broadcast), method: :delete, class:"btn btn-danger",
-                              data: {confirm: '削除します。よろしいでしょうか？'} %>
-
-  </div>
 </div>

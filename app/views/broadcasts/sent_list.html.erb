@@ -1,28 +1,32 @@
-<div class="row">
-  <div class="col-md-2">
-    <%= render'side' %>
-  </div>
+<div class='container-fluid'>
 
-  <div class="col-md-10">
-    <h2>送信済み</h2>
+  <div class="row">
+    <div class="col-md-2">
+      <%= render'side' %>
+    </div>
 
-    <table class="table table-hover table-bordered table-sm table-striped ">
-      <tr>
-        <th style="width: 10%;">Sent datetime</th>
-        <th style="width: 20%;">件名</th>
-        <th>本文</th>
-        <th style="width: 5%;"></th>
-      </tr>
+    <div class="col-md-10">
+      <h2>送信済み</h2>
 
-      <% @broadcasts.each do |broadcast| %>
+      <table class="table table-hover table-bordered table-sm table-striped ">
         <tr>
-          <td><%= broadcast.sent_at.strftime("%Y-%m-%d") if broadcast.sent_at %></td>
-          <td><%= broadcast.subject %></td>
-          <td><%= simple_format(truncate(broadcast.body)) %></td>
-          <td><%= link_to '詳細', show_sent_broadcast_path(broadcast), class:"btn btn-info btn-xs" %></td>
+          <th style="width: 10%;">Sent datetime</th>
+          <th style="width: 20%;">件名</th>
+          <th>本文</th>
+          <th style="width: 5%;"></th>
         </tr>
-      <% end %>
-    </table>
 
+        <% @broadcasts.each do |broadcast| %>
+          <tr>
+            <td><%= broadcast.sent_at.strftime("%Y-%m-%d") if broadcast.sent_at %></td>
+            <td><%= broadcast.subject %></td>
+            <td><%= simple_format(truncate(broadcast.body)) %></td>
+            <td><%= link_to '詳細', show_sent_broadcast_path(broadcast), class:"btn btn-info btn-xs" %></td>
+          </tr>
+        <% end %>
+      </table>
+
+    </div>
   </div>
+
 </div>
