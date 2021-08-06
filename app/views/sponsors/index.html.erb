@@ -1,39 +1,42 @@
-<div class="row">
-  <div class="col-md-2">
-    <%= render'side' %>
-  </div>
+<div class='container-fluid'>
 
-  <div class="col">
-    <h2>Sponsors#index</h2>
+  <div class="row">
+    <div class="col-md-2">
+      <%= render 'side' %>
+    </div>
 
-    <table class="table table-bordered table-striped table-sm">
-      <thead>
-        <tr>
-          <th width="8%">Created at</th>
-          <th width="15%">Sponsor Name</th>
-          <th>Slogan</th>
-          <th>Description</th>
-          <th>Website</th>
-          <th>End support</th>
-          <th width="5%"></th>
-        </tr>
-      </thead>
+    <div class="col">
+      <h2>Sponsors#index</h2>
 
-      <tbody>
-        <% @sponsors.each do |sponsor| %>
+      <table class="table table-bordered table-striped table-sm">
+        <thead>
           <tr>
-            <td><%= sponsor.created_at.strftime("%Y-%m-%d") %></td>
-            <td><%= sponsor.name %></td>
-            <td><%= sponsor.slogan %></td>
-            <td><%= sponsor.description[0..10] + "..." if sponsor.description.present? %></td>
-            <td><%= link_to sponsor.website, sponsor.website %></td>
-            <td><%= get_check_icon(sponsor.is_end) %></td>
-            <td><%= link_to "Detail", sponsor_path(sponsor), class: 'btn btn-info btn-sm' %></td>
+            <th width="8%">Created at</th>
+            <th width="15%">Sponsor Name</th>
+            <th>Slogan</th>
+            <th>Description</th>
+            <th>Website</th>
+            <th>End support</th>
+            <th width="5%"></th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
 
+        <tbody>
+          <% @sponsors.each do |sponsor| %>
+            <tr>
+              <td><%= sponsor.created_at.strftime("%Y-%m-%d") %></td>
+              <td><%= sponsor.name %></td>
+              <td><%= sponsor.slogan %></td>
+              <td><%= sponsor.description[0..10] + "..." if sponsor.description.present? %></td>
+              <td><%= link_to sponsor.website, sponsor.website %></td>
+              <td><%= get_check_icon(sponsor.is_end) %></td>
+              <td><%= link_to "Detail", sponsor_path(sponsor), class: 'btn btn-info btn-sm' %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+    </div>
   </div>
-</div>
 
+</div>

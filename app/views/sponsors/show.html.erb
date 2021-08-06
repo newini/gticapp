@@ -1,19 +1,23 @@
-<div class="row">
-  <div class="col-md-2">
-    <%= render 'side' %>
-  </div>
+<div class='container-fluid'>
 
-  <div class="col">
-    <h1>Sponsor</h1>
+  <div class="row">
+    <div class="col-md-2">
+      <%= render 'side' %>
+    </div>
 
-    <fieldset disabled="disabled">
-      <%= render 'form'%>
-    </fieldset>
+    <div class="col">
+      <h1>Sponsor</h1>
 
-    <div class="row">
-      <%= link_to 'Sponsor情報編集', edit_sponsor_path(@sponsor), class: "btn btn-primary col-sm-3" %>
-      <%= link_to 'Sponsor削除', @sponsor, value: @sponsor.id, class: 'btn btn-warning offset-1 col-sm-3',
-        method: :delete, data: { confirm: "削除してもよろしいですか？" } %>
+      <fieldset disabled="disabled">
+        <%= render 'form'%>
+      </fieldset>
+
+      <div class="row">
+        <%= link_to 'Sponsor情報編集', edit_sponsor_path(@sponsor), class: "btn btn-primary col-sm-3" %>
+        <%= link_to 'Sponsor削除', @sponsor, value: @sponsor.id, class: 'btn btn-warning offset-1 col-sm-3',
+          method: :delete, data: { confirm: "削除してもよろしいですか？" } %>
+      </div>
     </div>
   </div>
+
 </div>
