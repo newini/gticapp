@@ -41,6 +41,10 @@ module.exports = function(api) {
       '@babel/plugin-syntax-dynamic-import',
       isTestEnv && 'babel-plugin-dynamic-import-node',
       '@babel/plugin-transform-destructuring',
+      //The "loose" option must be the same for
+      //@babel/plugin-proposal-class-properties,
+      //@babel/plugin-proposal-private-methods and
+      //@babel/plugin-proposal-private-property-in-object
       [
         '@babel/plugin-proposal-class-properties',
         {
@@ -48,15 +52,19 @@ module.exports = function(api) {
         }
       ],
       [
-        '@babel/plugin-proposal-object-rest-spread',
-        {
-          useBuiltIns: true
-        }
-      ],
-      [
         '@babel/plugin-proposal-private-methods',
         {
           loose: true
+        }
+      ],
+      [
+        "@babel/plugin-proposal-private-property-in-object",
+        { "loose": true }
+      ],
+      [
+        '@babel/plugin-proposal-object-rest-spread',
+        {
+          useBuiltIns: true
         }
       ],
       [
