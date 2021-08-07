@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="<%= params[:locale] ? params[:locale] : 'ja' %>">
   <head>
+    <meta charset="UTF-8">
     <title><%= (yield(:title) + " - " unless yield(:title).blank?).to_s + "GTIC : Global Techno Innovation Cafe" %></title>
 
     <!-- For mobile view -->
