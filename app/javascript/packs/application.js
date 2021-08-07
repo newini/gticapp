@@ -8,9 +8,9 @@ console.log('Begin of application.js')
 
 /* Default */
 import Rails from "@rails/ujs"
-import Turbolinks from "turbolinks"
-
 Rails.start()
+
+import Turbolinks from "turbolinks"
 Turbolinks.start()
 
 
@@ -45,6 +45,14 @@ document.addEventListener('turbolinks:load', function() {
     startEvent: 'turbolinks:load' // if you are using turbolinks
   });
 });
+// Add for DOMContentLoaded, due to turbolink not loaded on first load
+// TODO find the reason
+document.addEventListener('DOMContentLoaded', function() {
+  AOS.init({
+    startEvent: 'turbolinks:load' // if you are using turbolinks
+  });
+});
+
 
 
 /* Create chart */
