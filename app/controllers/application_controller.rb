@@ -130,6 +130,7 @@ class ApplicationController < ActionController::Base
     # https://developer.yahoo.co.jp/webapi/jlp/furigana/v1/furigana.html
     def kanji_to_romaji_jlp(word)
       if word
+        romaji = ''
         word = word.gsub(/[^\p{Alnum}]/, '') # Remove special characters
         sentence = CGI.escape(word) # Convert to ascii
         base_url = 'http://jlp.yahooapis.jp/FuriganaService/V1/furigana'
@@ -138,14 +139,19 @@ class ApplicationController < ActionController::Base
         result_hash = Hash.from_xml(response.body) # Convert xml to hash
         if result_hash["ResultSet"].present?
           word_hashs = result_hash["ResultSet"]["Result"]["WordList"]["Word"]
-          if word_hashs.class == Hash
-            return word_hashs['Roman'].capitalize
+          logger.info('hgoehasiodfhoshdifh2022')
+          logger.info(word_hashs)
+          if word_hashs.class == Hash # single word
+            # Return romaji, or Original. This happens when word is alphabet
+            romaji = (word_hashs['Roman'].present?) ? word_hashs['Roman'].capitalize : word_hashs['Surface']
           else # If hash in array
-            return word_hashs.collect { |word| word['Roman']  }.join().capitalize
+            romaji = word_hashs.collect { |word|
+               (word['Roman'].present?) ? word['Roman'] : word['Surface']
+            }.join().capitalize
           end
         end
       end
-      return ""
+      return romaji
     end
 
     def admin_staff_only
