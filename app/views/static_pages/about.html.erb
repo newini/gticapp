@@ -196,29 +196,25 @@
             各国からの参加者
           </h5>
           <div id="geo" style="height: 300px;"></div>
-
-          <!-- jsapi is to use geo chart in chartkick -->
-          <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+          <%= javascript_include_tag "https://www.gstatic.com/charts/loader.js" %>
           <script>
-            document.addEventListener('turbolinks:load', () => {
-              new Chartkick.GeoChart("geo", [
-                // East Asia
-                ["China", 1], ["Hong Kong", 1], ["Japan", 1], ["South Korea", 1],
-                // Asia
-                ["Malaysia", 1], ["Philippines", 1], ["Singapore", 1], ["Thailand", 1],  ["Vietnam", 1],
-                // Central Asia
-                ["Uzbekistan", 1],
-                // South Asia
-                ["Bangladesh", 1], ["India", 1],
-                // America
-                ["Canada", 1], ["Mexico", 1], ["United States", 1],
-                // Africa
-                ["Tunisia", 1],
-                // Europe
-                ["Belgium", 1], ["France", 1], ["Hungary", 1], ["Russia", 1], ["United Kingdom", 1],
-                ["Poland", 1]
-              ]);
-            })
+            new Chartkick.GeoChart("geo", [
+              // East Asia
+              ["China", 1], ["Hong Kong", 1], ["Japan", 1], ["South Korea", 1],
+              // Asia
+              ["Malaysia", 1], ["Philippines", 1], ["Singapore", 1], ["Thailand", 1],  ["Vietnam", 1],
+              // Central Asia
+              ["Uzbekistan", 1],
+              // South Asia
+              ["Bangladesh", 1], ["India", 1],
+              // America
+              ["Canada", 1], ["Mexico", 1], ["United States", 1],
+              // Africa
+              ["Tunisia", 1],
+              // Europe
+              ["Belgium", 1], ["France", 1], ["Hungary", 1], ["Russia", 1], ["United Kingdom", 1],
+              ["Poland", 1]
+            ]);
           </script>
         </div>
       </div>
