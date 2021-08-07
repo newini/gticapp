@@ -139,10 +139,8 @@ class ApplicationController < ActionController::Base
         result_hash = Hash.from_xml(response.body) # Convert xml to hash
         if result_hash["ResultSet"].present?
           word_hashs = result_hash["ResultSet"]["Result"]["WordList"]["Word"]
-          logger.info('hgoehasiodfhoshdifh2022')
-          logger.info(word_hashs)
           if word_hashs.class == Hash # single word
-            # Return romaji, or Original. This happens when word is alphabet
+            # Return romaji, or Original word. This happens when word is alphabet
             romaji = (word_hashs['Roman'].present?) ? word_hashs['Roman'].capitalize : word_hashs['Surface']
           else # If hash in array
             romaji = word_hashs.collect { |word|
