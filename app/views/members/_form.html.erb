@@ -54,6 +54,8 @@
     </div>
   </div>
 
+  <div class='py-3'></div>
+
   <h5><strong>2. ソーシャル情報</strong></h5>
   <div class="row">
     <%= form.label :email, t('user.email'), class: 'col-form-label col-sm-2' %>
@@ -70,6 +72,8 @@
 
     <%= link_to "このサイトからIDを探す。https://lookup-id.com", "https://lookup-id.com" %>
   </div>
+
+  <div class='py-3'></div>
 
   <h5><strong>3. GTICで使う情報</strong></h5>
   <small><公開禁止></small>
@@ -119,6 +123,8 @@
     </div>
   </div>
 
+  <div class='py-3'></div>
+
   <h5><strong>4. ログイン関連情報</strong></h5>
   <small><基本的に触らないこと!></small>
   <div class="row">
@@ -129,7 +135,16 @@
     <%= form.text_field :uid, class: "form-control col" %>
   </div>
 
-  <br>
+  <div class='py-3'></div>
+
+  <h5><strong>5. デバッグ情報</strong></h5>
+  <div class="row">
+    <%= form.label :romaji, "romaji", class: 'col-form-label col-sm-2' %>
+    <%= form.text_field :romaji, disabled: true, class: "form-control col" %>
+  </div>
+
+
+  <div class='py-3'></div>
 
   <div class="row">
     <%= form.submit class: "btn btn-primary col-auto" %>
