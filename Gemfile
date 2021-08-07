@@ -100,5 +100,5 @@ gem 'rqrcode'
 gem 'link_thumbnailer'
 
 # Convert Kanji to romaji
-gem 'suika' # 形態素解析器
+#gem 'suika' # 形態素解析器, slow, do not use
 gem 'romaji' # Kana/hira -> romaji
