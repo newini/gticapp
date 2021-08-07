@@ -31,7 +31,7 @@ window.$ = window.jQuery = jQuery;
 /* Bootstrap */
 import bootstrap from 'bootstrap/dist/js/bootstrap';
 // Bootstrap popover
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('turbolinks:load', function() {
   var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
   var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
     return new bootstrap.Popover(popoverTriggerEl, {
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 /* AOS */
 import AOS from 'aos';
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('turbolinks:load', function() {
   AOS.init({
     startEvent: 'turbolinks:load' // if you are using turbolinks
   });

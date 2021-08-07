@@ -17,8 +17,9 @@
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
 
     <!-- ========== Javascript ============= -->
+    <!-- Always make sure to load your application’s JavaScript bundle using -->
+    <!-- https://github.com/turbolinks/turbolinks#working-with-script-elements -->
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag "//www.google.com/jsapi" %> <!-- To use geo chart in chartkick -->
 
     <!-- Page icon -->
     <link rel="shortcut icon" href="<%= asset_path('gtic_logo_c_30x30.png') %>"/>
@@ -44,6 +45,8 @@
     <%= debug(params) if Rails.env.development? %>
 
 
+
+    <!-- ========== Javascript ============= -->
 
     <!-- Facebook Analytics -->
     <script>

@@ -151,9 +151,16 @@
             <i class="fa fa-briefcase"></i>
             参加者の職業
           </h5>
-          <%= pie_chart Category.all.map{ |c|
-            [c.name, (Member.where(gtic_flg: false).where(category_id: c.id).count*100/Member.where(gtic_flg: false).where.not(category_id: nil).count.to_f).ceil]
-          }, suffix: "%" %>
+          <div id="pie-category" style="height: 300px;"></div>
+          <script>
+            new Chartkick.PieChart(
+              'pie-category',
+              <%= raw Category.all.map{ |c|
+                [c.name, (Member.where(gtic_flg: false).where(category_id: c.id).count*100/Member.where(gtic_flg: false).where.not(category_id: nil).count.to_f).ceil]
+              } %>,
+              {suffix: "%"}
+            );
+          </script>
         </div>
       </div>
     </div>
@@ -167,7 +174,11 @@
           </h5>
           <div id="pie-age" style="height: 300px;"></div>
           <script>
-            new Chartkick.PieChart("pie-age", [["20歳代未満", 14], ["30歳代", 36], ["40歳代", 31], ["50歳代", 15], ["60歳代以上", 4]], {suffix: "%"});
+            new Chartkick.PieChart(
+              "pie-age",
+              [["20歳代未満", 14], ["30歳代", 36], ["40歳代", 31], ["50歳代", 15], ["60歳代以上", 4]],
+              {suffix: "%"}
+            );
           </script>
         </div>
       </div>
@@ -185,6 +196,9 @@
             各国からの参加者
           </h5>
           <div id="geo" style="height: 300px;"></div>
+
+          <!-- jsapi is to use geo chart in chartkick -->
+          <script type="text/javascript" src="https://www.google.com/jsapi"></script>
           <script>
             new Chartkick.GeoChart("geo", [
               // East Asia
@@ -211,9 +225,3 @@
   </div> <!-- End of card row -->
 
 </div> <!-- End of container -->
-
-<script>
-  $('.carousel').carousel({
-    interval: 2000
-  })
-</script>
