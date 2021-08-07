@@ -180,14 +180,15 @@ class MembersController < ApplicationController
     def member_params
       params.require(:member).permit(
         :first_name, :last_name, :first_name_alphabet, :last_name_alphabet,
-        :category_id, :email,
-        :biography, :note,
-        :affiliation, :title,
-        :website,
-        :provider, :uid,
+        :affiliation, :affiliation_eng,
+        :category_id, :title,
+        :email, :website,
         :facebook_id,
+        :biography,
+        :note,
         :country_code, :age, :gender, :birthday,
-        :azsa_flg, :black_list_flg, :past_presenter_flg, :contributor_flg, :gtic_flg
+        :azsa_flg, :black_list_flg, :past_presenter_flg, :contributor_flg, :gtic_flg,
+        :provider, :uid,
       )
     end
 

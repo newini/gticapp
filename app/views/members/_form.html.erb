@@ -11,31 +11,34 @@
     <div class="col-sm-9">
       <div class="row">
         <%= form.label :last_name, t('user.last_name')+"(*)", class: 'col-form-label col-sm-2' %>
-        <%= form.text_field :last_name, placeholder: "山田/John", class: "form-control col", :required => 'required' %>
+        <%= form.text_field :last_name, class: "form-control col", :required => 'required' %>
 
         <%= form.label :first_name, t('user.first_name')+"(*)", class: 'col-form-label col-sm-2' %>
-        <%= form.text_field :first_name, placeholder: "太郎/SMITH", class: "form-control col", :required => 'required' %>
+        <%= form.text_field :first_name, class: "form-control col", :required => 'required' %>
       </div>
 
       <div class="row">
         <%= form.label :last_name_alphabet, t('user.last_name_alphabet'), class: 'col-form-label col-sm-2' %>
-        <%= form.text_field :last_name_alphabet, placeholder: "Yamada", class: "form-control col" %>
+        <%= form.text_field :last_name_alphabet, class: "form-control col" %>
 
         <%= form.label :first_name_alphabet, t('user.first_name_alphabet'), class: 'col-form-label col-sm-2' %>
-        <%= form.text_field :first_name_alphabet, placeholder: "Taro", class: "form-control col" %>
+        <%= form.text_field :first_name_alphabet, class: "form-control col" %>
+      </div>
+
+      <div class="row">
+        <%= form.label :affiliation, t('user.affiliation'), class: 'col-form-label col-sm-2' %>
+        <%= form.text_field :affiliation, class: "form-control col" %>
+
+        <%= form.label :affiliation_eng, t('user.affiliation_eng'), class: 'col-form-label col-sm-2' %>
+        <%= form.text_field :affiliation_eng, class: "form-control col" %>
       </div>
 
       <div class="row">
         <%= form.label :category_id, t('user.category'), class: 'col-form-label col-sm-2' %>
         <%= form.select :category_id, options_from_collection_for_select(Category.all, :id, :name, @member.category_id), { include_blank: true }, { class: "form-control col" } %>
-      </div>
-
-      <div class="row">
-        <%= form.label :affiliation, t('user.affiliation'), class: 'col-form-label col-sm-2' %>
-        <%= form.text_field :affiliation, placeholder:  "海山商事", class: "form-control col" %>
 
         <%= form.label :title, t('user.title'), class: 'col-form-label col-sm-2' %>
-        <%= form.text_field :title, placeholder:  "代表取締役社長", class: "form-control col" %>
+        <%= form.text_field :title, class: "form-control col" %>
       </div>
 
       <div class="row">
@@ -59,10 +62,10 @@
   <h5><strong>2. ソーシャル情報</strong></h5>
   <div class="row">
     <%= form.label :email, t('user.email'), class: 'col-form-label col-sm-2' %>
-    <%= form.email_field :email, placeholder: "test@example.com", class: "form-control col" %>
+    <%= form.email_field :email, class: "form-control col" %>
 
     <%= form.label :website, class: 'col-form-label col-sm-2' %>
-    <%= form.text_field :website, placeholder: "https://example.com", class: "form-control col" %>
+    <%= form.text_field :website, class: "form-control col" %>
   </div>
 
   <div class="row">

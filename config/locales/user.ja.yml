@@ -7,6 +7,7 @@ ja:
     first_name_alphabet: 名（英字）
     category: 職業属性
     affiliation: 所属
+    affiliation_eng: 所属（英字名）
     title: 役職
     email: メールアドレス
     email_confirm: メールアドレス確認

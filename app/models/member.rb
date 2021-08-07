@@ -28,11 +28,12 @@ class Member < ActiveRecord::Base
       OR last_name||first_name like ?
       OR first_name_alphabet||last_name_alphabet like ?
       OR affiliation like ?
+      OR affiliation_eng like ?
       OR title like ?
       OR note like ?",
       "%#{keyword}%", "%#{keyword}%", "%#{keyword}%", "%#{keyword}%",
       "%#{keyword}%", "%#{keyword}%", "%#{keyword}%", "%#{keyword}%",
-      "%#{keyword}%", "%#{keyword}%"
+      "%#{keyword}%", "%#{keyword}%", "%#{keyword}%"
   ) }
   scope :find_member_name, ->(name) { where(
       "last_name like ?

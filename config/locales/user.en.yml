@@ -6,7 +6,8 @@ en:
     last_name_alphabet: Last Name in English
     first_name_alphabet: First Name in English
     category: Occupational attributes
-    affiliation: Company
+    affiliation: Company Name in Japanese
+    affiliation_eng: Company Name in English
     title: Job title
     email: E-mail address
     email_confirm: E-mail address confirmation
