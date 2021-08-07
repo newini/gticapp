@@ -30,8 +30,9 @@ class ApplicationController < ActionController::Base
         words = keyword.tr("０-９Ａ-Ｚａ-ｚ　", "0-9A-Za-z ").to_s.split(" ")
         event_id_hash = Hash.new(0) # Score for OR search
         words.each do |word|
-          #word_romaji = kanji_to_romaji(word) # Slow
-          word_romaji = Romaji.kana2romaji(word)
+          #word_romaji = kanji_to_romaji_suika(word) # Slow
+          word_romaji = kanji_to_romaji_jlp(word) # Slow
+          #word_romaji = Romaji.kana2romaji(word)
           Event.all.each do |event|
             # Search in presentation
             event_id_hash[event.id] += 15 if event.presentations.search_presentation(word).present?
@@ -105,8 +106,10 @@ class ApplicationController < ActionController::Base
       return Rails.application.message_verifier(ENV['SECRET_KEY_BASE']).verify(hash)[:token]
     end
 
-    # Kanji to romaji
-    def kanji_to_romaji(word)
+    # Convert kanji to romaji by using Suika
+    def kanji_to_romaji_suika(word)
+      # Suika for Kanji to kana
+      $tagger = Suika::Tagger.new
       if word
         word = word.gsub(/[^\p{Alnum}]/, '') # Remove special characters
         kana_arr = $tagger.parse(word).map{ |w|
@@ -121,6 +124,28 @@ class ApplicationController < ActionController::Base
       else
         return ''
       end
+    end
+
+    # Convert kanji and hiragana to alphabet by using Yahoo api
+    # https://developer.yahoo.co.jp/webapi/jlp/furigana/v1/furigana.html
+    def kanji_to_romaji_jlp(word)
+      if word
+        word = word.gsub(/[^\p{Alnum}]/, '') # Remove special characters
+        sentence = CGI.escape(word) # Convert to ascii
+        base_url = 'http://jlp.yahooapis.jp/FuriganaService/V1/furigana'
+        req_url = "#{base_url}?sentence=#{sentence}&appid=#{ENV['YAHOO_APPID']}"
+        response = Net::HTTP.get_response(URI.parse(req_url)) # Get response
+        result_hash = Hash.from_xml(response.body) # Convert xml to hash
+        if result_hash["ResultSet"].present?
+          word_hashs = result_hash["ResultSet"]["Result"]["WordList"]["Word"]
+          if word_hashs.class == Hash
+            return word_hashs['Roman'].capitalize
+          else # If hash in array
+            return word_hashs.collect { |word| word['Roman']  }.join().capitalize
+          end
+        end
+      end
+      return ""
     end
 
     def admin_staff_only

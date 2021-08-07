@@ -204,19 +204,19 @@ class MembersController < ApplicationController
       # Last name
       if not member.last_name_alphabet.present? ||
           ( (member.last_name_alphabet.present?) && (not member.last_name_alphabet.ascii_only?) ) # If not alphabet
-        member.update(last_name_alphabet: kanji_to_romaji(member.last_name).capitalize )
+        member.update(last_name_alphabet: kanji_to_romaji_jlp(member.last_name).capitalize )
       end
       # First name
       if not member.first_name_alphabet.present? ||
           ( (member.first_name_alphabet.present?) && (not member.first_name_alphabet.ascii_only?) ) # If not alphabet
-        member.update(first_name_alphabet: kanji_to_romaji(member.first_name).capitalize )
+        member.update(first_name_alphabet: kanji_to_romaji_jlp(member.first_name).capitalize )
       end
     end
 
     def fill_romaji(member)
-      romaji = kanji_to_romaji(member.last_name) + ',' +
-          kanji_to_romaji(member.first_name) + ',' +
-          kanji_to_romaji(member.affiliation)
+      romaji = kanji_to_romaji_jlp(member.last_name) + ',' +
+          kanji_to_romaji_jlp(member.first_name) + ',' +
+          kanji_to_romaji_jlp(member.affiliation)
       member.update(romaji: romaji)
     end
 
