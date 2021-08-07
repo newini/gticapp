@@ -254,7 +254,7 @@ To rename column name, do this
 * Delete a row in a table: `DELETE FROM users WHERE id=;`
 
 
-### d. Yarn (js module manager)
+### d. Yarn (js module manager) (Not use anymore)
 #### d.1 Install yarn modules
 The yarn module is on `package.json`. ex. `"aos": "^2.3.4"`. To install these modules, type as below command.
 ```
@@ -266,13 +266,9 @@ If you want to add new js module, type
 ```
 yarn add module_name
 ```
-
 and edit `app/javascript/packs/application.js` and `app/assets/stylesheets/application.scss`.
 
-Then, update assets by webpack as below command.
-```
-./bin/webpack
-```
+
 
 ### e. npm (module manager)
 #### e.1 Install modules by npm
@@ -281,21 +277,40 @@ The modules are defined in `package-lock.json`.
 npm ci
 ```
 
+#### e.2 Add new npm module
+```
+npm install module_name
+```
+
 
 ### f. Edit credentials
 ```
 bin/rails credentials:edit
 
 ```
+and edit `app/javascript/packs/application.js` and `app/assets/stylesheets/application.scss`.
 
-### g. Compile assets
 
-#### webpack
+
+### g. Compile
+
+#### g.1 webpack for JavaScript
+There two targets
+- app/javascript/packs/application.js
+- app/javascript/packs/admin.js
+
+For development mode, webpack compile automatically.
+
+For production mode, use below command to compile manually.
 ```
-bin/webpack
+bin/webpack --profile
 ```
 
-#### Old compile commands
+#### g.2 compile for scss files
+There is one target
+- app/assets/stylesheets/application.scss
+
+
 ```
 bundle exec rake assets:clean
 
