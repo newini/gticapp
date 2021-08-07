@@ -3,10 +3,7 @@
 // https://railsguides.jp/webpacker.html
 
 // ======================================================================
-//
-console.log('Hello World from Webpacker')
-//
-// ======================================================================
+console.log('Begin of application.js')
 
 
 /* Default */
@@ -55,19 +52,11 @@ document.addEventListener('turbolinks:load', function() {
 require("chartkick")
 require("chart.js")
 
-// Plotly.js
-// https://classic.yarnpkg.com/en/package/plotly.js-basic-dist
-var Plotly = require('plotly.js-dist')
-global.Plotly = Plotly
-//console.log('Plotly.js. version: ' + Plotly.version)
-
 
 /* Custom JS */
 import "../src/custom.js";
 
 
+
 // ======================================================================
-//
-console.log('End from Webpacker')
-//
-// ======================================================================
+console.log('End of application.js')
