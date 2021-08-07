@@ -8,7 +8,7 @@
 
   <div class="col-sm-4" data-aos="fade-up">
     <div class="card">
-      <%= image_tag media_article.image_url, height: "200" if media_article.image_url %>
+      <%= image_tag media_article.image_url, height: "200", style: 'object-fit: contain;' if media_article.image_url %>
       <div class="card-body">
         <h5 class="card-title"><%= media_article.media %> <strong>「<%= media_article.title %>」</strong></h5>
         <p class="card-text"><%= media_article.description[0..50] + '...' if media_article.description %></p>
