@@ -30,9 +30,8 @@ class ApplicationController < ActionController::Base
         words = keyword.tr("０-９Ａ-Ｚａ-ｚ　", "0-9A-Za-z ").to_s.split(" ")
         event_id_hash = Hash.new(0) # Score for OR search
         words.each do |word|
-          #word_romaji = kanji_to_romaji_suika(word) # Slow
-          word_romaji = kanji_to_romaji_jlp(word) # Slow
-          #word_romaji = Romaji.kana2romaji(word)
+          #word_romaji = kanji_to_romaji_jlp(word)
+          word_romaji = Romaji.kana2romaji(word)
           Event.all.each do |event|
             # Search in presentation
             event_id_hash[event.id] += 15 if event.presentations.search_presentation(word).present?
@@ -76,22 +75,24 @@ class ApplicationController < ActionController::Base
     def get_search_media_article(keyword)
       if keyword.present?
         words = keyword.tr("０-９Ａ-Ｚａ-ｚ　", "0-9A-Za-z ").to_s.split(" ")
-        media_article_id_hash = Hash.new(0) # Score for OR search
+        ma_id_hash = Hash.new(0) # Score for OR search
         words.each do |word|
+          word_romaji = Romaji.kana2romaji(word)
           # Find in media article
-          MediaArticle.search_media_article(word).each do |media_article|
-            media_article_id_hash[media_article.id] += 10
+          MediaArticle.search_media_article(word).each do |ma|
+            ma_id_hash[ma.id] += 10
           end
 
           # Find in members
-          MediaArticle.all.each do |media_article|
-            media_article_id_hash[media_article.id] += 15 if Member.where(id: media_article.member_id).find_member(word).present?
+          MediaArticle.all.each do |ma|
+            ma_id_hash[ma.id] += 15 if Member.where(id: ma.member_id).find_member(word).present?
+            ma_id_hash[ma.id] += 5 if Member.where(id: ma.member_id).search_in_romaji(word_romaji).present?
           end
         end
         # Sort by score
-        media_article_ids = media_article_id_hash.sort_by{ |e| e[1] }.reverse.map{ |e| e[0] }
+        ma_ids = ma_id_hash.sort_by{ |e| e[1] }.reverse.map{ |e| e[0] }
 
-        return MediaArticle.where(id: media_article_ids).order(Arel.sql(media_article_ids.map{ |e| "id="+e.to_s+" DESC" }.join(', ')))
+        return MediaArticle.where(id: ma_ids).order(Arel.sql(ma_ids.map{ |e| "id="+e.to_s+" DESC" }.join(', ')))
       else
         return nil
       end
@@ -108,7 +109,6 @@ class ApplicationController < ActionController::Base
 
     # Convert kanji to romaji by using Suika
     def kanji_to_romaji_suika(word)
-      # Suika for Kanji to kana
       $tagger = Suika::Tagger.new
       if word
         word = word.gsub(/[^\p{Alnum}]/, '') # Remove special characters
