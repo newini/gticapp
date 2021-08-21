@@ -1,15 +1,21 @@
-/* mixins, variables, etc. */
+/* body */
+body {
+  padding-top: 70px;
+  background-image: url(asset_path("fabric_of_squares_gray.png"));
+}
 
+/* Dark theme */
+@media (prefers-color-scheme: dark) {
+  body {
+    color: #eee;
+    background: #1d1d1d;
+  }
+}
 
 /* global setting */
 html {
   overflow-y: scroll;
   scroll-behavior: smooth;
-}
-
-body {
-  padding-top: 70px;
-  background: url(asset_path("fabric_of_squares_gray.png"));
 }
 
 .center {
@@ -26,7 +32,6 @@ body {
 }
 .navbar-scroll {
   padding: 0;
-  background: #f7f7f7; // Faded color
 }
 
 /* static page */
@@ -63,6 +68,11 @@ body {
   right: 0;
   position: absolute;
   z-index: -1;
+}
+
+/* event detail page */
+.event-detail {
+  padding: 4vw 6vw;
 }
 
 

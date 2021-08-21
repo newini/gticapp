@@ -20,7 +20,7 @@
 
 
 <!-- first view -->
-<div class="container-fluid event-bkg" style="padding: 4vw 6vw 4vw 6vw;">
+<div class="container-fluid event-bkg event-detail">
 
   <!-- Social -->
   <div class="float-end" data-aos="fade-left">
@@ -87,7 +87,7 @@
 
 
 <!----------- Speakers --------------->
-<div class="container-fluid" style="background: lightsteelblue; padding: 4vw 6vw 4vw 6vw;">
+<div id='speakers' class="container-fluid event-detail bg-info">
   <h2>The Speakers</h2>
   <br>
 
@@ -116,7 +116,7 @@
 
 
 <!----------- Schedule --------------->
-<div class="container-fluid" style="background: rgb(250, 255, 255); padding: 4vw 6vw 4vw 6vw;">
+<div id='schedule' class="container-fluid event-detail bg-light">
   <h1>Schedule</h1>
   <br>
 
@@ -209,7 +209,7 @@
 
 
 <!----------- Sponsors --------------->
-<div class="container-fluid" style="background: lightsteelblue; padding: 4vw 0 4vw 0;">
+<div id='sponsors' class="container-fluid event-detail bg-info" style='padding: 4vw 0;'>
   <div style="padding-left: 6vw">
     <h1>Our sponsors</h1>
   </div>
@@ -257,7 +257,7 @@
 
 
 <!----------- Registration --------------->
-<div class="container-fluid" style="background: white; padding: 4vw 6vw 4vw 6vw;" id="registration">
+<div id='registration' class="container-fluid event-detail bg-light">
   <h1>Registration & Fee</h1>
   <br>
 
@@ -365,7 +365,7 @@
 
 
 <!----------- Map --------------->
-<div class="container-fluid" style="background: lightsteelblue; padding: 4vw 6vw 4vw 6vw;" id="how_to_go">
+<div id='how_to_go' class="container-fluid event-detail bg-info">
   <h1>Location</h1>
   <br>
 
@@ -384,7 +384,7 @@
 
 
 <!----------- Note --------------->
-<div class="container-fluid" style="background: white; padding: 4vw 6vw 4vw 6vw;" id="note">
+<div id='note' class="container-fluid event-detail bg-light">
   <h1>Note</h1>
   <br>
 
@@ -398,3 +398,16 @@
 <div class="fixed-bottom text-end">
   <a href="#top" class="btn btn-info"><i class="fas fa-arrow-up" style="font-size: 40px;"></i></a>
 </div>
+
+<script>
+  // Dark theme
+  const dark_theme_media = window.matchMedia("(prefers-color-scheme: dark)");
+  if (dark_theme_media.matches) {
+    document.getElementById("speakers").classList.add('bg-dark');
+    document.getElementById("schedule").classList.add('bg-dark');
+    document.getElementById("sponsors").classList.add('bg-dark');
+    document.getElementById("registration").classList.add('bg-dark');
+    document.getElementById("how_to_go").classList.add('bg-dark');
+    document.getElementById("note").classList.add('bg-dark');
+  }
+</script>
