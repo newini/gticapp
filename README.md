@@ -277,11 +277,19 @@ cd
 mkdir -p .npm
 npm config set prefix ~/.npm
 ```
+Next, Install latest npm
+```
+npm install -g npm@latest
+```
 Then, add below line into `.zshrc` or `.bashrc` to load local npm path.
 ```
 export PATH="$HOME/.npm/bin:$PATH"
 ```
-Restart the terminal.
+Restart the terminal and check npm version
+```
+npm --version
+# 7.21.1
+```
 
 #### e.1 Install modules by npm
 The modules are defined in `package-lock.json`.
