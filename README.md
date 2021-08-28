@@ -4,8 +4,7 @@ Major dependencies:
 * Ruby version: 3.0.0
 * Rails version: 6.1.3
 
-* npm version: 7.20.0
-To update npm, `npm install -g npm@latest`
+* npm version: 7.21.1
 
 * Database creation: ./db/production.sqlite3 (DO NOT COMMIT in Github)
 
@@ -271,6 +270,19 @@ and edit `app/javascript/packs/application.js` and `app/assets/stylesheets/appli
 
 
 ### e. npm (module manager)
+#### e.0 Install latest npm
+Add local npm path
+```
+cd
+mkdir -p .npm
+npm config set prefix ~/.npm
+```
+Then, add below line into `.zshrc` or `.bashrc` to load local npm path.
+```
+export PATH="$HOME/.npm/bin:$PATH"
+```
+Restart the terminal.
+
 #### e.1 Install modules by npm
 The modules are defined in `package-lock.json`.
 ```
