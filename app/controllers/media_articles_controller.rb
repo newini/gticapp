@@ -1,5 +1,5 @@
 class MediaArticlesController < ApplicationController
-  before_action :active_staff_only
+  before_action :active_staff_only, except: :serve_file
 
   def index
     @media_articles = MediaArticle.paginate(page: params[:page]).order(date: :desc)
