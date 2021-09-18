@@ -16,24 +16,25 @@ class StaticPagesController < ApplicationController
   end
 
   def event_list
-    logger.info('hoashfoiasdhfoi')
-    @start_date = Event.order("start_time ASC").first.start_time.beginning_of_year
-    logger.info(@start_date)
-    @last_date = Event.order("start_time ASC").last.start_time.end_of_year
-    if params[:year].present?
-      year = Date.parse(params[:year])
-      base = Event.where(:start_time => year.beginning_of_year..year.end_of_year).group(:start_time)
-    else
-      base = Event.where(:start_time => @last_date.beginning_of_year...@last_date.end_of_year).group(:start_time)
-    end
-    @events = base.where(is_public: true).order("start_time DESC")
-  end
+    # For search
+    if params[:keyword]
+      @events = get_search_event(params[:keyword])
 
-  def search_event
-    @events = get_search_event(params[:keyword])
+    # Default: show events in a year
+    else
+      @start_date = Event.order("start_time ASC").first.start_time.beginning_of_year
+      @last_date = Event.order("start_time ASC").last.start_time.end_of_year
+      if params[:year].present?
+        year = Date.parse(params[:year])
+        base = Event.where(start_time: year.beginning_of_year..year.end_of_year).group(:start_time)
+      else
+        base = Event.where(start_time: @last_date.beginning_of_year..@last_date.end_of_year).group(:start_time)
+      end
+      @events = base.where(is_public: true).order("start_time DESC")
+    end
+
     if @events
       @events = @events.where(is_public: true)
-      respond_to :js
     else
       redirect_to event_list_path
     end

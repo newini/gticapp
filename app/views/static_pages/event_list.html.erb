@@ -4,16 +4,29 @@
   <h1>GTIC Events</h1>
 
   <!-- Search -->
-  <%= form_tag '/search_event', method: 'get', remote: true, role: "form" do %>
+  <%= form_tag event_list_path, method: 'get' do %>
     <div class="row">
+      <%= hidden_field_tag 'locale', params[:locale] if params[:locale] %>
       <%= label_tag :keyword, 'イベント検索', class: 'col-form-label col-auto' %>
       <%= text_field_tag :keyword, params[:keyword], class: "form-control col", placeholder: "keyword" %>
-      <%= submit_tag 'Search', :name => nil, class: 'btn btn-primary col-auto' %>
+      <%= submit_tag 'Search', name: nil, class: 'btn btn-primary col-auto' %>
     </div>
     <div class="row">
       <span class='form-text col-auto'>*企業名、登壇者名、発表タイトル、概要、会場名から検索できます(OR検索：スペースで区切る)</span>
       <span class='form-text col-auto'>*登壇者は漢字もしくは英字名で検索可能。</span>
       <span class='form-text col-auto'>*ヒットしない場合は単語の一部分を入れてください。</span>
+    </div>
+  <% end %>
+
+  <!-- per year Paginate -->
+  <% if @start_date.present? and @last_date.present? %>
+    <div class="btn-group btn-group-sm row">
+      <% date = @last_date%>
+      <% while date >= @start_date do %>
+        <%= link_to "#{date.strftime("%Y")}年", event_list_path(year: date.strftime("%Y-%m-%d")),
+            class: "btn btn-info col-auto" %>
+        <% date = date - 1.year %>
+      <% end %>
     </div>
   <% end %>
 
