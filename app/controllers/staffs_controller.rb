@@ -50,7 +50,7 @@ class StaffsController < ApplicationController
   private
     def staff_params
       params.require(:staff).permit(
-        :member_id, :description,
+        :member_id, :introduction_jp, :introduction_en,
         :is_admin, :is_active
       )
     end

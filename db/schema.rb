@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_07_045148) do
+ActiveRecord::Schema.define(version: 2021_09_18_121811) do
 
   create_table "accounts", force: :cascade do |t|
     t.string "title", limit: 255
@@ -260,7 +260,8 @@ ActiveRecord::Schema.define(version: 2021_08_07_045148) do
     t.boolean "is_admin", default: false
     t.integer "member_id"
     t.boolean "is_active", default: false
-    t.string "description"
+    t.string "introduction_jp"
+    t.string "introduction_en"
   end
 
   create_table "users", force: :cascade do |t|

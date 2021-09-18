@@ -74,7 +74,13 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <p><%= organizer.description.present? ? simple_format(organizer.description) : 'TBA' %></p>
+          <p>
+            <% if params[:locale] == 'ja' %>
+              <%= organizer.introduction_jp.present? ? simple_format(organizer.introduction_jp) : 'TBA' %>
+            <% elsif params[:locale] == 'en' %>
+              <%= organizer.introduction_en.present? ? simple_format(organizer.introduction_en) : 'TBA' %>
+            <% end %>
+          </p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
