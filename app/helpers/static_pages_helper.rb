@@ -1,8 +1,9 @@
 module StaticPagesHelper
+
   def select_locale
     case params[:locale]
     when nil, 'ja'
-      locale_now = ['日本語', 'ja']
+      locale_now = ['Japanese', 'ja']
       locale_array = [ ['English', 'en'] ]
     when 'en'
       locale_now = ['English', 'en']
@@ -20,4 +21,5 @@ module StaticPagesHelper
       }
     }
   end
+
 end
