@@ -27,7 +27,8 @@
               <div class="row">
                 <div class="col-2">
                   <% if organizer.member.uid %>
-                    <%= image_tag "https://graph.facebook.com/#{organizer.member.uid}/picture?height=80&width=50", class: "rounded" %>
+                    <%= image_tag "https://graph.facebook.com/#{organizer.member.uid}/picture?height=80&width=50",
+                        class: "rounded" %>
                   <% else %>
                     <%= image_tag "/assets/blank_profile_picture.png", class: "rounded", height: 80, width: 50 %>
                   <% end %>
@@ -35,7 +36,9 @@
                 <div class="col-7 text-center">
                   <%= organizer.member.last_name + " " + organizer.member.first_name %>
                   <br>
-                  <small class="text-center"><%= organizer.member.first_name_alphabet + " " + organizer.member.last_name_alphabet %></small>
+                  <small class="text-center">
+                    <%= organizer.member.first_name_alphabet + " " + organizer.member.last_name_alphabet %>
+                  </small>
                 </div>
                 <div class="col-2">
                   <%= image_tag 'gtic_logo_c_50x50.png' %>
@@ -43,13 +46,13 @@
               </div>
 
               <div style="background-color: gainsboro; padding-top: 10px; padding-bottom: 10px;">
-                <a tabindex="0" class="btn btn-sm btn-info" role="button" data-bs-toggle="popover" data-bs-trigger="focus"
-                    title="<%= organizer.member.first_name_alphabet + " " + organizer.member.last_name_alphabet %>"
-                    data-bs-content="<%= organizer.description.present? ? organizer.description : 'To be added' %>">
+                <a class="btn btn-sm btn-info" role="button"
+                    data-bs-toggle="modal" data-bs-target="#about_<%= organizer.id%>"><!--button for modal -->
                   <%= t('organizer.about') %>
                 </a>
-                <%= link_to tag.i('', class: 'fab fa-facebook-f'), "https://facebook.com/"+organizer.member.facebook_id,
-                  class: 'btn btn-primary float-end btn-sm', target: 'blank' if organizer.member.facebook_id %>
+                <%= link_to tag.i('', class: 'fab fa-facebook-f'),
+                    "https://facebook.com/"+organizer.member.facebook_id,
+                    class: 'btn btn-primary float-end btn-sm', target: 'blank' if organizer.member.facebook_id %>
               </div>
             </div>
           </div>
@@ -59,3 +62,24 @@
   </div>
 
 </div>
+
+<% @organizers.each do |organizer| %>
+  <div id='about_<%= organizer.id %>' class="modal fade" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <%= organizer.member.first_name_alphabet + " " + organizer.member.last_name_alphabet %>
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p><%= organizer.description.present? ? simple_format(organizer.description) : 'TBA' %></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
