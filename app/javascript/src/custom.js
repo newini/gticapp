@@ -34,5 +34,10 @@ function applyDarkTheme() {
     tableList.forEach( (table) => {
       table.classList.add('table-dark');
     });
+    // modals
+    var modalList = [].slice.call(document.querySelectorAll('.modal-content'));
+    modalList.forEach( (modal) => {
+      modal.classList.add('bg-dark');
+    });
   }
 }
