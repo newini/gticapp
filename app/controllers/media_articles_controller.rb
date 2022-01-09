@@ -81,7 +81,7 @@ class MediaArticlesController < ApplicationController
           object = LinkThumbnailer.generate(url)
           media_article.update(description: object.description, image_url: object.images.first.src.to_s)
         rescue
-          logger.warning('Cannot retrive page info by LinkThumbnailer from ', url)
+          logger.warn('Cannot retrive page info by LinkThumbnailer from ' + url)
         end
       end
     end
