@@ -77,8 +77,12 @@ class MediaArticlesController < ApplicationController
 
     def retrieveLinkThumbnail(media_article, url)
       if url.present?
-        object = LinkThumbnailer.generate(url)
-        media_article.update(description: object.description, image_url: object.images.first.src.to_s)
+        begin
+          object = LinkThumbnailer.generate(url)
+          media_article.update(description: object.description, image_url: object.images.first.src.to_s)
+        rescue
+          logger.warning('Cannot retrive page info by LinkThumbnailer from ', url)
+        end
       end
     end
 
