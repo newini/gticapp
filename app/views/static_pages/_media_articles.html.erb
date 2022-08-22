@@ -14,7 +14,7 @@
         <p class="card-text"><%= media_article.description[0..50] + '...' if media_article.description %></p>
         <small><%= media_article.date.strftime('%Y-%m-%d') %></small>
         <%= link_to "（記事URL版）", "#{media_article.url}" if media_article.url.present? %>
-        <%= link_to "（記事PDF版）", serve_file_media_article_path(media_article), target: '_blank' if media_article.file_name.present? %>
+        <%= link_to "（記事全文PDF版）", serve_file_media_article_path(media_article), target: '_blank' if media_article.file_name.present? %>
 
         <% if media_article.member_id.present? %>
           <hr>
