@@ -59,7 +59,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # 認証
 gem 'devise'
-gem 'omniauth', '~> 1.9'
+gem 'omniauth', '~> 2.0'
 gem 'omniauth-facebook'
 gem 'recaptcha' # I am not a bot
 gem 'koala' # Facebook graph api
