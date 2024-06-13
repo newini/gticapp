@@ -310,6 +310,6 @@ Devise.setup do |config|
   # config.sign_in_after_change_password = true
 
   # For Facebook login
-  config.omniauth :facebook, ENV['FACEBOOK_APP_ID'], ENV['FACEBOOK_APP_SECRET']
+  # config.omniauth :facebook, ENV['FACEBOOK_APP_ID'], ENV['FACEBOOK_APP_SECRET']
 
 end

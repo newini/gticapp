@@ -420,6 +420,16 @@ members.each do |member|
 end
 ```
 
+## Trouble shooter
+- problem
+```
+libffi.so.7: cannot open shared object file: No such file or directory
+```
+solution:
+```
+sudo apt install libffi7
+```
+
 
 
 ## TODO

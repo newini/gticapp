@@ -31,9 +31,9 @@ Rails.application.routes.draw do
   #===================================================
   # For authentication
   devise_for :users, controllers: {
-    omniauth_callbacks: 'users/omniauth_callbacks',
-    #passwords: 'users/passwords',
-    #registrations: 'users/registrations',
+    #omniauth_callbacks: 'users/omniauth_callbacks',
+    passwords: 'users/passwords',
+    registrations: 'users/registrations',
     sessions: 'users/sessions'
   }
   # User page
