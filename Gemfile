@@ -60,7 +60,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # 認証
 gem 'devise'
 gem 'recaptcha' # I am not a bot
-gem 'koala' # Facebook graph api
 
 # deviseの日本語化
 gem 'devise-i18n'
